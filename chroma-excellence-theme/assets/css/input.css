@@ -13,8 +13,13 @@
  * Base Styles
  */
 @layer base {
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     font-family: theme('fontFamily.sans');
+    overflow-x: hidden;
   }
 
   /* Accessible focus states for keyboard navigation */
