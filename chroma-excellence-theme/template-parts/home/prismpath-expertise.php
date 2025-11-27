@@ -41,17 +41,23 @@ $readiness_text    = $readiness['description'];
 
 			<!-- Card 1: Large Blue Card (7 columns) -->
                         <div class="md:col-span-7 md:row-span-1 bg-chroma-blue rounded-[3rem] p-10 text-white flex flex-col justify-between relative overflow-hidden min-h-[300px] md:min-h-0">
-				<div class="absolute top-0 right-0 p-10 opacity-10 text-8xl">
-					<i class="fa-solid fa-shapes"></i>
-				</div>
+				<?php if ( ! empty( $card_1['icon_bg'] ) ) : ?>
+					<div class="absolute top-0 right-0 p-10 opacity-10 text-8xl">
+						<i class="<?php echo esc_attr( $card_1['icon_bg'] ); ?>"></i>
+					</div>
+				<?php endif; ?>
 				<div class="relative z-10 space-y-4">
 					<div class="flex items-start justify-between">
-						<div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-xl mb-6">
-							<i class="fa-brands fa-connectdevelop"></i>
-						</div>
-						<span class="bg-white/10 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-							<?php echo esc_html( $card_1['badge'] ); ?>
-						</span>
+						<?php if ( ! empty( $card_1['icon_badge'] ) ) : ?>
+							<div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-xl mb-6">
+								<i class="<?php echo esc_attr( $card_1['icon_badge'] ); ?>"></i>
+							</div>
+						<?php endif; ?>
+						<?php if ( ! empty( $card_1['badge'] ) ) : ?>
+							<span class="bg-white/10 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+								<?php echo esc_html( $card_1['badge'] ); ?>
+							</span>
+						<?php endif; ?>
 					</div>
                                         <h3 class="text-3xl font-serif"><?php echo esc_html( $card_1['heading'] ); ?></h3>
                                         <p class="text-white/80 text-lg leading-relaxed max-w-xl">
@@ -59,7 +65,9 @@ $readiness_text    = $readiness['description'];
                                         </p>
 					<div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
 						<h4 class="font-bold text-white mb-2 flex items-center gap-2">
-							<i class="fa-solid fa-check-circle text-chroma-yellow"></i>
+							<?php if ( ! empty( $card_1['icon_check'] ) ) : ?>
+								<i class="<?php echo esc_attr( $card_1['icon_check'] ); ?> text-chroma-yellow"></i>
+							<?php endif; ?>
 							<?php echo esc_html( $readiness_heading ); ?>
 						</h4>
 						<p class="text-sm text-white/80">
@@ -71,14 +79,18 @@ $readiness_text    = $readiness['description'];
 
 			<!-- Card 2: Large Red Card (5 columns, tall) -->
                         <div class="md:col-span-5 md:row-span-2 bg-chroma-red rounded-[3rem] p-10 text-white relative overflow-hidden min-h-[400px] md:min-h-0">
-				<div class="absolute top-0 right-0 p-12 opacity-10 text-8xl">
-					<i class="fa-solid fa-heart"></i>
-				</div>
+				<?php if ( ! empty( $card_2['icon_bg'] ) ) : ?>
+					<div class="absolute top-0 right-0 p-12 opacity-10 text-8xl">
+						<i class="<?php echo esc_attr( $card_2['icon_bg'] ); ?>"></i>
+					</div>
+				<?php endif; ?>
 				<div class="relative z-10 h-full flex flex-col justify-between">
 					<div>
-						<div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-2xl mb-8">
-							<i class="fa-solid fa-user-check"></i>
-						</div>
+						<?php if ( ! empty( $card_2['icon_badge'] ) ) : ?>
+							<div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-2xl mb-8">
+								<i class="<?php echo esc_attr( $card_2['icon_badge'] ); ?>"></i>
+							</div>
+						<?php endif; ?>
                                                 <h3 class="text-3xl font-serif mb-6"><?php echo esc_html( $card_2['heading'] ); ?></h3>
                                                 <p class="text-white/90 text-lg leading-relaxed">
                                                         <?php echo esc_html( $card_2['text'] ?? '' ); ?>
@@ -94,9 +106,11 @@ $readiness_text    = $readiness['description'];
 
 			<!-- Card 3: Green Card (3 columns) -->
 			<div class="md:col-span-3 md:row-span-1 bg-gradient-to-br from-chroma-green to-chroma-green/90 rounded-[3rem] p-8 text-white min-h-[300px] md:min-h-0">
-				<div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-4">
-					<i class="fa-solid fa-apple-whole"></i>
-				</div>
+				<?php if ( ! empty( $card_3['icon'] ) ) : ?>
+					<div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+						<i class="<?php echo esc_attr( $card_3['icon'] ); ?>"></i>
+					</div>
+				<?php endif; ?>
 				<h3 class="text-xl font-bold mb-2"><?php echo esc_html( $card_3['heading'] ); ?></h3>
 				<p class="text-white/80 text-sm">
 					<?php echo esc_html( $card_3['text'] ); ?>
@@ -106,7 +120,9 @@ $readiness_text    = $readiness['description'];
 			<!-- Card 4: White Card (4 columns) -->
                         <div class="md:col-span-4 md:row-span-1 bg-white border border-chroma-blue/10 shadow-soft rounded-[3rem] p-8 flex flex-col gap-4 min-h-[300px] md:min-h-0">
 				<div class="flex items-center gap-3">
-					<i class="fa-solid fa-shield-halved text-chroma-yellow text-2xl"></i>
+					<?php if ( ! empty( $card_4['icon'] ) ) : ?>
+						<i class="<?php echo esc_attr( $card_4['icon'] ); ?> text-chroma-yellow text-2xl"></i>
+					<?php endif; ?>
 					<h3 class="text-xl font-bold text-brand-ink"><?php echo esc_html( $card_4['heading'] ); ?></h3>
 				</div>
 				<p class="text-brand-ink/70 text-sm">

@@ -129,8 +129,8 @@ array(
 $wp_customize->add_control(
 'chroma_home_prismpath_cards_json',
 array(
-'label'       => __( 'Cards JSON (badge, heading, text, button, url)', 'chroma-excellence' ),
-'description' => __( 'Example: [{"badge":"Proprietary Model","heading":"The Prismpath™ Curriculum","text":"..."}]', 'chroma-excellence' ),
+'label'       => __( 'Cards JSON (badge, heading, text, button, url, icons)', 'chroma-excellence' ),
+'description' => __( 'Icon fields: "icon" for simple cards, or "icon_bg"/"icon_badge"/"icon_check" for complex cards. Use Font Awesome 6 classes: fa-solid fa-heart, fa-brands fa-connectdevelop', 'chroma-excellence' ),
 'section'     => 'chroma_home_prismpath_section',
 'type'        => 'textarea',
 )

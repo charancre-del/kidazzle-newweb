@@ -225,12 +225,80 @@ wp_enqueue_style(
 
 **Troubleshooting:**
 
-If icons don't show up:
+If icons don't show up (showing as blank squares or missing):
 
-1. **Clear browser cache** (Ctrl+Shift+R / Cmd+Shift+R)
-2. **Check CDN is accessible** - Visit: `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css`
-3. **Verify enqueue is running** - View page source, search for "font-awesome"
-4. **Check for CSS conflicts** - Inspect element, look for `font-family` override
+**Step 1: Verify Font Awesome is Loading**
+1. **Open browser DevTools** (F12 or Right-click → Inspect)
+2. **Go to Console tab** - Check for Font Awesome 404 errors
+3. **Go to Network tab** - Refresh page, filter "CSS", look for `font-awesome`
+4. **Check it loaded** - Should show `all.min.css` with status 200
+
+**Step 2: Check Icon HTML**
+1. **Right-click the missing icon** → Inspect Element
+2. **Verify the HTML** - Should look like: `<i class="fa-solid fa-heart"></i>`
+3. **Check computed styles** - Font family should be "Font Awesome 6 Free"
+
+**Step 3: Common Fixes**
+
+**Issue: Icons show as squares (□)**
+- **Cause**: Font Awesome CSS not loaded
+- **Fix**: Clear cache (Ctrl+Shift+R), check CDN is accessible
+- **Test CDN**: Visit `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css`
+
+**Issue: Wrong icon classes in Customizer**
+- **Cause**: JSON uses old Font Awesome 4 syntax (fa fa-heart)
+- **Fix**: Update icon classes to Font Awesome 6 syntax
+- **Old**: `"fa fa-heart"` ❌
+- **New**: `"fa-solid fa-heart"` ✅
+
+**Step 4: Fix Prismpath Icons in Customizer**
+
+Icons in the Prismpath bento box section can be customized via **Appearance → Customize → Homepage → Prismpath Section → Cards JSON**.
+
+**JSON Format for Prismpath Cards:**
+
+**Simple Cards** (Card 3, Card 4):
+```json
+{
+  "heading": "Wholesome Fuel",
+  "text": "Organic, balanced meals...",
+  "icon": "fa-solid fa-apple-whole"
+}
+```
+
+**Complex Cards** (Card 1, Card 2):
+```json
+{
+  "badge": "Proprietary Model",
+  "heading": "The Prismpath™ Curriculum",
+  "text": "Just as a prism refracts...",
+  "icon_bg": "fa-solid fa-shapes",
+  "icon_badge": "fa-brands fa-connectdevelop",
+  "icon_check": "fa-solid fa-check-circle"
+}
+```
+
+**Icon Fields:**
+- `icon` - Single icon for simple cards
+- `icon_bg` - Background decorative icon (large, faded)
+- `icon_badge` - Badge icon (small, in colored box)
+- `icon_check` - Checkmark icon for readiness section
+
+**Default Icon Classes:**
+- **Card 1** (Blue): `icon_bg: fa-solid fa-shapes`, `icon_badge: fa-brands fa-connectdevelop`, `icon_check: fa-solid fa-check-circle`
+- **Card 2** (Red): `icon_bg: fa-solid fa-heart`, `icon_badge: fa-solid fa-user-check`
+- **Card 3** (Green): `icon: fa-solid fa-apple-whole`
+- **Card 4** (White): `icon: fa-solid fa-shield-halved`
+
+**IMPORTANT**: Always use Font Awesome 6 syntax:
+- ✅ Correct: `fa-solid fa-heart`, `fa-brands fa-connectdevelop`
+- ❌ Wrong: `fa fa-heart`, `fa fa-apple`
+
+**Step 5: WordPress Admin Cache**
+1. **Disable caching plugins** temporarily
+2. **Clear WordPress cache** (if using W3 Total Cache, WP Rocket, etc.)
+3. **Regenerate CSS** - Go to theme folder, run `npm run build`
+4. **Hard refresh** browser (Ctrl+Shift+R)
 
 **Self-Hosting (Optional):**
 
