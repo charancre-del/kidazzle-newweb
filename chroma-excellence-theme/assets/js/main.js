@@ -126,8 +126,6 @@ document.addEventListener('DOMContentLoaded', function () {
           btn.classList.remove('bg-chroma-blue', 'text-white', 'shadow-soft');
           btn.classList.add('text-brand-ink/70');
         }
-        // Remove inline style to let Tailwind classes handle colors
-        btn.style.color = '';
       });
 
       const title = document.querySelector('[data-curriculum-title]');

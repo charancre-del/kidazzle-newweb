@@ -158,20 +158,21 @@ function chroma_home_prismpath_panels() {
         $cards = chroma_home_get_theme_mod_json( 'chroma_home_prismpath_cards_json', $defaults['cards'] );
         $cards = array_map(
                 function ( $card, $index ) use ( $defaults ) {
-                        // Merge with defaults to ensure icon fields exist
+                        // Get default card for this index
                         $default_card = $defaults['cards'][ $index ] ?? array();
-                        $merged = array_merge( $default_card, $card );
 
+                        // Explicitly set each field, preferring saved data but falling back to defaults
                         return array(
-                                'badge'      => sanitize_text_field( $merged['badge'] ?? '' ),
-                                'heading'    => sanitize_text_field( $merged['heading'] ?? '' ),
-                                'text'       => sanitize_textarea_field( $merged['text'] ?? '' ),
-                                'button'     => sanitize_text_field( $merged['button'] ?? '' ),
-                                'url'        => esc_url_raw( $merged['url'] ?? '' ),
-                                'icon'       => sanitize_text_field( $merged['icon'] ?? '' ),
-                                'icon_bg'    => sanitize_text_field( $merged['icon_bg'] ?? '' ),
-                                'icon_badge' => sanitize_text_field( $merged['icon_badge'] ?? '' ),
-                                'icon_check' => sanitize_text_field( $merged['icon_check'] ?? '' ),
+                                'badge'      => sanitize_text_field( $card['badge'] ?? $default_card['badge'] ?? '' ),
+                                'heading'    => sanitize_text_field( $card['heading'] ?? $default_card['heading'] ?? '' ),
+                                'text'       => sanitize_textarea_field( $card['text'] ?? $default_card['text'] ?? '' ),
+                                'button'     => sanitize_text_field( $card['button'] ?? $default_card['button'] ?? '' ),
+                                'url'        => esc_url_raw( $card['url'] ?? $default_card['url'] ?? '' ),
+                                // ALWAYS use default icons if not explicitly set in customizer
+                                'icon'       => sanitize_text_field( $card['icon'] ?? $default_card['icon'] ?? '' ),
+                                'icon_bg'    => sanitize_text_field( $card['icon_bg'] ?? $default_card['icon_bg'] ?? '' ),
+                                'icon_badge' => sanitize_text_field( $card['icon_badge'] ?? $default_card['icon_badge'] ?? '' ),
+                                'icon_check' => sanitize_text_field( $card['icon_check'] ?? $default_card['icon_check'] ?? '' ),
                         );
                 },
                 $cards,
