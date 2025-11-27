@@ -121,10 +121,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const isActive = btn.getAttribute('data-curriculum-button') === profile.key;
         if (isActive) {
           btn.classList.add('bg-chroma-blue', 'text-white', 'shadow-soft');
-          btn.classList.remove('text-brand-ink/70');
+          btn.classList.remove('text-brand-ink/70', 'bg-white');
         } else {
           btn.classList.remove('bg-chroma-blue', 'text-white', 'shadow-soft');
-          btn.classList.add('text-brand-ink/70');
+          btn.classList.add('text-brand-ink/70', 'bg-white');
         }
       });
 

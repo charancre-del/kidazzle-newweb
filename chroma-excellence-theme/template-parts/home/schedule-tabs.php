@@ -59,7 +59,7 @@ if ( empty( $tracks ) ) {
                                                         <div class="absolute left-[19px] top-2 bottom-2 w-0.5 <?php echo esc_attr( $timeline_color ); ?>"></div>
                                                         <?php foreach ( $track['steps'] as $step ) : ?>
                                                                 <div class="flex gap-6">
-                                                                        <div class="min-w-[2.5rem] h-10 px-2 rounded-full bg-white <?php echo esc_attr( $badge_color ); ?> flex items-center justify-center shadow-sm relative z-10 text-xs font-bold flex-shrink-0 self-start"><?php echo esc_html( $step['time'] ); ?></div>
+                                                                        <div class="w-[6.5rem] h-10 px-2 rounded-full bg-white <?php echo esc_attr( $badge_color ); ?> flex items-center justify-center shadow-sm relative z-10 text-xs font-bold flex-shrink-0 self-start"><?php echo esc_html( $step['time'] ); ?></div>
                                                                         <div class="flex-1 min-h-[2.5rem] flex flex-col justify-start">
                                                                                 <h4 class="font-bold <?php echo esc_attr( $title_color ); ?>"><?php echo esc_html( $step['title'] ); ?></h4>
                                                                                 <p class="text-sm text-brand-ink/60 mt-1"><?php echo esc_html( $step['copy'] ); ?></p>

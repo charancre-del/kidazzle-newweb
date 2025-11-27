@@ -28,17 +28,17 @@
 			$header_text = get_theme_mod( 'chroma_header_text', "Early Learning\nAcademy" );
 			$all_lines = array_map( 'trim', explode( "\n", $header_text ) );
 
+			// Check if first line is backslash or empty BEFORE filtering
+			$first_line_is_placeholder = empty( $all_lines[0] ) || $all_lines[0] === '\\';
+
 			// Remove lines that are just backslash (placeholder for spacing)
 			$all_lines = array_filter( $all_lines, function( $line ) {
 				return $line !== '\\';
 			} );
 			$all_lines = array_values( $all_lines ); // Re-index array
 
-			// Check if first line is empty
-			$first_line_empty = empty( $all_lines[0] );
-
-			if ( $first_line_empty ) {
-				// First line is empty, so all lines use "line 2" formatting
+			if ( $first_line_is_placeholder ) {
+				// First line was placeholder, so all remaining lines use "line 2" formatting
 				$line1 = '';
 				$line2_array = array_filter( $all_lines ); // Remove all empty lines
 			} else {
@@ -91,16 +91,17 @@
 				$mobile_header_text = get_theme_mod( 'chroma_header_text', "Early Learning\nAcademy" );
 				$mobile_all_lines = array_map( 'trim', explode( "\n", $mobile_header_text ) );
 
+				// Check if first line is backslash or empty BEFORE filtering
+				$mobile_first_is_placeholder = empty( $mobile_all_lines[0] ) || $mobile_all_lines[0] === '\\';
+
 				// Remove backslash placeholders
 				$mobile_all_lines = array_filter( $mobile_all_lines, function( $line ) {
 					return $line !== '\\';
 				} );
 				$mobile_all_lines = array_values( $mobile_all_lines );
 
-				$mobile_first_empty = empty( $mobile_all_lines[0] );
-
-				if ( $mobile_first_empty ) {
-					// First line empty, use second line or 'Menu'
+				if ( $mobile_first_is_placeholder ) {
+					// First line was placeholder, use second line or 'Menu'
 					$mobile_non_empty = array_filter( $mobile_all_lines );
 					$mobile_line1 = ! empty( $mobile_non_empty ) ? reset( $mobile_non_empty ) : 'Menu';
 				} else {
