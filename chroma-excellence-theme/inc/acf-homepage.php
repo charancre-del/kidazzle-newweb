@@ -117,11 +117,17 @@ function chroma_home_stats() {
         $stats    = chroma_home_get_theme_mod_json( 'chroma_home_stats_json', chroma_home_default_stats() );
         $cleaned  = array();
 
+        // Define color cycle for stats (red, yellow, blue, green)
+        $colors = array( 'chroma-red', 'chroma-yellow', 'chroma-blue', 'chroma-green' );
+        $index  = 0;
+
         foreach ( $stats as $stat ) {
                 $cleaned[] = array(
                         'value' => sanitize_text_field( $stat['value'] ?? '' ),
                         'label' => sanitize_text_field( $stat['label'] ?? '' ),
+                        'color' => $colors[ $index % count( $colors ) ],
                 );
+                $index++;
         }
 
         return $cleaned;

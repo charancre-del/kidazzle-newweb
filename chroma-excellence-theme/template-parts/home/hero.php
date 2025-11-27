@@ -57,12 +57,31 @@ $home_id = chroma_get_home_page_id();
             <div class="absolute bottom-6 left-6 w-72 h-72 bg-chroma-yellowLight rounded-full -z-10 blur-2xl opacity-70"></div>
 
             <div class="absolute inset-y-0 left-16 right-0 rounded-[3rem] overflow-hidden border border-white/10 shadow-soft">
-                <?php if ( has_post_thumbnail( $home_id ) ) : ?>
-                    <?php echo get_the_post_thumbnail( $home_id, 'hero-large', array( 'class' => 'w-full h-full object-cover' ) ); ?>
-                <?php else : ?>
+                <?php
+                $hero_video_path = get_template_directory() . '/assets/video/hero-classroom.mp4';
+                $hero_video_url  = get_template_directory_uri() . '/assets/video/hero-classroom.mp4';
+                $hero_image      = get_theme_mod( 'chroma_home_hero_image' );
+
+                if ( has_post_thumbnail( $home_id ) ) :
+                    // Priority 1: Homepage featured image
+                    echo get_the_post_thumbnail( $home_id, 'hero-large', array( 'class' => 'w-full h-full object-cover' ) );
+                elseif ( $hero_image ) :
+                    // Priority 2: Customizer hero image
+                    ?>
+                    <img src="<?php echo esc_url( $hero_image ); ?>" class="w-full h-full object-cover" alt="Chroma Classroom" />
+                <?php elseif ( file_exists( $hero_video_path ) ) : ?>
+                    <!-- Priority 3: Hero video file -->
                     <video autoplay muted playsinline loop class="w-full h-full object-cover">
-                        <source src="<?php echo get_template_directory_uri(); ?>/assets/video/hero-classroom.mp4" type="video/mp4" />
+                        <source src="<?php echo esc_url( $hero_video_url ); ?>" type="video/mp4" />
                     </video>
+                <?php else : ?>
+                    <!-- Fallback: Gradient background -->
+                    <div class="w-full h-full bg-gradient-to-br from-chroma-blue/20 via-chroma-green/20 to-chroma-yellow/20 flex items-center justify-center">
+                        <div class="text-center text-chroma-blueDark/30">
+                            <i class="fa-solid fa-image text-6xl mb-4"></i>
+                            <p class="text-sm font-semibold">Hero Image Coming Soon</p>
+                        </div>
+                    </div>
                 <?php endif; ?>
             </div>
 
