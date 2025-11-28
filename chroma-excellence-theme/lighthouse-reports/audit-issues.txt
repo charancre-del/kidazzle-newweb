@@ -1,38 +1,44 @@
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/about/
-SCORES: Performance: 71, Accessibility: 96, Best Practices: 96, SEO: 69
+SCORES: Performance: 90, Accessibility: 96, Best Practices: 96, SEO: 69
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.25)
-   Value: 3.9 s
+ - First Contentful Paint (Score: 0.92)
+   Value: 1.7 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.2)
-   Value: 5.4 s
+ - Largest Contentful Paint (Score: 0.65)
+   Value: 3.4 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.8)
-   Value: 4.1 s
+ - Speed Index (Score: 0.96)
+   Value: 2.8 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
+ - Document request latency (Score: 0)
+   Value: Est savings of 640 ms
+   Description: Your first network request is the most important.
  - Improve image delivery (Score: 0)
    Value: Est savings of 78 KiB
    Description: Reducing the download time of images can improve the perceived load time of the page and LCP.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 2,910 ms
+   Value: Est savings of 630 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.71)
-   Value: 5.4 s
+ - Time to Interactive (Score: 0.92)
+   Value: 3.5 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
  - Reduce unused CSS (Score: 0)
-   Value: Est savings of 75 KiB
+   Value: Est savings of 47 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
  - Reduce unused JavaScript (Score: 0)
    Value: Est savings of 22 KiB
    Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
  - Image elements do not have explicit `width` and `height` (Score: 0.5)
    Description: Set an explicit width and height on image elements to reduce layout shifts and improve CLS.
+ - Reduce initial server response time (Score: 0)
+   Value: Root document took 740 ms
+   Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
  - Background and foreground colors do not have a sufficient contrast ratio. (Score: 0)
@@ -70,38 +76,35 @@ SCORES: Performance: 71, Accessibility: 96, Best Practices: 96, SEO: 69
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/careers/
-SCORES: Performance: 96, Accessibility: 96, Best Practices: 96, SEO: 61
+SCORES: Performance: 99, Accessibility: 96, Best Practices: 96, SEO: 61
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.81)
-   Value: 2.1 s
+ - First Contentful Paint (Score: 0.92)
+   Value: 1.7 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.91)
-   Value: 2.4 s
+ - Largest Contentful Paint (Score: 0.98)
+   Value: 1.9 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.97)
-   Value: 2.5 s
+ - Speed Index (Score: 0.99)
+   Value: 2.2 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
  - Document request latency (Score: 0)
-   Value: Est savings of 860 ms
+   Value: Est savings of 720 ms
    Description: Your first network request is the most important.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 1,190 ms
+   Value: Est savings of 680 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.98)
-   Value: 2.4 s
-   Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
  - Reduce unused CSS (Score: 0)
-   Value: Est savings of 75 KiB
+   Value: Est savings of 48 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
  - Reduce unused JavaScript (Score: 0)
    Value: Est savings of 22 KiB
    Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
  - Reduce initial server response time (Score: 0)
-   Value: Root document took 960 ms
+   Value: Root document took 820 ms
    Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
@@ -142,39 +145,43 @@ SCORES: Performance: 96, Accessibility: 96, Best Practices: 96, SEO: 61
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/contact-us/
-SCORES: Performance: 76, Accessibility: 89, Best Practices: 96, SEO: 69
+SCORES: Performance: 98, Accessibility: 90, Best Practices: 96, SEO: 69
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.24)
-   Value: 4.0 s
+ - First Contentful Paint (Score: 0.92)
+   Value: 1.7 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.43)
-   Value: 4.3 s
+ - Largest Contentful Paint (Score: 0.96)
+   Value: 2.1 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.81)
-   Value: 4.0 s
+ - Speed Index (Score: 0.98)
+   Value: 2.5 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
+ - Document request latency (Score: 0)
+   Value: Est savings of 690 ms
+   Description: Your first network request is the most important.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 2,620 ms
+   Value: Est savings of 660 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.85)
-   Value: 4.3 s
+ - Time to Interactive (Score: 0.99)
+   Value: 2.1 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
  - Reduce unused CSS (Score: 0)
-   Value: Est savings of 75 KiB
+   Value: Est savings of 48 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
  - Reduce unused JavaScript (Score: 0)
    Value: Est savings of 22 KiB
    Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
+ - Reduce initial server response time (Score: 0)
+   Value: Root document took 790 ms
+   Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
  - Background and foreground colors do not have a sufficient contrast ratio. (Score: 0)
    Description: Low-contrast text is difficult or impossible for many users to read.
- - Heading elements are not in a sequentially-descending order (Score: 0)
-   Description: Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies.
  - Select elements do not have associated label elements. (Score: 0)
    Description: Form elements without effective labels can create frustrating experiences for screen reader users.
  - Interactive controls are keyboard focusable (Score: null)
@@ -214,20 +221,20 @@ SCORES: Performance: 96, Accessibility: 96, Best Practices: 96, SEO: 69
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.94)
-   Value: 1.6 s
+ - First Contentful Paint (Score: 0.96)
+   Value: 1.5 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.88)
+ - Largest Contentful Paint (Score: 0.87)
    Value: 2.6 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
  - Speed Index (Score: 0.99)
    Value: 2.1 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
  - Document request latency (Score: 0)
-   Value: Est savings of 700 ms
+   Value: Est savings of 710 ms
    Description: Your first network request is the most important.
  - Font display (Score: 0)
-   Value: Est savings of 170 ms
+   Value: Est savings of 90 ms
    Description: Consider setting [font-display](https://developer.
  - Improve image delivery (Score: 0)
    Value: Est savings of 29 KiB
@@ -235,7 +242,7 @@ SCORES: Performance: 96, Accessibility: 96, Best Practices: 96, SEO: 69
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 350 ms
+   Value: Est savings of 80 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
  - Time to Interactive (Score: 0.98)
    Value: 2.6 s
@@ -249,7 +256,7 @@ SCORES: Performance: 96, Accessibility: 96, Best Practices: 96, SEO: 69
  - Image elements do not have explicit `width` and `height` (Score: 0.5)
    Description: Set an explicit width and height on image elements to reduce layout shifts and improve CLS.
  - Reduce initial server response time (Score: 0)
-   Value: Root document took 800 ms
+   Value: Root document took 810 ms
    Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
@@ -288,39 +295,43 @@ SCORES: Performance: 96, Accessibility: 96, Best Practices: 96, SEO: 69
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/employers/
-SCORES: Performance: 76, Accessibility: 94, Best Practices: 96, SEO: 61
+SCORES: Performance: 98, Accessibility: 96, Best Practices: 96, SEO: 61
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.23)
-   Value: 4.0 s
+ - First Contentful Paint (Score: 0.92)
+   Value: 1.7 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.41)
-   Value: 4.3 s
+ - Largest Contentful Paint (Score: 0.97)
+   Value: 2.0 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.8)
-   Value: 4.0 s
+ - Speed Index (Score: 0.99)
+   Value: 2.0 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
+ - Document request latency (Score: 0)
+   Value: Est savings of 540 ms
+   Description: Your first network request is the most important.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 2,640 ms
+   Value: Est savings of 620 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.84)
-   Value: 4.3 s
+ - Time to Interactive (Score: 0.99)
+   Value: 2.0 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
  - Reduce unused CSS (Score: 0)
-   Value: Est savings of 75 KiB
+   Value: Est savings of 48 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
  - Reduce unused JavaScript (Score: 0)
    Value: Est savings of 22 KiB
    Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
+ - Reduce initial server response time (Score: 0)
+   Value: Root document took 640 ms
+   Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
  - Background and foreground colors do not have a sufficient contrast ratio. (Score: 0)
    Description: Low-contrast text is difficult or impossible for many users to read.
- - Heading elements are not in a sequentially-descending order (Score: 0)
-   Description: Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies.
  - Interactive controls are keyboard focusable (Score: null)
    Description: Custom interactive controls are keyboard focusable and display a focus indicator.
  - Interactive elements indicate their purpose and state (Score: null)
@@ -356,26 +367,32 @@ SCORES: Performance: 76, Accessibility: 94, Best Practices: 96, SEO: 61
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/
-SCORES: Performance: 84, Accessibility: 83, Best Practices: 100, SEO: 61
+SCORES: Performance: 97, Accessibility: 83, Best Practices: 100, SEO: 61
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.39)
-   Value: 3.3 s
+ - First Contentful Paint (Score: 0.8)
+   Value: 2.1 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.64)
-   Value: 3.5 s
+ - Largest Contentful Paint (Score: 0.96)
+   Value: 2.1 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.9)
-   Value: 3.3 s
+ - Speed Index (Score: 0.99)
+   Value: 2.1 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
+ - Font display (Score: 0)
+   Value: Est savings of 100 ms
+   Description: Consider setting [font-display](https://developer.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
- - Time to Interactive (Score: 0.92)
-   Value: 3.5 s
+ - Time to Interactive (Score: 0.99)
+   Value: 2.1 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
+ - Minimize main-thread work (Score: 0.5)
+   Value: 2.0 s
+   Description: Consider reducing the time spent parsing, compiling and executing JS.
  - Avoid multiple page redirects (Score: 0)
-   Value: Est savings of 1,070 ms
+   Value: Est savings of 1,340 ms
    Description: Redirects introduce additional delays before the page can be loaded.
 
 [ACCESSIBILITY]
@@ -420,39 +437,46 @@ SCORES: Performance: 84, Accessibility: 83, Best Practices: 100, SEO: 61
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/locations/midway-campus/
-SCORES: Performance: 66, Accessibility: 83, Best Practices: 96, SEO: 54
+SCORES: Performance: 76, Accessibility: 85, Best Practices: 96, SEO: 54
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.25)
-   Value: 3.9 s
+ - First Contentful Paint (Score: 0.96)
+   Value: 1.5 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.01)
-   Value: 8.9 s
+ - Largest Contentful Paint (Score: 0.06)
+   Value: 7.0 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.82)
-   Value: 3.9 s
+ - Speed Index (Score: 0.99)
+   Value: 2.1 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
+ - Document request latency (Score: 0)
+   Value: Est savings of 540 ms
+   Description: Your first network request is the most important.
+ - Font display (Score: 0)
+   Value: Est savings of 250 ms
+   Description: Consider setting [font-display](https://developer.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 2,450 ms
+   Value: Est savings of 130 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.34)
-   Value: 8.9 s
+ - Time to Interactive (Score: 0.52)
+   Value: 7.0 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
- - Reduce unused CSS (Score: 0)
-   Value: Est savings of 75 KiB
+ - Reduce unused CSS (Score: 0.5)
+   Value: Est savings of 26 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
  - Reduce unused JavaScript (Score: 0)
    Value: Est savings of 22 KiB
    Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
+ - Reduce initial server response time (Score: 0)
+   Value: Root document took 640 ms
+   Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
  - Background and foreground colors do not have a sufficient contrast ratio. (Score: 0)
    Description: Low-contrast text is difficult or impossible for many users to read.
- - Heading elements are not in a sequentially-descending order (Score: 0)
-   Description: Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies.
  - Form elements do not have associated labels (Score: 0)
    Description: Labels ensure that form controls are announced properly by assistive technologies, like screen readers.
  - Select elements do not have associated label elements. (Score: 0)
@@ -495,36 +519,43 @@ SCORES: Performance: 66, Accessibility: 83, Best Practices: 96, SEO: 54
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/locations/
-SCORES: Performance: 82, Accessibility: 93, Best Practices: 100, SEO: 57.99999999999999
+SCORES: Performance: 98, Accessibility: 95, Best Practices: 96, SEO: 57.99999999999999
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.35)
-   Value: 3.5 s
+ - First Contentful Paint (Score: 0.96)
+   Value: 1.5 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.58)
-   Value: 3.7 s
+ - Largest Contentful Paint (Score: 0.96)
+   Value: 2.1 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.88)
-   Value: 3.5 s
+ - Speed Index (Score: 0.98)
+   Value: 2.4 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
+ - Document request latency (Score: 0)
+   Value: Est savings of 610 ms
+   Description: Your first network request is the most important.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 2,490 ms
+   Value: Est savings of 180 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.9)
-   Value: 3.7 s
+ - Time to Interactive (Score: 0.99)
+   Value: 2.1 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
- - Reduce unused CSS (Score: 0)
-   Value: Est savings of 82 KiB
+ - Reduce unused CSS (Score: 0.5)
+   Value: Est savings of 22 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
+ - Reduce unused JavaScript (Score: 0)
+   Value: Est savings of 22 KiB
+   Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
+ - Reduce initial server response time (Score: 0)
+   Value: Root document took 710 ms
+   Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
  - Background and foreground colors do not have a sufficient contrast ratio. (Score: 0)
    Description: Low-contrast text is difficult or impossible for many users to read.
- - Heading elements are not in a sequentially-descending order (Score: 0)
-   Description: Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies.
  - Interactive controls are keyboard focusable (Score: null)
    Description: Custom interactive controls are keyboard focusable and display a focus indicator.
  - Interactive elements indicate their purpose and state (Score: null)
@@ -547,6 +578,8 @@ SCORES: Performance: 82, Accessibility: 93, Best Practices: 100, SEO: 57.9999999
    Description: Custom interactive controls have appropriate ARIA roles.
 
 [BEST-PRACTICES]
+ - Browser errors were logged to the console (Score: 0)
+   Description: Errors logged to the console indicate unresolved problems.
 
 [SEO]
  - Page is blocked from indexing (Score: 0)
@@ -558,44 +591,54 @@ SCORES: Performance: 82, Accessibility: 93, Best Practices: 100, SEO: 57.9999999
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/newsroom/
-SCORES: Performance: 78, Accessibility: 87, Best Practices: 96, SEO: 61
+SCORES: Performance: 82, Accessibility: 91, Best Practices: 96, SEO: 61
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.37)
-   Value: 3.4 s
+ - First Contentful Paint (Score: 0.92)
+   Value: 1.7 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.49)
-   Value: 4.0 s
+ - Largest Contentful Paint (Score: 0.81)
+   Value: 2.9 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.68)
-   Value: 4.8 s
+ - Total Blocking Time (Score: 0.59)
+   Value: 490 ms
+   Description: Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.
+ - Speed Index (Score: 0.99)
+   Value: 2.2 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
+ - Document request latency (Score: 0)
+   Value: Est savings of 640 ms
+   Description: Your first network request is the most important.
  - Improve image delivery (Score: 0)
    Value: Est savings of 24 KiB
    Description: Reducing the download time of images can improve the perceived load time of the page and LCP.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 2,600 ms
+   Value: Est savings of 760 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.87)
-   Value: 4.0 s
+ - Time to Interactive (Score: 0.96)
+   Value: 2.9 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
+ - Max Potential First Input Delay (Score: 0.05)
+   Value: 560 ms
+   Description: The maximum potential First Input Delay that your users could experience is the duration of the longest task.
  - Reduce unused CSS (Score: 0)
-   Value: Est savings of 86 KiB
+   Value: Est savings of 49 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
  - Reduce unused JavaScript (Score: 0)
-   Value: Est savings of 57 KiB
+   Value: Est savings of 61 KiB
    Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
  - Image elements do not have explicit `width` and `height` (Score: 0.5)
    Description: Set an explicit width and height on image elements to reduce layout shifts and improve CLS.
+ - Reduce initial server response time (Score: 0)
+   Value: Root document took 740 ms
+   Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
  - Background and foreground colors do not have a sufficient contrast ratio. (Score: 0)
    Description: Low-contrast text is difficult or impossible for many users to read.
- - Heading elements are not in a sequentially-descending order (Score: 0)
-   Description: Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies.
  - Interactive controls are keyboard focusable (Score: null)
    Description: Custom interactive controls are keyboard focusable and display a focus indicator.
  - Interactive elements indicate their purpose and state (Score: null)
@@ -631,36 +674,42 @@ SCORES: Performance: 78, Accessibility: 87, Best Practices: 96, SEO: 61
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/parents/
-SCORES: Performance: 75, Accessibility: 96, Best Practices: 96, SEO: 61
+SCORES: Performance: 96, Accessibility: 96, Best Practices: 96, SEO: 61
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.27)
-   Value: 3.8 s
+ - First Contentful Paint (Score: 0.92)
+   Value: 1.7 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.34)
-   Value: 4.6 s
+ - Largest Contentful Paint (Score: 0.88)
+   Value: 2.6 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.84)
-   Value: 3.8 s
+ - Speed Index (Score: 0.99)
+   Value: 2.0 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
- - Improve image delivery (Score: 0.5)
+ - Document request latency (Score: 0)
+   Value: Est savings of 580 ms
+   Description: Your first network request is the most important.
+ - Improve image delivery (Score: 0)
    Value: Est savings of 25 KiB
    Description: Reducing the download time of images can improve the perceived load time of the page and LCP.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 2,640 ms
+   Value: Est savings of 600 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.81)
-   Value: 4.6 s
+ - Time to Interactive (Score: 0.98)
+   Value: 2.6 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
  - Reduce unused CSS (Score: 0)
-   Value: Est savings of 75 KiB
+   Value: Est savings of 48 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
  - Reduce unused JavaScript (Score: 0)
    Value: Est savings of 22 KiB
    Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
+ - Reduce initial server response time (Score: 0)
+   Value: Root document took 680 ms
+   Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
  - Background and foreground colors do not have a sufficient contrast ratio. (Score: 0)
@@ -700,37 +749,51 @@ SCORES: Performance: 75, Accessibility: 96, Best Practices: 96, SEO: 61
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/privacy-policy/
-SCORES: Performance: 74, Accessibility: 95, Best Practices: 96, SEO: 61
+SCORES: Performance: 87, Accessibility: 90, Best Practices: 96, SEO: 61
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.29)
-   Value: 3.7 s
+ - First Contentful Paint (Score: 0.92)
+   Value: 1.7 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.32)
-   Value: 4.7 s
+ - Largest Contentful Paint (Score: 0.97)
+   Value: 2.0 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.85)
-   Value: 3.7 s
+ - Total Blocking Time (Score: 0.61)
+   Value: 460 ms
+   Description: Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.
+ - Speed Index (Score: 0.99)
+   Value: 2.1 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
+ - Document request latency (Score: 0)
+   Value: Est savings of 620 ms
+   Description: Your first network request is the most important.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 2,660 ms
+   Value: Est savings of 770 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.8)
-   Value: 4.7 s
+ - Time to Interactive (Score: 0.97)
+   Value: 2.8 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
+ - Max Potential First Input Delay (Score: 0.03)
+   Value: 610 ms
+   Description: The maximum potential First Input Delay that your users could experience is the duration of the longest task.
  - Reduce unused CSS (Score: 0)
-   Value: Est savings of 85 KiB
+   Value: Est savings of 49 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
  - Reduce unused JavaScript (Score: 0)
-   Value: Est savings of 59 KiB
+   Value: Est savings of 22 KiB
    Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
+ - Reduce initial server response time (Score: 0)
+   Value: Root document took 720 ms
+   Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
  - Background and foreground colors do not have a sufficient contrast ratio. (Score: 0)
    Description: Low-contrast text is difficult or impossible for many users to read.
+ - Touch targets do not have sufficient size or spacing. (Score: 0)
+   Description: Touch targets with sufficient size and spacing help users who may have difficulty targeting small controls to activate the targets.
  - Interactive controls are keyboard focusable (Score: null)
    Description: Custom interactive controls are keyboard focusable and display a focus indicator.
  - Interactive elements indicate their purpose and state (Score: null)
@@ -766,38 +829,42 @@ SCORES: Performance: 74, Accessibility: 95, Best Practices: 96, SEO: 61
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/programs/infant-care/
-SCORES: Performance: 92, Accessibility: 95, Best Practices: 96, SEO: 69
+SCORES: Performance: 98, Accessibility: 95, Best Practices: 96, SEO: 69
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.82)
-   Value: 2.1 s
+ - First Contentful Paint (Score: 0.96)
+   Value: 1.5 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.77)
-   Value: 3.0 s
+ - Largest Contentful Paint (Score: 0.95)
+   Value: 2.2 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.94)
-   Value: 3.0 s
+ - Speed Index (Score: 0.93)
+   Value: 3.1 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
- - Forced reflow (Score: 0)
-   Description: A forced reflow occurs when JavaScript queries geometric properties (such as offsetWidth) after styles have been invalidated by a change to the DOM state.
+ - Document request latency (Score: 0)
+   Value: Est savings of 680 ms
+   Description: Your first network request is the most important.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 1,150 ms
+   Value: Est savings of 230 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.86)
-   Value: 4.1 s
+ - Time to Interactive (Score: 0.96)
+   Value: 2.9 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
- - Max Potential First Input Delay (Score: 0.96)
-   Value: 100 ms
+ - Max Potential First Input Delay (Score: 0.89)
+   Value: 130 ms
    Description: The maximum potential First Input Delay that your users could experience is the duration of the longest task.
- - Reduce unused CSS (Score: 0)
-   Value: Est savings of 75 KiB
+ - Reduce unused CSS (Score: 0.5)
+   Value: Est savings of 27 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
  - Reduce unused JavaScript (Score: 0)
    Value: Est savings of 59 KiB
    Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
+ - Reduce initial server response time (Score: 0)
+   Value: Root document took 780 ms
+   Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
  - Background and foreground colors do not have a sufficient contrast ratio. (Score: 0)
@@ -835,45 +902,43 @@ SCORES: Performance: 92, Accessibility: 95, Best Practices: 96, SEO: 69
 
 ==================================================
 PAGE: https://x3yyntt5tp.wpdns.site/programs/
-SCORES: Performance: 94, Accessibility: 93, Best Practices: 96, SEO: 50
+SCORES: Performance: 94, Accessibility: 95, Best Practices: 96, SEO: 50
 ==================================================
 
 [PERFORMANCE]
- - First Contentful Paint (Score: 0.75)
-   Value: 2.3 s
+ - First Contentful Paint (Score: 0.9)
+   Value: 1.8 s
    Description: First Contentful Paint marks the time at which the first text or image is painted.
- - Largest Contentful Paint (Score: 0.86)
-   Value: 2.7 s
+ - Largest Contentful Paint (Score: 0.9)
+   Value: 2.5 s
    Description: Largest Contentful Paint marks the time at which the largest text or image is painted.
- - Speed Index (Score: 0.95)
-   Value: 2.9 s
+ - Speed Index (Score: 0.77)
+   Value: 4.2 s
    Description: Speed Index shows how quickly the contents of a page are visibly populated.
  - Document request latency (Score: 0)
-   Value: Est savings of 760 ms
+   Value: Est savings of 1,700 ms
    Description: Your first network request is the most important.
  - Network dependency tree (Score: 0)
    Description: [Avoid chaining critical requests](https://developer.
  - Render blocking requests (Score: 0)
-   Value: Est savings of 1,260 ms
+   Value: Est savings of 120 ms
    Description: Requests are blocking the page's initial render, which may delay LCP.
- - Time to Interactive (Score: 0.97)
-   Value: 2.7 s
+ - Time to Interactive (Score: 0.98)
+   Value: 2.5 s
    Description: Time to Interactive is the amount of time it takes for the page to become fully interactive.
- - Reduce unused CSS (Score: 0)
-   Value: Est savings of 75 KiB
+ - Reduce unused CSS (Score: 0.5)
+   Value: Est savings of 26 KiB
    Description: Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity.
  - Reduce unused JavaScript (Score: 0)
    Value: Est savings of 22 KiB
    Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.
  - Reduce initial server response time (Score: 0)
-   Value: Root document took 860 ms
+   Value: Root document took 1,800 ms
    Description: Keep the server response time for the main document short because all other requests depend on it.
 
 [ACCESSIBILITY]
  - Background and foreground colors do not have a sufficient contrast ratio. (Score: 0)
    Description: Low-contrast text is difficult or impossible for many users to read.
- - Heading elements are not in a sequentially-descending order (Score: 0)
-   Description: Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies.
  - Interactive controls are keyboard focusable (Score: null)
    Description: Custom interactive controls are keyboard focusable and display a focus indicator.
  - Interactive elements indicate their purpose and state (Score: null)

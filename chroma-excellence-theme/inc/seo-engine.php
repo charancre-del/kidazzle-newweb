@@ -417,35 +417,76 @@ add_action('wp_head', 'chroma_hreflang_tags', 1);
 /**
  * Shared meta description output with fallbacks
  */
+/**
+ * Shared meta description output with fallbacks
+ */
 function chroma_shared_meta_description()
 {
-        // Preserve About page specific metadata when defined.
-        if (function_exists('chroma_is_about_template') && function_exists('chroma_get_about_seo_fields') && chroma_is_about_template()) {
-                $about_fields = chroma_get_about_seo_fields();
+        // 1. Manual Override (General SEO Meta Box)
+        $post_id = get_the_ID();
+        $manual_description = $post_id ? get_post_meta($post_id, 'meta_description', true) : '';
 
-                if (!empty($about_fields['description'])) {
-                        return;
-                }
+        if (!empty($manual_description)) {
+                echo '<meta name="description" content="' . esc_attr(wp_strip_all_tags($manual_description)) . '" />' . "\n";
+                return;
         }
 
-        $post_id = get_the_ID();
+        // 2. Dynamic Templates
         $description = '';
 
-        if (function_exists('chroma_get_program_meta_tags') && is_singular('program')) {
-                $program_meta = chroma_get_program_meta_tags($post_id);
-                $description = $program_meta['description'];
+        if (is_singular('location')) {
+                // Location Template: "Visit our [Location Name] campus in [City], [State]. [Tagline]. Serving families in [Service Areas]. [Phone]."
+                $city = get_post_meta($post_id, 'location_city', true);
+                $state = get_post_meta($post_id, 'location_state', true);
+                $tagline = get_post_meta($post_id, 'location_tagline', true);
+                $service_areas = get_post_meta($post_id, 'location_service_areas', true);
+                $phone = get_post_meta($post_id, 'location_phone', true);
+
+                $parts = array();
+                $parts[] = 'Visit our ' . get_the_title() . ' campus';
+                if ($city && $state) {
+                        $parts[] = "in $city, $state";
+                }
+                if ($tagline) {
+                        $parts[] = ". $tagline";
+                }
+                if ($service_areas) {
+                        $parts[] = ". Serving families in " . $service_areas;
+                }
+                if ($phone) {
+                        $parts[] = ". Call us at $phone";
+                }
+
+                $description = implode('', $parts) . '.';
+
+        } elseif (is_singular('program')) {
+                // Program Template: "[Program Name] at Chroma Early Learning Academy. [Excerpt]."
+                $excerpt = has_excerpt() ? get_the_excerpt() : chroma_trimmed_excerpt(20, $post_id);
+                $description = get_the_title() . ' at Chroma Early Learning Academy. ' . $excerpt;
+
+        } elseif (is_singular('post')) {
+                // Blog Post Template: "[Title] - [Excerpt]"
+                $excerpt = has_excerpt() ? get_the_excerpt() : chroma_trimmed_excerpt(30, $post_id);
+                $description = get_the_title() . ' - ' . $excerpt;
         }
 
-        if (!$description && $post_id) {
-                $description = get_post_meta($post_id, 'meta_description', true);
-        }
+        // 3. Global Default / Fallback
+        if (empty($description)) {
+                // Preserve About page specific metadata if defined (legacy support)
+                if (function_exists('chroma_is_about_template') && function_exists('chroma_get_about_seo_fields') && chroma_is_about_template()) {
+                        $about_fields = chroma_get_about_seo_fields();
+                        if (!empty($about_fields['description'])) {
+                                $description = $about_fields['description'];
+                        }
+                }
 
-        if (!$description && $post_id) {
-                $description = has_excerpt($post_id) ? get_the_excerpt($post_id) : chroma_trimmed_excerpt(32, $post_id);
-        }
+                if (empty($description) && $post_id) {
+                        $description = has_excerpt($post_id) ? get_the_excerpt($post_id) : chroma_trimmed_excerpt(32, $post_id);
+                }
 
-        if (!$description) {
-                $description = chroma_global_seo_default_description();
+                if (empty($description)) {
+                        $description = chroma_global_seo_default_description();
+                }
         }
 
         if ($description) {
@@ -453,6 +494,58 @@ function chroma_shared_meta_description()
         }
 }
 add_action('wp_head', 'chroma_shared_meta_description', 2);
+
+/**
+ * Meta Keywords Output
+ */
+function chroma_meta_keywords()
+{
+        // 1. Manual Override
+        $post_id = get_the_ID();
+        $manual_keywords = $post_id ? get_post_meta($post_id, 'meta_keywords', true) : '';
+
+        if (!empty($manual_keywords)) {
+                echo '<meta name="keywords" content="' . esc_attr(wp_strip_all_tags($manual_keywords)) . '" />' . "\n";
+                return;
+        }
+
+        // 2. Dynamic Templates
+        $keywords = array();
+
+        if (is_singular('location')) {
+                $city = get_post_meta($post_id, 'location_city', true);
+                $service_areas = get_post_meta($post_id, 'location_service_areas', true);
+
+                $keywords[] = get_the_title();
+                if ($city) {
+                        $keywords[] = "child care $city";
+                        $keywords[] = "daycare $city";
+                        $keywords[] = "preschool $city";
+                }
+                if ($service_areas) {
+                        $keywords[] = $service_areas;
+                }
+
+        } elseif (is_singular('program')) {
+                $keywords[] = get_the_title();
+                $keywords[] = 'early childhood education';
+                $keywords[] = 'curriculum';
+                $keywords[] = 'child development';
+
+        } else {
+                // Global defaults
+                $keywords[] = 'child care';
+                $keywords[] = 'daycare';
+                $keywords[] = 'preschool';
+                $keywords[] = 'early learning';
+                $keywords[] = 'Atlanta';
+        }
+
+        if (!empty($keywords)) {
+                echo '<meta name="keywords" content="' . esc_attr(implode(', ', $keywords)) . '" />' . "\n";
+        }
+}
+add_action('wp_head', 'chroma_meta_keywords', 3);
 
 /**
  * Custom Sitemap.xml
