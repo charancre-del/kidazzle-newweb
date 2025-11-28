@@ -24,7 +24,6 @@ function chroma_should_load_maps()
         return $should_load_maps;
 }
 
-
 /**
  * Enqueue theme styles and scripts
  */
@@ -46,6 +45,25 @@ function chroma_enqueue_assets()
                 array(),
                 '6.4.0',
                 'print' // Load as print initially for async
+        );
+
+        // Compiled Tailwind CSS.
+        $css_path = CHROMA_THEME_DIR . '/assets/css/main.css';
+        $css_version = file_exists($css_path) ? filemtime($css_path) : CHROMA_VERSION;
+
+        wp_enqueue_style(
+                'chroma-main',
+                CHROMA_THEME_URI . '/assets/css/main.css',
+                array(),
+                $css_version,
+                'all'
+        );
+
+        // Chart.js for curriculum radar (homepage and program pages).
+        $script_dependencies = array();
+
+        if (is_front_page() || is_singular('program') || is_post_type_archive('program')) {
+                wp_enqueue_script(
                         'chartjs',
                         'https://cdn.jsdelivr.net/npm/chart.js',
                         array(),
