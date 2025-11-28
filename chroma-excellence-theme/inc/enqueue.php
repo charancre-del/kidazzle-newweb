@@ -29,6 +29,8 @@ function chroma_should_load_maps()
  */
 function chroma_enqueue_assets()
 {
+        $script_dependencies = array();
+
         // Self-Hosted Fonts (Outfit, Playfair Display).
         $fonts_path = CHROMA_THEME_DIR . '/assets/css/fonts.css';
         $fonts_version = file_exists($fonts_path) ? filemtime($fonts_path) : CHROMA_VERSION;
@@ -125,7 +127,8 @@ function chroma_enqueue_assets()
                 true
         );
 
-        wp_script_add_data('chroma-main', 'defer', true);
+        // Defer removed to prevent race conditions with inline scripts and dependencies
+        // wp_script_add_data('chroma-main', 'defer', true);
 
         // Map Facade (Lazy Load Leaflet).
         $should_load_maps = chroma_should_load_maps();

@@ -82,21 +82,6 @@
 					?>
 					<?php if ($footer_phone): ?>
 						<p><a href="tel:<?php echo esc_attr($footer_phone); ?>"
-								class="hover:text-white"><?php echo esc_html($footer_phone); ?></a></p>
-					<?php endif; ?>
-					<?php if ($footer_email): ?>
-						<p><a href="mailto:<?php echo esc_attr($footer_email); ?>"
-								class="hover:text-white"><?php echo esc_html($footer_email); ?></a></p>
-					<?php endif; ?>
-					<?php if ($footer_address): ?>
-						<p class="mt-2"><?php echo esc_html($footer_address); ?></p>
-					<?php endif; ?>
-				</div>
-			</div>
-
-			<!-- Bottom Section -->
-			<div
-				class="border-t border-white/10 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-[11px] text-white/60">
 				<p>&copy; <?php echo date('Y'); ?> Chroma Early Learning Academy. All rights reserved.</p>
 				<div class="flex gap-4">
 					<a href="<?php echo esc_url(home_url('/privacy-policy')); ?>"

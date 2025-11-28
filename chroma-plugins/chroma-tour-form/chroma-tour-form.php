@@ -44,31 +44,31 @@ function chroma_tour_form_shortcode()
 
                 <div class="grid md:grid-cols-2 gap-4">
                         <div>
-                                <label class="block text-xs font-semibold text-brand-ink/60 uppercase mb-1.5"
+                                <label class="block text-xs font-bold text-brand-ink uppercase mb-1.5"
                                         for="tour_parent_name">Parent Name *</label>
                                 <input type="text" id="tour_parent_name" name="parent_name" required aria-label="Parent Name"
-                                        class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none" />
+                                        class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink" />
                         </div>
                         <div>
-                                <label class="block text-xs font-semibold text-brand-ink/60 uppercase mb-1.5"
-                                        for="tour_phone">Phone *</label>
+                                <label class="block text-xs font-bold text-brand-ink uppercase mb-1.5" for="tour_phone">Phone
+                                        *</label>
                                 <input type="tel" id="tour_phone" name="phone" required aria-label="Phone Number"
-                                        class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none" />
+                                        class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink" />
                         </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-4">
                         <div>
-                                <label class="block text-xs font-semibold text-brand-ink/60 uppercase mb-1.5"
-                                        for="tour_email">Email *</label>
+                                <label class="block text-xs font-bold text-brand-ink uppercase mb-1.5" for="tour_email">Email
+                                        *</label>
                                 <input type="email" id="tour_email" name="email" required aria-label="Email Address"
-                                        class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none" />
+                                        class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink" />
                         </div>
                         <div>
-                                <label class="block text-xs font-semibold text-brand-ink/60 uppercase mb-1.5"
+                                <label class="block text-xs font-bold text-brand-ink uppercase mb-1.5"
                                         for="tour_location">Preferred Location</label>
                                 <select id="tour_location" name="location_id" aria-label="Preferred Location"
-                                        class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none">
+                                        class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink">
                                         <option value="">Select a location...</option>
                                         <?php
                                         $locations = get_posts(array('post_type' => 'location', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC'));
@@ -85,10 +85,10 @@ function chroma_tour_form_shortcode()
                 </div>
 
                 <div>
-                        <label class="block text-xs font-semibold text-brand-ink/60 uppercase mb-1.5"
-                                for="tour_child_ages">Child(ren) Age(s)</label>
+                        <label class="block text-xs font-bold text-brand-ink uppercase mb-1.5" for="tour_child_ages">Child(ren)
+                                Age(s)</label>
                         <input type="text" id="tour_child_ages" name="child_ages" aria-label="Child Ages"
-                                class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none"
+                                class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink"
                                 placeholder="e.g., 10 months, 3 years" />
                 </div>
 

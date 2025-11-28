@@ -102,7 +102,7 @@ while (have_posts()):
 						<?php echo esc_html($tagline); ?>
 					</p>
 
-					<p class="text-lg text-brand-ink/70 mb-8 max-w-xl leading-relaxed">
+					<p class="text-lg text-brand-ink/80 mb-8 max-w-xl leading-relaxed">
 						<?php echo esc_html($description); ?>
 					</p>
 
@@ -139,7 +139,7 @@ while (have_posts()):
 							<div class="text-2xl font-serif font-bold text-chroma-green mb-1">
 								<?php echo esc_html($hours); ?>
 							</div>
-							<div class="text-[10px] uppercase tracking-wider text-brand-ink/50 font-semibold">Mon - Fri
+							<div class="text-[10px] uppercase tracking-wider text-brand-ink/70 font-semibold">Mon - Fri
 							</div>
 						</div>
 					</div>
@@ -235,7 +235,7 @@ while (have_posts()):
 					<span class="text-chroma-blue font-bold tracking-[0.2em] text-xs uppercase mb-3 block">Campus
 						Features</span>
 					<h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-ink mb-4">Designed for discovery.</h2>
-					<p class="text-brand-ink/60">Every corner of our <?php echo esc_html($city); ?> campus is
+					<p class="text-brand-ink/80">Every corner of our <?php echo esc_html($city); ?> campus is
 						intentional—from the soft lighting in our infant suites to the collaborative stations in our Pre-K
 						classrooms.</p>
 				</div>
@@ -249,7 +249,7 @@ while (have_posts()):
 							<i class="fa-solid fa-shield-halved"></i>
 						</div>
 						<h3 class="font-serif text-xl font-bold text-brand-ink mb-3">Secure Access</h3>
-						<p class="text-sm text-brand-ink/70 leading-relaxed">Keypad entry, 24/7 video monitoring, and a
+						<p class="text-sm text-brand-ink/80 leading-relaxed">Keypad entry, 24/7 video monitoring, and a
 							staffed front desk ensure your child is always safe.</p>
 					</div>
 
@@ -421,7 +421,7 @@ while (have_posts()):
 										class="text-2xl group-hover:scale-110 transition-transform"><?php echo esc_html(mb_substr($icon, 0, 2)); ?></span>
 								</div>
 								<h3 class="font-serif text-xl font-bold text-brand-ink mb-2"><?php the_title(); ?></h3>
-								<p class="text-sm text-brand-ink/60 mb-6"><?php echo esc_html($excerpt); ?></p>
+								<p class="text-sm text-brand-ink/80 mb-6"><?php echo esc_html($excerpt); ?></p>
 								<a href="<?php the_permalink(); ?>"
 									class="text-xs font-bold text-<?php echo esc_attr($colors['text']); ?> uppercase tracking-wider hover:underline">
 									Learn More <i class="fa-solid fa-arrow-right text-[10px]"></i>
@@ -443,7 +443,7 @@ while (have_posts()):
 					<span class="text-chroma-green font-bold tracking-[0.2em] text-xs uppercase mb-3 block">Visit Us</span>
 					<h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-ink mb-6">Come see the magic in person.
 					</h2>
-					<p class="text-brand-ink/70 mb-8">
+					<p class="text-brand-ink/80 mb-8">
 						Tours are the best way to feel the Chroma difference.
 						<?php
 						// Parse opening and closing times from hours field
@@ -577,7 +577,7 @@ while (have_posts()):
 				<div id="tour"
 					class="bg-brand-cream p-8 md:p-10 rounded-[2.5rem] shadow-soft border border-chroma-blue/10 h-fit sticky top-28">
 					<h3 class="font-serif text-2xl font-bold text-brand-ink mb-2">Request a Tour</h3>
-					<p class="text-sm text-brand-ink/60 mb-6">Fill out the form below and we'll contact you to confirm a
+					<p class="text-sm text-brand-ink/80 mb-6">Fill out the form below and we'll contact you to confirm a
 						time.</p>
 
 					<?php echo do_shortcode('[chroma_tour_form location_id="' . $location_id . '"]'); ?>
