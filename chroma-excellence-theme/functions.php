@@ -69,6 +69,8 @@ require_once CHROMA_THEME_DIR . '/inc/monthly-seo-cron.php';
 
 
 require_once CHROMA_THEME_DIR . '/inc/security.php';
+require_once CHROMA_THEME_DIR . '/inc/critical-css.php';
+
 
 /**
  * Performance Optimizations - Phase 1 (Safe Mode)
@@ -128,4 +130,15 @@ function chroma_inject_dimensions($html, $attachment_id)
 
     return $html;
 }
+
+/**
+ * Allow WebP uploads
+ */
+function chroma_mime_types($mimes)
+{
+    $mimes['webp'] = 'image/webp';
+    return $mimes;
+}
+add_filter('upload_mimes', 'chroma_mime_types');
+
 

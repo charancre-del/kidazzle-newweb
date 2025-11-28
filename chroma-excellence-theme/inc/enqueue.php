@@ -1,29 +1,12 @@
 <?php
 /**
- * Enqueue Scripts and Styles
+ * Enqueue scripts and styles.
  *
  * @package Chroma_Excellence
- * @since 1.0.0
  */
 
-// Exit if accessed directly
 if (!defined('ABSPATH')) {
-        exit;
-}
-
-/**
- * Determine whether map assets should be enqueued.
- */
-function chroma_should_load_maps()
-{
-        $should_load_maps = is_post_type_archive('location') || is_singular('location') || is_page('locations');
-
-        if (is_front_page() && function_exists('chroma_home_locations_preview')) {
-                $locations_preview = chroma_home_locations_preview();
-                $should_load_maps = $should_load_maps || (!empty($locations_preview['map_points']));
-        }
-
-        return $should_load_maps;
+        exit; // Exit if accessed directly.
 }
 
 /**
@@ -53,11 +36,18 @@ function chroma_enqueue_assets()
         $css_path = CHROMA_THEME_DIR . '/assets/css/main.css';
         $css_version = file_exists($css_path) ? filemtime($css_path) : CHROMA_VERSION;
 
+        // If front page, we inline critical CSS, so defer the full file (or skip if fully inlined)
+        // Since we are inlining the *entire* file for the homepage (it's < 50KB), we can skip enqueuing it normally
+        // OR load it with low priority to cache it for other pages.
+
+        $media_type = is_front_page() ? 'print' : 'all';
+
         wp_enqueue_style(
                 'chroma-main',
                 CHROMA_THEME_URI . '/assets/css/main.css',
                 array(),
-                $css_version
+                $css_version,
+                $media_type
         );
 
         // Chart.js for curriculum radar (homepage and program pages).
@@ -222,7 +212,7 @@ add_action('admin_enqueue_scripts', 'chroma_enqueue_admin_assets');
  */
 function chroma_async_styles($html, $handle, $href, $media)
 {
-        if ('font-awesome' === $handle || 'chroma-fonts' === $handle) {
+        if ('font-awesome' === $handle || 'chroma-fonts' === $handle || ('chroma-main' === $handle && is_front_page())) {
                 $html = str_replace("media='print'", "media='print' onload=\"this.media='all'\"", $html);
                 // Add fallback for no-js
                 $html .= "<noscript><link rel='stylesheet' href='{$href}' media='all'></noscript>";
@@ -230,4 +220,3 @@ function chroma_async_styles($html, $handle, $href, $media)
         return $html;
 }
 add_filter('style_loader_tag', 'chroma_async_styles', 10, 4);
-
