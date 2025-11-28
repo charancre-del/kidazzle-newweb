@@ -143,41 +143,44 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     if (window.Chart) {
-      chartInstance = new Chart(curriculumChartEl.getContext('2d'), {
-        type: 'radar',
-        data: {
-          labels,
-          datasets: [
-            {
-              label: 'Focus',
-              data: (defaultProfile && defaultProfile.data) || [],
-              borderColor: defaultProfile?.color || '#4A6C7C',
-              backgroundColor: `${defaultProfile?.color || '#4A6C7C'}33`,
-              borderWidth: 2,
-              pointBackgroundColor: '#ffffff',
-              pointBorderColor: defaultProfile?.color || '#4A6C7C',
-              pointRadius: 4,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            r: {
-              angleLines: { color: '#e5e7eb' },
-              grid: { color: '#e5e7eb' },
-              suggestedMin: 0,
-              suggestedMax: 100,
-              ticks: { display: false },
-              pointLabels: {
-                font: { family: 'Outfit, system-ui, sans-serif', size: 12 },
-                color: '#263238',
+      // Use requestAnimationFrame to prevent forced reflow during chart initialization
+      requestAnimationFrame(() => {
+        chartInstance = new Chart(curriculumChartEl.getContext('2d'), {
+          type: 'radar',
+          data: {
+            labels,
+            datasets: [
+              {
+                label: 'Focus',
+                data: (defaultProfile && defaultProfile.data) || [],
+                borderColor: defaultProfile?.color || '#4A6C7C',
+                backgroundColor: `${defaultProfile?.color || '#4A6C7C'}33`,
+                borderWidth: 2,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: defaultProfile?.color || '#4A6C7C',
+                pointRadius: 4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              r: {
+                angleLines: { color: '#e5e7eb' },
+                grid: { color: '#e5e7eb' },
+                suggestedMin: 0,
+                suggestedMax: 100,
+                ticks: { display: false },
+                pointLabels: {
+                  font: { family: 'Outfit, system-ui, sans-serif', size: 12 },
+                  color: '#263238',
+                },
               },
             },
           },
-        },
+        });
       });
     }
 
