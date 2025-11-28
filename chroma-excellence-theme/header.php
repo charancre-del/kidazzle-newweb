@@ -4,9 +4,6 @@
 <head>
 	<meta charset="<?php bloginfo('charset'); ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-		integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<?php wp_head(); ?>
 </head>
 
@@ -23,10 +20,19 @@
 		<div class="max-w-7xl mx-auto px-4 lg:px-6 h-[82px] flex items-center justify-between">
 			<!-- Logo -->
 			<a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-3 group">
-				<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/chroma-logo.png'); ?>"
-					srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/chroma-logo.png'); ?> 1x,
-						 <?php echo esc_url(get_template_directory_uri() . '/assets/images/chroma-logo-highres.png'); ?> 2x"
-					alt="Chroma Early Learning" width="1994" height="1981" class="h-12 w-auto" />
+				<?php
+				$custom_logo_id = get_theme_mod('custom_logo');
+				if ($custom_logo_id) {
+					echo wp_get_attachment_image($custom_logo_id, 'full', false, array('class' => 'h-12 w-auto'));
+				} else {
+					?>
+					<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/chroma-logo.png'); ?>"
+						srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/chroma-logo.png'); ?> 1x,
+							 <?php echo esc_url(get_template_directory_uri() . '/assets/images/chroma-logo-highres.png'); ?> 2x"
+						alt="Chroma Early Learning" width="1994" height="1981" class="h-12 w-auto" />
+					<?php
+				}
+				?>
 				<?php
 				// Parse header text lines
 				$header_text = get_theme_mod('chroma_header_text', "Early Learning\nAcademy");

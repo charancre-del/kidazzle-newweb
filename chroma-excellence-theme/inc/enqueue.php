@@ -38,12 +38,14 @@ function chroma_enqueue_assets()
                 'print' // Load as print initially for async
         );
 
-        // Font Awesome.
+        // Font Awesome (Local).
+        $fa_path = CHROMA_THEME_DIR . '/assets/css/font-awesome.css';
+        $fa_version = file_exists($fa_path) ? filemtime($fa_path) : '6.4.0';
         wp_enqueue_style(
                 'font-awesome',
-                'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+                CHROMA_THEME_URI . '/assets/css/font-awesome.css',
                 array(),
-                '6.4.0',
+                $fa_version,
                 'print' // Load as print initially for async
         );
 
@@ -93,36 +95,18 @@ function chroma_enqueue_assets()
 
         wp_script_add_data('chroma-main', 'defer', true);
 
-        // Leaflet for maps (location archive, single locations, locations page, or home locations preview).
+        // Map Facade (Lazy Load Leaflet).
         $should_load_maps = chroma_should_load_maps();
 
         if ($should_load_maps) {
-                wp_enqueue_style(
-                        'leaflet',
-                        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-                        array(),
-                        '1.9.4'
-                );
-
                 wp_enqueue_script(
-                        'leaflet',
-                        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
-                        array(),
-                        '1.9.4',
-                        true
-                );
-
-                wp_script_add_data('leaflet', 'defer', true);
-
-                wp_enqueue_script(
-                        'chroma-map-layer',
-                        CHROMA_THEME_URI . '/assets/js/map-layer.js',
-                        array('leaflet'),
+                        'chroma-map-facade',
+                        CHROMA_THEME_URI . '/assets/js/map-facade.js',
+                        array('chroma-main'), // Depend on main to ensure chromaData is available
                         $js_version,
                         true
                 );
-
-                wp_script_add_data('chroma-map-layer', 'defer', true);
+                wp_script_add_data('chroma-map-facade', 'defer', true);
         }
 
         // Localize script for AJAX and dynamic data.

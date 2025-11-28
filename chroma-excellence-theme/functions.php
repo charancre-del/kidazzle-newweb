@@ -165,3 +165,21 @@ function chroma_mime_types($mimes)
 add_filter('upload_mimes', 'chroma_mime_types');
 
 
+
+/**
+ * Defer non-critical third-party scripts.
+ */
+function chroma_defer_scripts($tag, $handle, $src)
+{
+    // List of scripts to defer
+    $defer_scripts = array('gtag', 'did-0014');
+
+    foreach ($defer_scripts as $script) {
+        if (strpos($src, $script) !== false) {
+            return str_replace(' src', ' defer src', $tag);
+        }
+    }
+
+    return $tag;
+}
+add_filter('script_loader_tag', 'chroma_defer_scripts', 10, 3);
