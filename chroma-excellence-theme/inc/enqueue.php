@@ -36,7 +36,8 @@ function chroma_enqueue_assets()
                 'chroma-fonts',
                 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap',
                 array(),
-                null
+                null,
+                'print' // Load as print initially for async
         );
 
         // Font Awesome.
@@ -44,7 +45,8 @@ function chroma_enqueue_assets()
                 'font-awesome',
                 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
                 array(),
-                '6.4.0'
+                '6.4.0',
+                'print' // Load as print initially for async
         );
 
         // Compiled Tailwind CSS.
@@ -214,3 +216,18 @@ function chroma_enqueue_admin_assets($hook)
         );
 }
 add_action('admin_enqueue_scripts', 'chroma_enqueue_admin_assets');
+
+/**
+ * Async load CSS for fonts to prevent render blocking
+ */
+function chroma_async_styles($html, $handle, $href, $media)
+{
+        if ('font-awesome' === $handle || 'chroma-fonts' === $handle) {
+                $html = str_replace("media='print'", "media='print' onload=\"this.media='all'\"", $html);
+                // Add fallback for no-js
+                $html .= "<noscript><link rel='stylesheet' href='{$href}' media='all'></noscript>";
+        }
+        return $html;
+}
+add_filter('style_loader_tag', 'chroma_async_styles', 10, 4);
+
