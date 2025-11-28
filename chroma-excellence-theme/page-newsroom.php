@@ -135,7 +135,7 @@ $newsroom_query = new WP_Query($newsroom_args);
 
     <section class="py-16 bg-brand-ink text-white text-center">
       <div class="max-w-2xl mx-auto px-4">
-        <h3 class="font-serif text-2xl font-bold mb-4">Media Inquiries</h3>
+        <h2 class="font-serif text-2xl font-bold mb-4">Media Inquiries</h2>
         <p class="text-white/60 mb-8">For interviews, high-res assets, or filming requests.</p>
         <?php
         $contact_page = get_page_by_path('contact');

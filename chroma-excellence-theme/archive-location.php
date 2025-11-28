@@ -55,7 +55,7 @@ function chroma_get_region_color_from_term($term_id)
 
 			<h1 class="font-serif text-[2.8rem] md:text-6xl text-brand-ink mb-6 fade-in-up"
 				style="animation-delay: 0.1s;">
-				Find your Chroma <span class="text-chroma-green italic">community.</span>
+				Find your Chroma <span class="text-chroma-green italic">Community</span> - Our Locations
 			</h1>
 
 			<p class="text-lg text-brand-ink/60 max-w-2xl mx-auto mb-10 fade-in-up" style="animation-delay: 0.2s;">
@@ -178,10 +178,10 @@ function chroma_get_region_color_from_term($term_id)
 									<?php endif; ?>
 								</div>
 
-								<h3
+								<h2
 									class="font-serif text-2xl font-bold text-brand-ink mb-2 group-hover:text-<?php echo esc_attr($colors['text']); ?> transition-colors">
 									<?php echo esc_html($location_name); ?>
-								</h3>
+								</h2>
 
 								<p class="text-sm text-brand-ink/60 mb-4 flex-grow">
 									<?php echo esc_html($address); ?><br>

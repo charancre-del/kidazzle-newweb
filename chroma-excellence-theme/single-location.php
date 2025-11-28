@@ -95,18 +95,12 @@ while (have_posts()):
 						<?php echo esc_html($hero_subtitle); ?>
 					</div>
 
-					<h1 class="font-serif text-[2.8rem] sm:text-[3.5rem] leading-none text-brand-ink mb-6">
-						<?php
-						$parts = explode(' ', $tagline);
-						if (count($parts) > 3) {
-							$last_words = array_slice($parts, -2);
-							$first_words = array_slice($parts, 0, count($parts) - 2);
-							echo esc_html(implode(' ', $first_words)) . ' <span class="italic text-chroma-blue">' . esc_html(implode(' ', $last_words)) . '</span>';
-						} else {
-							echo esc_html($tagline);
-						}
-						?>
+					<h1 class="font-serif text-[2.8rem] sm:text-[3.5rem] leading-none text-brand-ink mb-4">
+						<?php echo esc_html($location_name); ?>
 					</h1>
+					<p class="font-serif text-2xl italic text-chroma-blue mb-6">
+						<?php echo esc_html($tagline); ?>
+					</p>
 
 					<p class="text-lg text-brand-ink/70 mb-8 max-w-xl leading-relaxed">
 						<?php echo esc_html($description); ?>
@@ -475,7 +469,7 @@ while (have_posts()):
 									<i class="fa-solid fa-location-dot"></i>
 								</div>
 								<div>
-									<h4 class="font-bold text-brand-ink">Address</h4>
+									<h3 class="font-bold text-brand-ink">Address</h3>
 									<p class="text-sm text-brand-ink/70">
 										<?php echo esc_html($address); ?><br>
 										<?php echo esc_html("$city, $state $zip"); ?>
@@ -497,7 +491,7 @@ while (have_posts()):
 									<i class="fa-solid fa-phone"></i>
 								</div>
 								<div>
-									<h4 class="font-bold text-brand-ink">Contact</h4>
+									<h3 class="font-bold text-brand-ink">Contact</h3>
 									<p class="text-sm text-brand-ink/70">
 										<?php if ($phone): ?>
 											Phone: <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>"
@@ -518,7 +512,7 @@ while (have_posts()):
 								<i class="fa-solid fa-clock"></i>
 							</div>
 							<div>
-								<h4 class="font-bold text-brand-ink">Hours of Operation</h4>
+								<h3 class="font-bold text-brand-ink">Hours of Operation</h3>
 								<p class="text-sm text-brand-ink/70">
 									Monday - Friday: <?php echo esc_html($hours); ?><br>
 									Weekends: Closed
@@ -536,7 +530,7 @@ while (have_posts()):
 										<i class="fa-solid fa-bus"></i>
 									</div>
 									<div>
-										<h4 class="font-bold text-brand-ink">School Pickups</h4>
+										<h3 class="font-bold text-brand-ink">School Pickups</h3>
 										<p class="text-sm text-brand-ink/70">We provide pickup service to:</p>
 										<ul class="text-sm text-brand-ink/70 mt-2 space-y-1">
 											<?php foreach ($schools as $school): ?>
