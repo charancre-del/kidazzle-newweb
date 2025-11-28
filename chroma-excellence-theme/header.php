@@ -88,51 +88,35 @@
 			<!-- Mobile Menu Button -->
 			<button data-mobile-nav-toggle class="md:hidden text-2xl text-brand-ink" aria-label="Open menu">☰</button>
 		</div>
+		$mobile_first_is_placeholder = empty($mobile_all_lines[0]) || $mobile_all_lines[0] === '\\';
 
-		<!-- Mobile Menu -->
-		<div data-mobile-nav
-			class="fixed inset-0 bg-white z-50 translate-x-full transition-transform duration-300 md:hidden flex flex-col">
-			<div class="flex items-center justify-between px-5 py-5 border-b border-chroma-blue/10">
-				<div class="flex items-center gap-2">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/chroma-logo.png'); ?>"
-						srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/chroma-logo.png'); ?> 1x,
-							 <?php echo esc_url(get_template_directory_uri() . '/assets/images/chroma-logo-highres.png'); ?> 2x"
-						alt="Chroma Early Learning" class="h-10 w-auto" />
-					<?php
-					// Parse header text for mobile menu
-					$mobile_header_text = get_theme_mod('chroma_header_text', "Early Learning\nAcademy");
-					$mobile_all_lines = array_map('trim', explode("\n", $mobile_header_text));
+		// Remove backslash placeholders
+		$mobile_all_lines = array_filter($mobile_all_lines, function ($line) {
+		return $line !== '\\';
+		});
+		$mobile_all_lines = array_values($mobile_all_lines);
 
-					// Check if first line is backslash or empty BEFORE filtering
-					$mobile_first_is_placeholder = empty($mobile_all_lines[0]) || $mobile_all_lines[0] === '\\';
-
-					// Remove backslash placeholders
-					$mobile_all_lines = array_filter($mobile_all_lines, function ($line) {
-						return $line !== '\\';
-					});
-					$mobile_all_lines = array_values($mobile_all_lines);
-
-					if ($mobile_first_is_placeholder) {
-						// First line was placeholder, use second line or 'Menu'
-						$mobile_non_empty = array_filter($mobile_all_lines);
-						$mobile_line1 = !empty($mobile_non_empty) ? reset($mobile_non_empty) : 'Menu';
-					} else {
-						// Use first line
-						$mobile_line1 = $mobile_all_lines[0];
-					}
-					?>
-					<span class="font-serif text-lg font-bold text-brand-ink"><?php echo esc_html($mobile_line1); ?>
-						Menu</span>
-				</div>
-				<button data-mobile-nav-toggle class="text-3xl text-brand-ink" aria-label="Close menu">×</button>
-			</div>
-			<nav class="flex-1 px-6 py-6 text-lg font-semibold text-brand-ink space-y-6">
-				<?php chroma_primary_nav(); ?>
-				<a href="<?php echo esc_url(home_url('/contact#tour')); ?>"
-					class="block bg-brand-ink text-white text-center py-3 rounded-2xl shadow-soft hover:bg-chroma-blueDark transition mt-4">
-					Book A Tour
-				</a>
-			</nav>
+		if ($mobile_first_is_placeholder) {
+		// First line was placeholder, use second line or 'Menu'
+		$mobile_non_empty = array_filter($mobile_all_lines);
+		$mobile_line1 = !empty($mobile_non_empty) ? reset($mobile_non_empty) : 'Menu';
+		} else {
+		// Use first line
+		$mobile_line1 = $mobile_all_lines[0];
+		}
+		?>
+		<span class="font-serif text-lg font-bold text-brand-ink"><?php echo esc_html($mobile_line1); ?>
+			Menu</span>
+		</div>
+		<button data-mobile-nav-toggle class="text-3xl text-brand-ink" aria-label="Close menu">×</button>
+		</div>
+		<nav class="flex-1 px-6 py-6 text-lg font-semibold text-brand-ink space-y-6">
+			<?php chroma_primary_nav(); ?>
+			<a href="<?php echo esc_url(home_url('/contact#tour')); ?>"
+				class="block bg-brand-ink text-white text-center py-3 rounded-2xl shadow-soft hover:bg-chroma-blueDark transition mt-4">
+				Book A Tour
+			</a>
+		</nav>
 		</div>
 	</header>
 
