@@ -42,6 +42,19 @@ function chroma_enqueue_assets()
 
         // Font Awesome (Local).
         $fa_path = CHROMA_THEME_DIR . '/assets/css/font-awesome.css';
+        $fa_version = file_exists($fa_path) ? filemtime($fa_path) : '6.4.0';
+        wp_enqueue_style(
+                'font-awesome',
+                CHROMA_THEME_URI . '/assets/css/font-awesome.css',
+                array(),
+                $fa_version,
+                'all' // Load synchronously to ensure icons appear
+        );
+
+        if (is_front_page() || is_singular('program')) {
+                $chart_js_path = CHROMA_THEME_DIR . '/assets/js/chart.min.js';
+                $chart_js_version = file_exists($chart_js_path) ? filemtime($chart_js_path) : '4.4.1';
+
                 wp_enqueue_script(
                         'chartjs',
                         CHROMA_THEME_URI . '/assets/js/chart.min.js',
@@ -53,6 +66,52 @@ function chroma_enqueue_assets()
                 wp_script_add_data('chartjs', 'defer', true);
                 $script_dependencies[] = 'chartjs';
         }
+
+        // Compiled Tailwind CSS.
+        $css_path = CHROMA_THEME_DIR . '/assets/css/main.css';
+        $css_version = file_exists($css_path) ? filemtime($css_path) : CHROMA_VERSION;
+
+        // Compiled Tailwind CSS - loads synchronously
+        wp_enqueue_style(
+                'chroma-main',
+                CHROMA_THEME_URI . '/assets/css/main.css',
+                array(),
+                $css_version,
+                'all' // Load normally to prevent FOUC
+        );
+
+        // CRITICAL ACCESSIBILITY FIXES (Injected Inline to bypass cache/build)
+        $custom_css = "
+                /* Darkened Brand Colors for WCAG AA Compliance */
+                .text-chroma-red { color: #A84B38 !important; }
+                .bg-chroma-red { background-color: #A84B38 !important; }
+                .text-chroma-orange { color: #C26524 !important; }
+                .bg-chroma-orange { background-color: #C26524 !important; }
+                .text-chroma-green { color: #5E7066 !important; }
+                .bg-chroma-green { background-color: #5E7066 !important; }
+                .text-chroma-yellow { color: #9C7835 !important; }
+                .bg-chroma-yellow { background-color: #9C7835 !important; }
+                
+                /* Footer Social Links - Touch Target Fix (48px) */
+                footer .flex.gap-3 a {
+                        width: 48px !important;
+                        height: 48px !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                }
+                footer .flex.gap-3 a i {
+                        font-size: 1.25rem !important; /* Increase icon size */
+                }
+                
+                /* Form Labels - Ensure visibility if hidden */
+                .chroma-tour-form label {
+                        display: block !important;
+                        color: #263238 !important; /* Brand Ink */
+                        opacity: 1 !important;
+                }
+        ";
+        wp_add_inline_style('chroma-main', $custom_css);
 
         // Main JavaScript.
         $js_path = CHROMA_THEME_DIR . '/assets/js/main.js';
