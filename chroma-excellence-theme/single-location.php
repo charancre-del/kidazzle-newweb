@@ -150,7 +150,7 @@ while (have_posts()):
 					<div
 						class="absolute inset-0 bg-chroma-blue/10 rounded-[3rem] rotate-6 transform translate-x-4 translate-y-4">
 					</div>
-					<div class="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white aspect-[4/3] md:aspect-[4/3] aspect-square"
+					<div class="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white aspect-square md:aspect-[4/3]"
 						<?php if (count($hero_gallery) > 1)
 							echo 'data-location-carousel'; ?>>
 						<?php if (!empty($hero_gallery)): ?>

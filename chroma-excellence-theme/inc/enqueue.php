@@ -56,7 +56,7 @@ function chroma_enqueue_assets()
                 'all' // Load synchronously to ensure icons appear
         );
 
-        if (is_front_page() || is_singular('program')) {
+        if (is_front_page()) {
                 $chart_js_path = CHROMA_THEME_DIR . '/assets/js/chart.min.js';
                 $chart_js_version = file_exists($chart_js_path) ? filemtime($chart_js_path) : '4.4.1';
 

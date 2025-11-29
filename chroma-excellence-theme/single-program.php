@@ -217,34 +217,46 @@ while (have_posts()):
 	</style>
 
 	<script>
-		// Prismpath Chart Config
+		// Prismpath Chart Config - Lazy Loaded
 		document.addEventListener('DOMContentLoaded', function () {
 			const ctx = document.getElementById('programChart');
 			if (ctx) {
-				new Chart(ctx, {
-					type: 'radar',
-					data: {
-						labels: ['Physical', 'Emotional', 'Social', 'Academic', 'Creative'],
-						datasets: [{
-							label: '<?php echo esc_js(get_the_title()); ?> Focus',
-							data: [
-								<?php echo absint($prism_physical); ?>,
-								<?php echo absint($prism_emotional); ?>,
-								<?php echo absint($prism_social); ?>,
-								<?php echo absint($prism_academic); ?>,
-								<?php echo absint($prism_creative); ?>
-							],
-							backgroundColor: 'rgba(214, 125, 107, 0.2)',
-							borderColor: '<?php
-							$chart_colors = array(
-								'red' => '#D67D6B',
-								'blue' => '#4A6C7C',
-								'yellow' => '#E6BE75',
-								'blueDark' => '#2F4858',
-								'green' => '#8DA399',
-							);
-							echo $chart_colors[$color_scheme] ?? '#D67D6B';
-							?>',
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							// Disconnect observer immediately
+							observer.disconnect();
+
+							// Dynamically load Chart.js library
+							const script = document.createElement('script');
+							script.src = '<?php echo esc_url(get_template_directory_uri() . '/assets/js/chart.min.js'); ?>';
+							script.async = true;
+							script.onload = function () {
+								// Initialize Chart after library loads
+								new Chart(ctx, {
+									type: 'radar',
+									data: {
+										labels: ['Physical', 'Emotional', 'Social', 'Academic', 'Creative'],
+										datasets: [{
+											label: '<?php echo esc_js(get_the_title()); ?> Focus',
+											data: [
+												<?php echo absint($prism_physical); ?>,
+												<?php echo absint($prism_emotional); ?>,
+												<?php echo absint($prism_social); ?>,
+												<?php echo absint($prism_academic); ?>,
+												<?php echo absint($prism_creative); ?>
+											],
+											backgroundColor: 'rgba(214, 125, 107, 0.2)',
+											borderColor: '<?php
+											$chart_colors = array(
+												'red' => '#D67D6B',
+												'blue' => '#4A6C7C',
+												'yellow' => '#E6BE75',
+												'blueDark' => '#2F4858',
+												'green' => '#8DA399',
+											);
+											echo $chart_colors[$color_scheme] ?? '#D67D6B';
+											?>',
 				pointBackgroundColor: '#fff',
 					pointBorderColor: '<?php echo $chart_colors[$color_scheme] ?? '#D67D6B'; ?>',
 						borderWidth: 2
@@ -263,9 +275,15 @@ while (have_posts()):
 			},
 			plugins: { legend: { display: false } }
 		}
-				});
-			}
-		});
+									});
+								};
+		document.body.appendChild(script);
+							}
+						});
+					}, { rootMargin: '200px' }); // Start loading 200px before view
+		observer.observe(ctx);
+				}
+			});
 	</script>
 
 	<?php
