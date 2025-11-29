@@ -172,16 +172,20 @@ add_filter('upload_mimes', 'chroma_mime_types');
 /**
  * Move jQuery to footer for better performance
  * This prevents jQuery from blocking initial render
+ * Priority 999 ensures this runs AFTER all plugins
  */
 function chroma_move_jquery_to_footer()
 {
     if (!is_admin()) {
         wp_deregister_script('jquery');
+        wp_deregister_script('jquery-core');
+        wp_deregister_script('jquery-migrate');
+
         wp_register_script('jquery', includes_url('/js/jquery/jquery.min.js'), [], null, true);
         wp_enqueue_script('jquery');
     }
 }
-add_action('wp_enqueue_scripts', 'chroma_move_jquery_to_footer');
+add_action('wp_enqueue_scripts', 'chroma_move_jquery_to_footer', 999);
 
 /**
  * Defer non-critical third-party scripts.
@@ -261,6 +265,27 @@ function chroma_add_meta_description()
     }
 }
 add_action('wp_head', 'chroma_add_meta_description', 1);
+
+/**
+ * Dequeue LeadConnector Plugin Scripts
+ * The plugin loads scripts immediately, blocking render
+ * We dequeue them and load manually with lazy-loading below
+ */
+function chroma_dequeue_leadconnector_plugin()
+{
+    // Dequeue all LeadConnector plugin scripts
+    wp_dequeue_script('leadconnector-widget');
+    wp_deregister_script('leadconnector-widget');
+    wp_dequeue_script('leadconnector');
+    wp_deregister_script('leadconnector');
+    wp_dequeue_script('lc-widget');
+    wp_deregister_script('lc-widget');
+
+    // Also dequeue any styles
+    wp_dequeue_style('leadconnector');
+    wp_deregister_style('leadconnector');
+}
+add_action('wp_enqueue_scripts', 'chroma_dequeue_leadconnector_plugin', 9999);
 
 /**
  * Lazy Load LeadConnector Widget
