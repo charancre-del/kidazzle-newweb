@@ -38,7 +38,7 @@ require_once CHROMA_THEME_DIR . '/inc/cpt-locations.php';
 require_once CHROMA_THEME_DIR . '/inc/cpt-team-members.php';
 
 // API Handlers
-// require_once CHROMA_THEME_DIR . '/inc/careers-api.php';
+require_once CHROMA_THEME_DIR . '/inc/careers-api.php';
 
 // Page Meta Boxes
 require_once CHROMA_THEME_DIR . '/inc/about-page-meta.php';

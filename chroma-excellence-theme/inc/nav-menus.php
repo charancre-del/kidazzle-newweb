@@ -104,6 +104,11 @@ class Chroma_Primary_Nav_Walker extends Walker_Nav_Menu
 		$output .= esc_html($item->title);
 		$output .= '</a>';
 	}
+
+	function end_el(&$output, $item, $depth = 0, $args = null)
+	{
+		// No closing tag needed as we are not using li
+	}
 }
 
 /**
@@ -116,6 +121,11 @@ class Chroma_Footer_Nav_Walker extends Walker_Nav_Menu
 		$output .= '<a href="' . esc_url($item->url) . '" class="block hover:text-white transition">';
 		$output .= esc_html($item->title);
 		$output .= '</a>';
+	}
+
+	function end_el(&$output, $item, $depth = 0, $args = null)
+	{
+		// No closing tag needed as we are not using li
 	}
 }
 
@@ -163,5 +173,10 @@ class Chroma_Mobile_Nav_Walker extends Walker_Nav_Menu
 		$output .= '<a href="' . esc_url($item->url) . '" class="' . esc_attr($classes) . '">';
 		$output .= esc_html($item->title);
 		$output .= '</a>';
+	}
+
+	function end_el(&$output, $item, $depth = 0, $args = null)
+	{
+		// No closing tag needed as we are not using li
 	}
 }
