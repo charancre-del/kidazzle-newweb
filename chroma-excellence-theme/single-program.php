@@ -75,12 +75,12 @@ while (have_posts()):
 					</h1>
 
 					<?php if ($hero_description): ?>
-						<p class="text-lg text-brand-ink/70 max-w-2xl" style="margin-bottom: 8rem;">
+						<p class="text-lg text-brand-ink/70 max-w-2xl">
 							<?php echo wp_kses_post(wpautop($hero_description)); ?>
 						</p>
 					<?php endif; ?>
 
-					<div class="flex gap-4">
+					<div class="flex gap-4" style="margin-top: 3rem;">
 						<a href="#prism"
 							class="px-8 py-4 bg-<?php echo esc_attr($colors['main']); ?> text-white font-bold rounded-full uppercase tracking-[0.2em] text-xs hover:opacity-90 transition-colors shadow-lg">View
 							Curriculum</a>
