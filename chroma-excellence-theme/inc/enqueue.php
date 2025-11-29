@@ -130,6 +130,9 @@ function chroma_enqueue_assets()
                 true
         );
 
+        // DEBUG: Confirm script was enqueued
+        echo '<!-- DEBUG: Enqueued chroma-main-js with URL: ' . CHROMA_THEME_URI . '/assets/js/main.js and version: ' . $js_version . ' -->';
+
         // Defer removed to prevent race conditions with inline scripts and dependencies
         // wp_script_add_data('chroma-main-js', 'defer', true);
 
