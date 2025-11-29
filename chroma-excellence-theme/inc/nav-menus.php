@@ -72,25 +72,6 @@ function chroma_footer_contact_nav()
 			'walker' => new Chroma_Footer_Nav_Walker(),
 		));
 	}
-}
-
-/**
- * Primary Nav Fallback
- */
-function chroma_primary_nav_fallback()
-{
-	$program_slug = chroma_get_program_base_slug();
-	$pages = array($program_slug, "prismpath", "curriculum", "schedule", "locations", "faq");
-	foreach ($pages as $slug) {
-		echo '<a href="#' . esc_attr($slug) . '" class="hover:text-chroma-blue transition">' . esc_html(ucwords(str_replace('-', ' ', $slug))) . '</a>';
-	}
-}
-
-/**
- * Footer Nav Fallback
- */
-function chroma_footer_nav_fallback()
-{
 	$program_slug = chroma_get_program_base_slug();
 	$pages = array(
 		$program_slug => 'Programs',
