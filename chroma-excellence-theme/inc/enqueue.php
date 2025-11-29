@@ -154,6 +154,14 @@ function chroma_enqueue_assets()
                         opacity: 1 !important;
                         margin-bottom: 0.5rem !important;
                 }
+
+                /* Critical Fix: Hide Mobile Nav on Desktop */
+                @media (min-width: 1024px) {
+                        [data-mobile-nav],
+                        [data-mobile-nav-toggle] {
+                                display: none !important;
+                        }
+                }
         ";
         wp_add_inline_style('chroma-main', $custom_css);
 
