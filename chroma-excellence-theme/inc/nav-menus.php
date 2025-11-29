@@ -19,6 +19,7 @@ function chroma_register_menus()
 	register_nav_menus(array(
 		'primary' => __('Primary Menu', 'chroma-excellence'),
 		'footer' => __('Footer Menu', 'chroma-excellence'),
+		'footer_contact' => __('Footer Contact Menu', 'chroma-excellence'),
 	));
 }
 add_action('init', 'chroma_register_menus');
@@ -56,6 +57,24 @@ function chroma_footer_nav()
 }
 
 /**
+ * Footer Contact Navigation
+ */
+function chroma_footer_contact_nav()
+{
+	if (has_nav_menu('footer_contact')) {
+		wp_nav_menu(array(
+			'theme_location' => 'footer_contact',
+			'container' => false,
+			'menu_class' => 'mt-4 space-y-2 pt-4 border-t border-white/10',
+			'fallback_cb' => false,
+			'items_wrap' => '<div class="%2$s">%3$s</div>',
+			'depth' => 1,
+			'walker' => new Chroma_Footer_Nav_Walker(),
+		));
+	}
+}
+
+/**
  * Primary Nav Fallback
  */
 function chroma_primary_nav_fallback()
@@ -85,6 +104,7 @@ function chroma_footer_nav_fallback()
 		echo '<a href="' . esc_url($url) . '" class="block hover:text-white transition">' . esc_html($title) . '</a>';
 	}
 }
+
 /**
  * Custom Walker for Primary Navigation
  */
