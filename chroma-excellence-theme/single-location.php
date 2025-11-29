@@ -245,18 +245,27 @@ while (have_posts()):
 						<?php endif; ?>
 
 						<!-- Floating Review Badge -->
-						<div
-							class="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm p-5 rounded-2xl shadow-float max-w-[200px]">
-							<div class="flex items-center gap-1 mb-2">
-								<?php for ($i = 0; $i < 5; $i++): ?>
-									<i class="fa-solid fa-star text-chroma-yellow text-sm"></i>
-								<?php endfor; ?>
+						<?php
+						$hero_review_text = get_post_meta(get_the_ID(), 'location_hero_review_text', true);
+						$hero_review_author = get_post_meta(get_the_ID(), 'location_hero_review_author', true) ?: 'Parent Review';
+
+						if ($hero_review_text):
+							?>
+							<div
+								class="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm p-5 rounded-2xl shadow-float max-w-[200px] fade-in-up delay-300">
+								<div class="flex items-center gap-1 mb-2">
+									<?php for ($i = 0; $i < 5; $i++): ?>
+										<i class="fa-solid fa-star text-chroma-yellow text-sm"></i>
+									<?php endfor; ?>
+								</div>
+								<p class="text-xs font-serif italic text-brand-ink/80">
+									"<?php echo esc_html($hero_review_text); ?>"
+								</p>
+								<p class="text-[10px] font-bold text-brand-ink/40 mt-2 uppercase tracking-wide">—
+									<?php echo esc_html($hero_review_author); ?>
+								</p>
 							</div>
-							<p class="text-xs font-serif italic text-brand-ink/80">"The best decision we made for our
-								daughter. The teachers are incredible."</p>
-							<p class="text-[10px] font-bold text-brand-ink/40 mt-2 uppercase tracking-wide">— Parent Review
-							</p>
-						</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

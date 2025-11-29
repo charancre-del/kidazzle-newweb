@@ -274,6 +274,8 @@ function chroma_render_location_custom_fields_meta_box($post)
 
 	// Get existing values
 	$hero_subtitle = get_post_meta($post->ID, 'location_hero_subtitle', true);
+	$hero_review_text = get_post_meta($post->ID, 'location_hero_review_text', true);
+	$hero_review_author = get_post_meta($post->ID, 'location_hero_review_author', true);
 	$hero_gallery = get_post_meta($post->ID, 'location_hero_gallery', true);
 	$virtual_tour_embed = get_post_meta($post->ID, 'location_virtual_tour_embed', true);
 	$tagline = get_post_meta($post->ID, 'location_tagline', true);
@@ -402,6 +404,20 @@ function chroma_render_location_custom_fields_meta_box($post)
 			<input type="text" id="location_hero_subtitle" name="location_hero_subtitle"
 				value="<?php echo esc_attr($hero_subtitle); ?>" placeholder="e.g., Now Enrolling: Pre-K & Toddlers" />
 			<small><?php _e('Small badge text shown above the location name', 'chroma-excellence'); ?></small>
+		</div>
+
+		<div class="chroma-meta-field">
+			<label for="location_hero_review_text"><?php _e('Hero Review Text', 'chroma-excellence'); ?></label>
+			<textarea id="location_hero_review_text" name="location_hero_review_text" rows="3"
+				placeholder="The best decision we made for our daughter..."><?php echo esc_textarea($hero_review_text); ?></textarea>
+			<small><?php _e('Review text displayed in the floating badge (leave empty to hide)', 'chroma-excellence'); ?></small>
+		</div>
+
+		<div class="chroma-meta-field">
+			<label for="location_hero_review_author"><?php _e('Hero Review Author', 'chroma-excellence'); ?></label>
+			<input type="text" id="location_hero_review_author" name="location_hero_review_author"
+				value="<?php echo esc_attr($hero_review_author); ?>" placeholder="Parent Review" />
+			<small><?php _e('Author of the review (defaults to "Parent Review" if empty)', 'chroma-excellence'); ?></small>
 		</div>
 
 		<div class="chroma-meta-field">
@@ -662,6 +678,8 @@ function chroma_save_location_custom_fields($post_id)
 	// Save fields
 	$fields = array(
 		'location_hero_subtitle',
+		'location_hero_review_text',
+		'location_hero_review_author',
 		'location_hero_gallery',
 		'location_virtual_tour_embed',
 		'location_tagline',
@@ -693,7 +711,7 @@ function chroma_save_location_custom_fields($post_id)
 		if (isset($_POST[$field])) {
 			$value = wp_unslash($_POST[$field]);
 			// Sanitize based on field type
-			if (in_array($field, array('location_description', 'location_director_bio', 'location_maps_embed', 'location_school_pickups', 'location_seo_content_text', 'location_service_areas'))) {
+			if (in_array($field, array('location_description', 'location_director_bio', 'location_maps_embed', 'location_school_pickups', 'location_seo_content_text', 'location_service_areas', 'location_hero_review_text'))) {
 				$value = sanitize_textarea_field($value);
 			} elseif ($field === 'location_email') {
 				$value = sanitize_email($value);
