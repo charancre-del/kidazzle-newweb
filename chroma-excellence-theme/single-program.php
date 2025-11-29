@@ -42,6 +42,8 @@ while (have_posts()):
 		'yellow' => array('main' => 'chroma-yellow', 'light' => 'chroma-yellowLight'),
 		'blueDark' => array('main' => 'chroma-blueDark', 'light' => 'chroma-blueLight'),
 		'green' => array('main' => 'chroma-green', 'light' => 'chroma-greenLight'),
+		'orange' => array('main' => 'chroma-orange', 'light' => 'chroma-orangeLight'),
+		'teal' => array('main' => 'chroma-teal', 'light' => 'chroma-tealLight'),
 	);
 
 	$colors = $color_map[$color_scheme] ?? $color_map['red'];
@@ -68,12 +70,12 @@ while (have_posts()):
 						</div>
 					<?php endif; ?>
 
-					<h1 class="font-serif text-5xl md:text-6xl text-brand-ink mb-6">
+					<h1 class="font-serif text-5xl md:text-6xl text-brand-ink mb-10">
 						<?php echo esc_html($hero_title); ?>
 					</h1>
 
 					<?php if ($hero_description): ?>
-						<p class="text-lg text-brand-ink/70 mb-8 max-w-lg">
+						<p class="text-lg text-brand-ink/70 mb-12 max-w-2xl">
 							<?php echo wp_kses_post(wpautop($hero_description)); ?>
 						</p>
 					<?php endif; ?>
@@ -246,20 +248,23 @@ while (have_posts()):
 												<?php echo absint($prism_academic); ?>,
 												<?php echo absint($prism_creative); ?>
 											],
-											backgroundColor: 'rgba(214, 125, 107, 0.2)',
-											borderColor: '<?php
+											backgroundColor: '<?php
 											$chart_colors = array(
 												'red' => '#D67D6B',
 												'blue' => '#4A6C7C',
 												'yellow' => '#E6BE75',
 												'blueDark' => '#2F4858',
 												'green' => '#8DA399',
+												'orange' => '#C26524',
+												'teal' => '#4A6C7C',
 											);
-											echo $chart_colors[$color_scheme] ?? '#D67D6B';
+											$hex_color = $chart_colors[$color_scheme] ?? '#D67D6B';
+											echo $hex_color . '33'; // Add 20% opacity
 											?>',
-				pointBackgroundColor: '#fff',
-					pointBorderColor: '<?php echo $chart_colors[$color_scheme] ?? '#D67D6B'; ?>',
-						borderWidth: 2
+				borderColor: '<?php echo $hex_color; ?>',
+					pointBackgroundColor: '#fff',
+						pointBorderColor: '<?php echo $hex_color; ?>',
+							borderWidth: 2
 			}]
 		},
 			options: {
@@ -275,15 +280,15 @@ while (have_posts()):
 			},
 			plugins: { legend: { display: false } }
 		}
-									});
-								};
+										});
+									};
 		document.body.appendChild(script);
-							}
-						});
-					}, { rootMargin: '200px' }); // Start loading 200px before view
+								}
+							});
+						}, { rootMargin: '200px' }); // Start loading 200px before view
 		observer.observe(ctx);
-				}
-			});
+					}
+				});
 	</script>
 
 	<?php
