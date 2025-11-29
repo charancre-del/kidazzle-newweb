@@ -26,6 +26,16 @@ module.exports = {
           blue: '#4A6C7C',
           blueDark: '#2F4858',
           blueLight: '#E3E9EC',
+          green: '#4A7C59',
+          greenLight: '#E3ECE6',
+          yellow: '#C2A024',
+          yellowLight: '#FEF8E6',
+          purple: '#7D5BA6',
+          purpleLight: '#F3EBF9',
+          teal: '#248EC2',
+          tealLight: '#E6F4FE',
+        },
+      },
     },
   },
   safelist: [
@@ -33,9 +43,17 @@ module.exports = {
     'animate-pulse',
     'w-2',
     'h-2',
-    'bg-chroma-green',
-    'bg-chroma-blue',
     'rounded-full',
+    // Dynamic Chroma Colors (bg, text, border, gradients)
+    {
+      pattern: /(bg|text|border|from)-chroma-(red|blue|green|yellow|purple|orange|teal)(Light|Dark)?/,
+      variants: ['hover'],
+    },
+    // Opacity variants for backgrounds and borders
+    {
+      pattern: /(bg|border|from)-chroma-(red|blue|green|yellow|purple|orange|teal)(Light|Dark)?\/(5|10|15|30)/,
+      variants: ['hover'],
+    },
   ],
   plugins: [],
 };
