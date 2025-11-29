@@ -330,17 +330,4 @@ function chroma_lazy_load_leadconnector()
 }
 add_action('wp_footer', 'chroma_lazy_load_leadconnector', 999);
 
-/**
- * Dynamic Menu Label for Locations Archive
- * Syncs the navigation menu label with the Customizer setting.
- */
-function chroma_dynamic_location_menu_label($title, $item, $args, $depth)
-{
-    // Check if this is the Locations Post Type Archive menu item
-    if (isset($item->type) && 'post_type_archive' === $item->type && 'location' === $item->object) {
-        // Return the Customizer setting value
-        return get_theme_mod('chroma_locations_label', 'All Locations');
-    }
-    return $title;
-}
-add_filter('nav_menu_item_title', 'chroma_dynamic_location_menu_label', 10, 4);
+
