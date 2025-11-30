@@ -199,7 +199,7 @@ add_filter('script_loader_tag', 'chroma_defer_scripts', 10, 3);
 function chroma_preload_lcp_image()
 {
     // Using optimized logo as LCP candidate since specific hero image is missing
-    $logo_url = get_template_directory_uri() . '/assets/images/logo_icon_140x140.webp';
+    $logo_url = get_template_directory_uri() . '/assets/images/logo_chromacropped_140x140.webp';
     echo '<link rel="preload" as="image" href="' . esc_url($logo_url) . '" fetchpriority="high">' . "\n";
 }
 add_action('wp_head', 'chroma_preload_lcp_image', 1);

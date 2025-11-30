@@ -21,9 +21,9 @@
 
 			<!-- Logo -->
 			<a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-4 group">
-				<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_icon_70x70.webp'); ?>"
-					srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_icon_70x70.webp'); ?> 1x,
-							<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_icon_140x140.webp'); ?> 2x"
+				<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_chromacropped_70x70.webp'); ?>"
+					srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_chromacropped_70x70.webp'); ?> 1x,
+							<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_chromacropped_140x140.webp'); ?> 2x"
 					alt="Chroma Early Learning" width="70" height="70"
 					class="h-14 w-auto lg:h-20 transition-transform duration-300 group-hover:scale-105 no-lazy"
 					data-no-lazy="1" />
@@ -69,9 +69,9 @@
 			class="fixed inset-0 bg-white z-40 transform translate-x-full transition-transform duration-300 lg:hidden flex flex-col">
 			<div class="flex items-center justify-between p-4 border-b border-brand-ink/5">
 				<div class="flex items-center gap-3">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_icon_40x40.webp'); ?>"
-						srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_icon_40x40.webp'); ?> 1x,
-								 <?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_icon_70x70.webp'); ?> 2x"
+					<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_chromacropped_40x40.webp'); ?>"
+						srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_chromacropped_40x40.webp'); ?> 1x,
+								 <?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_chromacropped_70x70.webp'); ?> 2x"
 						alt="Chroma Early Learning" width="40" height="40" class="h-10 w-auto" />
 					<span class="font-serif text-lg font-bold text-brand-ink">Menu</span>
 				</div>

@@ -14,9 +14,9 @@
 			<!-- Logo and Description -->
 			<div class="md:col-span-1">
 				<a href="<?php echo esc_url(home_url('/')); ?>" class="block mb-4">
-					<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_icon_70x70.webp'); ?>"
-						srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_icon_70x70.webp'); ?> 1x,
-								 <?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_icon_140x140.webp'); ?> 2x"
+					<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_chromacropped_70x70.webp'); ?>"
+						srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_chromacropped_70x70.webp'); ?> 1x,
+								 <?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_chromacropped_140x140.webp'); ?> 2x"
 						alt="Chroma Early Learning" width="70" height="70"
 						class="h-12 w-auto brightness-0 invert opacity-90 hover:opacity-100 transition-opacity" />
 				</a>
