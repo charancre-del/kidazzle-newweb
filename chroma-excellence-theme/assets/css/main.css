@@ -5,6 +5,85 @@
  * @package Chroma_Excellence
  */
 
+/* Moved from fonts.css */
+/**
+ * Self-Hosted Google Fonts
+ * Outfit: Weights 300, 400, 500, 600, 700
+ * Playfair Display: Weights 600, 700, 800
+ */
+
+/* Outfit - Light 300 */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../webfonts/Outfit-Light.woff2') format('woff2');
+}
+
+/* Outfit - Regular 400 */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../webfonts/Outfit-Regular.woff2') format('woff2');
+}
+
+/* Outfit - Medium 500 */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../webfonts/Outfit-Medium.woff2') format('woff2');
+}
+
+/* Outfit - SemiBold 600 */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../webfonts/Outfit-SemiBold.woff2') format('woff2');
+}
+
+/* Outfit - Bold 700 */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../webfonts/Outfit-Bold.woff2') format('woff2');
+}
+
+/* Playfair Display - SemiBold 600 */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../webfonts/PlayfairDisplay-SemiBold.woff2') format('woff2');
+}
+
+/* Playfair Display - Bold 700 */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../webfonts/PlayfairDisplay-Bold.woff2') format('woff2');
+}
+
+/* Playfair Display - ExtraBold 800 */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../webfonts/PlayfairDisplay-ExtraBold.woff2') format('woff2');
+}
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;

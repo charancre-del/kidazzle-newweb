@@ -34,16 +34,7 @@ function chroma_enqueue_assets()
 
         $script_dependencies = array();
 
-        // Self-Hosted Fonts (Outfit, Playfair Display).
-        $fonts_path = CHROMA_THEME_DIR . '/assets/css/fonts.css';
-        $fonts_version = file_exists($fonts_path) ? filemtime($fonts_path) : CHROMA_VERSION;
-        wp_enqueue_style(
-                'chroma-fonts',
-                CHROMA_THEME_URI . '/assets/css/fonts.css',
-                array(),
-                $fonts_version,
-                'all'
-        );
+
 
         // Font Awesome (Local).
         $fa_path = CHROMA_THEME_DIR . '/assets/css/font-awesome.css';
