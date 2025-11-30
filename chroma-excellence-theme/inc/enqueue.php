@@ -309,8 +309,8 @@ add_action('admin_enqueue_scripts', 'chroma_enqueue_admin_assets');
  */
 function chroma_async_styles($html, $handle, $href, $media)
 {
-        // Defer Google Fonts and Font Awesome
-        if (in_array($handle, array('chroma-fonts', 'font-awesome'))) {
+        // Defer Font Awesome (keep chroma-fonts synchronous for LCP)
+        if (in_array($handle, array('font-awesome'))) {
                 // If media is 'all', swap to 'print' and add onload
                 $html = str_replace("media='all'", "media='print' onload=\"this.media='all'\"", $html);
                 // If media is already 'print' (rare but possible), ensure onload is present
