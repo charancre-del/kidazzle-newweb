@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Chroma Tour Form
- * Description: Tour request form with lead logging for Chroma Early Learning Academy. Fully editable fields via Settings.
- * Version: 1.2.0
+ * Plugin Name: Chroma Contact Form
+ * Description: General contact form with GUI editor, Webhooks, and Lead Log integration.
+ * Version: 1.0.0
  * Author: Chroma Development Team
- * Text Domain: chroma-tour-form
+ * Text Domain: chroma-contact-form
  */
 
 // Exit if accessed directly
@@ -15,48 +15,73 @@ if (!defined('ABSPATH')) {
 /**
  * Default Fields Configuration
  */
-function chroma_tour_default_fields()
+function chroma_contact_default_fields()
 {
     return array(
         array(
-            'id' => 'parent_name',
-            'label' => 'Parent Name',
+            'id' => 'first_name',
+            'label' => 'First Name',
             'type' => 'text',
             'required' => true,
             'width' => 'half',
-            'placeholder' => ''
+            'placeholder' => 'Jane'
         ),
         array(
-            'id' => 'phone',
-            'label' => 'Phone',
-            'type' => 'tel',
+            'id' => 'last_name',
+            'label' => 'Last Name',
+            'type' => 'text',
             'required' => true,
             'width' => 'half',
-            'placeholder' => ''
+            'placeholder' => 'Doe'
         ),
         array(
             'id' => 'email',
-            'label' => 'Email',
+            'label' => 'Email Address',
             'type' => 'email',
             'required' => true,
             'width' => 'half',
-            'placeholder' => ''
+            'placeholder' => 'you@example.com'
         ),
         array(
-            'id' => 'location_id',
-            'label' => 'Preferred Location',
+            'id' => 'phone',
+            'label' => 'Phone Number',
+            'type' => 'tel',
+            'required' => true,
+            'width' => 'half',
+            'placeholder' => '(555) 123-4567'
+        ),
+        array(
+            'id' => 'preferred_campus',
+            'label' => 'Preferred Campus',
             'type' => 'select_location',
             'required' => false,
             'width' => 'half',
             'placeholder' => 'Select a location...'
         ),
         array(
-            'id' => 'child_ages',
-            'label' => 'Child(ren) Age(s)',
+            'id' => 'child_age',
+            'label' => 'Child\'s Age',
             'type' => 'text',
             'required' => false,
+            'width' => 'half',
+            'placeholder' => 'e.g. 2 years'
+        ),
+        array(
+            'id' => 'topic',
+            'label' => 'Topic',
+            'type' => 'select',
+            'required' => false,
             'width' => 'full',
-            'placeholder' => 'e.g., 10 months, 3 years'
+            'options' => 'Schedule a Tour, Tuition Inquiry, Careers / HR, Partnerships, Other Inquiry',
+            'placeholder' => 'Select a topic...'
+        ),
+        array(
+            'id' => 'message',
+            'label' => 'Message',
+            'type' => 'textarea',
+            'required' => false,
+            'width' => 'full',
+            'placeholder' => 'Tell us about your family\'s needs...'
         )
     );
 }
@@ -64,51 +89,51 @@ function chroma_tour_default_fields()
 /**
  * Admin Menu & Settings
  */
-function chroma_tour_register_settings()
+function chroma_contact_register_settings()
 {
-    register_setting('chroma_tour_options', 'chroma_tour_fields', array(
+    register_setting('chroma_contact_options', 'chroma_contact_fields', array(
         'type' => 'string',
-        'sanitize_callback' => 'chroma_tour_sanitize_json',
-        'default' => wp_json_encode(chroma_tour_default_fields())
+        'sanitize_callback' => 'chroma_contact_sanitize_json',
+        'default' => wp_json_encode(chroma_contact_default_fields())
     ));
     
-    register_setting('chroma_tour_options', 'chroma_tour_webhook_url', array(
+    register_setting('chroma_contact_options', 'chroma_contact_webhook_url', array(
         'type' => 'string',
         'sanitize_callback' => 'esc_url_raw',
         'default' => ''
     ));
 
-    register_setting('chroma_tour_options', 'chroma_tour_email_recipient', array(
+    register_setting('chroma_contact_options', 'chroma_contact_email_recipient', array(
         'type' => 'string',
         'sanitize_callback' => 'sanitize_email',
         'default' => get_option('admin_email')
     ));
 }
-add_action('admin_init', 'chroma_tour_register_settings');
+add_action('admin_init', 'chroma_contact_register_settings');
 
-function chroma_tour_sanitize_json($input)
+function chroma_contact_sanitize_json($input)
 {
     $decoded = json_decode($input, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
-        add_settings_error('chroma_tour_fields', 'invalid_json', 'Invalid JSON format. Changes not saved.');
-        return get_option('chroma_tour_fields');
+        add_settings_error('chroma_contact_fields', 'invalid_json', 'Invalid JSON format. Changes not saved.');
+        return get_option('chroma_contact_fields');
     }
     return $input;
 }
 
-function chroma_tour_admin_menu()
+function chroma_contact_admin_menu()
 {
     add_options_page(
-        'Tour Form Settings',
-        'Tour Form',
+        'Contact Form Settings',
+        'Contact Form',
         'manage_options',
-        'chroma-tour-form',
-        'chroma_tour_settings_page_html'
+        'chroma-contact-form',
+        'chroma_contact_settings_page_html'
     );
 }
-add_action('admin_menu', 'chroma_tour_admin_menu');
+add_action('admin_menu', 'chroma_contact_admin_menu');
 
-function chroma_tour_settings_page_html()
+function chroma_contact_settings_page_html()
 {
     if (!current_user_can('manage_options')) {
         return;
@@ -116,28 +141,28 @@ function chroma_tour_settings_page_html()
     ?>
     <div class="wrap">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-        <form action="options.php" method="post" id="chroma-tour-settings-form">
+        <form action="options.php" method="post" id="chroma-contact-settings-form">
             <?php
-            settings_fields('chroma_tour_options');
-            do_settings_sections('chroma_tour_options');
+            settings_fields('chroma_contact_options');
+            do_settings_sections('chroma_contact_options');
             
-            $fields_json = get_option('chroma_tour_fields', wp_json_encode(chroma_tour_default_fields()));
-            $webhook_url = get_option('chroma_tour_webhook_url', '');
-            $email_recipient = get_option('chroma_tour_email_recipient', get_option('admin_email'));
+            $fields_json = get_option('chroma_contact_fields', wp_json_encode(chroma_contact_default_fields()));
+            $webhook_url = get_option('chroma_contact_webhook_url', '');
+            $email_recipient = get_option('chroma_contact_email_recipient', get_option('admin_email'));
             ?>
             
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row">Email Recipient</th>
                     <td>
-                        <input type="email" name="chroma_tour_email_recipient" value="<?php echo esc_attr($email_recipient); ?>" class="regular-text" />
-                        <p class="description">The email address where notifications will be sent. Defaults to admin email.</p>
+                        <input type="email" name="chroma_contact_email_recipient" value="<?php echo esc_attr($email_recipient); ?>" class="regular-text" />
+                        <p class="description">The email address where notifications will be sent.</p>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row">Webhook URL</th>
                     <td>
-                        <input type="url" name="chroma_tour_webhook_url" value="<?php echo esc_attr($webhook_url); ?>" class="regular-text" placeholder="https://hooks.zapier.com/..." />
+                        <input type="url" name="chroma_contact_webhook_url" value="<?php echo esc_attr($webhook_url); ?>" class="regular-text" placeholder="https://hooks.zapier.com/..." />
                         <p class="description">Optional. Send form submissions to this URL via POST request.</p>
                     </td>
                 </tr>
@@ -145,7 +170,7 @@ function chroma_tour_settings_page_html()
                     <th scope="row">Form Fields</th>
                     <td>
                         <div id="chroma-fields-editor"></div>
-                        <input type="hidden" name="chroma_tour_fields" id="chroma_tour_fields_input" value="<?php echo esc_attr($fields_json); ?>">
+                        <input type="hidden" name="chroma_contact_fields" id="chroma_contact_fields_input" value="<?php echo esc_attr($fields_json); ?>">
                     </td>
                 </tr>
             </table>
@@ -186,7 +211,7 @@ function chroma_tour_settings_page_html()
             margin-bottom: 4px;
             font-size: 12px;
         }
-        .chroma-input-group input, .chroma-input-group select {
+        .chroma-input-group input, .chroma-input-group select, .chroma-input-group textarea {
             width: 100%;
         }
         .chroma-btn-remove {
@@ -203,7 +228,7 @@ function chroma_tour_settings_page_html()
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('chroma-fields-editor');
-            const input = document.getElementById('chroma_tour_fields_input');
+            const input = document.getElementById('chroma_contact_fields_input');
             let fields = JSON.parse(input.value || '[]');
 
             function render() {
@@ -212,6 +237,17 @@ function chroma_tour_settings_page_html()
                 fields.forEach((field, index) => {
                     const row = document.createElement('div');
                     row.className = 'chroma-field-row';
+                    
+                    let optionsHtml = '';
+                    if (field.type === 'select') {
+                        optionsHtml = `
+                            <div class="chroma-input-group">
+                                <label>Options (comma separated)</label>
+                                <input type="text" value="${escapeHtml(field.options || '')}" onchange="updateField(${index}, 'options', this.value)" placeholder="Option 1, Option 2">
+                            </div>
+                        `;
+                    }
+
                     row.innerHTML = `
                         <div class="chroma-field-col">
                             <div class="chroma-input-group">
@@ -222,6 +258,7 @@ function chroma_tour_settings_page_html()
                                 <label>Field ID (Unique)</label>
                                 <input type="text" value="${escapeHtml(field.id)}" onchange="updateField(${index}, 'id', this.value)">
                             </div>
+                            ${optionsHtml}
                         </div>
                         <div class="chroma-field-col">
                             <div class="chroma-input-group">
@@ -232,6 +269,7 @@ function chroma_tour_settings_page_html()
                                     <option value="tel" ${field.type === 'tel' ? 'selected' : ''}>Phone</option>
                                     <option value="textarea" ${field.type === 'textarea' ? 'selected' : ''}>Text Area</option>
                                     <option value="select_location" ${field.type === 'select_location' ? 'selected' : ''}>Location Select</option>
+                                    <option value="select" ${field.type === 'select' ? 'selected' : ''}>Dropdown (Custom)</option>
                                 </select>
                             </div>
                             <div class="chroma-input-group">
@@ -273,7 +311,12 @@ function chroma_tour_settings_page_html()
 
             window.updateField = function(index, key, value) {
                 fields[index][key] = value;
-                input.value = JSON.stringify(fields);
+                // Re-render if type changes to show/hide options
+                if (key === 'type') {
+                    render();
+                } else {
+                    input.value = JSON.stringify(fields);
+                }
             };
 
             window.removeField = function(index) {
@@ -312,35 +355,23 @@ function chroma_tour_settings_page_html()
 }
 
 /**
- * Safe accessor for global settings without relying on ACF.
+ * Contact Form Shortcode
+ * Usage: [chroma_contact_form]
  */
-function chroma_tour_get_global_setting($key, $default = '')
+function chroma_contact_form_shortcode()
 {
-    if (function_exists('chroma_get_global_setting')) {
-        return chroma_get_global_setting($key, $default);
-    }
-    $settings = get_option('chroma_global_settings', array());
-    return isset($settings[$key]) ? $settings[$key] : $default;
-}
-
-/**
- * Tour Form Shortcode
- * Usage: [chroma_tour_form]
- */
-function chroma_tour_form_shortcode()
-{
-    $fields_json = get_option('chroma_tour_fields', wp_json_encode(chroma_tour_default_fields()));
+    $fields_json = get_option('chroma_contact_fields', wp_json_encode(chroma_contact_default_fields()));
     $fields = json_decode($fields_json, true);
     if (!is_array($fields)) {
-        $fields = chroma_tour_default_fields();
+        $fields = chroma_contact_default_fields();
     }
 
     ob_start();
     ?>
-    <form class="chroma-tour-form space-y-4" method="post" action="">
-        <?php wp_nonce_field('chroma_tour_submit', 'chroma_tour_nonce'); ?>
+    <form class="chroma-contact-form space-y-6" method="post" action="">
+        <?php wp_nonce_field('chroma_contact_submit', 'chroma_contact_nonce'); ?>
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid md:grid-cols-2 gap-6">
             <?php foreach ($fields as $field):
                 $id = esc_attr($field['id']);
                 $label = esc_html($field['label']);
@@ -352,13 +383,13 @@ function chroma_tour_form_shortcode()
                 ?>
 
                 <div class="<?php echo esc_attr($width); ?>">
-                    <label class="block text-xs font-bold text-brand-ink uppercase mb-1.5" for="tour_<?php echo $id; ?>">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-ink/50 mb-2" for="contact_<?php echo $id; ?>">
                         <?php echo $label . $asterisk; ?>
                     </label>
 
                     <?php if ($type === 'select_location'): ?>
-                        <select id="tour_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?> aria-label="<?php echo $label; ?>"
-                            class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink">
+                        <select id="contact_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?> aria-label="<?php echo $label; ?>"
+                            class="w-full p-4 rounded-xl border border-brand-ink/10 focus:border-chroma-blue focus:outline-none bg-white">
                             <option value=""><?php echo $placeholder ?: 'Select a location...'; ?></option>
                             <?php
                             $locations = get_posts(array('post_type' => 'location', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC'));
@@ -370,50 +401,64 @@ function chroma_tour_form_shortcode()
                             <?php endforeach; ?>
                         </select>
 
+                    <?php elseif ($type === 'select'): 
+                        $options = isset($field['options']) ? explode(',', $field['options']) : array();
+                        ?>
+                        <select id="contact_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?> aria-label="<?php echo $label; ?>"
+                            class="w-full p-4 rounded-xl border border-brand-ink/10 focus:border-chroma-blue focus:outline-none bg-white">
+                            <option value=""><?php echo $placeholder ?: 'Select an option...'; ?></option>
+                            <?php foreach ($options as $opt): 
+                                $opt = trim($opt);
+                                if(empty($opt)) continue;
+                                ?>
+                                <option value="<?php echo esc_attr($opt); ?>"><?php echo esc_html($opt); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
                     <?php elseif ($type === 'textarea'): ?>
-                        <textarea id="tour_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?> aria-label="<?php echo $label; ?>"
+                        <textarea id="contact_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?> aria-label="<?php echo $label; ?>"
                             placeholder="<?php echo $placeholder; ?>"
-                            class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink h-32"></textarea>
+                            class="w-full p-4 rounded-xl border border-brand-ink/10 focus:border-chroma-blue focus:outline-none bg-white" rows="4"></textarea>
 
                     <?php else: ?>
-                        <input type="<?php echo $type; ?>" id="tour_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?>
+                        <input type="<?php echo $type; ?>" id="contact_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?>
                             aria-label="<?php echo $label; ?>" placeholder="<?php echo $placeholder; ?>"
-                            class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink" />
+                            class="w-full p-4 rounded-xl border border-brand-ink/10 focus:border-chroma-blue focus:outline-none bg-white" />
                     <?php endif; ?>
                 </div>
 
             <?php endforeach; ?>
         </div>
 
-        <button type="submit" name="chroma_tour_submit"
-            class="w-full bg-chroma-red text-white text-xs font-semibold uppercase tracking-wider py-4 rounded-full shadow-soft hover:bg-chroma-red/90 transition">
-            Request Tour
+        <button type="submit" name="chroma_contact_submit"
+            class="w-full py-4 bg-chroma-blue text-white font-bold rounded-full uppercase tracking-[0.2em] text-xs hover:bg-chroma-blueDark transition-colors shadow-lg">
+            Submit Request
         </button>
     </form>
     <?php
     return ob_get_clean();
 }
-add_shortcode('chroma_tour_form', 'chroma_tour_form_shortcode');
+add_shortcode('chroma_contact_form', 'chroma_contact_form_shortcode');
 
 /**
  * Handle Form Submission
  */
-function chroma_handle_tour_submission()
+function chroma_handle_contact_submission()
 {
-    if (!isset($_POST['chroma_tour_submit']) || !wp_verify_nonce(wp_unslash($_POST['chroma_tour_nonce'] ?? ''), 'chroma_tour_submit')) {
+    if (!isset($_POST['chroma_contact_submit']) || !wp_verify_nonce(wp_unslash($_POST['chroma_contact_nonce'] ?? ''), 'chroma_contact_submit')) {
         return;
     }
 
     // Get fields configuration
-    $fields_json = get_option('chroma_tour_fields', wp_json_encode(chroma_tour_default_fields()));
+    $fields_json = get_option('chroma_contact_fields', wp_json_encode(chroma_contact_default_fields()));
     $fields = json_decode($fields_json, true);
     if (!is_array($fields)) {
-        $fields = chroma_tour_default_fields();
+        $fields = chroma_contact_default_fields();
     }
 
     $submission_data = array();
     $has_error = false;
-    $parent_name = 'Unknown';
+    $name = 'Unknown';
     $email = '';
     $location_id = 0;
 
@@ -429,7 +474,7 @@ function chroma_handle_tour_submission()
                 $has_error = true;
             }
             if (is_email($value)) {
-                $email = $value; // Capture email for sending
+                $email = $value;
             }
         }
 
@@ -438,8 +483,9 @@ function chroma_handle_tour_submission()
         }
 
         // Capture specific fields for logic
-        if ($id === 'parent_name') $parent_name = $value;
-        if ($id === 'location_id') $location_id = intval($value);
+        if ($id === 'first_name') $name = $value;
+        if ($id === 'last_name') $name .= ' ' . $value;
+        if ($id === 'preferred_campus' && is_numeric($value)) $location_id = intval($value);
 
         $submission_data[$field['label']] = $value;
     }
@@ -449,12 +495,12 @@ function chroma_handle_tour_submission()
     $redirect_url = wp_validate_redirect($redirect_target, $redirect_fallback);
 
     if ($has_error || empty($email)) {
-        wp_safe_redirect(add_query_arg('tour_sent', '0', $redirect_url));
+        wp_safe_redirect(add_query_arg('contact_sent', '0', $redirect_url));
         exit;
     }
 
     // Determine email recipients
-    $global_recipients_str = get_option('chroma_tour_email_recipient', 'enrollment@chromaela.com, info@chromaela.com');
+    $global_recipients_str = get_option('chroma_contact_email_recipient', get_option('admin_email'));
     $recipients = array_map('trim', explode(',', $global_recipients_str));
     
     if ($location_id) {
@@ -472,11 +518,11 @@ function chroma_handle_tour_submission()
     }
 
     // Construct Message
-    $subject = 'New Tour Request from ' . $parent_name;
-    $message = "New tour request:\n\n";
+    $subject = 'New Contact Inquiry from ' . $name;
+    $message = "New contact inquiry:\n\n";
     foreach ($submission_data as $label => $val) {
         $val_display = $val;
-        if ($label === 'Preferred Location' && is_numeric($val) && $val > 0) {
+        if ($label === 'Preferred Campus' && is_numeric($val) && $val > 0) {
             $val_display = get_the_title($val);
         }
         $message .= $label . ": " . $val_display . "\n";
@@ -489,11 +535,11 @@ function chroma_handle_tour_submission()
         wp_insert_post(
             array(
                 'post_type' => 'lead_log',
-                'post_title' => 'Tour: ' . $parent_name,
+                'post_title' => 'Contact: ' . $name,
                 'post_status' => 'publish',
                 'meta_input' => array(
-                    'lead_type' => 'tour',
-                    'lead_name' => $parent_name,
+                    'lead_type' => 'contact',
+                    'lead_name' => $name,
                     'lead_email' => $email,
                     'lead_location' => $location_id,
                     'lead_payload' => wp_json_encode($submission_data),
@@ -503,10 +549,10 @@ function chroma_handle_tour_submission()
     }
     
     // Webhook Integration
-    $webhook_url = get_option('chroma_tour_webhook_url', '');
+    $webhook_url = get_option('chroma_contact_webhook_url', '');
     if (!empty($webhook_url)) {
         $webhook_data = array(
-            'form_name' => 'Tour Request',
+            'form_name' => 'Contact Inquiry',
             'submitted_at' => current_time('mysql'),
             'data' => $submission_data
         );
@@ -515,11 +561,11 @@ function chroma_handle_tour_submission()
             'body' => wp_json_encode($webhook_data),
             'headers' => array('Content-Type' => 'application/json'),
             'timeout' => 15,
-            'blocking' => false // Don't wait for response
+            'blocking' => false
         ));
     }
 
-    wp_safe_redirect(add_query_arg('tour_sent', '1', $redirect_url));
+    wp_safe_redirect(add_query_arg('contact_sent', '1', $redirect_url));
     exit;
 }
-add_action('template_redirect', 'chroma_handle_tour_submission');
+add_action('template_redirect', 'chroma_handle_contact_submission');

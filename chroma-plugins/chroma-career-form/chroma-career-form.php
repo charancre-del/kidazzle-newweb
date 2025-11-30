@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Chroma Tour Form
- * Description: Tour request form with lead logging for Chroma Early Learning Academy. Fully editable fields via Settings.
- * Version: 1.2.0
+ * Plugin Name: Chroma Career Form
+ * Description: Job application form with file upload support. Fully editable fields via Settings.
+ * Version: 1.0.0
  * Author: Chroma Development Team
- * Text Domain: chroma-tour-form
+ * Text Domain: chroma-career-form
  */
 
 // Exit if accessed directly
@@ -15,21 +15,13 @@ if (!defined('ABSPATH')) {
 /**
  * Default Fields Configuration
  */
-function chroma_tour_default_fields()
+function chroma_career_default_fields()
 {
     return array(
         array(
-            'id' => 'parent_name',
-            'label' => 'Parent Name',
+            'id' => 'applicant_name',
+            'label' => 'Full Name',
             'type' => 'text',
-            'required' => true,
-            'width' => 'half',
-            'placeholder' => ''
-        ),
-        array(
-            'id' => 'phone',
-            'label' => 'Phone',
-            'type' => 'tel',
             'required' => true,
             'width' => 'half',
             'placeholder' => ''
@@ -43,20 +35,36 @@ function chroma_tour_default_fields()
             'placeholder' => ''
         ),
         array(
-            'id' => 'location_id',
-            'label' => 'Preferred Location',
-            'type' => 'select_location',
-            'required' => false,
+            'id' => 'phone',
+            'label' => 'Phone',
+            'type' => 'tel',
+            'required' => true,
             'width' => 'half',
-            'placeholder' => 'Select a location...'
+            'placeholder' => ''
         ),
         array(
-            'id' => 'child_ages',
-            'label' => 'Child(ren) Age(s)',
+            'id' => 'position',
+            'label' => 'Position Applied For',
             'type' => 'text',
             'required' => false,
+            'width' => 'half',
+            'placeholder' => 'e.g. Lead Teacher'
+        ),
+        array(
+            'id' => 'resume',
+            'label' => 'Resume / Cover Letter',
+            'type' => 'file',
+            'required' => true,
             'width' => 'full',
-            'placeholder' => 'e.g., 10 months, 3 years'
+            'placeholder' => ''
+        ),
+        array(
+            'id' => 'message',
+            'label' => 'Message',
+            'type' => 'textarea',
+            'required' => false,
+            'width' => 'full',
+            'placeholder' => 'Tell us about yourself...'
         )
     );
 }
@@ -64,51 +72,51 @@ function chroma_tour_default_fields()
 /**
  * Admin Menu & Settings
  */
-function chroma_tour_register_settings()
+function chroma_career_register_settings()
 {
-    register_setting('chroma_tour_options', 'chroma_tour_fields', array(
+    register_setting('chroma_career_options', 'chroma_career_fields', array(
         'type' => 'string',
-        'sanitize_callback' => 'chroma_tour_sanitize_json',
-        'default' => wp_json_encode(chroma_tour_default_fields())
+        'sanitize_callback' => 'chroma_career_sanitize_json',
+        'default' => wp_json_encode(chroma_career_default_fields())
     ));
     
-    register_setting('chroma_tour_options', 'chroma_tour_webhook_url', array(
+    register_setting('chroma_career_options', 'chroma_career_webhook_url', array(
         'type' => 'string',
         'sanitize_callback' => 'esc_url_raw',
         'default' => ''
     ));
 
-    register_setting('chroma_tour_options', 'chroma_tour_email_recipient', array(
+    register_setting('chroma_career_options', 'chroma_career_email_recipient', array(
         'type' => 'string',
         'sanitize_callback' => 'sanitize_email',
-        'default' => get_option('admin_email')
+        'default' => 'careers@chromaela.com'
     ));
 }
-add_action('admin_init', 'chroma_tour_register_settings');
+add_action('admin_init', 'chroma_career_register_settings');
 
-function chroma_tour_sanitize_json($input)
+function chroma_career_sanitize_json($input)
 {
     $decoded = json_decode($input, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
-        add_settings_error('chroma_tour_fields', 'invalid_json', 'Invalid JSON format. Changes not saved.');
-        return get_option('chroma_tour_fields');
+        add_settings_error('chroma_career_fields', 'invalid_json', 'Invalid JSON format. Changes not saved.');
+        return get_option('chroma_career_fields');
     }
     return $input;
 }
 
-function chroma_tour_admin_menu()
+function chroma_career_admin_menu()
 {
     add_options_page(
-        'Tour Form Settings',
-        'Tour Form',
+        'Career Form Settings',
+        'Career Form',
         'manage_options',
-        'chroma-tour-form',
-        'chroma_tour_settings_page_html'
+        'chroma-career-form',
+        'chroma_career_settings_page_html'
     );
 }
-add_action('admin_menu', 'chroma_tour_admin_menu');
+add_action('admin_menu', 'chroma_career_admin_menu');
 
-function chroma_tour_settings_page_html()
+function chroma_career_settings_page_html()
 {
     if (!current_user_can('manage_options')) {
         return;
@@ -116,28 +124,28 @@ function chroma_tour_settings_page_html()
     ?>
     <div class="wrap">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-        <form action="options.php" method="post" id="chroma-tour-settings-form">
+        <form action="options.php" method="post" id="chroma-career-settings-form">
             <?php
-            settings_fields('chroma_tour_options');
-            do_settings_sections('chroma_tour_options');
+            settings_fields('chroma_career_options');
+            do_settings_sections('chroma_career_options');
             
-            $fields_json = get_option('chroma_tour_fields', wp_json_encode(chroma_tour_default_fields()));
-            $webhook_url = get_option('chroma_tour_webhook_url', '');
-            $email_recipient = get_option('chroma_tour_email_recipient', get_option('admin_email'));
+            $fields_json = get_option('chroma_career_fields', wp_json_encode(chroma_career_default_fields()));
+            $webhook_url = get_option('chroma_career_webhook_url', '');
+            $email_recipient = get_option('chroma_career_email_recipient', 'careers@chromaela.com');
             ?>
             
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row">Email Recipient</th>
                     <td>
-                        <input type="email" name="chroma_tour_email_recipient" value="<?php echo esc_attr($email_recipient); ?>" class="regular-text" />
-                        <p class="description">The email address where notifications will be sent. Defaults to admin email.</p>
+                        <input type="email" name="chroma_career_email_recipient" value="<?php echo esc_attr($email_recipient); ?>" class="regular-text" />
+                        <p class="description">The email address where applications will be sent.</p>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row">Webhook URL</th>
                     <td>
-                        <input type="url" name="chroma_tour_webhook_url" value="<?php echo esc_attr($webhook_url); ?>" class="regular-text" placeholder="https://hooks.zapier.com/..." />
+                        <input type="url" name="chroma_career_webhook_url" value="<?php echo esc_attr($webhook_url); ?>" class="regular-text" placeholder="https://hooks.zapier.com/..." />
                         <p class="description">Optional. Send form submissions to this URL via POST request.</p>
                     </td>
                 </tr>
@@ -145,7 +153,7 @@ function chroma_tour_settings_page_html()
                     <th scope="row">Form Fields</th>
                     <td>
                         <div id="chroma-fields-editor"></div>
-                        <input type="hidden" name="chroma_tour_fields" id="chroma_tour_fields_input" value="<?php echo esc_attr($fields_json); ?>">
+                        <input type="hidden" name="chroma_career_fields" id="chroma_career_fields_input" value="<?php echo esc_attr($fields_json); ?>">
                     </td>
                 </tr>
             </table>
@@ -203,7 +211,7 @@ function chroma_tour_settings_page_html()
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('chroma-fields-editor');
-            const input = document.getElementById('chroma_tour_fields_input');
+            const input = document.getElementById('chroma_career_fields_input');
             let fields = JSON.parse(input.value || '[]');
 
             function render() {
@@ -231,7 +239,7 @@ function chroma_tour_settings_page_html()
                                     <option value="email" ${field.type === 'email' ? 'selected' : ''}>Email</option>
                                     <option value="tel" ${field.type === 'tel' ? 'selected' : ''}>Phone</option>
                                     <option value="textarea" ${field.type === 'textarea' ? 'selected' : ''}>Text Area</option>
-                                    <option value="select_location" ${field.type === 'select_location' ? 'selected' : ''}>Location Select</option>
+                                    <option value="file" ${field.type === 'file' ? 'selected' : ''}>File Upload</option>
                                 </select>
                             </div>
                             <div class="chroma-input-group">
@@ -312,33 +320,21 @@ function chroma_tour_settings_page_html()
 }
 
 /**
- * Safe accessor for global settings without relying on ACF.
+ * Career Form Shortcode
+ * Usage: [chroma_career_form]
  */
-function chroma_tour_get_global_setting($key, $default = '')
+function chroma_career_form_shortcode()
 {
-    if (function_exists('chroma_get_global_setting')) {
-        return chroma_get_global_setting($key, $default);
-    }
-    $settings = get_option('chroma_global_settings', array());
-    return isset($settings[$key]) ? $settings[$key] : $default;
-}
-
-/**
- * Tour Form Shortcode
- * Usage: [chroma_tour_form]
- */
-function chroma_tour_form_shortcode()
-{
-    $fields_json = get_option('chroma_tour_fields', wp_json_encode(chroma_tour_default_fields()));
+    $fields_json = get_option('chroma_career_fields', wp_json_encode(chroma_career_default_fields()));
     $fields = json_decode($fields_json, true);
     if (!is_array($fields)) {
-        $fields = chroma_tour_default_fields();
+        $fields = chroma_career_default_fields();
     }
 
     ob_start();
     ?>
-    <form class="chroma-tour-form space-y-4" method="post" action="">
-        <?php wp_nonce_field('chroma_tour_submit', 'chroma_tour_nonce'); ?>
+    <form class="chroma-career-form space-y-4" method="post" action="" enctype="multipart/form-data">
+        <?php wp_nonce_field('chroma_career_submit', 'chroma_career_nonce'); ?>
 
         <div class="grid md:grid-cols-2 gap-4">
             <?php foreach ($fields as $field):
@@ -352,31 +348,23 @@ function chroma_tour_form_shortcode()
                 ?>
 
                 <div class="<?php echo esc_attr($width); ?>">
-                    <label class="block text-xs font-bold text-brand-ink uppercase mb-1.5" for="tour_<?php echo $id; ?>">
+                    <label class="block text-xs font-bold text-brand-ink uppercase mb-1.5" for="career_<?php echo $id; ?>">
                         <?php echo $label . $asterisk; ?>
                     </label>
 
-                    <?php if ($type === 'select_location'): ?>
-                        <select id="tour_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?> aria-label="<?php echo $label; ?>"
-                            class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink">
-                            <option value=""><?php echo $placeholder ?: 'Select a location...'; ?></option>
-                            <?php
-                            $locations = get_posts(array('post_type' => 'location', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC'));
-                            foreach ($locations as $location):
-                                ?>
-                                <option value="<?php echo esc_attr($location->ID); ?>">
-                                    <?php echo esc_html($location->post_title); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-
-                    <?php elseif ($type === 'textarea'): ?>
-                        <textarea id="tour_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?> aria-label="<?php echo $label; ?>"
+                    <?php if ($type === 'textarea'): ?>
+                        <textarea id="career_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?> aria-label="<?php echo $label; ?>"
                             placeholder="<?php echo $placeholder; ?>"
                             class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink h-32"></textarea>
+                    
+                    <?php elseif ($type === 'file'): ?>
+                        <input type="file" id="career_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?>
+                            aria-label="<?php echo $label; ?>" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                            class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink" />
+                        <p class="text-xs text-brand-ink/60 mt-1">Accepted formats: PDF, DOC, DOCX, JPG, PNG. Max 5MB.</p>
 
                     <?php else: ?>
-                        <input type="<?php echo $type; ?>" id="tour_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?>
+                        <input type="<?php echo $type; ?>" id="career_<?php echo $id; ?>" name="<?php echo $id; ?>" <?php echo $required; ?>
                             aria-label="<?php echo $label; ?>" placeholder="<?php echo $placeholder; ?>"
                             class="w-full px-4 py-3 rounded-xl border border-chroma-blue/20 bg-white focus:border-chroma-blue outline-none text-brand-ink" />
                     <?php endif; ?>
@@ -385,42 +373,77 @@ function chroma_tour_form_shortcode()
             <?php endforeach; ?>
         </div>
 
-        <button type="submit" name="chroma_tour_submit"
+        <button type="submit" name="chroma_career_submit"
             class="w-full bg-chroma-red text-white text-xs font-semibold uppercase tracking-wider py-4 rounded-full shadow-soft hover:bg-chroma-red/90 transition">
-            Request Tour
+            Submit Application
         </button>
     </form>
     <?php
     return ob_get_clean();
 }
-add_shortcode('chroma_tour_form', 'chroma_tour_form_shortcode');
+add_shortcode('chroma_career_form', 'chroma_career_form_shortcode');
 
 /**
  * Handle Form Submission
  */
-function chroma_handle_tour_submission()
+function chroma_handle_career_submission()
 {
-    if (!isset($_POST['chroma_tour_submit']) || !wp_verify_nonce(wp_unslash($_POST['chroma_tour_nonce'] ?? ''), 'chroma_tour_submit')) {
+    if (!isset($_POST['chroma_career_submit']) || !wp_verify_nonce(wp_unslash($_POST['chroma_career_nonce'] ?? ''), 'chroma_career_submit')) {
         return;
     }
 
     // Get fields configuration
-    $fields_json = get_option('chroma_tour_fields', wp_json_encode(chroma_tour_default_fields()));
+    $fields_json = get_option('chroma_career_fields', wp_json_encode(chroma_career_default_fields()));
     $fields = json_decode($fields_json, true);
     if (!is_array($fields)) {
-        $fields = chroma_tour_default_fields();
+        $fields = chroma_career_default_fields();
     }
 
     $submission_data = array();
+    $attachments = array();
     $has_error = false;
-    $parent_name = 'Unknown';
+    $applicant_name = 'Unknown';
     $email = '';
-    $location_id = 0;
 
     // Process fields
     foreach ($fields as $field) {
         $id = $field['id'];
         $required = !empty($field['required']);
+        
+        // Handle File Uploads
+        if ($field['type'] === 'file') {
+            if (!empty($_FILES[$id]['name'])) {
+                $file = $_FILES[$id];
+                
+                // Basic validation
+                $allowed_types = array('application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png');
+                if (!in_array($file['type'], $allowed_types)) {
+                    // Invalid file type
+                    $has_error = true; 
+                    continue;
+                }
+                
+                // Handle upload
+                if (!function_exists('wp_handle_upload')) {
+                    require_once(ABSPATH . 'wp-admin/includes/file.php');
+                }
+                
+                $upload_overrides = array('test_form' => false);
+                $movefile = wp_handle_upload($file, $upload_overrides);
+                
+                if ($movefile && !isset($movefile['error'])) {
+                    $attachments[] = $movefile['file']; // For email attachment
+                    $submission_data[$field['label']] = $movefile['url']; // Store URL in log
+                } else {
+                    $has_error = true;
+                }
+            } elseif ($required) {
+                $has_error = true;
+            }
+            continue;
+        }
+
+        // Handle Text Fields
         $value = isset($_POST[$id]) ? sanitize_text_field(wp_unslash($_POST[$id])) : '';
 
         if ($field['type'] === 'email') {
@@ -429,7 +452,7 @@ function chroma_handle_tour_submission()
                 $has_error = true;
             }
             if (is_email($value)) {
-                $email = $value; // Capture email for sending
+                $email = $value;
             }
         }
 
@@ -437,65 +460,41 @@ function chroma_handle_tour_submission()
             $has_error = true;
         }
 
-        // Capture specific fields for logic
-        if ($id === 'parent_name') $parent_name = $value;
-        if ($id === 'location_id') $location_id = intval($value);
+        if ($id === 'applicant_name') $applicant_name = $value;
 
         $submission_data[$field['label']] = $value;
     }
 
-    $redirect_fallback = home_url('/contact/');
+    $redirect_fallback = home_url('/careers/');
     $redirect_target = wp_get_referer() ?: $redirect_fallback;
     $redirect_url = wp_validate_redirect($redirect_target, $redirect_fallback);
 
     if ($has_error || empty($email)) {
-        wp_safe_redirect(add_query_arg('tour_sent', '0', $redirect_url));
+        wp_safe_redirect(add_query_arg('career_sent', '0', $redirect_url));
         exit;
     }
 
-    // Determine email recipients
-    $global_recipients_str = get_option('chroma_tour_email_recipient', 'enrollment@chromaela.com, info@chromaela.com');
-    $recipients = array_map('trim', explode(',', $global_recipients_str));
-    
-    if ($location_id) {
-        $location_email = get_post_meta($location_id, 'location_email', true);
-        if ($location_email && is_email($location_email)) {
-            $recipients[] = $location_email;
-        }
-    }
-
-    // Remove duplicates and empty values
-    $recipients = array_unique(array_filter($recipients, 'is_email'));
-    
-    if (empty($recipients)) {
-        $recipients = array(get_option('admin_email'));
-    }
-
-    // Construct Message
-    $subject = 'New Tour Request from ' . $parent_name;
-    $message = "New tour request:\n\n";
+    // Email to careers team
+    $to_email = get_option('chroma_career_email_recipient', 'careers@chromaela.com');
+    $subject = 'New Job Application: ' . $applicant_name;
+    $message = "New job application:\n\n";
     foreach ($submission_data as $label => $val) {
-        $val_display = $val;
-        if ($label === 'Preferred Location' && is_numeric($val) && $val > 0) {
-            $val_display = get_the_title($val);
-        }
-        $message .= $label . ": " . $val_display . "\n";
+        $message .= $label . ": " . $val . "\n";
     }
 
-    wp_mail($recipients, $subject, $message);
+    wp_mail($to_email, $subject, $message, '', $attachments);
 
     // Log to Lead Log CPT
     if (post_type_exists('lead_log')) {
         wp_insert_post(
             array(
                 'post_type' => 'lead_log',
-                'post_title' => 'Tour: ' . $parent_name,
+                'post_title' => 'Application: ' . $applicant_name,
                 'post_status' => 'publish',
                 'meta_input' => array(
-                    'lead_type' => 'tour',
-                    'lead_name' => $parent_name,
+                    'lead_type' => 'career',
+                    'lead_name' => $applicant_name,
                     'lead_email' => $email,
-                    'lead_location' => $location_id,
                     'lead_payload' => wp_json_encode($submission_data),
                 ),
             )
@@ -503,10 +502,10 @@ function chroma_handle_tour_submission()
     }
     
     // Webhook Integration
-    $webhook_url = get_option('chroma_tour_webhook_url', '');
+    $webhook_url = get_option('chroma_career_webhook_url', '');
     if (!empty($webhook_url)) {
         $webhook_data = array(
-            'form_name' => 'Tour Request',
+            'form_name' => 'Job Application',
             'submitted_at' => current_time('mysql'),
             'data' => $submission_data
         );
@@ -515,11 +514,13 @@ function chroma_handle_tour_submission()
             'body' => wp_json_encode($webhook_data),
             'headers' => array('Content-Type' => 'application/json'),
             'timeout' => 15,
-            'blocking' => false // Don't wait for response
+            'blocking' => false
         ));
     }
 
-    wp_safe_redirect(add_query_arg('tour_sent', '1', $redirect_url));
+    // Cleanup attachments if needed (optional, but keeping them in uploads is usually better for record keeping)
+
+    wp_safe_redirect(add_query_arg('career_sent', '1', $redirect_url));
     exit;
 }
-add_action('template_redirect', 'chroma_handle_tour_submission');
+add_action('template_redirect', 'chroma_handle_career_submission');
