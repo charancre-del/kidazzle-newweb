@@ -10,6 +10,11 @@
 	<link rel="preload" as="font" href="<?php echo get_template_directory_uri(); ?>/assets/webfonts/Outfit-Bold.woff2"
 		type="font/woff2" crossorigin>
 
+	<?php wp_head(); ?>
+</head>
+
+<body <?php body_class(); ?>>
+
 	<!-- Skip Links for Accessibility -->
 	<a href="#main-content"
 		class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-white text-brand-ink p-4 z-50 rounded-lg shadow-lg">Skip
