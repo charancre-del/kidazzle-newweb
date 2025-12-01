@@ -94,7 +94,8 @@
 
 	<!-- Mobile Menu Overlay -->
 	<div data-mobile-nav
-		class="fixed inset-0 bg-white z-[100] transform translate-x-full transition-transform duration-300 lg:hidden flex flex-col h-full w-full overflow-hidden">
+		class="fixed inset-0 bg-white transform translate-x-full transition-transform duration-300 lg:hidden flex flex-col h-full w-full overflow-hidden"
+		style="z-index: 9999;">
 		<div class="flex items-center justify-between p-4 border-b border-brand-ink/5">
 			<div class="flex items-center gap-3"> <img
 					src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo_chromacropped_40x40.webp'); ?>"
