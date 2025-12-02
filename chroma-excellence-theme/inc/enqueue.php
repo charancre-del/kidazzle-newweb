@@ -39,6 +39,18 @@ function chroma_enqueue_assets()
         $fa_version = file_exists($fa_path) ? filemtime($fa_path) : '6.4.0';
         wp_enqueue_style(
                 'chroma-font-awesome',
+                CHROMA_THEME_URI . '/assets/css/font-awesome-subset.css',
+                array(),
+                $fa_version
+        );
+
+        // Chart.js (Only for single programs or front page if needed)
+        if (is_singular('program') || is_front_page()) {
+                $chart_js_path = CHROMA_THEME_DIR . '/assets/js/chart.min.js';
+                $chart_js_version = file_exists($chart_js_path) ? filemtime($chart_js_path) : '4.4.0';
+
+                wp_enqueue_script(
+                        'chartjs',
                         CHROMA_THEME_URI . '/assets/js/chart.min.js',
                         array(),
                         $chart_js_version,
