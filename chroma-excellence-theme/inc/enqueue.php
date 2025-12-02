@@ -29,8 +29,6 @@ function chroma_should_load_maps()
  */
 function chroma_enqueue_assets()
 {
-        // DEBUG: Confirm this function is executing
-        echo '<!-- DEBUG: chroma_enqueue_assets is running -->';
 
         $script_dependencies = array('jquery');
 
@@ -156,8 +154,19 @@ function chroma_enqueue_assets()
         ";
         wp_add_inline_style('chroma-main', $custom_css);
 
-        // Main JavaScript (Interactions)
-        // Replaces legacy main.js
+        // Interactions Script (Replaces main.js)
+        $js_path = CHROMA_THEME_DIR . '/assets/js/interactions.js';
+        $js_version = file_exists($js_path) ? filemtime($js_path) : CHROMA_VERSION;
+
+        wp_enqueue_script(
+                'chroma-interactions',
+                CHROMA_THEME_URI . '/assets/js/interactions.js',
+                array(), // No dependencies
+                $js_version,
+                true // In footer
+        );
+
+        // Localize script for AJAX and dynamic data.
         wp_localize_script(
                 'chroma-interactions',
                 'chromaData',

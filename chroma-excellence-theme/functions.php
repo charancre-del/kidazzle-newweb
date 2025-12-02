@@ -335,17 +335,3 @@ add_action('wp_footer', 'chroma_lazy_load_leadconnector', 999);
 
 
 
-/**
- * Enqueue Interactions Script for new design
- */
-function chroma_enqueue_interactions()
-{
-    wp_enqueue_script(
-        'chroma-interactions',
-        get_template_directory_uri() . '/assets/js/interactions.js',
-        array(), // No dependencies needed for vanilla JS
-        CHROMA_VERSION,
-        true // Load in footer
-    );
-}
-add_action('wp_enqueue_scripts', 'chroma_enqueue_interactions');
