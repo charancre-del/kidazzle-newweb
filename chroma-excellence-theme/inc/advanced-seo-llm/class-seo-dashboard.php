@@ -96,6 +96,7 @@ class Chroma_SEO_Dashboard
                         <th>LLM Context</th>
                         <th>Quality & Ratings</th>
                         <th>Media & Pricing</th>
+                        <th>Events & Enrollment</th>
                         <th style="width: 80px;">Actions</th>
                     </tr>
                 </thead>
@@ -115,9 +116,13 @@ class Chroma_SEO_Dashboard
                         $quality = get_post_meta($id, 'location_quality_rated', true);
                         $rating = get_post_meta($id, 'location_google_rating', true);
 
-                        // Media/Pricing (Placeholders for now)
+                        // Media/Pricing
                         $video = get_post_meta($id, 'location_video_tour_url', true);
                         $price = get_post_meta($id, 'location_price_min', true);
+
+                        // Events/HowTo
+                        $events = get_post_meta($id, 'location_events', true);
+                        $howto = get_post_meta($id, 'location_enrollment_steps', true);
                         ?>
                         <tr>
                             <td>
@@ -136,7 +141,8 @@ class Chroma_SEO_Dashboard
 
                                 <?php if ($geo_data): ?>
                                     <div><?php echo number_format($geo_data['lat'], 4); ?>,
-                                        <?php echo number_format($geo_data['lng'], 4); ?></div>
+                                        <?php echo number_format($geo_data['lng'], 4); ?>
+                                    </div>
                                     <div>Radius: <?php echo $geo_data['radius']; ?> mi</div>
                                 <?php else: ?>
                                     <span class="chroma-cross">×</span> No coordinates
@@ -190,6 +196,23 @@ class Chroma_SEO_Dashboard
                                         <span class="chroma-check">✓</span> Pricing
                                     <?php else: ?>
                                         <span class="chroma-cross">×</span> No Price
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div style="margin-bottom: 4px;">
+                                    <?php if (!empty($events)): ?>
+                                        <span class="chroma-check">✓</span> <?php echo count($events); ?> Events
+                                    <?php else: ?>
+                                        <span style="color: #ccc;">-</span> No Events
+                                    <?php endif; ?>
+                                </div>
+                                <div>
+                                    <?php if (!empty($howto)): ?>
+                                        <span class="chroma-check">✓</span> Enrollment Steps
+                                    <?php else: ?>
+                                        <span class="chroma-cross">×</span> No Steps
                                     <?php endif; ?>
                                 </div>
                             </td>
