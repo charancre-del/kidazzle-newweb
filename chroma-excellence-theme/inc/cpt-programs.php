@@ -848,11 +848,5 @@ function chroma_program_single_page_meta_box_save($post_id)
 }
 add_action('save_post_program', 'chroma_program_single_page_meta_box_save');
 
-/**
- * Get program archive URL
- */
-function chroma_get_program_archive_url()
-{
-	return get_post_type_archive_link('program');
-}
+
 
