@@ -291,6 +291,7 @@ add_action('wp_enqueue_scripts', 'chroma_dequeue_leadconnector_plugin', 9999);
  */
 function chroma_lazy_load_leadconnector()
 {
+
     ?>
     <script>
         (function () {
@@ -339,5 +340,3 @@ function chroma_lazy_load_leadconnector()
     <?php
 }
 add_action('wp_footer', 'chroma_lazy_load_leadconnector', 999);
-
-

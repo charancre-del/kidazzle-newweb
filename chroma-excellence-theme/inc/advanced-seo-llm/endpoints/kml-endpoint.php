@@ -88,5 +88,4 @@ class Chroma_KML_Endpoint
         }
     }
 }
-
 Chroma_KML_Endpoint::init();
