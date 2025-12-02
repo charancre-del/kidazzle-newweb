@@ -257,6 +257,6 @@ window.switchTab = function (tabName) {
     switchTabInternal(tabName);
 };
 
-    // Initialize default tab
-    // switchTabInternal('infant'); // Optional
-});
+// Initialize default tab
+// switchTabInternal('infant'); // Optional
+

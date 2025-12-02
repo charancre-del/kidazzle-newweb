@@ -13,6 +13,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Suppress Deprecation warnings to prevent Customizer AJAX corruption (caused by 3rd party plugins)
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
+
 /**
  * Define theme constants
  */

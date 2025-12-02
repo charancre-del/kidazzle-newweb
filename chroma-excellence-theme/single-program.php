@@ -184,9 +184,7 @@ while (have_posts()):
 			<?php endif; endif; ?>
 
 		<!-- CTA Section -->
-		</div>
-		</div>
-		</section>
+
 	</main>
 
 	<style>
@@ -266,15 +264,15 @@ while (have_posts()):
 			},
 			plugins: { legend: { display: false } }
 		}
-												});
-											};
+													});
+												};
 		document.body.appendChild(script);
-										}
-									});
-								}, { rootMargin: '200px' }); // Start loading 200px before view
+											}
+										});
+									}, { rootMargin: '200px' }); // Start loading 200px before view
 		observer.observe(ctx);
-							}
-						});
+								}
+							});
 	</script>
 
 	<?php

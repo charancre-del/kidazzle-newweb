@@ -19,8 +19,8 @@ $programs_query = $wp_query;
 		<!-- Background -->
 		<div class="absolute inset-0 z-0">
 			<div class="absolute inset-0 bg-brand-ink/60 z-10"></div>
-			<img src="<?php echo get_theme_file_uri('/assets/images/hero-programs.jpg'); ?>" alt="Chroma Programs"
-				class="w-full h-full object-cover">
+			<img src="https://images.unsplash.com/photo-1587654780291-39c940483713?q=80&w=1600&auto=format&fit=crop"
+				alt="Chroma Programs" class="w-full h-full object-cover">
 		</div>
 
 		<!-- Content -->
