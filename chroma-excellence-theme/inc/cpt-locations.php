@@ -466,6 +466,14 @@ function chroma_render_location_custom_fields_meta_box($post)
 			<small><?php _e('Enter programs separated by commas. These appear as badges on the location card.', 'chroma-excellence'); ?></small>
 		</div>
 
+	<div class="chroma-meta-field">
+		<label for="location_quality_rated">
+			<input type="checkbox" id="location_quality_rated" name="location_quality_rated" value="1"
+				<?php checked(get_post_meta($post->ID, 'location_quality_rated', true), '1'); ?> />
+			<?php _e('Quality Rated by Georgia DECAL', 'chroma-excellence'); ?>
+		</label>
+		<small><?php _e('Check if this location has achieved Georgia\'s Quality Rated status', 'chroma-excellence'); ?></small>
+	</div>
 		<div class="chroma-meta-field">
 			<label for="location_google_rating"><?php _e('Google Rating', 'chroma-excellence'); ?></label>
 			<input type="text" id="location_google_rating" name="location_google_rating"
@@ -646,6 +654,17 @@ function chroma_render_location_custom_fields_meta_box($post)
 	</div>
 
 	<div class="chroma-meta-section">
+		<h4><?php _e('Location-Specific FAQs (LLM SEO)', 'chroma-excellence'); ?></h4>
+
+		<div class="chroma-meta-field">
+			<label for="location_faq_items"><?php _e('FAQ Items', 'chroma-excellence'); ?></label>
+			<textarea id="location_faq_items" name="location_faq_items" rows="8"
+				placeholder="Format (one per line):&#10;What are your hours?|We're open Mon-Fri 6:30am-6:30pm&#10;Do you provide meals?|Yes, breakfast, lunch, and snack included"><?php echo esc_textarea(get_post_meta($post->ID, 'location_faq_items', true)); ?></textarea>
+			<small><?php _e('Enter FAQ items in format: Question|Answer (one per line). These appear in JSON endpoints for LLMs.', 'chroma-excellence'); ?></small>
+		</div>
+	</div>
+
+	<div class="chroma-meta-section">
 		<p><strong><?php _e('Note:', 'chroma-excellence'); ?></strong>
 			<?php _e('Use the "Featured Image" box in the sidebar to set the hero image for this location. Programs available at this location can be managed from the Programs admin section.', 'chroma-excellence'); ?>
 		</p>
@@ -705,13 +724,15 @@ function chroma_save_location_custom_fields($post_id)
 		'location_latitude',
 		'location_longitude',
 		'location_service_areas',
+		'location_special_programs',
+		'location_faq_items',
 	);
 
 	foreach ($fields as $field) {
 		if (isset($_POST[$field])) {
 			$value = wp_unslash($_POST[$field]);
 			// Sanitize based on field type
-			if (in_array($field, array('location_description', 'location_director_bio', 'location_maps_embed', 'location_school_pickups', 'location_seo_content_text', 'location_service_areas', 'location_hero_review_text'))) {
+			if (in_array($field, array('location_description', 'location_director_bio', 'location_maps_embed', 'location_school_pickups', 'location_seo_content_text', 'location_service_areas', 'location_hero_review_text', 'location_faq_items'))) {
 				$value = sanitize_textarea_field($value);
 			} elseif ($field === 'location_email') {
 				$value = sanitize_email($value);
@@ -723,5 +744,9 @@ function chroma_save_location_custom_fields($post_id)
 			update_post_meta($post_id, $field, $value);
 		}
 	}
+
+	// Save checkbox field for quality_rated
+	$quality_rated = isset($_POST['location_quality_rated']) ? '1' : '';
+	update_post_meta($post_id, 'location_quality_rated', $quality_rated);
 }
 add_action('save_post_location', 'chroma_save_location_custom_fields');
