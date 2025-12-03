@@ -167,6 +167,33 @@ function chroma_advanced_seo_init()
 add_action('init', 'chroma_advanced_seo_init');
 
 /**
+ * Admin Assets
+ */
+function chroma_advanced_seo_admin_assets($hook)
+{
+	// Only load on SEO Dashboard or Post Edit screens
+	$screen = get_current_screen();
+	$allowed_post_types = ['location', 'program', 'page', 'post', 'city'];
+
+	$is_dashboard = (isset($_GET['page']) && $_GET['page'] === 'chroma-seo-dashboard');
+	$is_post_edit = ($hook === 'post.php' || $hook === 'post-new.php');
+	$is_allowed_type = ($screen && in_array($screen->post_type, $allowed_post_types));
+
+	if (!$is_dashboard && !($is_post_edit && $is_allowed_type)) {
+		return;
+	}
+
+	?>
+	<style>
+		.chroma-seo-meta-box {
+			background: #fff;
+		}
+
+		.chroma-section-title {
+			font-size: 14px;
+			font-weight: 600;
+			margin: 15px 0 10px;
+			border-bottom: 1px solid #eee;
 			padding: 10px 0;
 		}
 

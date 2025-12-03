@@ -95,7 +95,7 @@ class Chroma_Fallback_Resolver
         }
 
         // Build from existing data
-        $name = get_the_title($location_id);
+        $name = get_post_field('post_title', $location_id);
         $city = get_post_meta($location_id, 'location_city', true);
         $quality = get_post_meta($location_id, 'location_quality_rated', true);
         $ages = get_post_meta($location_id, 'location_ages_served', true);
@@ -136,7 +136,7 @@ class Chroma_Fallback_Resolver
 
         // Auto-generate from location data
         $city = get_post_meta($location_id, 'location_city', true);
-        $name = get_the_title($location_id);
+        $name = get_post_field('post_title', $location_id);
 
         $queries = [];
 
@@ -219,7 +219,7 @@ class Chroma_Fallback_Resolver
 
         // Add CPT program titles
         foreach ($cpt_programs as $program_id) {
-            $all_programs[] = get_the_title($program_id);
+            $all_programs[] = get_post_field('post_title', $program_id);
         }
 
         // 2. ALSO merge manual programs from text field

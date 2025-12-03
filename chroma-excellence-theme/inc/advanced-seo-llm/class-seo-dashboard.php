@@ -216,7 +216,8 @@ class Chroma_SEO_Dashboard
                     ?>
                     <tr>
                         <td>
-                            <strong><a href="<?php echo get_edit_post_link($id); ?>"><?php echo get_the_title($id); ?></a></strong>
+                            <strong><a
+                                    href="<?php echo get_edit_post_link($id); ?>"><?php echo esc_html($p->post_title); ?></a></strong>
                             <?php if ($post_type === 'location'): ?>
                                 <br><small><?php echo get_post_meta($id, 'location_city', true); ?></small>
                             <?php endif; ?>
