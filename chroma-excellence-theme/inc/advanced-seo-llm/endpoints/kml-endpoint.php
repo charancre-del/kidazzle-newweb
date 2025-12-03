@@ -78,6 +78,22 @@ class Chroma_KML_Endpoint
                                 </Point>
                             </Placemark>
                             <?php
+                        } elseif ($address) {
+                            // Fallback to address if coordinates are missing
+                            ?>
+                            <Placemark>
+                                <name><?php echo esc_html($location->post_title); ?></name>
+                                <description>
+                                    <![CDATA[
+                                    <p><strong>Address:</strong> <?php echo esc_html("$address, $city, $state $zip"); ?></p>
+                                    <p><strong>Phone:</strong> <?php echo esc_html($phone); ?></p>
+                                    <p><a href="<?php echo get_permalink($location->ID); ?>">View Details</a></p>
+                                    <p><em>(Coordinates missing, using address)</em></p>
+                                    ]]>
+                                </description>
+                                <address><?php echo esc_html("$address, $city, $state $zip"); ?></address>
+                            </Placemark>
+                            <?php
                         }
                     }
                     ?>
