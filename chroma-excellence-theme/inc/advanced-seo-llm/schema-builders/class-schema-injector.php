@@ -143,7 +143,12 @@ class Chroma_Schema_Injector
                 $location_name = get_the_title($post_id);
                 $address = get_post_meta($post_id, 'location_address', true);
                 $phone = get_post_meta($post_id, 'location_phone', true);
-                $description = get_the_excerpt($post_id) ?: get_post_meta($post_id, 'location_short_description', true);
+                $excerpt = get_post_field('post_excerpt', $post_id);
+                if (empty($excerpt)) {
+                    $content = get_post_field('post_content', $post_id);
+                    $excerpt = wp_trim_words(strip_shortcodes($content), 55);
+                }
+                $description = $excerpt ?: get_post_meta($post_id, 'location_short_description', true);
 
                 $defaults[] = [
                     'type' => 'ChildCare',
@@ -161,7 +166,11 @@ class Chroma_Schema_Injector
             case 'program':
                 // Service schema for programs
                 $program_name = get_the_title($post_id);
-                $program_desc = get_the_excerpt($post_id);
+                $program_desc = get_post_field('post_excerpt', $post_id);
+                if (empty($program_desc)) {
+                    $content = get_post_field('post_content', $post_id);
+                    $program_desc = wp_trim_words(strip_shortcodes($content), 55);
+                }
                 $age_range = get_post_meta($post_id, 'program_age_range', true);
 
                 $defaults[] = [

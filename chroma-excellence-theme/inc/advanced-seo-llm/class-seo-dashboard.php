@@ -28,6 +28,8 @@ class Chroma_SEO_Dashboard
         add_action('wp_ajax_chroma_fetch_social_preview', [$this, 'ajax_fetch_social_preview']);
         add_action('wp_ajax_chroma_fetch_llm_data', [$this, 'ajax_fetch_llm_data']);
         add_action('wp_ajax_chroma_save_llm_targeting', [$this, 'ajax_save_llm_targeting']);
+        add_action('wp_ajax_chroma_generate_llm_targeting', [$this, 'ajax_generate_llm_targeting']);
+        add_action('wp_ajax_chroma_generate_schema', [$this, 'ajax_generate_schema']);
         add_action('admin_init', [$this, 'register_settings']);
     }
 
@@ -860,9 +862,12 @@ class Chroma_SEO_Dashboard
             }
             // If still no schemas, try to load smart defaults based on post type
             if (empty($existing_schemas)) {
-                $defaults = Chroma_Schema_Injector::get_default_schema_for_post_type($post_id);
-                if (!empty($defaults)) {
-                    $existing_schemas = $defaults;
+                // Use the Schema Injector to get defaults if available
+                if (class_exists('Chroma_Schema_Injector')) {
+                    $defaults = Chroma_Schema_Injector::get_default_schema_for_post_type($post_id);
+                    if (!empty($defaults)) {
+                        $existing_schemas = $defaults;
+                    }
                 }
             }
         }
@@ -1349,5 +1354,61 @@ class Chroma_SEO_Dashboard
         update_post_meta($post_id, 'seo_llm_key_differentiators', $key_differentiators);
 
         wp_send_json_success();
+    }
+    /**
+     * AJAX: Generate LLM Targeting Data (AI Auto-Fill)
+     */
+    public function ajax_generate_llm_targeting()
+    {
+        check_ajax_referer('chroma_seo_dashboard_nonce', 'nonce');
+        $post_id = intval($_POST['post_id']);
+        if (!$post_id)
+            wp_send_json_error(['message' => 'Invalid Post ID']);
+
+        if (!class_exists('Chroma_Fallback_Resolver')) {
+            wp_send_json_error(['message' => 'Fallback Resolver not found']);
+        }
+
+        $data = [
+            'primary_intent' => 'informational', // Default
+            'target_queries' => Chroma_Fallback_Resolver::get_llm_target_queries($post_id),
+            'key_differentiators' => Chroma_Fallback_Resolver::get_llm_key_differentiators($post_id)
+        ];
+
+        wp_send_json_success($data);
+    }
+
+    /**
+     * AJAX: Generate Schema Data (AI Auto-Fill)
+     */
+    public function ajax_generate_schema()
+    {
+        check_ajax_referer('chroma_seo_dashboard_nonce', 'nonce');
+        $post_id = intval($_POST['post_id']);
+        $type = sanitize_text_field($_POST['schema_type']);
+
+        if (!$post_id || !$type)
+            wp_send_json_error(['message' => 'Invalid parameters']);
+
+        $data = [];
+        $post = get_post($post_id);
+
+        // Basic smart defaults based on post content
+        if ($post) {
+            $data['name'] = $post->post_title;
+            $data['description'] = wp_trim_words($post->post_content, 25);
+            $data['url'] = get_permalink($post_id);
+
+            if ($type === 'Person') {
+                $data['jobTitle'] = get_post_meta($post_id, 'team_member_title', true) ?: 'Team Member';
+            }
+
+            if ($type === 'LocalBusiness' || $type === 'ChildCare') {
+                $data['telephone'] = get_post_meta($post_id, 'location_phone', true) ?: get_theme_mod('chroma_phone_number');
+                $data['address'] = get_post_meta($post_id, 'location_address', true);
+            }
+        }
+
+        wp_send_json_success($data);
     }
 }

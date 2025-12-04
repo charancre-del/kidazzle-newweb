@@ -53,7 +53,7 @@ $locations_query = new WP_Query(array(
 			<div class="max-w-7xl mx-auto bg-white p-2 rounded-full shadow-float border border-brand-ink/5 flex flex-col lg:flex-row gap-2 fade-in-up"
 				style="animation-delay: 0.3s;">
 				<div class="relative flex-grow max-w-md">
-					<i class="fa-solid fa-search absolute left-5 top-1/2 -translate-y-1/2 text-brand-ink/70"></i>
+					<i class="fa-solid fa-search absolute left-5 top-1/2 -translate-y-1/2 text-brand-ink"></i>
 					<input type="text" id="location-search" placeholder="Search by ZIP code or city name..."
 						class="w-full pl-12 pr-4 py-3 rounded-full focus:outline-none text-brand-ink bg-white" />
 				</div>
@@ -182,7 +182,7 @@ $locations_query = new WP_Query(array(
 								</p>
 
 								<div
-									class="flex flex-wrap gap-2 mb-6 text-[10px] font-bold uppercase tracking-wider text-brand-ink/80">
+									class="flex flex-wrap gap-2 mb-6 text-[10px] font-bold uppercase tracking-wider text-brand-ink">
 									<span
 										class="border border-brand-ink/10 px-2 py-1 rounded-md"><?php echo esc_html($ages_served); ?></span>
 									<?php foreach (array_slice($special_programs, 0, 2) as $program): ?>

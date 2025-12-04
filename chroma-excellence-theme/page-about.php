@@ -497,24 +497,36 @@ while (have_posts()):
 	<div id="chroma-bio-modal"
 		class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-brand-ink/80 backdrop-blur-sm"
 		role="dialog" aria-modal="true" aria-labelledby="chroma-bio-modal-title">
-		<div class="bg-white rounded-[2rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative p-8 md:p-12">
+		<div
+			class="bg-white rounded-[2rem] max-w-5xl w-full max-h-[90vh] overflow-hidden shadow-2xl relative flex flex-col">
 			<button id="chroma-bio-close"
-				class="absolute top-6 right-6 text-brand-ink/80 hover:text-chroma-red transition-colors z-10"
+				class="absolute top-6 right-6 text-brand-ink/80 hover:text-chroma-red transition-colors z-10 bg-white/50 rounded-full p-2"
 				aria-label="Close modal">
 				<i class="fa-solid fa-xmark text-2xl"></i>
 			</button>
-			<div class="flex flex-col md:flex-row gap-8 items-start">
-				<div class="w-full md:w-48 flex-shrink-0 text-center mx-auto md:mx-0">
-					<div id="chroma-bio-modal-image"
-						class="w-48 h-48 rounded-full overflow-hidden bg-gradient-to-br from-chroma-blue to-chroma-blueDark flex items-center justify-center mx-auto shadow-lg border-4 border-white">
-						<i class="fa-solid fa-user text-6xl text-white/30"></i>
+
+			<div class="flex-grow overflow-y-auto p-8 md:p-12">
+				<div class="grid md:grid-cols-2 gap-12 items-start">
+					<!-- Image Column -->
+					<div class="relative sticky top-0">
+						<div id="chroma-bio-modal-image"
+							class="aspect-[3/4] rounded-2xl overflow-hidden bg-brand-cream shadow-lg flex items-center justify-center">
+							<!-- Image injected here -->
+							<i class="fa-solid fa-user text-6xl text-brand-ink/10"></i>
+						</div>
+						<div class="mt-6 text-center md:text-left">
+							<h3 id="chroma-bio-modal-title"
+								class="font-serif text-3xl font-bold text-brand-ink mb-2 leading-tight"></h3>
+							<p id="chroma-bio-modal-subtitle"
+								class="text-sm font-bold uppercase tracking-wider text-chroma-blue"></p>
+						</div>
 					</div>
-					<h3 id="chroma-bio-modal-title"
-						class="font-serif text-2xl font-bold text-brand-ink mt-6 mb-1 leading-tight"></h3>
-					<p id="chroma-bio-modal-subtitle"
-						class="text-xs font-bold uppercase tracking-wider text-chroma-blue mb-0"></p>
+
+					<!-- Content Column -->
+					<div id="chroma-bio-modal-content" class="prose prose-lg text-brand-ink/90">
+						<!-- Bio content injected here -->
+					</div>
 				</div>
-				<div id="chroma-bio-modal-content" class="prose prose-lg text-brand-ink/90 flex-grow"></div>
 			</div>
 		</div>
 	</div>
