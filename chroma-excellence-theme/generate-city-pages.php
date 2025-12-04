@@ -9,18 +9,28 @@
  *    OR run via command line: php generate-city-pages.php
  */
 
+// Enable Error Reporting immediately
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+echo "<h1>City Page Generator</h1>";
+echo "<p>Script started...</p>";
+
 // Try to load WordPress
 $possible_paths = [
-    './wp-load.php',
-    '../wp-load.php',
-    '../../wp-load.php',
-    '../../../wp-load.php',
-    '../../../../wp-load.php'
+    __DIR__ . '/wp-load.php',
+    __DIR__ . '/../wp-load.php',
+    __DIR__ . '/../../wp-load.php',
+    __DIR__ . '/../../../wp-load.php',
+    __DIR__ . '/../../../../wp-load.php',
+    $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php'
 ];
 
 $loaded = false;
 foreach ($possible_paths as $path) {
     if (file_exists($path)) {
+        echo "<p>Found WordPress at: $path</p>";
         require_once $path;
         $loaded = true;
         break;
@@ -28,7 +38,14 @@ foreach ($possible_paths as $path) {
 }
 
 if (!$loaded) {
-    die("Error: Could not find wp-load.php. Please place this script in your WordPress root directory.");
+    die("<h3>Error: Could not find wp-load.php.</h3><p>Current directory: " . __DIR__ . "</p><p>Please place this script in your WordPress root directory (public_html).</p>");
+}
+
+if (!function_exists('is_cli')) {
+    function is_cli()
+    {
+        return defined('WP_CLI') && WP_CLI;
+    }
 }
 
 // Ensure we have admin privileges if running via browser
