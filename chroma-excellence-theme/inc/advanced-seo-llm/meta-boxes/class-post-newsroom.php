@@ -10,30 +10,45 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Chroma_Post_Newsroom extends Chroma_Meta_Box_Base
+class Chroma_Post_Newsroom extends Chroma_Advanced_SEO_Meta_Box_Base
 {
     /**
-     * Register the meta box
+     * Get meta box ID
+     *
+     * @return string
      */
-    public function register()
+    public function get_id()
     {
-        $this->id = 'chroma_post_newsroom';
-        $this->title = 'Newsroom Settings';
-        $this->post_types = ['post'];
-        $this->context = 'side';
-        $this->priority = 'default';
-
-        parent::register();
+        return 'chroma_post_newsroom';
     }
 
     /**
-     * Render the meta box content
+     * Get meta box title
+     *
+     * @return string
+     */
+    public function get_title()
+    {
+        return 'Newsroom Settings';
+    }
+
+    /**
+     * Get allowed post types
+     *
+     * @return array
+     */
+    public function get_post_types()
+    {
+        return ['post'];
+    }
+
+    /**
+     * Render the meta box fields
      *
      * @param WP_Post $post The post object.
      */
-    public function render($post)
+    public function render_fields($post)
     {
-        wp_nonce_field('chroma_post_newsroom_nonce', 'chroma_post_newsroom_nonce');
         $show_in_newsroom = get_post_meta($post->ID, '_chroma_show_in_newsroom', true);
         ?>
         <div class="chroma-field-wrapper">
@@ -47,24 +62,12 @@ class Chroma_Post_Newsroom extends Chroma_Meta_Box_Base
     }
 
     /**
-     * Save the meta box data
+     * Save the meta box fields
      *
      * @param int $post_id The post ID.
      */
-    public function save($post_id)
+    public function save_fields($post_id)
     {
-        if (!isset($_POST['chroma_post_newsroom_nonce']) || !wp_verify_nonce($_POST['chroma_post_newsroom_nonce'], 'chroma_post_newsroom_nonce')) {
-            return;
-        }
-
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return;
-        }
-
-        if (!current_user_can('edit_post', $post_id)) {
-            return;
-        }
-
         $val = isset($_POST['chroma_show_in_newsroom']) ? '1' : '';
         update_post_meta($post_id, '_chroma_show_in_newsroom', $val);
     }

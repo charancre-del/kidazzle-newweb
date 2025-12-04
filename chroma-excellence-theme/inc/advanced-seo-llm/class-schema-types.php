@@ -35,7 +35,18 @@ class Chroma_Schema_Types
             'JobPosting' => self::get_job_posting_schema(),
             'HowTo' => self::get_howto_schema(),
             'VideoObject' => self::get_video_object_schema(),
+            'ChildCare' => self::get_childcare_schema(),
         ];
+    }
+
+    /**
+     * ChildCare (Inherits from LocalBusiness)
+     */
+    private static function get_childcare_schema()
+    {
+        $schema = self::get_local_business_schema();
+        $schema['label'] = 'Child Care / Preschool';
+        return $schema;
     }
 
 
