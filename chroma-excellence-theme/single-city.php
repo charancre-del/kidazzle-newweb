@@ -51,7 +51,7 @@ $location_count = is_array($location_ids) ? count($location_ids) : 0;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
+            tailwind.config                                      = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Outfit', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
@@ -169,27 +169,27 @@ $location_count = is_array($location_ids) ? count($location_ids) : 0;
                                 if (!$image)
                                     $image = 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=600';
                                 ?>
-                                <!-- Location Card -->
-                                <div
-                                    class="group p-8 rounded-[2.5rem] bg-brand-cream border border-brand-ink/5 hover:border-chroma-blue/30 transition-all hover:-translate-y-1 flex flex-col">
-                                    <div class="h-48 rounded-[2rem] bg-gray-200 mb-6 overflow-hidden relative">
-                                        <img src="<?php echo esc_url($image); ?>" class="w-full h-full object-cover"
-                                            alt="<?php the_title(); ?>">
-                                        <div
-                                            class="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-sm">
-                                            <?php echo esc_html($rating); ?> ★</div>
-                                    </div>
-                                    <h3 class="font-serif text-2xl font-bold text-brand-ink mb-2"><?php the_title(); ?></h3>
-                                    <p class="text-sm text-brand-ink/60 mb-1"><?php echo esc_html($address); ?></p>
-                                    <p class="text-xs text-brand-ink/40 font-bold uppercase tracking-widest mb-6">Serving
-                                        <?php echo esc_html($city); ?> Families</p>
-                                    <div class="mt-auto flex gap-3">
-                                        <a href="<?php the_permalink(); ?>"
-                                            class="w-full py-3 bg-chroma-blue text-white text-center rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-chroma-blueDark transition-colors">View
-                                            Campus</a>
-                                    </div>
-                                </div>
-                                <?php
+                                            <!-- Location Card -->
+                                            <div
+                                                class="group p-8 rounded-[2.5rem] bg-brand-cream border border-brand-ink/5 hover:border-chroma-blue/30 transition-all hover:-translate-y-1 flex flex-col">
+                                                <div class="h-48 rounded-[2rem] bg-gray-200 mb-6 overflow-hidden relative">
+                                                    <img src="<?php echo esc_url($image); ?>" class="w-full h-full object-cover"
+                                                        alt="<?php the_title(); ?>">
+                                                    <div
+                                                        class="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-sm">
+                                                        <?php echo esc_html($rating); ?> ★</div>
+                                                </div>
+                                                <h3 class="font-serif text-2xl font-bold text-brand-ink mb-2"><?php the_title(); ?></h3>
+                                                <p class="text-sm text-brand-ink/60 mb-1"><?php echo esc_html($address); ?></p>
+                                                <p class="text-xs text-brand-ink/40 font-bold uppercase tracking-widest mb-6">Serving
+                                                    <?php echo esc_html($city); ?> Families</p>
+                                                <div class="mt-auto flex gap-3">
+                                                    <a href="<?php the_permalink(); ?>"
+                                                        class="w-full py-3 bg-chroma-blue text-white text-center rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-chroma-blueDark transition-colors">View
+                                                        Campus</a>
+                                                </div>
+                                            </div>
+                                            <?php
                             endwhile;
                             wp_reset_postdata();
                         endif;
@@ -197,6 +197,16 @@ $location_count = is_array($location_ids) ? count($location_ids) : 0;
                     ?>
 
                 </div>
+                </div>
+                
+                <?php if (!empty($neighborhoods) && is_array($neighborhoods)): ?>
+                        <div class="mt-16 text-center">
+                            <p class="text-brand-ink/60 text-sm">
+                                <strong>Also proudly serving families in:</strong><br>
+                                <?php echo esc_html(implode(', ', $neighborhoods)); ?>.
+                            </p>
+                        </div>
+                <?php endif; ?>
             </div>
         </section>
 
