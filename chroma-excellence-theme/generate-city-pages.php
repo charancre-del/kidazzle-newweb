@@ -1,61 +1,30 @@
 <?php
 /**
- * Generate City Pages Script
+ * Template Name: City Page Generator
  * 
- * Run this script to automatically create City pages and associate them with locations.
- * Usage: 
- * 1. Place this file in your WordPress root directory (or adjust the wp-load.php path).
- * 2. Visit it in your browser (e.g., https://your-site.com/generate-city-pages.php)
- *    OR run via command line: php generate-city-pages.php
+ * Instructions:
+ * 1. Upload this file to your theme folder.
+ * 2. Create a new Page in WordPress.
+ * 3. Select "City Page Generator" as the Template.
+ * 4. Publish and View the page to run the script.
  */
 
-// Enable Error Reporting immediately
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// Prevent direct access (though WP handles this for templates usually)
+if (!defined('ABSPATH')) {
+    exit;
+}
 
+// Ensure admin only
+if (!current_user_can('manage_options')) {
+    wp_die('You must be an administrator to access this page.');
+}
+
+get_header();
+
+echo '<div style="max-width: 800px; margin: 100px auto; padding: 20px; background: #fff; border: 1px solid #ccc;">';
 echo "<h1>City Page Generator</h1>";
-echo "<p>Script started...</p>";
-
-// Try to load WordPress
-$possible_paths = [
-    __DIR__ . '/wp-load.php',
-    __DIR__ . '/../wp-load.php',
-    __DIR__ . '/../../wp-load.php',
-    __DIR__ . '/../../../wp-load.php',
-    __DIR__ . '/../../../../wp-load.php',
-    $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php'
-];
-
-$loaded = false;
-foreach ($possible_paths as $path) {
-    if (file_exists($path)) {
-        echo "<p>Found WordPress at: $path</p>";
-        require_once $path;
-        $loaded = true;
-        break;
-    }
-}
-
-if (!$loaded) {
-    die("<h3>Error: Could not find wp-load.php.</h3><p>Current directory: " . __DIR__ . "</p><p>Please place this script in your WordPress root directory (public_html).</p>");
-}
-
-if (!function_exists('is_cli')) {
-    function is_cli()
-    {
-        return defined('WP_CLI') && WP_CLI;
-    }
-}
-
-// Ensure we have admin privileges if running via browser
-if (!is_cli() && !current_user_can('manage_options')) {
-    die("Please log in as an administrator to run this script.");
-}
-
-echo "Starting City Page Generation...\n";
-if (!is_cli())
-    echo "<br>";
+echo "<p>Starting generation process...</p>";
+echo "<pre>";
 
 // 1. Define the Mapping (School -> Cities)
 $school_city_map = [
@@ -107,15 +76,13 @@ foreach ($city_schools as $city_name => $school_names) {
             'post_title' => $city_name,
             'post_type' => 'city',
             'post_status' => 'publish',
-            'post_author' => 1, // Assign to admin
+            'post_author' => get_current_user_id(),
             'post_content' => '', // Content generated below
         ];
         $post_id = wp_insert_post($post_data);
 
         if (is_wp_error($post_id)) {
             echo "Error creating post: " . $post_id->get_error_message() . "\n";
-            if (!is_cli())
-                echo "<br>";
             continue;
         }
         echo "Created (ID: $post_id). ";
@@ -173,8 +140,11 @@ foreach ($city_schools as $city_name => $school_names) {
     wp_update_post($update_args);
 
     echo "Done.\n";
-    if (!is_cli())
-        echo "<br>";
 }
 
 echo "All cities processed successfully!\n";
+echo "</pre>";
+echo "<p><strong>Finished!</strong> You can now delete this page and the template file.</p>";
+echo '</div>';
+
+get_footer();
