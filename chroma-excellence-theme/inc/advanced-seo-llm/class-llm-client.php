@@ -58,7 +58,8 @@ class Chroma_LLM_Client
                         <input type="text" id="chroma_llm_model" value="<?php echo esc_attr($model); ?>" class="regular-text"
                             placeholder="gpt-4o-mini">
                         <p class="description">e.g., <code>gpt-4o</code>, <code>claude-3-sonnet</code> (via OpenRouter),
-                            <code>llama-3</code></p>
+                            <code>llama-3</code>
+                        </p>
                     </td>
                 </tr>
                 <tr>
@@ -83,50 +84,11 @@ class Chroma_LLM_Client
             </table>
         </div>
 
-        <script>
-            jQuery(document).ready(function ($) {
-                // Save Settings
-                $('#chroma-save-llm').on('click', function (e) {
-                    e.preventDefault();
-                    var btn = $(this);
-                    btn.prop('disabled', true).text('Saving...');
-
-                    $.post(ajaxurl, {
-                        action: 'chroma_save_llm_settings',
-                        api_key: $('#chroma_openai_api_key').val(),
-                        model: $('#chroma_llm_model').val(),
-                        base_url: $('#chroma_llm_base_url').val()
-                    }, function (response) {
-                        btn.prop('disabled', false).text('Save Settings');
-                        if (response.success) {
-                            alert('Settings saved!');
-                        } else {
-                            alert('Error saving settings.');
-                        }
-                    });
-                });
-
-                // Test Connection
-                $('#chroma-test-llm').on('click', function (e) {
-                    e.preventDefault();
-                    var btn = $(this);
-                    var status = $('#chroma-llm-status');
-
-                    btn.prop('disabled', true).text('Testing...');
-                    status.text('').css('color', 'inherit');
-
-                    $.post(ajaxurl, {
-                        action: 'chroma_test_llm_connection'
-                    }, function (response) {
-                        btn.prop('disabled', false).text('Test Connection');
-                        if (response.success) {
-                            status.text('✅ Connected successfully!').css('color', 'green');
-                        } else {
-                            status.text('❌ Connection failed: ' + response.data.message).css('color', 'red');
-                        }
-                    });
-                });
-            });
+        <script>     jQuery(document).ready(function ($) {         // Save Settings         $('#chroma-save-llm').on('click', function (e) {             e.preventDefault();             var btn = $(this);             btn.prop('disabled', true).text('Saving...');
+                     $.post(ajaxurl, {                 action: 'chroma_save_llm_settings',                 api_key: $('#chroma_openai_api_key').val(),                 model: $('#chroma_llm_model').val(),                 base_url: $('#chroma_llm_base_url').val()             }, function (response) {                 btn.prop('disabled', false).text('Save Settings');                 if (response.success) {                     alert('Settings saved!');                 } else {                     alert('Error saving settings.');                 }             });         });
+                 // Test Connection         $('#chroma-test-llm').on('click', function (e) {             e.preventDefault();             var btn = $(this);             var status = $('#chroma-llm-status');
+                     btn.prop('disabled', true).text('Testing...');             status.text('').css('color', 'inherit');
+                     $.post(ajaxurl, {                 action: 'chroma_test_llm_connection'             }, function (response) {                 btn.prop('disabled', false).text('Test Connection');                 if (response.success) {                     status.text('✅ Connected successfully!').css('color', 'green');                 } else {                     status.text('❌ Connection failed: ' + response.data.message).css('color', 'red');                 }             });         });     });
         </script>
         <?php
     }
@@ -224,7 +186,35 @@ class Chroma_LLM_Client
             $prompt .= "If a field cannot be found, leave it empty or omit it.\n";
         }
 
-        $prompt .= "\nContent:\n" . strip_tags($post->post_content);
+
+
+        // Fetch and format meta
+        $meta = get_post_meta($post_id);
+        $meta_context = "";
+        if ($meta) {
+            foreach ($meta as $key => $values) {
+                if (strpos($key, '_') === 0)
+                    continue; // Skip internal meta
+                foreach ($values as $value) {
+                    if (is_serialized($value)) {
+                        $value = print_r(maybe_unserialize($value), true);
+                    }
+                    $meta_context .= "- {$key}: {$value}\n";
+                }
+            }
+        }
+
+        $prompt .= "\nContent Context:\n";
+        $prompt .= "Title: " . $post->post_title . "\n";
+        $prompt .= "Excerpt: " . $post->post_excerpt . "\n";
+        $prompt .= "Meta Data:\n" . $meta_context . "\n";
+        $prompt .= "Main Content:\n" . strip_tags($post->post_content);
+
+        // Add Web Context (Live Page + Homepage)
+        $web_context = $this->get_web_context($post_id);
+        if ($web_context) {
+            $prompt .= "\n\nWeb Context (Live Site Info):\n" . $web_context;
+        }
 
         $response = $this->make_request([
             'messages' => [
@@ -275,7 +265,35 @@ class Chroma_LLM_Client
         $prompt .= "- primary_intent: (string) The main user intent (e.g., 'informational', 'commercial', 'transactional').\n";
         $prompt .= "- target_queries: (array of strings) 3-5 natural language questions users might ask to find this.\n";
         $prompt .= "- key_differentiators: (array of strings) 3-5 unique selling points or key facts.\n";
-        $prompt .= "\nContent:\n" . strip_tags($post->post_content);
+        $prompt .= "- key_differentiators: (array of strings) 3-5 unique selling points or key facts.\n";
+
+        // Fetch and format meta
+        $meta = get_post_meta($post_id);
+        $meta_context = "";
+        if ($meta) {
+            foreach ($meta as $key => $values) {
+                if (strpos($key, '_') === 0)
+                    continue; // Skip internal meta
+                foreach ($values as $value) {
+                    if (is_serialized($value)) {
+                        $value = print_r(maybe_unserialize($value), true);
+                    }
+                    $meta_context .= "- {$key}: {$value}\n";
+                }
+            }
+        }
+
+        $prompt .= "\nContent Context:\n";
+        $prompt .= "Title: " . $post->post_title . "\n";
+        $prompt .= "Excerpt: " . $post->post_excerpt . "\n";
+        $prompt .= "Meta Data:\n" . $meta_context . "\n";
+        $prompt .= "Main Content:\n" . strip_tags($post->post_content);
+
+        // Add Web Context (Live Page + Homepage)
+        $web_context = $this->get_web_context($post_id);
+        if ($web_context) {
+            $prompt .= "\n\nWeb Context (Live Site Info):\n" . $web_context;
+        }
 
         $response = $this->make_request([
             'messages' => [
@@ -338,5 +356,40 @@ class Chroma_LLM_Client
         }
 
         return $data;
+    }
+
+    /**
+     * Helper: Fetch Web Context (Live Page + Homepage)
+     */
+    private function get_web_context($post_id)
+    {
+        $context = "";
+
+        // 1. Try to get the live page content (if published)
+        $permalink = get_permalink($post_id);
+        if ($permalink && get_post_status($post_id) === 'publish') {
+            $response = wp_remote_get($permalink, ['timeout' => 5, 'sslverify' => false]);
+            if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+                $body = wp_remote_retrieve_body($response);
+                // Extract main content or body text
+                $text = strip_tags($body);
+                // Limit length to avoid token limits (e.g., first 2000 chars)
+                $context .= "Live Page Content:\n" . substr(preg_replace('/\s+/', ' ', $text), 0, 2000) . "\n\n";
+            }
+        }
+
+        // 2. Always fetch Homepage for global info (Address, Phone, etc.)
+        $home_url = home_url('/');
+        // Avoid fetching homepage if we just fetched it as the permalink
+        if ($permalink !== $home_url) {
+            $response = wp_remote_get($home_url, ['timeout' => 5, 'sslverify' => false]);
+            if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+                $body = wp_remote_retrieve_body($response);
+                $text = strip_tags($body);
+                $context .= "Homepage/Organization Info:\n" . substr(preg_replace('/\s+/', ' ', $text), 0, 1500) . "\n";
+            }
+        }
+
+        return $context;
     }
 }
