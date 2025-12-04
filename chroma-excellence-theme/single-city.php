@@ -51,7 +51,7 @@ $location_count = is_array($location_ids) ? count($location_ids) : 0;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-            tailwind.config                                      = {
+        tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Outfit', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
@@ -74,11 +74,11 @@ $location_count = is_array($location_ids) ? count($location_ids) : 0;
     <!-- Simplified Header -->
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-chroma-blue/10">
         <div class="max-w-7xl mx-auto px-4 h-[82px] flex items-center justify-between">
-            <a href="/" class="font-bold text-lg text-brand-ink">Chroma <span
+            <a href="/" class="font-bold text-lg text-brand-ink focus:outline-none focus:ring-2 focus:ring-chroma-blue rounded-lg px-2">Chroma <span
                     class="text-chroma-blue text-xs uppercase tracking-widest ml-2"><?php echo esc_html($city); ?>
                     Area</span></a>
             <a href="#locations"
-                class="bg-chroma-red text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-chroma-blueDark transition-colors">Find
+                class="bg-chroma-red text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-chroma-blueDark focus:ring-2 focus:ring-offset-2 focus:ring-chroma-red focus:outline-none transition-colors">Find
                 Nearest School</a>
         </div>
     </header>
@@ -101,7 +101,7 @@ $location_count = is_array($location_ids) ? count($location_ids) : 0;
                     <?php echo esc_html($city); ?> area, featuring the Prismpath™ curriculum and GA Pre-K.
                 </p>
                 <a href="#locations"
-                    class="inline-flex items-center gap-2 text-chroma-red font-bold border-b-2 border-chroma-red pb-1 hover:text-brand-ink hover:border-brand-ink transition-all">
+                    class="inline-flex items-center gap-2 text-chroma-red font-bold border-b-2 border-chroma-red pb-1 hover:text-brand-ink hover:border-brand-ink focus:outline-none focus:ring-2 focus:ring-chroma-red rounded px-1 transition-all">
                     See Locations in <?php echo esc_html($city); ?> <i class="fa-solid fa-arrow-down"></i>
                 </a>
             </div>
@@ -169,34 +169,34 @@ $location_count = is_array($location_ids) ? count($location_ids) : 0;
                                 if (!$image)
                                     $image = 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=600';
                                 ?>
-                                            <!-- Location Card -->
-                                            <div
-                                                class="group p-8 rounded-[2.5rem] bg-brand-cream border border-brand-ink/5 hover:border-chroma-blue/30 transition-all hover:-translate-y-1 flex flex-col">
-                                                <div class="h-48 rounded-[2rem] bg-gray-200 mb-6 overflow-hidden relative">
-                                                    <img src="<?php echo esc_url($image); ?>" class="w-full h-full object-cover"
-                                                        alt="<?php the_title(); ?>">
-                                                    <div
-                                                        class="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-sm">
-                                                        <?php echo esc_html($rating); ?> ★</div>
-                                                </div>
-                                                <h3 class="font-serif text-2xl font-bold text-brand-ink mb-2"><?php the_title(); ?></h3>
-                                                <p class="text-sm text-brand-ink/60 mb-1"><?php echo esc_html($address); ?></p>
-                                                <p class="text-xs text-brand-ink/40 font-bold uppercase tracking-widest mb-6">Serving
-                                                    <?php echo esc_html($city); ?> Families</p>
-                                                <div class="mt-auto flex gap-3">
-                                                    <a href="<?php the_permalink(); ?>"
-                                                        class="w-full py-3 bg-chroma-blue text-white text-center rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-chroma-blueDark transition-colors">View
-                                                        Campus</a>
-                                                </div>
-                                            </div>
-                                            <?php
+                                <!-- Location Card -->
+                                <div
+                                    class="group p-8 rounded-[2.5rem] bg-brand-cream border border-brand-ink/5 hover:border-chroma-blue/30 transition-all hover:-translate-y-1 flex flex-col">
+                                    <div class="h-48 rounded-[2rem] bg-gray-200 mb-6 overflow-hidden relative">
+                                        <img src="<?php echo esc_url($image); ?>" class="w-full h-full object-cover"
+                                            alt="<?php the_title(); ?>">
+                                        <div
+                                            class="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-sm">
+                                            <?php echo esc_html($rating); ?> ★</div>
+                                    </div>
+                                    <h3 class="font-serif text-2xl font-bold text-brand-ink mb-2"><?php the_title(); ?></h3>
+                                    <p class="text-sm text-brand-ink/60 mb-1"><?php echo esc_html($address); ?></p>
+                                    <p class="text-xs text-brand-ink/70 font-bold uppercase tracking-widest mb-6">Serving
+                                        <?php echo esc_html($city); ?> Families</p>
+                                    <div class="mt-auto flex gap-3">
+                                        <a href="<?php the_permalink(); ?>"
+                                            aria-label="View Campus: <?php the_title_attribute(); ?>"
+                                            class="w-full py-3 bg-chroma-blue text-white text-center rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-chroma-blueDark focus:ring-2 focus:ring-offset-2 focus:ring-chroma-blue focus:outline-none transition-colors">View
+                                            Campus</a>
+                                    </div>
+                                </div>
+                                <?php
                             endwhile;
                             wp_reset_postdata();
                         endif;
                     endif;
                     ?>
 
-                </div>
                 </div>
                 
                 <?php if (!empty($neighborhoods) && is_array($neighborhoods)): ?>
@@ -217,8 +217,8 @@ $location_count = is_array($location_ids) ? count($location_ids) : 0;
                     <?php echo esc_html($city); ?></h2>
 
                 <div class="space-y-4">
-                    <details class="group bg-white rounded-2xl p-6 shadow-sm border border-brand-ink/5 cursor-pointer">
-                        <summary class="flex items-center justify-between font-bold text-brand-ink list-none">
+                    <details class="group bg-white rounded-2xl p-6 shadow-sm border border-brand-ink/5 cursor-pointer focus-within:ring-2 focus-within:ring-chroma-blue focus-within:ring-offset-2">
+                        <summary class="flex items-center justify-between font-bold text-brand-ink list-none focus:outline-none">
                             <span>Do you offer GA Lottery Pre-K in <?php echo esc_html($city); ?>?</span>
                             <span class="text-chroma-blue group-open:rotate-180 transition-transform"><i
                                     class="fa-solid fa-chevron-down"></i></span>
@@ -228,8 +228,8 @@ $location_count = is_array($location_ids) ? count($location_ids) : 0;
                             tuition-free for all 4-year-olds living in Georgia.</p>
                     </details>
 
-                    <details class="group bg-white rounded-2xl p-6 shadow-sm border border-brand-ink/5 cursor-pointer">
-                        <summary class="flex items-center justify-between font-bold text-brand-ink list-none">
+                    <details class="group bg-white rounded-2xl p-6 shadow-sm border border-brand-ink/5 cursor-pointer focus-within:ring-2 focus-within:ring-chroma-blue focus-within:ring-offset-2">
+                        <summary class="flex items-center justify-between font-bold text-brand-ink list-none focus:outline-none">
                             <span>Do you provide transportation from <?php echo esc_html($city); ?> schools?</span>
                             <span class="text-chroma-blue group-open:rotate-180 transition-transform"><i
                                     class="fa-solid fa-chevron-down"></i></span>
@@ -239,8 +239,8 @@ $location_count = is_array($location_ids) ? count($location_ids) : 0;
                             specific campus page for a full list.</p>
                     </details>
 
-                    <details class="group bg-white rounded-2xl p-6 shadow-sm border border-brand-ink/5 cursor-pointer">
-                        <summary class="flex items-center justify-between font-bold text-brand-ink list-none">
+                    <details class="group bg-white rounded-2xl p-6 shadow-sm border border-brand-ink/5 cursor-pointer focus-within:ring-2 focus-within:ring-chroma-blue focus-within:ring-offset-2">
+                        <summary class="flex items-center justify-between font-bold text-brand-ink list-none focus:outline-none">
                             <span>What ages do you accept at your <?php echo esc_html($city); ?> centers?</span>
                             <span class="text-chroma-blue group-open:rotate-180 transition-transform"><i
                                     class="fa-solid fa-chevron-down"></i></span>
