@@ -5,7 +5,7 @@ Please review the list below. I have extracted the names and addresses from the 
 
 | School Name | Address | Target City (Please Fill) |
 | :--- | :--- | :--- |
-| Cherokee Academy by Chroma Early Learning | 1205 Upper Burris Road, Canton, GA 30114 | Canton, Woodstock, Ballground, Milton |
+| Cherokee Academy by Chroma Early Learning | 1205 Upper Burris Road, Canton, GA 30114 | Canton, Woodstock, Ballground, Milton, Waleska, Jasper |
 | East Cobb Campus | 2499 Shallowford Road NE, Marietta, GA 30066 | East Cobb, Marietta, Roswell |
 | Ellenwood Campus | 2765 E Atlanta Rd, Ellenwood, GA 30294 | Ellenwood, Rex, Decatur, Stockbridge, Morrow |
 | Johns Creek | 3580 Old Alabama Rd, Johns Creek, GA 30005 | Johns Creek, Alpharetta, Duluth, Peachtree Corners |
@@ -15,9 +15,9 @@ Please review the list below. I have extracted the names and addresses from the 
 | Mcdonough | 90 Hunters Chase, Mcdonough, GA 30253 | Mcdonough, Locust Grove, Hampton, Stockbridge, Griffin |
 | Midway Campus | 4015 Discovery Dr, Alpharetta, GA 30004 | Alpharetta, Milton, Cumming |
 | Newnan Campus | 40 Bledsoe Rd, Newnan, GA 30265 | Newnan, Peachtree City, Fairburn, Palmetto |
-| North Hall Campus, Murraysville | 5760 Wade Whelchel Road, Murraysville, GA 30269 | Gainesville, Dawsonville |
+| North Hall Campus, Murraysville | 5760 Wade Whelchel Road, Murraysville, GA 30269 | Gainesville, Dawsonville, Murrayville, Dahlonega, Clermont, North Hall |
 | Pleasanthill Campus, Duluth | 3152 Creek Dr NW, Duluth, GA 30096 | Duluth, Norcross, Peachtree Corners, Johns Creek |
-| Rivergreen Campus | 200 River Green Avenue, Canton, GA 30114 | Canton, Woodstock, Ballground |
+| Rivergreen Campus | 200 River Green Avenue, Canton, GA 30114 | Canton, Woodstock, Ballground, Waleska, Jasper |
 | Roswell Campus | 1255 Upper Hembree Road, Roswell, GA 30076 | Roswell, Alpharetta, East Cobb, Milton |
 | Satellite Bvd Campus | 3730 Satellite Boulevard, Duluth, GA 30096 | Duluth, Norcross, Peachtree Corners |
 | South Cobb Campus, Austell | 7225 Premier Lane, Austell, GA 30168 | Austell, Mableton, Powder Springs, Lithia Springs |
@@ -73,3 +73,9 @@ Please review the list below. I have extracted the names and addresses from the 
 41. Locust Grove
 42. Rex
 43. Morrow
+44. Waleska
+45. Jasper
+46. Murrayville
+47. Dahlonega
+48. Clermont
+49. North Hall

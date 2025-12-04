@@ -326,6 +326,64 @@ function chroma_location_schema()
 add_action('wp_head', 'chroma_location_schema');
 
 /**
+ * Add Service Schema to City Pages
+ */
+function chroma_city_schema()
+{
+        if (!is_singular('city')) {
+                return;
+        }
+
+        $post_id = get_the_ID();
+        $city_name = get_the_title();
+        $location_ids = get_post_meta($post_id, 'city_nearby_locations', true);
+
+        // Basic Service Schema
+        $schema = array(
+                '@context' => 'https://schema.org',
+                '@type' => 'Service',
+                'name' => "Daycare & Preschool in $city_name",
+                'serviceType' => 'Child Care',
+                'provider' => array(
+                        '@type' => 'Organization',
+                        'name' => get_bloginfo('name'),
+                        'url' => home_url()
+                ),
+                'areaServed' => array(
+                        '@type' => 'City',
+                        'name' => $city_name
+                ),
+                'description' => get_the_excerpt() ?: "Premier child care and early education services in $city_name, GA.",
+                'url' => get_permalink()
+        );
+
+        // Add Related Locations (Schools)
+        if (!empty($location_ids) && is_array($location_ids)) {
+                $offers = array();
+                foreach ($location_ids as $loc_id) {
+                        $loc_name = get_the_title($loc_id);
+                        $loc_url = get_permalink($loc_id);
+                        $offers[] = array(
+                                '@type' => 'Offer',
+                                'itemOffered' => array(
+                                        '@type' => 'ChildCare',
+                                        'name' => $loc_name,
+                                        'url' => $loc_url
+                                )
+                        );
+                }
+                $schema['hasOfferCatalog'] = array(
+                        '@type' => 'OfferCatalog',
+                        'name' => "Schools serving $city_name",
+                        'itemListElement' => $offers
+                );
+        }
+
+        echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
+}
+add_action('wp_head', 'chroma_city_schema');
+
+/**
  * Add Service Schema to Program Pages
  */
 function chroma_program_schema()
@@ -536,6 +594,11 @@ function chroma_shared_meta_description()
 
                 $description = implode('', $parts) . '.';
 
+        } elseif (is_singular('city')) {
+                // City Template: "Best Daycare & Preschool in [City], GA. [Excerpt]"
+                $excerpt = has_excerpt() ? get_the_excerpt() : chroma_trimmed_excerpt(30, $post_id);
+                $description = "Best Daycare & Preschool in " . get_the_title() . ", GA. " . $excerpt;
+
         } elseif (is_singular('program')) {
                 // Program Template: "[Program Name] at Chroma Early Learning Academy. [Excerpt]."
                 $excerpt = has_excerpt() ? get_the_excerpt() : chroma_trimmed_excerpt(20, $post_id);
@@ -640,6 +703,24 @@ function chroma_meta_keywords()
                                 $keywords[] = trim($area);
                         }
                 }
+
+        } elseif (is_singular('city')) {
+                $city_name = get_the_title();
+                $keywords[] = "daycare $city_name";
+                $keywords[] = "child care $city_name";
+                $keywords[] = "preschool $city_name";
+                $keywords[] = "best daycare in $city_name";
+                $keywords[] = "early learning $city_name";
+                $keywords[] = "childcare near me";
+
+        } elseif (is_singular('city')) {
+                $city_name = get_the_title();
+                $keywords[] = "daycare $city_name";
+                $keywords[] = "child care $city_name";
+                $keywords[] = "preschool $city_name";
+                $keywords[] = "best daycare in $city_name";
+                $keywords[] = "early learning $city_name";
+                $keywords[] = "childcare near me";
 
         } elseif (is_singular('program')) {
                 if (empty($keywords)) {
