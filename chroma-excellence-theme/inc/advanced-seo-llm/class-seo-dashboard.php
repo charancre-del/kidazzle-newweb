@@ -459,8 +459,8 @@ class Chroma_SEO_Dashboard
                     $status_color = 'green';
                     $status_reason = 'Optimized';
                     if (empty($schemas)) {
-                        $status_color = 'red';
-                        $status_reason = 'Missing Schema';
+                        $status_color = 'orange'; // Changed from red to orange
+                        $status_reason = 'Default Schema'; // Changed from Missing Schema
                     } elseif (empty($intent_manual)) {
                         $status_color = 'orange';
                         $status_reason = 'Missing Intent';

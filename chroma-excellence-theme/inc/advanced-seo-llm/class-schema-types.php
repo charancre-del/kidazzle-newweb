@@ -34,8 +34,20 @@ class Chroma_Schema_Types
             'FAQPage' => self::get_faq_page_schema(),
             'JobPosting' => self::get_job_posting_schema(),
             'HowTo' => self::get_howto_schema(),
+            'HowTo' => self::get_howto_schema(),
             'VideoObject' => self::get_video_object_schema(),
+            'ChildCare' => self::get_childcare_schema(),
         ];
+    }
+
+    /**
+     * ChildCare (Inherits from LocalBusiness)
+     */
+    private static function get_childcare_schema()
+    {
+        $schema = self::get_local_business_schema();
+        $schema['label'] = 'Child Care / Preschool';
+        return $schema;
     }
 
     /**

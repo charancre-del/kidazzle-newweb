@@ -182,7 +182,8 @@ class Chroma_Schema_Injector
 
             case 'page':
                 // About page gets Organization schema
-                if (is_page('about')) {
+                $post = get_post($post_id);
+                if ($post && ($post->post_name === 'about' || $post->post_name === 'about-us')) {
                     $defaults[] = [
                         'type' => 'Organization',
                         'data' => self::get_organization_schema_data()
