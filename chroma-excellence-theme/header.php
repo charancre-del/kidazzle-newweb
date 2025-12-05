@@ -76,7 +76,7 @@
 			</a>
 
 			<!-- Desktop Nav -->
-			<nav class="hidden lg:flex items-center gap-4">
+			<nav class="hidden lg:flex items-center gap-5 xl:gap-8">
 				<?php chroma_primary_nav(); ?>
 
 				<!-- CTA Button -->
