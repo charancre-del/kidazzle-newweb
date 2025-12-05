@@ -41,6 +41,23 @@ function chroma_header_customizer_settings($wp_customize)
 		),
 	));
 
+	// Book a Tour Button Text
+	$wp_customize->add_setting('chroma_header_cta_text', array(
+		'default' => 'Book a Tour',
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport' => 'refresh',
+	));
+
+	$wp_customize->add_control('chroma_header_cta_text', array(
+		'label' => __('Book a Tour Button Text', 'chroma-excellence'),
+		'description' => __('Enter the text for the CTA button in the header.', 'chroma-excellence'),
+		'section' => 'chroma_header_settings',
+		'type' => 'text',
+		'input_attrs' => array(
+			'placeholder' => 'Book a Tour',
+		),
+	));
+
 	// Book a Tour Button URL
 	$wp_customize->add_setting('chroma_book_tour_url', array(
 		'default' => home_url('/contact#tour'),
