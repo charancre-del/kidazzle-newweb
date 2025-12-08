@@ -1,0 +1,1421 @@
+<?php
+/**
+ * Advanced SEO/LLM Dashboard
+ * Provides a centralized view of all SEO data
+ * Shows manual values vs. fallback values
+ *
+ * @package kidazzle_Excellence
+ * @since 1.0.0
+ */
+
+// Exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+class kidazzle_SEO_Dashboard
+{
+    /**
+     * Initialize the dashboard
+     */
+    public function init()
+    {
+        add_action('admin_menu', [$this, 'register_menu_page']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
+        add_action('wp_ajax_kidazzle_fetch_schema_inspector', [$this, 'ajax_fetch_inspector_data']);
+        add_action('wp_ajax_kidazzle_save_schema_inspector', [$this, 'ajax_save_inspector_data']);
+        add_action('wp_ajax_kidazzle_get_schema_fields', [$this, 'ajax_get_schema_fields']);
+        add_action('wp_ajax_kidazzle_fetch_social_preview', [$this, 'ajax_fetch_social_preview']);
+        add_action('wp_ajax_kidazzle_fetch_llm_data', [$this, 'ajax_fetch_llm_data']);
+        add_action('wp_ajax_kidazzle_save_llm_targeting', [$this, 'ajax_save_llm_targeting']);
+        add_action('wp_ajax_kidazzle_generate_llm_targeting', [$this, 'ajax_generate_llm_targeting']);
+        add_action('wp_ajax_kidazzle_generate_schema', [$this, 'ajax_generate_schema']);
+        add_action('admin_init', [$this, 'register_settings']);
+    }
+
+    /**
+     * Register settings
+     */
+    public function register_settings()
+    {
+        register_setting('kidazzle_llm_options', 'kidazzle_llm_brand_voice');
+        register_setting('kidazzle_llm_options', 'kidazzle_llm_brand_context');
+    }
+
+    /**
+     * Register the menu page
+     */
+    public function register_menu_page()
+    {
+        add_menu_page(
+            'SEO & LLM Data',              // Page title
+            'SEO & LLM',                   // Menu title
+            'edit_posts',                  // Capability
+            'kidazzle-seo-dashboard',        // Menu slug
+            [$this, 'render_page'],        // Callback
+            'dashicons-chart-area',        // Icon
+            80                             // Position
+        );
+    }
+
+    /**
+     * Enqueue assets
+     */
+    public function enqueue_assets($hook)
+    {
+        // Check if we are on the correct page
+        if (!isset($_GET['page']) || $_GET['page'] !== 'kidazzle-seo-dashboard') {
+            return;
+        }
+
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('jquery-ui-tabs');
+
+        // Simple inline styles for the dashboard
+        wp_add_inline_style('common', '
+			.kidazzle-seo-table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 1px 1px rgba(0,0,0,0.04); }
+			.kidazzle-seo-table th, .kidazzle-seo-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e5e5; vertical-align: top; }
+			.kidazzle-seo-table th { background: #f9f9f9; font-weight: 600; border-bottom: 2px solid #ddd; }
+			.kidazzle-seo-table tr:hover { background: #fbfbfb; }
+			.kidazzle-value-manual { color: #2271b1; font-weight: 500; }
+			.kidazzle-value-fallback { color: #646970; font-style: italic; }
+			.kidazzle-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-right: 4px; }
+			.kidazzle-badge-manual { background: #e6f6e6; color: #006600; border: 1px solid #b3e6b3; }
+			.kidazzle-badge-auto { background: #f0f0f1; color: #646970; border: 1px solid #dcdcde; }
+			.kidazzle-status-icon { font-size: 16px; margin-right: 5px; }
+			.kidazzle-check { color: #00a32a; }
+			.kidazzle-cross { color: #d63638; }
+            
+            /* Inspector Styles */
+            .kidazzle-inspector-controls { background: #fff; padding: 20px; border: 1px solid #ccd0d4; margin-bottom: 20px; display: flex; gap: 20px; align-items: center; }
+            .kidazzle-inspector-table input[type="text"], .kidazzle-inspector-table textarea { width: 100%; }
+            .kidazzle-inspector-row.modified { background-color: #f0f6fc; }
+            
+            /* Health Dots */
+            .kidazzle-health-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+            .kidazzle-health-good { background-color: #00a32a; }
+            .kidazzle-health-ok { background-color: #dba617; }
+            .kidazzle-health-poor { background-color: #d63638; opacity: 0.3; }
+		');
+    }
+
+    /**
+     * Render the dashboard page
+     */
+    public function render_page()
+    {
+        $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'locations';
+        ?>
+        <div class="wrap">
+            <h1 class="wp-heading-inline">SEO & LLM Data Dashboard</h1>
+
+            <nav class="nav-tab-wrapper">
+                <a href="<?php echo admin_url('admin.php?page=kidazzle-seo-dashboard&tab=locations'); ?>"
+                    class="nav-tab <?php echo $active_tab === 'locations' ? 'nav-tab-active' : ''; ?>">Locations</a>
+                <a href="<?php echo admin_url('admin.php?page=kidazzle-seo-dashboard&tab=programs'); ?>"
+                    class="nav-tab <?php echo $active_tab === 'programs' ? 'nav-tab-active' : ''; ?>">Programs</a>
+                <a href="<?php echo admin_url('admin.php?page=kidazzle-seo-dashboard&tab=pages'); ?>"
+                    class="nav-tab <?php echo $active_tab === 'pages' ? 'nav-tab-active' : ''; ?>">Pages</a>
+                <a href="<?php echo admin_url('admin.php?page=kidazzle-seo-dashboard&tab=cities'); ?>"
+                    class="nav-tab <?php echo $active_tab === 'cities' ? 'nav-tab-active' : ''; ?>">Cities</a>
+                <a href="<?php echo admin_url('admin.php?page=kidazzle-seo-dashboard&tab=posts'); ?>"
+                    class="nav-tab <?php echo $active_tab === 'posts' ? 'nav-tab-active' : ''; ?>">Blog Posts</a>
+                <a href="<?php echo admin_url('admin.php?page=kidazzle-seo-dashboard&tab=geo'); ?>"
+                    class="nav-tab <?php echo $active_tab === 'geo' ? 'nav-tab-active' : ''; ?>">GEO Settings</a>
+                <a href="<?php echo admin_url('admin.php?page=kidazzle-seo-dashboard&tab=llm'); ?>"
+                    class="nav-tab <?php echo $active_tab === 'llm' ? 'nav-tab-active' : ''; ?>">LLM Settings</a>
+                <a href="<?php echo admin_url('admin.php?page=kidazzle-seo-dashboard&tab=schema-builder'); ?>"
+                    class="nav-tab <?php echo $active_tab === 'schema-builder' ? 'nav-tab-active' : ''; ?>">Schema Builder</a>
+                <a href="<?php echo admin_url('admin.php?page=kidazzle-seo-dashboard&tab=breadcrumbs'); ?>"
+                    class="nav-tab <?php echo $active_tab === 'breadcrumbs' ? 'nav-tab-active' : ''; ?>">Breadcrumbs</a>
+                <a href="<?php echo admin_url('admin.php?page=kidazzle-seo-dashboard&tab=social'); ?>"
+                    class="nav-tab <?php echo $active_tab === 'social' ? 'nav-tab-active' : ''; ?>">Social Preview</a>
+                <?php do_action('kidazzle_seo_dashboard_tabs'); ?>
+            </nav>
+
+            <br>
+
+            <?php
+            switch ($active_tab) {
+                case 'locations':
+                    $this->render_overview_tab('location');
+                    break;
+                case 'programs':
+                    $this->render_overview_tab('program');
+                    break;
+                case 'pages':
+                    $this->render_overview_tab('page');
+                    break;
+                case 'cities':
+                    $this->render_overview_tab('city');
+                    break;
+                case 'posts':
+                    $this->render_overview_tab('post');
+                    break;
+                case 'geo':
+                    $this->render_geo_tab();
+                    break;
+                case 'llm':
+                    $this->render_llm_tab();
+                    break;
+                case 'schema-builder':
+                    $this->render_schema_builder_tab();
+                    break;
+                case 'breadcrumbs':
+                    if (class_exists('kidazzle_Breadcrumbs')) {
+                        (new kidazzle_Breadcrumbs())->render_settings();
+                    } else {
+                        echo '<p>Breadcrumbs module not loaded.</p>';
+                    }
+                    break;
+                case 'social':
+                    $this->render_social_tab();
+                    break;
+                default:
+                    // Allow other tabs to render via action
+                    if (has_action('kidazzle_seo_dashboard_content')) {
+                        do_action('kidazzle_seo_dashboard_content');
+                    } else {
+                        $this->render_overview_tab('location');
+                    }
+                    break;
+            }
+            ?>
+        </div>
+        <?php
+    }
+
+    /**
+     * Render GEO Tab
+     */
+    private function render_geo_tab()
+    {
+        ?>
+        <div class="kidazzle-seo-card">
+            <h2>🌍 Geo-Optimization Settings</h2>
+            <p>Manage your location-based SEO settings.</p>
+
+            <div class="kidazzle-doc-section" style="margin-top: 20px;">
+                <h3>KML File</h3>
+                <p>Your KML file is automatically generated and available at:</p>
+                <code><a href="<?php echo home_url('/locations.kml'); ?>" target="_blank"><?php echo home_url('/locations.kml'); ?></a></code>
+                <p class="description">Submit this URL to Google Earth and other geo-directories.</p>
+            </div>
+
+            <div class="kidazzle-doc-section" style="margin-top: 20px;">
+                <h3>Service Area Defaults</h3>
+                <p>If a location does not have specific coordinates set, the system will attempt to geocode the address
+                    automatically.</p>
+                <p>Default Radius: <strong>10 miles</strong></p>
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * Render LLM Tab
+     */
+    /**
+     * Render LLM Tab
+     */
+    private function render_llm_tab()
+    {
+        // Render Global Settings First
+        global $kidazzle_llm_client;
+        if (isset($kidazzle_llm_client) && method_exists($kidazzle_llm_client, 'render_settings')) {
+            $kidazzle_llm_client->render_settings();
+            echo '<hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;">';
+        }
+
+        // Get all posts for selector
+        $locations = get_posts(['post_type' => 'location', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC']);
+        $programs = get_posts(['post_type' => 'program', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC']);
+        $pages = get_posts(['post_type' => 'page', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC']);
+        $posts = get_posts(['post_type' => 'post', 'posts_per_page' => 50, 'orderby' => 'date', 'order' => 'DESC']);
+
+        $selected_id = isset($_GET['post_id']) ? intval($_GET['post_id']) : 0;
+        ?>
+        <div class="kidazzle-llm-controls">
+            <label><strong>Select Page to Edit LLM Targeting:</strong></label>
+            <select id="kidazzle-llm-select" style="min-width: 300px;">
+                <option value="">-- Select a Page --</option>
+                <optgroup label="Locations">
+                    <?php foreach ($locations as $loc):
+                        if (!$loc || !is_a($loc, 'WP_Post'))
+                            continue; ?>
+                        <option value="<?php echo $loc->ID; ?>" <?php selected($selected_id, $loc->ID); ?>>
+                            <?php echo esc_html($loc->post_title); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </optgroup>
+                <optgroup label="Programs">
+                    <?php foreach ($programs as $prog):
+                        if (!$prog || !is_a($prog, 'WP_Post'))
+                            continue; ?>
+                        <option value="<?php echo $prog->ID; ?>" <?php selected($selected_id, $prog->ID); ?>>
+                            <?php echo esc_html($prog->post_title); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </optgroup>
+                <optgroup label="Pages">
+                    <?php foreach ($pages as $pg):
+                        if (!$pg || !is_a($pg, 'WP_Post'))
+                            continue; ?>
+                        <option value="<?php echo $pg->ID; ?>" <?php selected($selected_id, $pg->ID); ?>>
+                            <?php echo esc_html($pg->post_title); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </optgroup>
+                <optgroup label="Blog Posts">
+                    <?php foreach ($posts as $pt):
+                        if (!$pt || !is_a($pt, 'WP_Post'))
+                            continue; ?>
+                        <option value="<?php echo $pt->ID; ?>" <?php selected($selected_id, $pt->ID); ?>>
+                            <?php echo esc_html($pt->post_title); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </optgroup>
+            </select>
+            <span class="spinner" id="kidazzle-llm-spinner"></span>
+        </div>
+
+        <div id="kidazzle-llm-content">
+            <p class="description">Select a page above to edit its LLM targeting data.</p>
+        </div>
+
+        <script>
+            jQuery(document).ready(function ($) {
+                var kidazzle_nonce = '<?php echo wp_create_nonce('kidazzle_seo_dashboard_nonce'); ?>';
+                var selectedId = '<?php echo $selected_id; ?>';
+
+                if (selectedId && selectedId != '0') {
+                    loadLLMData(selectedId);
+                }
+
+                $('#kidazzle-llm-select').on('change', function () {
+                    var id = $(this).val();
+                    if (id) loadLLMData(id);
+                });
+
+                function loadLLMData(id) {
+                    $('#kidazzle-llm-spinner').addClass('is-active');
+                    $.post(ajaxurl, {
+                        action: 'kidazzle_fetch_llm_data',
+                        nonce: kidazzle_nonce,
+                        post_id: id
+                    }, function (response) {
+                        $('#kidazzle-llm-spinner').removeClass('is-active');
+                        if (response.success) {
+                            $('#kidazzle-llm-content').html(response.data.html);
+                        } else {
+                            alert('Error loading data');
+                        }
+                    });
+                }
+
+                // Save Handler
+                $(document).on('click', '#kidazzle-llm-save', function (e) {
+                    e.preventDefault();
+                    var btn = $(this);
+                    btn.prop('disabled', true).text('Saving...');
+
+                    var primary_intent = $('#seo_llm_primary_intent').val();
+                    var target_queries = [];
+                    $('.kidazzle-llm-query-input').each(function () {
+                        var val = $(this).val();
+                        if (val) target_queries.push(val);
+                    });
+                    var key_differentiators = [];
+                    $('.kidazzle-llm-diff-input').each(function () {
+                        var val = $(this).val();
+                        if (val) key_differentiators.push(val);
+                    });
+
+                    $.post(ajaxurl, {
+                        action: 'kidazzle_save_llm_targeting',
+                        nonce: kidazzle_nonce,
+                        post_id: $('#kidazzle-llm-post-id').val(),
+                        primary_intent: primary_intent,
+                        target_queries: target_queries,
+                        key_differentiators: key_differentiators
+                    }, function (response) {
+                        btn.prop('disabled', false).text('Save LLM Targeting');
+                        if (response.success) {
+                            alert('✅ Settings saved successfully!');
+                        } else {
+                            alert('Error saving settings.');
+                        }
+                    });
+                });
+
+                // Auto-Fill Handler
+                $(document).on('click', '#kidazzle-llm-autofill', function (e) {
+                    e.preventDefault();
+                    var btn = $(this);
+
+                    if (!confirm('This will overwrite existing fields with AI-generated content. Continue?')) {
+                        return;
+                    }
+
+                    btn.prop('disabled', true).text('Generating...');
+
+                    $.post(ajaxurl, {
+                        action: 'kidazzle_generate_llm_targeting',
+                        nonce: kidazzle_nonce,
+                        post_id: $('#kidazzle-llm-post-id').val()
+                    }, function (response) {
+                        btn.prop('disabled', false).html('<span class="dashicons dashicons-superhero" style="font-size: 14px; width: 14px; height: 14px; vertical-align: middle;"></span> Auto-Fill with AI');
+
+                        if (response.success) {
+                            var data = response.data;
+                            $('#seo_llm_primary_intent').val(data.primary_intent);
+
+                            // Clear and populate queries
+                            $('#llm-queries-container').empty();
+                            if (data.target_queries && Array.isArray(data.target_queries)) {
+                                data.target_queries.forEach(function (q) {
+                                    var html = '<div class="kidazzle-repeater-row" style="margin-bottom: 8px;"><input type="text" class="kidazzle-llm-query-input regular-text" value="' + q + '" style="width: 80%;"> <button class="button remove-llm-row">×</button></div>';
+                                    $('#llm-queries-container').append(html);
+                                });
+                            }
+
+                            // Clear and populate differentiators
+                            $('#llm-diffs-container').empty();
+                            if (data.key_differentiators && Array.isArray(data.key_differentiators)) {
+                                data.key_differentiators.forEach(function (d) {
+                                    var html = '<div class="kidazzle-repeater-row" style="margin-bottom: 8px;"><input type="text" class="kidazzle-llm-diff-input regular-text" value="' + d + '" style="width: 80%;"> <button class="button remove-llm-row">×</button></div>';
+                                    $('#llm-diffs-container').append(html);
+                                });
+                            }
+
+                            alert('✨ Content generated successfully!');
+                        } else {
+                            alert('AI Error: ' + (response.data && response.data.message ? response.data.message : 'Unknown error'));
+                        }
+                    });
+                });
+
+                // Add query row
+                $(document).on('click', '#add-llm-query', function (e) {
+                    e.preventDefault();
+                    var html = '<div class="kidazzle-repeater-row" style="margin-bottom: 8px;"><input type="text" class="kidazzle-llm-query-input regular-text" placeholder="e.g., best preschool curriculum" style="width: 80%;"> <button class="button remove-llm-row">×</button></div>';
+                    $('#llm-queries-container').append(html);
+                });
+
+                // Add differentiator row
+                $(document).on('click', '#add-llm-diff', function (e) {
+                    e.preventDefault();
+                    var html = '<div class="kidazzle-repeater-row" style="margin-bottom: 8px;"><input type="text" class="kidazzle-llm-diff-input regular-text" placeholder="e.g., STEAM-focused curriculum" style="width: 80%;"> <button class="button remove-llm-row">×</button></div>';
+                    $('#llm-diffs-container').append(html);
+                });
+
+                // Remove row
+                $(document).on('click', '.remove-llm-row', function (e) {
+                    e.preventDefault();
+                    $(this).closest('.kidazzle-repeater-row').remove();
+                });
+            });
+        </script>
+        <?php
+    }
+
+    /**
+     * Render Overview Tab (Generic)
+     */
+    private function render_overview_tab($post_type)
+    {
+        $args = [
+            'post_type' => $post_type,
+            'posts_per_page' => 50,
+            'orderby' => 'title',
+            'order' => 'ASC',
+        ];
+        $posts = get_posts($args);
+        $type_obj = get_post_type_object($post_type);
+        ?>
+        <p class="description">
+            Overview of SEO/LLM data for <strong><?php echo esc_html($type_obj->labels->name); ?></strong>.
+            <span class="kidazzle-badge kidazzle-badge-manual">Manual</span> values are set by you.
+            <span class="kidazzle-badge kidazzle-badge-auto">Auto</span> values are generated by the system fallbacks.
+        </p>
+        <br>
+        <table class="kidazzle-seo-table widefat fixed striped">
+            <thead>
+                <tr>
+                    <th style="width: 50px;">Status</th>
+                    <th style="width: 250px;">Title</th>
+                    <th>LLM Context</th>
+                    <th>Schema</th>
+                    <th style="width: 100px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($posts as $p):
+                    if (!$p || !is_a($p, 'WP_Post'))
+                        continue;
+                    $id = $p->ID;
+                    // LLM Context
+                    $intent_manual = get_post_meta($id, 'seo_llm_primary_intent', true);
+                    $desc = kidazzle_Fallback_Resolver::get_llm_description($id);
+                    // Schema
+                    $schemas = get_post_meta($id, '_kidazzle_post_schemas', true);
+                    $schema_count = is_array($schemas) ? count($schemas) : 0;
+
+                    // Health
+                    $health = $this->calculate_health($id, $intent_manual, $schema_count);
+
+                    // Status Logic
+                    $status_color = 'green';
+                    $status_reason = 'Optimized';
+                    if (empty($schemas)) {
+                        $status_color = 'orange'; // Changed from red to orange
+                        $status_reason = 'Default Schema'; // Changed from Missing Schema
+                    } elseif (empty($intent_manual)) {
+                        $status_color = 'orange';
+                        $status_reason = 'Missing Intent';
+                    }
+                    ?>
+                    <tr>
+                        <td style="text-align: center;">
+                            <span class="kidazzle-health-dot kidazzle-health-<?php echo esc_attr($health['status']); ?>"
+                                title="<?php echo esc_attr($health['message']); ?>"></span>
+                        </td>
+                        <td>
+                            <strong><a
+                                    href="<?php echo admin_url('post.php?post=' . $id . '&action=edit'); ?>"><?php echo esc_html($p->post_title); ?></a></strong>
+                            <?php if ($post_type === 'location'): ?>
+                                <br><small><?php echo get_post_meta($id, 'location_city', true); ?></small>
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <div style="margin-bottom: 6px;">
+                                <strong>Intent:</strong>
+                                <?php if ($intent_manual): ?>
+                                    <span class="kidazzle-value-manual"><?php echo esc_html($intent_manual); ?></span>
+                                <?php else: ?>
+                                    <span class="kidazzle-value-fallback">Auto-Generated</span>
+                                <?php endif; ?>
+                            </div>
+                            <div>
+                                <strong>Description:</strong>
+                                <div style="font-size: 11px; line-height: 1.4;"><?php echo wp_trim_words($desc, 15); ?></div>
+                            </div>
+                        </td>
+                        <td>
+                            <?php if ($schema_count > 0): ?>
+                                <span class="kidazzle-check">✓</span> <?php echo $schema_count; ?> Custom Schema(s)
+                            <?php else: ?>
+                                <span style="color: #ccc;">-</span> Default
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <span class="kidazzle-status-dot" style="background: <?php echo esc_attr($status_color); ?>;"></span>
+                            <span
+                                style="font-size: 12px; color: #666; margin-left: 5px;"><?php echo esc_html($status_reason); ?></span>
+                        </td>
+                        <td>
+                            <a href="?page=kidazzle-seo-dashboard&tab=schema-builder&post_id=<?php echo $id; ?>"
+                                class="button button-small">Builder</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php
+    }
+
+    /**
+     * Calculate SEO Health
+     */
+    private function calculate_health($post_id, $intent, $schema_count)
+    {
+        if ($intent && $schema_count > 0) {
+            return ['status' => 'good', 'message' => 'Excellent! Custom Intent & Schema defined.'];
+        } elseif ($intent || $schema_count > 0) {
+            return ['status' => 'ok', 'message' => 'Good. Either Intent or Schema is customized.'];
+        } else {
+            return ['status' => 'poor', 'message' => 'Basic. Using all default values.'];
+        }
+    }
+
+    /**
+     * Render Schema Builder Tab
+     */
+    private function render_schema_builder_tab()
+    {
+        $locations = get_posts(['post_type' => 'location', 'posts_per_page' => 100, 'orderby' => 'title', 'order' => 'ASC']);
+        $programs = get_posts(['post_type' => 'program', 'posts_per_page' => 100, 'orderby' => 'title', 'order' => 'ASC']);
+        $pages = get_posts(['post_type' => 'page', 'posts_per_page' => 100, 'orderby' => 'title', 'order' => 'ASC']);
+        $posts = get_posts(['post_type' => 'post', 'posts_per_page' => 100, 'orderby' => 'title', 'order' => 'ASC']);
+
+        $selected_id = isset($_GET['post_id']) ? intval($_GET['post_id']) : 0;
+        ?>
+        <div class="kidazzle-inspector-controls">
+            <label><strong>Select Page to Edit Schema:</strong></label>
+            <select id="kidazzle-inspector-select" style="min-width: 300px;">
+                <option value="">-- Select a Page --</option>
+                <optgroup label="Locations">
+                    <?php foreach ($locations as $loc):
+                        if (!$loc || !is_a($loc, 'WP_Post'))
+                            continue; ?>
+                        <option value="<?php echo $loc->ID; ?>" <?php selected($selected_id, $loc->ID); ?>>
+                            <?php echo esc_html($loc->post_title); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </optgroup>
+                <optgroup label="Programs">
+                    <?php foreach ($programs as $prog):
+                        if (!$prog || !is_a($prog, 'WP_Post'))
+                            continue; ?>
+                        <option value="<?php echo $prog->ID; ?>" <?php selected($selected_id, $prog->ID); ?>>
+                            <?php echo esc_html($prog->post_title); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </optgroup>
+                <optgroup label="Pages">
+                    <?php foreach ($pages as $pg):
+                        if (!$pg || !is_a($pg, 'WP_Post'))
+                            continue; ?>
+                        <option value="<?php echo $pg->ID; ?>" <?php selected($selected_id, $pg->ID); ?>>
+                            <?php echo esc_html($pg->post_title); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </optgroup>
+                <optgroup label="Cities">
+                    <?php
+                    $cities = get_posts(['post_type' => 'city', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC']);
+                    foreach ($cities as $city):
+                        if (!$city || !is_a($city, 'WP_Post'))
+                            continue; ?>
+                        <option value="<?php echo $city->ID; ?>" <?php selected($selected_id, $city->ID); ?>>
+                            <?php echo esc_html($city->post_title); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </optgroup>
+                <optgroup label="Blog Posts">
+                    <?php foreach ($posts as $pt):
+                        if (!$pt || !is_a($pt, 'WP_Post'))
+                            continue; ?>
+                        <option value="<?php echo $pt->ID; ?>" <?php selected($selected_id, $pt->ID); ?>>
+                            <?php echo esc_html($pt->post_title); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </optgroup>
+            </select>
+            <span class="spinner" id="kidazzle-inspector-spinner"></span>
+        </div>
+
+        <div id="kidazzle-inspector-content">
+            <p class="description">Select a page above to view and edit its Schema/SEO data.</p>
+        </div>
+
+        <script>
+            jQuery(document).ready(function ($) {
+                var kidazzle_nonce = '<?php echo wp_create_nonce('kidazzle_seo_dashboard_nonce'); ?>';
+                var selectedId = '<?php echo $selected_id; ?>';
+
+                if (selectedId && selectedId != '0') {
+                    loadInspectorData(selectedId);
+                }
+
+                $('#kidazzle-inspector-select').on('change', function () {
+                    var id = $(this).val();
+                    if (id) loadInspectorData(id);
+                });
+
+                function loadInspectorData(id) {
+                    $('#kidazzle-inspector-spinner').addClass('is-active');
+                    $.post(ajaxurl, {
+                        action: 'kidazzle_fetch_schema_inspector',
+                        nonce: kidazzle_nonce,
+                        post_id: id
+                    }, function (response) {
+                        $('#kidazzle-inspector-spinner').removeClass('is-active');
+                        if (response.success) {
+                            $('#kidazzle-inspector-content').html(response.data.html);
+                            initTooltips();
+                        } else {
+                            alert('Error loading data');
+                        }
+                    });
+                }
+
+                function initTooltips() {
+                    $('.kidazzle-help-tip').tooltip({
+                        content: function () {
+                            return $(this).attr('title');
+                        },
+                        position: {
+                            my: "center bottom-20",
+                            at: "center top",
+                            using: function (position, feedback) {
+                                $(this).css(position);
+                                $("<div>")
+                                    .addClass("arrow")
+                                    .addClass(feedback.vertical)
+                                    .addClass(feedback.horizontal)
+                                    .appendTo(this);
+                            }
+                        }
+                    });
+                }
+
+                // Add New Schema Handler
+                $(document).on('click', '#kidazzle-add-schema-btn', function (e) {
+                    e.preventDefault();
+                    var type = $('#kidazzle-schema-type-select').val();
+                    if (!type) return;
+
+                    var container = $('#kidazzle-active-schemas');
+                    var index = container.children('.kidazzle-schema-block').length;
+
+                    // Fetch schema fields template via AJAX or use JS template
+                    // For simplicity, we'll reload the inspector data with a param to add a new schema, 
+                    // OR better: Append a new block via JS if we have the definitions.
+                    // Given the complexity, let's trigger a reload or fetch just the new block.
+
+                    // Strategy: We will just append a placeholder block and let the user save? 
+                    // No, we need the fields. Let's ask the server for the fields for this type.
+
+                    $.post(ajaxurl, {
+                        action: 'kidazzle_get_schema_fields',
+                        nonce: kidazzle_nonce,
+                        schema_type: type,
+                        index: index,
+                        post_id: $('#kidazzle-inspector-post-id').val()
+                    }, function (response) {
+                        if (response.success) {
+                            container.append(response.data.html);
+                            initTooltips();
+                        }
+                    });
+                });
+
+                // Remove Schema Handler
+                $(document).on('click', '.kidazzle-remove-schema', function (e) {
+                    e.preventDefault();
+                    if (confirm('Are you sure you want to remove this schema?')) {
+                        $(this).closest('.kidazzle-schema-block').remove();
+                    }
+                });
+
+                // Repeater: Add Row
+                $(document).on('click', '.kidazzle-add-repeater-row', function (e) {
+                    e.preventDefault();
+                    var btn = $(this);
+                    var fields = btn.data('fields');
+                    var wrapper = btn.closest('.kidazzle-repeater-wrapper');
+                    var container = wrapper.find('.kidazzle-repeater-items');
+
+                    // Generate HTML for new row (simplified JS generation)
+                    var html = '<div class="kidazzle-repeater-row" style="background: #f9f9f9; padding: 10px; margin-bottom: 10px; border: 1px solid #eee;">';
+                    html += '<div style="text-align: right; margin-bottom: 5px;"><span class="kidazzle-remove-repeater-row dashicons dashicons-trash" style="cursor: pointer; color: #d63638;"></span></div>';
+
+                    $.each(fields, function (key, field) {
+                        html += '<div style="margin-bottom: 5px;">';
+                        html += '<label style="font-size: 12px; font-weight: 600; display: block;">' + field.label + '</label>';
+                        if (field.type === 'textarea') {
+                            html += '<textarea class="kidazzle-repeater-input large-text" data-name="' + key + '" rows="2" style="width: 100%;"></textarea>';
+                        } else {
+                            html += '<input type="text" class="kidazzle-repeater-input regular-text" data-name="' + key + '" value="" style="width: 100%;">';
+                        }
+                        html += '</div>';
+                    });
+                    html += '</div>';
+
+                    container.append(html);
+                });
+
+                // Repeater: Remove Row
+                $(document).on('click', '.kidazzle-remove-repeater-row', function (e) {
+                    e.preventDefault();
+                    if (confirm('Remove this row?')) {
+                        $(this).closest('.kidazzle-repeater-row').remove();
+                    }
+                });
+
+                // Save Handler
+                $(document).on('click', '#kidazzle-inspector-save', function (e) {
+                    e.preventDefault();
+                    var btn = $(this);
+                    btn.prop('disabled', true).text('Saving...');
+
+                    var schemas = [];
+
+                    $('.kidazzle-schema-block').each(function () {
+                        var block = $(this);
+                        var schema = {
+                            type: block.data('type'),
+                            data: {}
+                        };
+
+                        // Regular fields
+                        block.find('.kidazzle-schema-input').each(function () {
+                            var name = $(this).data('name');
+                            var val = $(this).val();
+                            if (val) schema.data[name] = val;
+                        });
+
+                        // Repeater fields
+                        block.find('.kidazzle-repeater-wrapper').each(function () {
+                            var wrapper = $(this);
+                            var key = wrapper.data('key');
+                            var rows = [];
+
+                            wrapper.find('.kidazzle-repeater-row').each(function () {
+                                var row = {};
+                                $(this).find('.kidazzle-repeater-input').each(function () {
+                                    var subName = $(this).data('name');
+                                    var subVal = $(this).val();
+                                    if (subVal) row[subName] = subVal;
+                                });
+                                if (!$.isEmptyObject(row)) rows.push(row);
+                            });
+
+                            if (rows.length > 0) schema.data[key] = rows;
+                        });
+
+                        schemas.push(schema);
+                    });
+
+                    $.post(ajaxurl, {
+                        action: 'kidazzle_save_schema_inspector',
+                        nonce: kidazzle_nonce,
+                        post_id: $('#kidazzle-inspector-post-id').val(),
+                        schemas: schemas
+                    }, function (response) {
+                        btn.prop('disabled', false).text('Update Schema Settings');
+                        if (response.success) {
+                            alert('Settings saved successfully!');
+                        } else {
+                            alert('Error saving settings.');
+                        }
+                    });
+                });
+                // AI Auto-Fill Handler
+                $(document).on('click', '.kidazzle-ai-autofill', function (e) {
+                    e.preventDefault();
+                    var btn = $(this);
+                    var block = btn.closest('.kidazzle-schema-block');
+                    var type = btn.data('type');
+                    var postId = $('#kidazzle-inspector-post-id').val();
+
+                    if (!confirm('This will overwrite existing fields with AI-generated content. Continue?')) {
+                        return;
+                    }
+
+                    btn.prop('disabled', true).text('Generating...');
+
+                    $.post(ajaxurl, {
+                        action: 'kidazzle_generate_schema',
+                        post_id: postId,
+                        schema_type: type
+                    }, function (response) {
+                        btn.prop('disabled', false).html('<span class="dashicons dashicons-superhero" style="font-size: 14px; width: 14px; height: 14px; vertical-align: middle;"></span> Auto-Fill');
+
+                        if (response.success) {
+                            var data = response.data;
+                            // Populate fields
+                            $.each(data, function (key, value) {
+                                var input = block.find('[data-name="' + key + '"]');
+                                if (input.length) {
+                                    if (input.hasClass('kidazzle-repeater-input')) {
+                                        // Handle simple repeater logic if needed, for now supports simple fields
+                                    } else {
+                                        input.val(value);
+                                        // Highlight change
+                                        input.css('background-color', '#f0f6fc').animate({ backgroundColor: '#fff' }, 2000);
+                                    }
+                                }
+                            });
+                            alert('✨ Content generated successfully!');
+                        } else {
+                            alert('AI Error: ' + (response.data && response.data.message ? response.data.message : 'Unknown error'));
+                        }
+                    });
+                });
+            });
+        </script>
+        <?php
+    }
+
+    /**
+     * AJAX: Fetch Inspector Data (Schema Builder)
+     */
+    public function ajax_fetch_inspector_data()
+    {
+        check_ajax_referer('kidazzle_seo_dashboard_nonce', 'nonce');
+
+        $post_id = intval($_POST['post_id']);
+        if (!$post_id)
+            wp_send_json_error();
+
+        // Get existing schemas
+        $existing_schemas = get_post_meta($post_id, '_kidazzle_post_schemas', true);
+        if (!is_array($existing_schemas) || empty($existing_schemas)) {
+            $existing_schemas = [];
+            // Backwards compatibility: Check for legacy schema data
+            $legacy_type = get_post_meta($post_id, '_kidazzle_schema_type', true);
+            if ($legacy_type && $legacy_type !== 'none') {
+                $legacy_data = get_post_meta($post_id, '_kidazzle_schema_data', true);
+                if (!is_array($legacy_data))
+                    $legacy_data = [];
+
+                // Add as a new modular schema
+                $existing_schemas[] = [
+                    'type' => $legacy_type,
+                    'data' => $legacy_data
+                ];
+            }
+            // If still no schemas, try to load smart defaults based on post type
+            if (empty($existing_schemas)) {
+                // Use the Schema Injector to get defaults if available
+                if (class_exists('kidazzle_Schema_Injector')) {
+                    $defaults = kidazzle_Schema_Injector::get_default_schema_for_post_type($post_id);
+                    if (!empty($defaults)) {
+                        $existing_schemas = $defaults;
+                    }
+                }
+            }
+        }
+        $available_types = kidazzle_Schema_Types::get_definitions();
+
+        ob_start();
+        ?>
+        <input type="hidden" id="kidazzle-inspector-post-id" value="<?php echo $post_id; ?>">
+
+
+
+        <div id="kidazzle-active-schemas">
+            <?php
+            if (empty($existing_schemas)) {
+                echo '<p class="description" style="padding: 20px; text-align: center;">No custom schemas added yet. Add one above.</p>';
+            } else {
+                foreach ($existing_schemas as $index => $schema) {
+                    $this->render_schema_block($schema['type'], $schema['data'], $index);
+                }
+            }
+            ?>
+        </div>
+
+        <div
+            style="display: flex; gap: 20px; margin-top: 20px; margin-bottom: 20px; align-items: center; background: #fff; padding: 15px; border: 1px solid #ddd;">
+            <strong>Add New Schema:</strong>
+            <select id="kidazzle-schema-type-select">
+                <option value="">-- Select Type --</option>
+                <?php foreach ($available_types as $type => $def): ?>
+                    <option value="<?php echo esc_attr($type); ?>"><?php echo esc_html($def['label']); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <button id="kidazzle-add-schema-btn" class="button button-secondary">Add Schema</button>
+        </div>
+
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #ccc;">
+            <button id="kidazzle-inspector-save" class="button button-primary button-large">Save All Schemas</button>
+        </div>
+        <?php
+        $html = ob_get_clean();
+        wp_send_json_success(['html' => $html]);
+    }
+
+    /**
+     * Render a single schema block
+     */
+    private function render_schema_block($type, $data = [], $index = 0)
+    {
+        $definitions = kidazzle_Schema_Types::get_definitions();
+        if (!isset($definitions[$type]))
+            return;
+
+        $def = $definitions[$type];
+        ?>
+        <div class="kidazzle-schema-block" data-type="<?php echo esc_attr($type); ?>"
+            style="background: #fff; border: 1px solid #ccd0d4; padding: 15px; margin-bottom: 15px; position: relative;">
+            <h3
+                style="margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span><?php echo esc_html($def['label']); ?></span>
+                <div>
+                    <button class="button button-small kidazzle-ai-autofill" data-type="<?php echo esc_attr($type); ?>"
+                        style="margin-right: 10px; border-color: #8c64ff; color: #6b42e4;">
+                        <span class="dashicons dashicons-superhero"
+                            style="font-size: 14px; width: 14px; height: 14px; vertical-align: middle;"></span> Auto-Fill
+                    </button>
+                    <button class="kidazzle-remove-schema button-link-delete">Remove</button>
+                </div>
+            </h3>
+
+            <table class="form-table" style="margin-top: 0;">
+                <?php foreach ($def['fields'] as $key => $field):
+                    $val = isset($data[$key]) ? $data[$key] : '';
+                    ?>
+                    <tr>
+                        <th scope="row" style="padding: 10px 0; width: 200px;">
+                            <?php echo esc_html($field['label']); ?>
+                            <?php if (!empty($field['description'])): ?>
+                                <span class="dashicons dashicons-editor-help kidazzle-help-tip"
+                                    title="<?php echo esc_attr($field['description']); ?>"
+                                    style="color: #999; font-size: 16px; cursor: help;"></span>
+                            <?php endif; ?>
+                        </th>
+                        <td style="padding: 10px 0;">
+                            <?php if ($field['type'] === 'repeater'): ?>
+                                <div class="kidazzle-repeater-wrapper" data-key="<?php echo esc_attr($key); ?>">
+                                    <div class="kidazzle-repeater-items">
+                                        <?php
+                                        $sub_items = is_array($val) ? $val : [];
+                                        if (empty($sub_items)) {
+                                            // Add one empty row by default? No, let user add.
+                                        }
+                                        foreach ($sub_items as $sub_index => $sub_item) {
+                                            $this->render_repeater_row($field['subfields'], $sub_item, $key);
+                                        }
+                                        ?>
+                                    </div>
+                                    <button class="button button-small kidazzle-add-repeater-row"
+                                        data-fields="<?php echo esc_attr(json_encode($field['subfields'])); ?>">Add Row</button>
+                                </div>
+                            <?php elseif ($field['type'] === 'textarea'): ?>
+                                <textarea class="kidazzle-schema-input large-text" data-name="<?php echo esc_attr($key); ?>"
+                                    rows="3"><?php echo esc_textarea($val); ?></textarea>
+                            <?php else: ?>
+                                <input type="text" class="kidazzle-schema-input regular-text" data-name="<?php echo esc_attr($key); ?>"
+                                    value="<?php echo esc_attr($val); ?>" style="width: 100%;">
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+        <?php
+    }
+
+    /**
+     * Render a repeater row
+     */
+    private function render_repeater_row($subfields, $data = [], $parent_key = '')
+    {
+        ?>
+        <div class="kidazzle-repeater-row"
+            style="background: #f9f9f9; padding: 10px; margin-bottom: 10px; border: 1px solid #eee;">
+            <div style="text-align: right; margin-bottom: 5px;">
+                <span class="kidazzle-remove-repeater-row dashicons dashicons-trash"
+                    style="cursor: pointer; color: #d63638;"></span>
+            </div>
+            <?php foreach ($subfields as $sub_key => $sub_field):
+                $val = isset($data[$sub_key]) ? $data[$sub_key] : '';
+                ?>
+                <div style="margin-bottom: 5px;">
+                    <label
+                        style="font-size: 12px; font-weight: 600; display: block;"><?php echo esc_html($sub_field['label']); ?></label>
+                    <?php if ($sub_field['type'] === 'textarea'): ?>
+                        <textarea class="kidazzle-repeater-input large-text" data-name="<?php echo esc_attr($sub_key); ?>" rows="2"
+                            style="width: 100%;"><?php echo esc_textarea($val); ?></textarea>
+                    <?php else: ?>
+                        <input type="text" class="kidazzle-repeater-input regular-text" data-name="<?php echo esc_attr($sub_key); ?>"
+                            value="<?php echo esc_attr($val); ?>" style="width: 100%;">
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <?php
+    }
+
+    /**
+     * AJAX: Get Schema Fields (for adding new block)
+     */
+    public function ajax_get_schema_fields()
+    {
+        check_ajax_referer('kidazzle_seo_dashboard_nonce', 'nonce');
+        $type = sanitize_text_field($_POST['schema_type']);
+        $index = intval($_POST['index']);
+        $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+
+        $prefill_data = [];
+        if ($post_id) {
+            $post = get_post($post_id);
+            if ($post) {
+                // Common prefill fields
+                $prefill_data['name'] = $post->post_title;
+                $prefill_data['headline'] = $post->post_title;
+                $prefill_data['description'] = wp_trim_words($post->post_content, 25);
+                $prefill_data['url'] = get_permalink($post_id);
+                $prefill_data['datePublished'] = get_the_date('Y-m-d', $post);
+                $prefill_data['dateModified'] = get_the_modified_date('Y-m-d', $post);
+
+                $img_id = get_post_thumbnail_id($post_id);
+                if ($img_id) {
+                    $prefill_data['image'] = wp_get_attachment_image_url($img_id, 'full');
+                }
+            }
+        }
+
+        ob_start();
+        $this->render_schema_block($type, $prefill_data, $index);
+        $html = ob_get_clean();
+
+        wp_send_json_success(['html' => $html]);
+    }
+
+    /**
+     * AJAX: Save Inspector Data
+     */
+    public function ajax_save_inspector_data()
+    {
+        check_ajax_referer('kidazzle_seo_dashboard_nonce', 'nonce');
+
+        if (!current_user_can('edit_posts'))
+            wp_send_json_error();
+
+        $post_id = intval($_POST['post_id']);
+        $schemas = isset($_POST['schemas']) ? $_POST['schemas'] : [];
+
+        if (!$post_id)
+            wp_send_json_error();
+
+        // Sanitize
+        $clean_schemas = [];
+        if (is_array($schemas)) {
+            foreach ($schemas as $s) {
+                if (isset($s['type']) && isset($s['data'])) {
+                    $clean_data = [];
+                    if (is_array($s['data'])) {
+                        foreach ($s['data'] as $k => $v) {
+                            if (is_array($v)) {
+                                // Handle Repeater (Array of Arrays)
+                                $clean_repeater = [];
+                                foreach ($v as $row) {
+                                    if (is_array($row)) {
+                                        $clean_row = [];
+                                        foreach ($row as $rk => $rv) {
+                                            $clean_row[sanitize_key($rk)] = sanitize_textarea_field($rv);
+                                        }
+                                        $clean_repeater[] = $clean_row;
+                                    }
+                                }
+                                $clean_data[sanitize_key($k)] = $clean_repeater;
+                            } else {
+                                // Handle Simple Field
+                                $clean_data[sanitize_key($k)] = sanitize_textarea_field($v);
+                            }
+                        }
+                    }
+                    $clean_schemas[] = [
+                        'type' => sanitize_text_field($s['type']),
+                        'data' => $clean_data
+                    ];
+                }
+            }
+        }
+
+        update_post_meta($post_id, '_kidazzle_post_schemas', $clean_schemas);
+
+        wp_send_json_success();
+    }
+    /**
+     * Render Social Preview Tab
+     */
+    private function render_social_tab()
+    {
+        $posts = get_posts(['post_type' => 'post', 'posts_per_page' => 50]);
+        ?>
+        <div class="kidazzle-seo-card">
+            <h2>Social Media Preview</h2>
+            <p>Preview how your posts will look on Facebook, Twitter, and LinkedIn.</p>
+
+            <div style="margin: 20px 0;">
+                <label for="kidazzle-social-select"><strong>Select Post:</strong></label>
+                <select id="kidazzle-social-select">
+                    <option value="">-- Select a Post --</option>
+                    <?php foreach ($posts as $p): ?>
+                        <option value="<?php echo $p->ID; ?>"><?php echo esc_html($p->post_title); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div id="kidazzle-social-preview-container" style="display: none; max-width: 600px;">
+                <div class="kidazzle-seo-card">
+                    <h3>Facebook / OG Preview</h3>
+                    <div
+                        style="border: 1px solid #dadde1; border-radius: 8px; overflow: hidden; font-family: Helvetica, Arial, sans-serif;">
+                        <div id="kidazzle-og-image"
+                            style="height: 315px; background-color: #f0f2f5; background-size: cover; background-position: center;">
+                        </div>
+                        <div style="padding: 10px 12px; background: #f0f2f5; border-top: 1px solid #dadde1;">
+                            <div style="font-size: 12px; color: #606770; text-transform: uppercase;" id="kidazzle-og-site">
+                                <?php echo $_SERVER['HTTP_HOST']; ?>
+                            </div>
+                            <div style="font-family: Georgia, serif; font-size: 16px; color: #1d2129; font-weight: 600; margin: 5px 0;"
+                                id="kidazzle-og-title">Page Title</div>
+                            <div style="font-size: 14px; color: #606770; line-height: 20px; max-height: 40px; overflow: hidden;"
+                                id="kidazzle-og-desc">Page description goes here...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            jQuery(document).ready(function ($) {
+                $('#kidazzle-social-select').on('change', function () {
+                    var pid = $(this).val();
+                    if (!pid) {
+                        $('#kidazzle-social-preview-container').hide();
+                        return;
+                    }
+
+                    $.post(ajaxurl, {
+                        action: 'kidazzle_fetch_social_preview',
+                        nonce: '<?php echo wp_create_nonce('kidazzle_seo_dashboard_nonce'); ?>',
+                        post_id: pid
+                    }, function (response) {
+                        if (response.success) {
+                            var data = response.data;
+                            $('#kidazzle-og-title').text(data.title);
+                            $('#kidazzle-og-desc').text(data.description);
+                            $('#kidazzle-og-site').text(data.site_name);
+
+                            if (data.image) {
+                                $('#kidazzle-og-image').css('background-image', 'url(' + data.image + ')');
+                            } else {
+                                $('#kidazzle-og-image').css('background-image', 'none');
+                            }
+
+                            $('#kidazzle-social-preview-container').show();
+                        }
+                    });
+                });
+            });
+        </script>
+        <?php
+    }
+
+    /**
+     * AJAX: Fetch Social Preview Data
+     */
+    public function ajax_fetch_social_preview()
+    {
+        check_ajax_referer('kidazzle_seo_dashboard_nonce', 'nonce');
+        $post_id = intval($_POST['post_id']);
+        if (!$post_id)
+            wp_send_json_error();
+
+        $post = get_post($post_id);
+        if (!$post)
+            wp_send_json_error();
+
+        // Use our Fallback Resolver to get the actual SEO data
+        $title = get_post_meta($post_id, 'seo_llm_title', true) ?: $post->post_title;
+
+        // Fallback description
+        $desc = '';
+        if (class_exists('kidazzle_Fallback_Resolver')) {
+            $desc = kidazzle_Fallback_Resolver::get_llm_description($post_id);
+        } else {
+            $desc = get_post_meta($post_id, 'seo_llm_description', true) ?: wp_trim_words($post->post_content, 25);
+        }
+
+        // Image
+        $img_id = get_post_thumbnail_id($post_id);
+        $img_url = '';
+        if ($img_id) {
+            $img_url = wp_get_attachment_image_url($img_id, 'large');
+        }
+
+        wp_send_json_success([
+            'title' => $title,
+            'description' => $desc,
+            'image' => $img_url,
+            'site_name' => $_SERVER['HTTP_HOST']
+        ]);
+    }
+
+    /**
+     * AJAX: Fetch LLM Targeting Data
+     */
+    public function ajax_fetch_llm_data()
+    {
+        check_ajax_referer('kidazzle_seo_dashboard_nonce', 'nonce');
+
+        $post_id = intval($_POST['post_id']);
+        if (!$post_id)
+            wp_send_json_error();
+
+        // Get current values
+        $primary_intent = get_post_meta($post_id, 'seo_llm_primary_intent', true);
+        $target_queries = get_post_meta($post_id, 'seo_llm_target_queries', true) ?: [];
+        $key_differentiators = get_post_meta($post_id, 'seo_llm_key_differentiators', true) ?: [];
+
+        // Get fallbacks
+        $fallback_queries = kidazzle_Fallback_Resolver::get_llm_target_queries($post_id);
+        $fallback_differentiators = kidazzle_Fallback_Resolver::get_llm_key_differentiators($post_id);
+
+        ob_start();
+        ?>
+        <input type="hidden" id="kidazzle-llm-post-id" value="<?php echo $post_id; ?>">
+
+        <div style="background: #fff; padding: 20px; border: 1px solid #ddd; margin-bottom: 20px;">
+            <h3 style="margin-top: 0;">LLM Targeting for: <?php echo get_the_title($post_id); ?></h3>
+
+            <p class="description" style="margin-bottom: 20px;">
+                <strong>Optimize how AI assistants (ChatGPT, Claude, Perplexity) recommend this page.</strong>
+                <button id="kidazzle-llm-autofill" class="button button-secondary"
+                    style="margin-left: 10px; border-color: #8c64ff; color: #6b42e4;">
+                    <span class="dashicons dashicons-superhero"
+                        style="font-size: 14px; width: 14px; height: 14px; vertical-align: middle;"></span> Auto-Fill with AI
+                </button>
+            </p>
+
+            <!-- Primary Intent -->
+            <div style="margin-bottom: 25px;">
+                <label for="seo_llm_primary_intent" style="display: block; font-weight: 600; margin-bottom: 8px;">
+                    Primary Intent
+                </label>
+                <input type="text" id="seo_llm_primary_intent" class="regular-text"
+                    value="<?php echo esc_attr($primary_intent); ?>"
+                    placeholder="e.g., childcare_discovery, program_information" style="width: 100%; max-width: 500px;">
+                <?php if (empty($primary_intent)): ?>
+                    <p class="description" style="color: #646970;">
+                        <em>Default: informational</em>
+                    </p>
+                <?php endif; ?>
+            </div>
+
+            <!-- Target Queries -->
+            <div style="margin-bottom: 25px;">
+                <h4 style="margin-bottom: 10px;">Target Queries</h4>
+                <p class="description" style="margin-bottom: 10px;">
+                    Natural language queries where LLMs should recommend this content.
+                </p>
+                <?php if (!empty($fallback_queries) && empty($target_queries)): ?>
+                    <p class="description" style="color: #646970; font-style: italic; margin-bottom: 10px;">
+                        Auto-generated examples: <?php echo implode(', ', array_slice($fallback_queries, 0, 2)); ?>
+                    </p>
+                <?php endif; ?>
+                <div id="llm-queries-container">
+                    <?php foreach ($target_queries as $query): ?>
+                        <div class="kidazzle-repeater-row" style="margin-bottom: 8px;">
+                            <input type="text" class="kidazzle-llm-query-input regular-text" value="<?php echo esc_attr($query); ?>"
+                                placeholder="e.g., best preschool curriculum" style="width: 80%;">
+                            <button class="button remove-llm-row">×</button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <button id="add-llm-query" class="button button-secondary">+ Add Query</button>
+            </div>
+
+            <!-- Key Differentiators -->
+            <div style="margin-bottom: 25px;">
+                <h4 style="margin-bottom: 10px;">Key Differentiators</h4>
+                <p class="description" style="margin-bottom: 10px;">
+                    What makes this content unique? LLMs use these as talking points.
+                </p>
+                <?php if (!empty($fallback_differentiators) && empty($key_differentiators)): ?>
+                    <p class="description" style="color: #646970; font-style: italic; margin-bottom: 10px;">
+                        Auto-discovered: <?php echo implode('; ', array_slice($fallback_differentiators, 0, 2)); ?>
+                    </p>
+                <?php endif; ?>
+                <div id="llm-diffs-container">
+                    <?php foreach ($key_differentiators as $diff): ?>
+                        <div class="kidazzle-repeater-row" style="margin-bottom: 8px;">
+                            <input type="text" class="kidazzle-llm-diff-input regular-text" value="<?php echo esc_attr($diff); ?>"
+                                placeholder="e.g., STEAM-focused curriculum" style="width: 80%;">
+                            <button class="button remove-llm-row">×</button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <button id="add-llm-diff" class="button button-secondary">+ Add Differentiator</button>
+            </div>
+
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ccc;">
+                <button id="kidazzle-llm-save" class="button button-primary button-large">
+                    Save LLM Targeting
+                </button>
+            </div>
+        </div>
+        <?php
+        $html = ob_get_clean();
+        wp_send_json_success(['html' => $html]);
+    }
+
+    /**
+     * AJAX: Save LLM Targeting Data
+     */
+    public function ajax_save_llm_targeting()
+    {
+        check_ajax_referer('kidazzle_seo_dashboard_nonce', 'nonce');
+
+        if (!current_user_can('edit_posts'))
+            wp_send_json_error();
+
+        $post_id = intval($_POST['post_id']);
+        if (!$post_id)
+            wp_send_json_error();
+
+        // Save data
+        update_post_meta($post_id, 'seo_llm_primary_intent', sanitize_text_field($_POST['primary_intent']));
+
+        $target_queries = isset($_POST['target_queries']) ? array_map('sanitize_text_field', $_POST['target_queries']) : [];
+        update_post_meta($post_id, 'seo_llm_target_queries', $target_queries);
+
+        $key_differentiators = isset($_POST['key_differentiators']) ? array_map('sanitize_text_field', $_POST['key_differentiators']) : [];
+        update_post_meta($post_id, 'seo_llm_key_differentiators', $key_differentiators);
+
+        wp_send_json_success();
+    }
+    /**
+     * AJAX: Generate LLM Targeting Data (AI Auto-Fill)
+     */
+    public function ajax_generate_llm_targeting()
+    {
+        check_ajax_referer('kidazzle_seo_dashboard_nonce', 'nonce');
+        $post_id = intval($_POST['post_id']);
+        if (!$post_id)
+            wp_send_json_error(['message' => 'Invalid Post ID']);
+
+        if (!class_exists('kidazzle_Fallback_Resolver')) {
+            wp_send_json_error(['message' => 'Fallback Resolver not found']);
+        }
+
+        $data = [
+            'primary_intent' => 'informational', // Default
+            'target_queries' => kidazzle_Fallback_Resolver::get_llm_target_queries($post_id),
+            'key_differentiators' => kidazzle_Fallback_Resolver::get_llm_key_differentiators($post_id)
+        ];
+
+        wp_send_json_success($data);
+    }
+
+    /**
+     * AJAX: Generate Schema Data (AI Auto-Fill)
+     */
+    public function ajax_generate_schema()
+    {
+        check_ajax_referer('kidazzle_seo_dashboard_nonce', 'nonce');
+        $post_id = intval($_POST['post_id']);
+        $type = sanitize_text_field($_POST['schema_type']);
+
+        if (!$post_id || !$type)
+            wp_send_json_error(['message' => 'Invalid parameters']);
+
+        $data = [];
+        $post = get_post($post_id);
+
+        // Basic smart defaults based on post content
+        if ($post) {
+            $data['name'] = $post->post_title;
+            $data['description'] = wp_trim_words($post->post_content, 25);
+            $data['url'] = get_permalink($post_id);
+
+            if ($type === 'Person') {
+                $data['jobTitle'] = get_post_meta($post_id, 'team_member_title', true) ?: 'Team Member';
+            }
+
+            if ($type === 'LocalBusiness' || $type === 'ChildCare') {
+                $data['telephone'] = get_post_meta($post_id, 'location_phone', true) ?: get_theme_mod('kidazzle_phone_number');
+                $data['address'] = get_post_meta($post_id, 'location_address', true);
+            }
+        }
+
+        wp_send_json_success($data);
+    }
+}

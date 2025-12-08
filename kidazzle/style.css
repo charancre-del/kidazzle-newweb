@@ -1,0 +1,52 @@
+/*
+Theme Name: Kidazzle Theme
+Theme URI: https://kidazzlechildcare.com
+Author: KIDazzle Development Team
+Author URI: https://kidazzlechildcare.com
+Description: Custom WordPress theme for KIDazzle Child Care. Independent, playful, and built for growth.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 8.0
+License: Proprietary
+License URI: All rights reserved
+Text Domain: kidazzle-theme
+Tags: education, childcare, early-learning, tailwind, custom-theme
+
+Kidazzle Theme
+Copyright (C) 2025 KIDazzle Child Care Inc.
+All rights reserved. This theme is proprietary software.
+*/
+
+/**
+ * This file only contains the WordPress theme header.
+ * All styles are compiled via Tailwind CSS into assets/css/main.css
+ * and enqueued via inc/enqueue.php
+ */
+
+/* Fallback Utilities for Schedule Layout */
+.gap-x-4 {
+    column-gap: 1rem;
+}
+
+.gap-y-4 {
+    row-gap: 1rem;
+}
+
+.w-14 {
+    width: 3.5rem;
+}
+
+.h-14 {
+    height: 3.5rem;
+}
+
+@media (min-width: 768px) {
+    .md\:w-16 {
+        width: 4rem;
+    }
+
+    .md\:h-16 {
+        height: 4rem;
+    }
+}

@@ -1,0 +1,628 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIDazzle Child Care - Where Learning is Fun!</title>
+   
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+   
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+   
+    <!-- Custom Styles -->
+    <style>
+        .graph-bar { transition: height 1s cubic-bezier(0.4, 0, 0.2, 1); }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        html { scroll-behavior: smooth; }
+        .view-section { display: none; }
+        .view-section.active { display: block; animation: fadeIn 0.3s ease-out; }
+    </style>
+</head>
+<body class="font-sans text-slate-800 bg-white">
+
+    <!-- TOP UTILITY BAR -->
+    <div class="bg-slate-50 text-slate-600 text-xs py-2 px-4 hidden md:flex justify-between items-center border-b border-slate-200 fixed w-full top-0 z-50 h-10">
+        <div class="flex gap-4 items-center">
+            <div class="h-6 w-auto mr-2">
+                <img src="./kidazzle logo.jpg" alt="KIDazzle Logo" class="h-full w-auto object-contain" onError="this.style.display='none'">
+            </div>
+            <span class="flex items-center gap-1 cursor-pointer hover:text-cyan-600 transition" onclick="navigateTo('locations')">
+                <i data-lucide="map-pin" class="w-3 h-3 text-red-500"></i> Locations in GA, TN, & FL
+            </span>
+            <span class="flex items-center gap-1">
+                <i data-lucide="phone" class="w-3 h-3 text-green-500"></i> 877-410-1002
+            </span>
+        </div>
+        <div class="flex gap-6 font-medium">
+            <button onclick="navigateTo('careers')" class="hover:text-cyan-600 transition flex items-center gap-1">Careers</button>
+            <button onclick="navigateTo('teacher-portal')" class="hover:text-cyan-600 transition flex items-center gap-1 font-bold text-orange-500">
+                <i data-lucide="users" class="w-3 h-3"></i> Teacher Portal
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION -->
+    <nav id="navbar" class="fixed top-10 w-full z-40 transition-all duration-300 bg-white py-4 shadow-sm">
+        <div class="container mx-auto px-4 md:px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
+                <div class="h-12 md:h-16 flex items-center relative">
+                    <img src="./kidazzle logo.jpg" alt="KIDazzle Child Care Logo" class="h-full w-auto object-contain" onError="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+                    <h1 class="text-3xl font-extrabold text-black pl-2 tracking-tighter hidden md:block">KID<span class="text-yellow-500">azzle</span></h1>
+                </div>
+            </div>
+
+            <!-- Desktop Links -->
+            <div class="hidden lg:flex items-center gap-6 font-bold text-slate-600 text-sm tracking-wide">
+                <button onclick="navigateTo('home')" class="hover:text-indigo-600 transition uppercase">Home</button>
+                <button onclick="navigateTo('programs')" class="hover:text-red-500 transition uppercase">Programs</button>
+                <button onclick="navigateTo('curriculum')" class="hover:text-cyan-500 transition uppercase">Curriculum</button>
+                <button onclick="navigateTo('locations')" class="hover:text-green-500 transition uppercase">Locations</button>
+                <button onclick="navigateTo('resources')" class="hover:text-purple-500 transition uppercase">Resources</button>
+                <button onclick="openContactModal()" class="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-700 transition ml-2">Contact Us</button>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="lg:hidden text-slate-900" id="mobile-menu-btn">
+                <i data-lucide="menu" class="w-7 h-7"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden fixed inset-0 bg-white z-50 pt-24 px-6 overflow-y-auto">
+            <button id="close-menu-btn" class="absolute top-4 right-4 text-slate-900">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <div class="flex flex-col gap-6 font-bold text-xl text-slate-800 pt-4">
+                <button class="text-left" onclick="navigateTo('home')">Home</button>
+                <button class="text-left text-red-500" onclick="navigateTo('programs')">Programs</button>
+                <button class="text-left text-cyan-500" onclick="navigateTo('curriculum')">Curriculum</button>
+                <button class="text-left text-green-500" onclick="navigateTo('locations')">Locations</button>
+                <button class="text-left text-purple-500" onclick="navigateTo('resources')">Resources</button>
+                <button class="text-left" onclick="navigateTo('careers')">Careers</button>
+                <button class="text-left text-orange-500" onclick="navigateTo('teacher-portal')">Teacher Portal</button>
+                <button class="text-left" onclick="openContactModal()">Contact Us</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT AREA (Dynamic Views) -->
+    <main class="mt-20 min-h-screen">
+
+        <!-- 1. HOME VIEW -->
+        <div id="view-home" class="view-section active">
+            <header class="relative w-full h-[600px] flex items-center overflow-hidden">
+                <div class="absolute inset-0 z-0">
+                    <img src="https://images.unsplash.com/photo-1560785496-0c9018085c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Group of diverse children laughing" class="w-full h-full object-cover object-center" />
+                    <div class="absolute inset-0 bg-slate-900/40"></div>
+                </div>
+                <div class="container mx-auto px-4 md:px-6 relative z-10 mt-10">
+                    <div class="max-w-2xl bg-white/90 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-2xl border-l-8 border-yellow-400">
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="bg-yellow-400 text-slate-900 px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider shadow-sm">Now Enrolling</span>
+                            <span class="text-slate-600 text-sm font-semibold flex items-center gap-1"><i data-lucide="star" class="w-3 h-3 fill-yellow-400 text-yellow-400"></i> 31 Years of Excellence</span>
+                        </div>
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 text-slate-900">Where Learning <br /><span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 to-cyan-500">is Fun!</span></h1>
+                        <p class="text-lg text-slate-600 mb-8 leading-relaxed font-medium">More than a daycare. We are an independent, premier learning academy nurturing diverse bright minds.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="navigateTo('locations')" class="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold py-4 px-10 rounded-full shadow-lg transition flex items-center justify-center gap-2 transform hover:-translate-y-1">
+                                Find Your Center <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </button>
+                            <button onclick="navigateTo('curriculum')" class="bg-white text-slate-700 border-2 border-slate-200 hover:border-cyan-400 hover:text-cyan-600 font-bold py-4 px-10 rounded-full transition flex items-center justify-center">
+                                Explore Curriculum
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="py-24 bg-white">
+                <div class="container mx-auto px-4">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Why Families Choose KIDazzle</h2>
+                        <p class="text-slate-500 text-xl">We combine the resources of a large center with the personal touch of a family-owned school.</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="p-8 rounded-3xl border-2 border-orange-100 hover:border-orange-400 transition cursor-pointer bg-white shadow-sm hover:shadow-xl group">
+                            <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center mb-4 group-hover:scale-110 transition"><i data-lucide="utensils"></i></div>
+                            <h3 class="font-bold text-lg text-slate-900">Healthy Meals</h3>
+                            <p class="text-slate-500 text-sm">Chef-prepared onsite daily.</p>
+                        </div>
+                        <div class="p-8 rounded-3xl border-2 border-red-100 hover:border-red-400 transition cursor-pointer bg-white shadow-sm hover:shadow-xl group">
+                            <div class="w-12 h-12 rounded-xl bg-red-50 text-red-500 flex items-center justify-center mb-4 group-hover:scale-110 transition"><i data-lucide="heart"></i></div>
+                            <h3 class="font-bold text-lg text-slate-900">Family Owned</h3>
+                            <p class="text-slate-500 text-sm">Independent and trusted.</p>
+                        </div>
+                        <div class="p-8 rounded-3xl border-2 border-cyan-100 hover:border-cyan-400 transition cursor-pointer bg-white shadow-sm hover:shadow-xl group" onclick="navigateTo('curriculum')">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-500 flex items-center justify-center mb-4 group-hover:scale-110 transition"><i data-lucide="brain"></i></div>
+                            <h3 class="font-bold text-lg text-slate-900">Creative Curriculum</h3>
+                            <p class="text-slate-500 text-sm">Play-based education.</p>
+                        </div>
+                        <div class="p-8 rounded-3xl border-2 border-green-100 hover:border-green-400 transition cursor-pointer bg-white shadow-sm hover:shadow-xl group">
+                            <div class="w-12 h-12 rounded-xl bg-green-50 text-green-500 flex items-center justify-center mb-4 group-hover:scale-110 transition"><i data-lucide="shield-check"></i></div>
+                            <h3 class="font-bold text-lg text-slate-900">Safety First</h3>
+                            <p class="text-slate-500 text-sm">Secure and monitored.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 2. PROGRAMS VIEW -->
+        <div id="view-programs" class="view-section">
+            <div class="bg-slate-900 py-20 text-white text-center">
+                <h1 class="text-5xl font-extrabold mb-4">Our Programs</h1>
+                <p class="text-xl text-slate-300">Comprehensive care for every stage.</p>
+            </div>
+            <div class="container mx-auto px-4 py-16 space-y-12">
+                <!-- Program Items injected here structure -->
+                <article class="flex flex-col md:flex-row gap-8 items-center p-8 rounded-3xl bg-white border-l-8 shadow-sm border-red-500">
+                    <div class="md:w-1/3 h-48 bg-slate-100 rounded-2xl w-full flex items-center justify-center text-slate-400 text-4xl">👶</div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-2">Infants</h2>
+                        <span class="inline-block bg-slate-100 px-3 py-1 rounded-full text-xs font-bold text-slate-600 mb-4">6 wks - 12 mos</span>
+                        <p class="text-lg text-slate-600 leading-relaxed">Our 'Smart Steps' program focuses on nurturing care, tummy time, and sensory activities to build security and trust. Lesson plans include daily sensory experiences (touch, sight, sound) and bonding milestones.</p>
+                    </div>
+                </article>
+               
+                <article class="flex flex-col md:flex-row gap-8 items-center p-8 rounded-3xl bg-white border-l-8 shadow-sm border-orange-500">
+                    <div class="md:w-1/3 h-48 bg-slate-100 rounded-2xl w-full flex items-center justify-center text-slate-400 text-4xl">🧸</div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-2">Toddlers</h2>
+                        <span class="inline-block bg-slate-100 px-3 py-1 rounded-full text-xs font-bold text-slate-600 mb-4">12 - 24 mos</span>
+                        <p class="text-lg text-slate-600 leading-relaxed">Toddlers are on the move! We provide safe environments for exploration. Lesson plans emphasize gross motor skills (walking, climbing), early language building (storytime, songs), and social interaction (parallel play).</p>
+                    </div>
+                </article>
+
+                <article class="flex flex-col md:flex-row gap-8 items-center p-8 rounded-3xl bg-white border-l-8 shadow-sm border-yellow-500">
+                    <div class="md:w-1/3 h-48 bg-slate-100 rounded-2xl w-full flex items-center justify-center text-slate-400 text-4xl">🎨</div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-2">Preschool</h2>
+                        <span class="inline-block bg-slate-100 px-3 py-1 rounded-full text-xs font-bold text-slate-600 mb-4">2 - 3 yrs</span>
+                        <p class="text-lg text-slate-600 leading-relaxed">Structured play meets early academics. Children learn shapes, colors, and early math concepts through hands-on fun. The curriculum introduces 'Project-Based Learning' where children explore themes like 'Trees' or 'Balls' in depth.</p>
+                    </div>
+                </article>
+
+                <article class="flex flex-col md:flex-row gap-8 items-center p-8 rounded-3xl bg-white border-l-8 shadow-sm border-green-500">
+                    <div class="md:w-1/3 h-48 bg-slate-100 rounded-2xl w-full flex items-center justify-center text-slate-400 text-4xl">📚</div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-2">Pre-K</h2>
+                        <span class="inline-block bg-slate-100 px-3 py-1 rounded-full text-xs font-bold text-slate-600 mb-4">4 - 5 yrs</span>
+                        <p class="text-lg text-slate-600 leading-relaxed">Kindergarten readiness with a focus on literacy, math, and social-emotional skills. We utilize state-approved standards (GELDS, TN-ELDS) to ensure children are ready for the K-12 system.</p>
+                    </div>
+                </article>
+
+                <article class="flex flex-col md:flex-row gap-8 items-center p-8 rounded-3xl bg-white border-l-8 shadow-sm border-cyan-500">
+                    <div class="md:w-1/3 h-48 bg-slate-100 rounded-2xl w-full flex items-center justify-center text-slate-400 text-4xl">🚌</div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-2">After School</h2>
+                        <span class="inline-block bg-slate-100 px-3 py-1 rounded-full text-xs font-bold text-slate-600 mb-4">5 - 12 yrs</span>
+                        <p class="text-lg text-slate-600 leading-relaxed">A safe haven after the bell rings. Lesson plans include homework assistance, STEM challenges, and relaxation time to unwind after a school day.</p>
+                    </div>
+                </article>
+
+                <article class="flex flex-col md:flex-row gap-8 items-center p-8 rounded-3xl bg-white border-l-8 shadow-sm border-purple-500">
+                    <div class="md:w-1/3 h-48 bg-slate-100 rounded-2xl w-full flex items-center justify-center text-slate-400 text-4xl">☀️</div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-2">Summer Camp</h2>
+                        <span class="inline-block bg-slate-100 px-3 py-1 rounded-full text-xs font-bold text-slate-600 mb-4">5 - 12 yrs</span>
+                        <p class="text-lg text-slate-600 leading-relaxed">Weekly themes, field trips, and outdoor adventures. From 'Space Week' to 'Dino Discovery', we keep learning alive all summer long with hands-on projects.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <!-- 3. CURRICULUM VIEW -->
+        <div id="view-curriculum" class="view-section">
+            <div class="bg-cyan-900 py-20 text-white">
+                <div class="container mx-auto px-4 text-center">
+                    <i data-lucide="brain" class="w-16 h-16 mx-auto mb-6 text-cyan-400"></i>
+                    <h1 class="text-5xl font-extrabold mb-4">The Creative Curriculum®</h1>
+                    <p class="text-xl max-w-2xl mx-auto text-cyan-200">A research-based, whole-child approach to education that adapts to every environment.</p>
+                </div>
+            </div>
+            <div class="container mx-auto px-4 py-16">
+                <div class="max-w-4xl mx-auto space-y-16">
+                    <section>
+                        <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">Research-Based & Child-Centered</h2>
+                        <p class="text-xl text-slate-700 leading-relaxed mb-8 text-center">
+                            At KIDazzle, we don't just "watch" children. We engage them. Using the nationally recognized <strong>Creative Curriculum®</strong>, we balance teacher-directed and child-initiated learning.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="bg-white p-8 rounded-3xl shadow-lg border-t-8 border-yellow-400">
+                                <h3 class="text-2xl font-bold text-slate-900 mb-4">38 Objectives for Development</h3>
+                                <p class="text-slate-600 leading-relaxed">The curriculum identifies goals in all four major areas of development: <strong>Social/Emotional, Physical, Cognitive, and Language</strong>. Teachers use these goals to plan activities that are relevant to the children's lives.</p>
+                            </div>
+                            <div class="bg-white p-8 rounded-3xl shadow-lg border-t-8 border-green-400">
+                                <h3 class="text-2xl font-bold text-slate-900 mb-4">The Interest Areas</h3>
+                                <p class="text-slate-600 leading-relaxed">Classrooms are divided into interest areas: Blocks, Dramatic Play, Toys & Games, Art, Library, Discovery, Sand & Water, and Music & Movement. This layout promotes independence.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 class="text-3xl font-bold text-slate-900 mb-6 border-b pb-4">Meeting State Standards</h2>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-700">Georgia (GELDS & Frog Street)</h3>
+                                <p class="text-slate-600">For our Georgia centers, specifically our GA Pre-K classrooms, we utilize <strong>Frog Street</strong> in conjunction with the Georgia Early Learning and Development Standards (GELDS). This ensures rigorous preparation for the K-12 system.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-700">Tennessee (TN-ELDS)</h3>
+                                <p class="text-slate-600">Our Memphis location adheres to the Tennessee Early Learning Developmental Standards (TN-ELDS), ensuring that our curriculum supports the state's specific educational goals for birth to age 5.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-cyan-700">Florida (Early Learning Standards)</h3>
+                                <p class="text-slate-600">In Doral, our curriculum is aligned with the Florida Early Learning and Developmental Standards, preparing children for VPK and beyond with a focus on literacy and mathematical thinking.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="bg-slate-50 p-8 rounded-3xl border border-slate-200">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-4">Adapting to Our Environment</h2>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            One of the strengths of Creative Curriculum is its flexibility. At KIDazzle, we integrate the environment into the lesson plans:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-slate-700 ml-4">
+                            <li><strong>Urban Classrooms (Downtown Atlanta/Memphis):</strong> We use the cityscape as a teaching tool—exploring architecture, transportation, and community helpers in the hustle and bustle of the city.</li>
+                            <li><strong>Suburban/Rural Settings (Hampton/College Park):</strong> We leverage larger outdoor spaces for nature walks, gardening projects, and environmental science exploration.</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. LOCATIONS VIEW (List) -->
+        <div id="view-locations" class="view-section">
+            <div class="bg-cyan-50 py-20">
+                <div class="container mx-auto px-4 text-center">
+                    <h1 class="text-5xl font-extrabold mb-4 text-slate-900">Our Locations</h1>
+                    <p class="text-xl max-w-2xl mx-auto text-slate-600">Find a KIDazzle center near you.</p>
+                </div>
+            </div>
+            <div class="container mx-auto px-4 py-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="locations-grid">
+                <!-- Locations Injected via JS -->
+            </div>
+        </div>
+
+        <!-- 5. INDIVIDUAL LOCATION VIEWS (Dynamic Placeholder) -->
+        <div id="view-location-detail" class="view-section">
+            <!-- Content injected via JS based on location ID -->
+        </div>
+
+        <!-- 6. RESOURCES VIEW -->
+        <div id="view-resources" class="view-section">
+            <div class="bg-green-50 py-20 text-center">
+                <h1 class="text-5xl font-extrabold text-slate-900 mb-4">Resources</h1>
+                <p class="text-xl text-slate-600">Blogs, guides, and support.</p>
+            </div>
+            <div class="container mx-auto px-4 py-16 grid md:grid-cols-3 gap-8">
+                <!-- Blog Placeholders -->
+                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition">
+                    <div class="h-48 bg-slate-100 flex items-center justify-center text-slate-300 text-4xl">📖</div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-green-600 uppercase">Parenting Tip</span>
+                        <h3 class="font-bold text-lg text-slate-900 mt-2 mb-2">Supporting Early Literacy</h3>
+                        <p class="text-sm text-slate-500 mb-4">Simple tips to help your child love reading from day one.</p>
+                        <button class="text-green-600 font-bold text-sm">Read Article</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition">
+                    <div class="h-48 bg-slate-100 flex items-center justify-center text-slate-300 text-4xl">🥦</div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-green-600 uppercase">Wellness</span>
+                        <h3 class="font-bold text-lg text-slate-900 mt-2 mb-2">Healthy Eating Habits</h3>
+                        <p class="text-sm text-slate-500 mb-4">How to handle picky eaters with patience.</p>
+                        <button class="text-green-600 font-bold text-sm">Read Article</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition">
+                    <div class="h-48 bg-slate-100 flex items-center justify-center text-slate-300 text-4xl">🎨</div>
+                    <div class="p-6">
+                        <span class="text-xs font-bold text-green-600 uppercase">Development</span>
+                        <h3 class="font-bold text-lg text-slate-900 mt-2 mb-2">The Power of Play</h3>
+                        <p class="text-sm text-slate-500 mb-4">Why messy play is crucial for brain development.</p>
+                        <button class="text-green-600 font-bold text-sm">Read Article</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. CAREERS VIEW -->
+        <div id="view-careers" class="view-section">
+            <div class="bg-slate-900 py-20 text-white text-center">
+                <h1 class="text-5xl font-extrabold mb-4">Join Our Team</h1>
+                <p class="text-xl text-slate-300">Help us shape the future, one child at a time.</p>
+            </div>
+            <div class="container mx-auto px-4 py-16">
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 hover:shadow-md transition">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">Lead Teacher (Pre-K)</h3>
+                            <div class="flex gap-4 text-sm text-slate-500 mt-1">
+                                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Atlanta, GA</span>
+                                <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> Full Time</span>
+                            </div>
+                        </div>
+                        <button onclick="openContactModal()" class="bg-cyan-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-cyan-700 transition">Apply Now</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 hover:shadow-md transition">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">Center Director</h3>
+                            <div class="flex gap-4 text-sm text-slate-500 mt-1">
+                                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Hampton, GA</span>
+                                <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> Full Time</span>
+                            </div>
+                        </div>
+                        <button onclick="openContactModal()" class="bg-cyan-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-cyan-700 transition">Apply Now</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 hover:shadow-md transition">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">Nutrition Specialist</h3>
+                            <div class="flex gap-4 text-sm text-slate-500 mt-1">
+                                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Doral, FL</span>
+                                <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> Full Time</span>
+                            </div>
+                        </div>
+                        <button onclick="openContactModal()" class="bg-cyan-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-cyan-700 transition">Apply Now</button>
+                    </div>
+                   
+                    <div class="bg-slate-50 p-8 rounded-3xl text-center mt-12">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Don't see your role?</h3>
+                        <p class="text-slate-600 mb-6">We are always looking for passionate educators. Submit your resume to our general pool.</p>
+                        <button onclick="openContactModal()" class="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold">Submit General Application</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. TEACHER PORTAL VIEW -->
+        <div id="view-teacher-portal" class="view-section">
+            <div class="bg-slate-900 py-16 text-white text-center">
+                <h1 class="text-4xl font-bold mb-2 flex items-center justify-center gap-3"><i data-lucide="users" class="text-yellow-400"></i> Teacher Portal</h1>
+                <p class="text-slate-400">Classroom tools and resources.</p>
+            </div>
+            <div class="container mx-auto px-4 py-12 grid md:grid-cols-3 gap-8">
+                <div class="md:col-span-1 space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-lg mb-4 text-slate-900">Quick Actions</h3>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex items-center gap-2 cursor-pointer hover:text-cyan-600"><i data-lucide="check-square" class="w-4 h-4"></i> Daily Checklist</li>
+                            <li class="flex items-center gap-2 cursor-pointer hover:text-cyan-600"><i data-lucide="file-text" class="w-4 h-4"></i> Incident Report</li>
+                            <li class="flex items-center gap-2 cursor-pointer hover:text-cyan-600"><i data-lucide="briefcase" class="w-4 h-4"></i> Time Off Request</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="md:col-span-2 space-y-8">
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-6">Teacher Daily Tasks</h2>
+                        <div class="bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-12 text-center">
+                            <p class="text-slate-400 text-sm mb-2">Embed Code Placeholder</p>
+                            <p class="font-bold text-slate-600">Daily Checklist Form</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-6">Weekly Task Automation</h2>
+                        <div class="bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-12 text-center">
+                            <p class="text-slate-400 text-sm mb-2">Embed Code Placeholder</p>
+                            <p class="font-bold text-slate-600">Weekly Task Form</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 py-16 relative mt-12">
+        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-white p-2 rounded-full shadow-lg border border-slate-100">
+            <img src="./kidazzle logo.jpg" alt="KIDazzle Logo" class="h-10 w-auto object-contain" onError="this.style.display='none'">
+        </div>
+
+        <div class="container mx-auto px-4 md:px-6 pt-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center bg-white p-2 rounded-lg shadow-sm w-fit mb-6">
+                        <img src="./kidazzle logo.jpg" alt="KIDazzle Logo" class="h-10 w-auto object-contain" onError="this.style.display='none'">
+                    </div>
+                    <p class="text-sm leading-relaxed mb-6 text-slate-400">Providing elite, independent child care and early education.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-3 text-sm cursor-pointer">
+                        <li onclick="navigateTo('programs')" class="hover:text-red-400">Programs</li>
+                        <li onclick="navigateTo('locations')" class="hover:text-green-400">Locations</li>
+                        <li onclick="navigateTo('careers')" class="hover:text-cyan-400">Careers</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Resources</h4>
+                    <ul class="space-y-3 text-sm cursor-pointer">
+                        <li onclick="navigateTo('teacher-portal')" class="hover:text-cyan-400">Teacher Portal</li>
+                        <li class="hover:text-yellow-400">Parent Portal</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Contact</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li>100 Alabama St SW, Atlanta, GA</li>
+                        <li class="font-bold text-white">877-410-1002</li>
+                        <li><button onclick="openContactModal()" class="text-cyan-400 underline mt-2">Open Contact Form</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 text-center text-xs text-slate-500">
+                <span>© 2025 KIDazzle Child Care Inc.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CONTACT MODAL -->
+    <div id="contact-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fade-in">
+        <div class="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl max-h-[90vh] overflow-y-auto p-8">
+            <button onclick="closeContactModal()" class="absolute top-4 right-4 p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition">
+                <i data-lucide="x" class="w-6 h-6 text-slate-600"></i>
+            </button>
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-slate-900">How Can We Help?</h3>
+                <p class="text-slate-500">Select an option below.</p>
+            </div>
+            <!-- Embed Placeholder -->
+            <div class="bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-12 text-center h-96 flex flex-col items-center justify-center">
+                <div class="text-slate-400 font-mono text-xs mb-4 w-full break-all">
+                    <!-- PASTE 123 FORM EMBED CODE HERE -->
+                    &lt;iframe src="https://www.123formbuilder.com/..." &gt;&lt;/iframe&gt;
+                </div>
+                <p class="font-bold text-slate-700">123 Form Placeholder</p>
+                <div class="flex justify-center gap-4 mt-4 text-sm text-slate-500">
+                    <span class="bg-white px-2 py-1 rounded border">Enrollment</span>
+                    <span class="bg-white px-2 py-1 rounded border">Hiring</span>
+                    <span class="bg-white px-2 py-1 rounded border">Service</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- Location Data ---
+        const locationsData = {
+            westend: {
+                id: "westend", name: "West End Center", city: "Atlanta, GA", address: "674 Joseph E Lowery Blvd, Atlanta, GA 30310", phone: "(404) 753-8884", email: "westend@kidazzle.com", desc: "Rooted in culture, bursting with creativity — West End kids shine in every crayon stroke.", features: ["Arts Focus", "Historic District", "Pre-K Program"]
+            },
+            summit: {
+                id: "summit", name: "IRS Summit Building", city: "Midtown Atlanta, GA", address: "401 W Peachtree St NW, Atlanta, GA 30308", phone: "(404) 555-0101", email: "summit@kidazzle.com", desc: "Bright minds meet big city energy. Convenient for federal employees.", features: ["Bilingual Center", "Infant Care", "Federal Employee Priority"]
+            },
+            memphis: {
+                id: "memphis", name: "Downtown Memphis", city: "Memphis, TN", address: "200 Main St, Memphis, TN 38103", phone: "(901) 555-0105", email: "memphis@kidazzle.com", desc: "From blues to blocks, we've got Memphis rhythm and preschool brilliance.", features: ["FedEx Hub Nearby", "Music Program", "Extended Hours"]
+            },
+            afc: {
+                id: "afc", name: "Atlanta Federal Center", city: "Downtown Atlanta, GA", address: "61 Forsyth St SW, Atlanta, GA 30303", phone: "(404) 555-0102", email: "afc@kidazzle.com", desc: "A hub for hugs, discovery, and Storytime superstars — your downtown oasis.", features: ["Secure Federal Facility", "GA Pre-K", "Toddler Discovery"]
+            },
+            collegepark: {
+                id: "collegepark", name: "College Park Center", city: "College Park, GA", address: "1701 Columbia Ave, College Park, GA 30337", phone: "(404) 555-0103", email: "collegepark@kidazzle.com", desc: "Where little learners take flight — right in the heart of College Park.", features: ["Near Airport", "STEAM Focus", "Transportation"]
+            },
+            hampton: {
+                id: "hampton", name: "Hampton Center", city: "Hampton, GA", address: "Hampton, GA", phone: "(770) 555-0199", email: "hampton@kidazzle.com", desc: "Where the kids sparkle brighter than the Georgia sunshine.", features: ["School Readiness", "Large Playground", "Summer Camp"]
+            },
+            miami: {
+                id: "miami", name: "Doral International", city: "Doral, FL", address: "8800 NW 36th St, Doral, FL 33178", phone: "(305) 555-0106", email: "miami@kidazzle.com", desc: "Sunshine, smiles, and Spanish flair — Spanish immersion learning.", features: ["Spanish Immersion", "STEM Lab", "Cultural Arts"]
+            }
+        };
+
+        // --- Navigation Logic ---
+        function navigateTo(viewId) {
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+           
+            // Check if it's a specific location
+            if (viewId.startsWith('loc-')) {
+                const locationId = viewId.split('-')[1];
+                renderLocationDetail(locationId);
+                document.getElementById('view-location-detail').classList.add('active');
+            } else {
+                // Show generic view
+                const target = document.getElementById(`view-${viewId}`);
+                if (target) target.classList.add('active');
+            }
+           
+            // Close mobile menu
+            document.getElementById('mobile-menu').classList.add('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        // --- Location Detail Renderer ---
+        function renderLocationDetail(id) {
+            const loc = locationsData[id];
+            if (!loc) return;
+           
+            const container = document.getElementById('view-location-detail');
+            container.innerHTML = `
+                <div class="bg-slate-900 py-20 text-white relative overflow-hidden">
+                    <div class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 via-yellow-500 to-cyan-500"></div>
+                    <div class="container mx-auto px-4 text-center relative z-10">
+                        <span class="bg-white/20 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4 inline-block">${loc.city}</span>
+                        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">${loc.name}</h1>
+                        <p class="text-xl max-w-2xl mx-auto text-slate-300">${loc.desc}</p>
+                    </div>
+                </div>
+                <div class="container mx-auto px-4 py-16">
+                    <div class="grid lg:grid-cols-3 gap-12">
+                        <div class="lg:col-span-2 space-y-12">
+                            <section>
+                                <h2 class="text-3xl font-bold text-slate-900 mb-6">About This Center</h2>
+                                <p class="text-slate-600 leading-relaxed text-lg mb-6">Welcome to <strong>${loc.name}</strong>. We are dedicated to providing a safe, nurturing, and educational environment for families in ${loc.city}.</p>
+                                <div class="grid md:grid-cols-3 gap-4">
+                                    ${loc.features.map(f => `<div class="bg-slate-50 p-4 rounded-xl border border-slate-200 font-bold text-slate-700 text-center">${f}</div>`).join('')}
+                                </div>
+                            </section>
+                            <section class="bg-slate-100 rounded-3xl h-80 flex items-center justify-center text-slate-400 border-2 border-slate-200">
+                                <div class="text-center"><p class="font-mono text-sm">Google Map Embed Placeholder</p></div>
+                            </section>
+                        </div>
+                        <div class="space-y-8">
+                            <div class="bg-white p-6 rounded-2xl shadow-lg border-t-8 border-yellow-400">
+                                <h3 class="text-xl font-bold text-slate-900 mb-4">Contact Us</h3>
+                                <div class="space-y-4 text-sm">
+                                    <div class="flex items-start gap-3"><span class="text-slate-600">${loc.address}</span></div>
+                                    <div class="flex items-center gap-3"><span class="text-slate-600 font-bold">${loc.phone}</span></div>
+                                    <div class="flex items-center gap-3"><span class="text-slate-600">${loc.email}</span></div>
+                                </div>
+                            </div>
+                            <div class="bg-slate-900 p-6 rounded-2xl text-white shadow-xl">
+                                <h3 class="text-xl font-bold mb-2 flex items-center gap-2">Book a Tour</h3>
+                                <div class="bg-white/10 rounded-xl h-64 flex items-center justify-center border border-white/20">
+                                    <div class="text-center p-4">
+                                        <p class="font-mono text-xs text-slate-400 mb-2">Calendar Embed Placeholder</p>
+                                        <button class="bg-yellow-400 text-slate-900 px-4 py-2 rounded font-bold text-sm">Launch Calendar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- Render Location List Grid ---
+        function renderLocationList() {
+            const grid = document.getElementById('locations-grid');
+            grid.innerHTML = Object.values(locationsData).map(loc => `
+                <div class="border border-slate-200 rounded-3xl p-8 hover:shadow-xl transition bg-white group flex flex-col">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">${loc.name}</h3>
+                    <p class="text-slate-500 mb-4 text-sm">${loc.address}</p>
+                    <div class="flex-grow mb-6">
+                        <div class="flex flex-wrap gap-2">
+                            ${loc.features.map(f => `<span class="bg-cyan-50 text-cyan-700 text-xs px-2 py-1 rounded-md font-bold">${f}</span>`).join('')}
+                        </div>
+                    </div>
+                    <button onclick="navigateTo('loc-${loc.id}')" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-cyan-600 transition shadow-md">View Details</button>
+                </div>
+            `).join('');
+        }
+
+        // --- Modals & Mobile Menu ---
+        const contactModal = document.getElementById('contact-modal');
+        function openContactModal() { contactModal.classList.remove('hidden'); }
+        function closeContactModal() { contactModal.classList.add('hidden'); }
+       
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.remove('hidden');
+        });
+        document.getElementById('close-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        });
+
+        // Initialize Icons & List
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderLocationList();
+        });
+    </script>
+</body>
+</html>

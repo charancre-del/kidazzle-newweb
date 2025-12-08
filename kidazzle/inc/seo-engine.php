@@ -1,0 +1,836 @@
+<?php
+/**
+ * SEO Engine: Schema, Sitemap, Robots.txt, Meta Tags
+ *
+ * @package kidazzle_Excellence
+ * @since 1.0.0
+ */
+
+// Exit if accessed directly
+if (!defined('ABSPATH')) {
+        exit;
+}
+
+/**
+ * Add Organization Schema to Homepage
+ */
+function kidazzle_organization_schema()
+{
+        if (!is_front_page()) {
+                return;
+        }
+
+        $homepage_id = get_option('page_on_front');
+
+        // Get custom values or fallbacks
+        $name = get_post_meta($homepage_id, 'schema_org_name', true) ?: get_bloginfo('name');
+        $url = get_post_meta($homepage_id, 'schema_org_url', true) ?: home_url();
+        $logo = get_post_meta($homepage_id, 'schema_org_logo', true) ?: kidazzle_get_global_setting('global_logo', '');
+        $description = get_post_meta($homepage_id, 'schema_org_description', true) ?: kidazzle_global_seo_default_description();
+        $area_served = get_post_meta($homepage_id, 'schema_org_area_served', true) ?: 'Atlanta';
+        $telephone = get_post_meta($homepage_id, 'schema_org_telephone', true);
+        $email = get_post_meta($homepage_id, 'schema_org_email', true);
+
+        $schema = array(
+                '@context' => 'https://schema.org',
+                '@type' => 'ChildCare',
+                'name' => $name,
+                'url' => $url,
+                'logo' => $logo,
+                'description' => $description,
+                'areaServed' => array(
+                        '@type' => 'City',
+                        'name' => $area_served,
+                ),
+                'sameAs' => array_filter(array(
+                        kidazzle_global_facebook_url(),
+                        kidazzle_global_instagram_url(),
+                        kidazzle_global_linkedin_url(),
+                )),
+        );
+
+        // Add optional fields if provided
+        if ($telephone) {
+                $schema['telephone'] = $telephone;
+        }
+        if ($email) {
+                $schema['email'] = $email;
+        }
+
+        echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
+}
+add_action('wp_head', 'kidazzle_organization_schema');
+
+/**
+ * Add WebSite Schema to Homepage (for Sitelinks Search Box)
+ */
+function kidazzle_website_schema()
+{
+        if (!is_front_page()) {
+                return;
+        }
+
+        $schema = array(
+                '@context' => 'https://schema.org',
+                '@type' => 'WebSite',
+                'name' => get_bloginfo('name'),
+                'url' => home_url(),
+                'potentialAction' => array(
+                        '@type' => 'SearchAction',
+                        'target' => home_url('/?s={search_term_string}'),
+                        'query-input' => 'required name=search_term_string',
+                ),
+        );
+
+        echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
+}
+add_action('wp_head', 'kidazzle_website_schema');
+
+/**
+ * Add LocalBusiness Schema to Location Pages
+ */
+function kidazzle_location_schema()
+{
+        if (!is_singular('location')) {
+                return;
+        }
+
+        $location_id = get_the_ID();
+
+        // Ensure Advanced SEO classes are available
+        if (!class_exists('kidazzle_Fallback_Resolver')) {
+                return;
+        }
+
+        // 1. DATA GATHERING
+        // -----------------
+        $location_fields = kidazzle_get_location_fields($location_id);
+        $service_area = kidazzle_Fallback_Resolver::get_service_area_circle($location_id);
+
+        // Meta Fields
+        $name = get_post_meta($location_id, 'schema_loc_name', true) ?: get_the_title();
+        $description = get_post_meta($location_id, 'schema_loc_description', true) ?: (get_the_excerpt() ?: kidazzle_trimmed_excerpt(30, $location_id));
+        $telephone = get_post_meta($location_id, 'schema_loc_telephone', true) ?: $location_fields['phone'];
+        $email = get_post_meta($location_id, 'schema_loc_email', true) ?: $location_fields['email'];
+        $opening_hours_raw = get_post_meta($location_id, 'schema_loc_opening_hours', true) ?: $location_fields['hours'];
+        $payment = get_post_meta($location_id, 'schema_loc_payment_accepted', true);
+        $price_range = get_post_meta($location_id, 'seo_llm_price_min', true);
+        $quality_rated = get_post_meta($location_id, 'location_quality_rated', true);
+        $ages_served = get_post_meta($location_id, 'location_ages_served', true);
+        $school_pickups = get_post_meta($location_id, 'location_school_pickups', true);
+        // Director
+        $director_name = get_post_meta($location_id, 'location_director_name', true);
+        $director_bio = get_post_meta($location_id, 'location_director_bio', true);
+        $director_photo = get_post_meta($location_id, 'location_director_photo', true);
+
+        // Price Range Formatting
+        if ($price_range) {
+                $price_max = get_post_meta($location_id, 'seo_llm_price_max', true);
+                $currency = get_post_meta($location_id, 'seo_llm_price_currency', true) ?: 'USD';
+                $frequency = get_post_meta($location_id, 'seo_llm_price_frequency', true) ?: 'week';
+                $price_range = "$currency $price_range" . ($price_max ? "-$price_max" : "") . " per $frequency";
+        } else {
+                // Fallback to manual schema field or default
+                $price_range = get_post_meta($location_id, 'schema_loc_price_range', true) ?: '$$';
+        }
+
+        // 2. SCHEMA CONSTRUCTION
+        // ----------------------
+        $schema = array(
+                '@type' => array('ChildCare', 'Preschool', 'EducationalOrganization', 'LocalBusiness'),
+                '@id' => get_permalink() . '#organization',
+                'name' => $name,
+                'description' => $description,
+                'url' => get_permalink(),
+                'image' => get_the_post_thumbnail_url($location_id, 'full'),
+                'logo' => kidazzle_get_global_setting('global_logo', ''),
+                'telephone' => $telephone,
+                'email' => $email,
+                'priceRange' => $price_range,
+                'address' => array(
+                        '@type' => 'PostalAddress',
+                        'streetAddress' => $location_fields['address'],
+                        'addressLocality' => $location_fields['city'],
+                        'addressRegion' => $location_fields['state'],
+                        'postalCode' => $location_fields['zip'],
+                        'addressCountry' => 'US'
+                ),
+        );
+
+        // Social Profiles (sameAs)
+        $socials = array_filter(array(
+                kidazzle_global_facebook_url(),
+                kidazzle_global_instagram_url(),
+                kidazzle_global_linkedin_url(),
+        ));
+        if (!empty($socials)) {
+                $schema['sameAs'] = array_values($socials);
+        }
+
+        // Geo Coordinates
+        if ($service_area) {
+                $schema['geo'] = array(
+                        '@type' => 'GeoCoordinates',
+                        'latitude' => $service_area['lat'],
+                        'longitude' => $service_area['lng'],
+                );
+                $schema['areaServed'] = array(
+                        '@type' => 'GeoCircle',
+                        'geoMidpoint' => $schema['geo'],
+                        'geoRadius' => ($service_area['radius'] * 1609.34) // Miles to meters
+                );
+        } elseif ($location_fields['latitude'] && $location_fields['longitude']) {
+                $schema['geo'] = array(
+                        '@type' => 'GeoCoordinates',
+                        'latitude' => $location_fields['latitude'],
+                        'longitude' => $location_fields['longitude'],
+                );
+        }
+
+        // Google Maps
+        if ($location_fields['map_link']) {
+                $schema['hasMap'] = $location_fields['map_link']; // Assuming this exists or we construct it
+        } else {
+                // Construct Google Maps URL from address
+                $addr_string = urlencode($location_fields['address'] . ', ' . $location_fields['city'] . ', ' . $location_fields['state'] . ' ' . $location_fields['zip']);
+                $schema['hasMap'] = "https://www.google.com/maps/search/?api=1&query=$addr_string";
+        }
+
+        // Hours (OpeningHoursSpecification)
+        if ($opening_hours_raw) {
+                // Simple parser: assumes "7am - 6pm" or similar format
+                // If it contains newlines, treat as multiple entries
+                $hours_lines = explode("\n", $opening_hours_raw);
+                $specs = array();
+
+                foreach ($hours_lines as $line) {
+                        // Try to extract times
+                        if (preg_match('/(\d{1,2}(?::\d{2})?\s*[ap]m)\s*-\s*(\d{1,2}(?::\d{2})?\s*[ap]m)/i', $line, $matches)) {
+                                $opens = date("H:i", strtotime($matches[1]));
+                                $closes = date("H:i", strtotime($matches[2]));
+
+                                $specs[] = array(
+                                        '@type' => 'OpeningHoursSpecification',
+                                        'dayOfWeek' => array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
+                                        'opens' => $opens,
+                                        'closes' => $closes
+                                );
+                        }
+                }
+
+                if (!empty($specs)) {
+                        $schema['openingHoursSpecification'] = $specs;
+                } else {
+                        // Fallback to simple string if parsing fails
+                        $schema['openingHours'] = $opening_hours_raw;
+                }
+        }
+
+        // Attributes & Credentials
+        $knowsAbout = array();
+        if ($quality_rated) {
+                $knowsAbout[] = 'Quality Rated Provider';
+                $schema['amenityFeature'][] = array(
+                        '@type' => 'LocationFeatureSpecification',
+                        'name' => 'Quality Rated',
+                        'value' => true
+                );
+        }
+        if ($school_pickups) {
+                $schema['amenityFeature'][] = array(
+                        '@type' => 'LocationFeatureSpecification',
+                        'name' => 'School Transportation',
+                        'value' => true
+                );
+        }
+        if (!empty($knowsAbout)) {
+                $schema['knowsAbout'] = $knowsAbout;
+        }
+
+        // Audience (Ages)
+        if ($ages_served) {
+                $schema['audience'] = array(
+                        '@type' => 'PeopleAudience',
+                        'audienceType' => 'families',
+                        'name' => "Children ages $ages_served"
+                );
+        }
+
+        // Staff (Director)
+        if ($director_name) {
+                $schema['employee'] = array(
+                        '@type' => 'Person',
+                        'name' => $director_name,
+                        'jobTitle' => 'Center Director',
+                        'description' => $director_bio ? wp_strip_all_tags($director_bio) : ''
+                );
+                if ($director_photo) {
+                        $schema['employee']['image'] = $director_photo;
+                }
+        }
+
+        // Offers (Programs)
+        // Query programs associated with this location
+        $related_programs = get_posts(array(
+                'post_type' => 'program',
+                'posts_per_page' => -1,
+                'meta_query' => array(
+                        array(
+                                'key' => 'program_locations',
+                                'value' => '"' . $location_id . '"', // Serialized array search (approximate)
+                                'compare' => 'LIKE'
+                        )
+                )
+        ));
+
+        if (!empty($related_programs)) {
+                $offers = array();
+                foreach ($related_programs as $program) {
+                        $offers[] = array(
+                                '@type' => 'Offer',
+                                'name' => $program->post_title,
+                                'description' => get_the_excerpt($program->ID),
+                                'url' => get_permalink($program->ID),
+                                'category' => get_post_meta($program->ID, 'program_age_range', true) ?: 'Child Care'
+                        );
+                }
+                $schema['makesOffer'] = $offers;
+                $schema['hasOfferCatalog'] = array(
+                        '@type' => 'OfferCatalog',
+                        'name' => 'Early Learning Programs',
+                        'itemListElement' => $offers
+                );
+        }
+
+        // Reviews (Aggregate Rating)
+        $rating_value = get_post_meta($location_id, 'seo_llm_rating_value', true) ?: get_post_meta($location_id, 'location_google_rating', true);
+        $rating_count = get_post_meta($location_id, 'seo_llm_rating_count', true);
+
+        if ($rating_value) {
+                $schema['aggregateRating'] = array(
+                        '@type' => 'AggregateRating',
+                        'ratingValue' => $rating_value,
+                        'reviewCount' => $rating_count ?: '1', // Fallback to 1 if count missing but rating exists
+                        'bestRating' => '5',
+                        'worstRating' => '1'
+                );
+        }
+
+        // Payment
+        if ($payment) {
+                $schema['paymentAccepted'] = $payment;
+        }
+
+        echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
+}
+add_action('wp_head', 'kidazzle_location_schema');
+
+/**
+ * Add Service Schema to City Pages
+ */
+function kidazzle_city_schema()
+{
+        if (!is_singular('city')) {
+                return;
+        }
+
+        $post_id = get_the_ID();
+        $city_name = get_the_title();
+        $location_ids = get_post_meta($post_id, 'city_nearby_locations', true);
+
+        // Basic Service Schema
+        $schema = array(
+                '@context' => 'https://schema.org',
+                '@type' => 'Service',
+                'name' => "Daycare & Preschool in $city_name",
+                'serviceType' => 'Child Care',
+                'provider' => array(
+                        '@type' => 'Organization',
+                        'name' => get_bloginfo('name'),
+                        'url' => home_url()
+                ),
+                'areaServed' => array(
+                        '@type' => 'City',
+                        'name' => $city_name
+                ),
+                'description' => get_the_excerpt() ?: "Premier child care and early education services in $city_name, GA.",
+                'url' => get_permalink()
+        );
+
+        // Add Related Locations (Schools)
+        if (!empty($location_ids) && is_array($location_ids)) {
+                $offers = array();
+                foreach ($location_ids as $loc_id) {
+                        $loc_name = get_the_title($loc_id);
+                        $loc_url = get_permalink($loc_id);
+                        $offers[] = array(
+                                '@type' => 'Offer',
+                                'itemOffered' => array(
+                                        '@type' => 'ChildCare',
+                                        'name' => $loc_name,
+                                        'url' => $loc_url
+                                )
+                        );
+                }
+                $schema['hasOfferCatalog'] = array(
+                        '@type' => 'OfferCatalog',
+                        'name' => "Schools serving $city_name",
+                        'itemListElement' => $offers
+                );
+        }
+
+        echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
+}
+add_action('wp_head', 'kidazzle_city_schema');
+
+/**
+ * Add Service Schema to Program Pages
+ */
+function kidazzle_program_schema()
+{
+        if (!is_singular('program')) {
+                return;
+        }
+
+        $program_id = get_the_ID();
+
+        // Get custom values or fallbacks
+        $name = get_post_meta($program_id, 'schema_prog_name', true) ?: get_the_title();
+        $description = get_post_meta($program_id, 'schema_prog_description', true) ?: (get_the_excerpt() ?: kidazzle_trimmed_excerpt(30, $program_id));
+        $service_type = get_post_meta($program_id, 'schema_prog_service_type', true) ?: 'Early Childhood Education';
+        $provider_name = get_post_meta($program_id, 'schema_prog_provider_name', true) ?: get_bloginfo('name');
+        $area_served = get_post_meta($program_id, 'schema_prog_area_served', true) ?: 'Metro Atlanta';
+        $category = get_post_meta($program_id, 'schema_prog_category', true);
+
+        $schema = array(
+                '@context' => 'https://schema.org',
+                '@type' => 'Service',
+                'name' => $name,
+                'description' => $description,
+                'url' => get_permalink(),
+                'provider' => array(
+                        '@type' => 'Organization',
+                        'name' => $provider_name,
+                ),
+                'serviceType' => $service_type,
+                'areaServed' => $area_served,
+        );
+
+        // Add optional category if provided
+        if ($category) {
+                $schema['category'] = $category;
+        }
+
+        echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
+}
+add_action('wp_head', 'kidazzle_program_schema');
+
+/**
+ * Add FAQPage Schema to Homepage (when FAQ section exists)
+ */
+function kidazzle_faq_schema()
+{
+        if (!is_front_page()) {
+                return;
+        }
+
+        // Check if FAQ data exists
+        if (!function_exists('kidazzle_home_has_faq') || !kidazzle_home_has_faq()) {
+                return;
+        }
+
+        if (!function_exists('kidazzle_home_faq')) {
+                return;
+        }
+
+        $faq_data = kidazzle_home_faq();
+        if (empty($faq_data['items'])) {
+                return;
+        }
+
+        // Build FAQ schema
+        $main_entity = array();
+        foreach ($faq_data['items'] as $item) {
+                if (empty($item['question']) || empty($item['answer'])) {
+                        continue;
+                }
+
+                $main_entity[] = array(
+                        '@type' => 'Question',
+                        'name' => $item['question'],
+                        'acceptedAnswer' => array(
+                                '@type' => 'Answer',
+                                'text' => wp_strip_all_tags($item['answer']),
+                        ),
+                );
+        }
+
+        if (empty($main_entity)) {
+                return;
+        }
+
+        $schema = array(
+                '@context' => 'https://schema.org',
+                '@type' => 'FAQPage',
+                'mainEntity' => $main_entity,
+        );
+
+        echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
+}
+add_action('wp_head', 'kidazzle_faq_schema');
+
+/**
+ * Breadcrumb Schema is now handled by inc/advanced-seo-llm/class-breadcrumbs.php
+ */
+
+/**
+ * Open Graph Tags
+ */
+function kidazzle_og_tags()
+{
+        echo '<meta property="og:type" content="website" />' . "\n";
+        echo '<meta property="og:title" content="' . esc_attr(get_the_title()) . '" />' . "\n";
+        echo '<meta property="og:url" content="' . esc_url(get_permalink()) . '" />' . "\n";
+        echo '<meta property="og:site_name" content="' . esc_attr(get_bloginfo('name')) . '" />' . "\n";
+
+        if (has_post_thumbnail()) {
+                echo '<meta property="og:image" content="' . esc_url(get_the_post_thumbnail_url(null, 'full')) . '" />' . "\n";
+        }
+
+        $description = get_the_excerpt() ?: kidazzle_global_seo_default_description();
+        echo '<meta property="og:description" content="' . esc_attr(wp_strip_all_tags($description)) . '" />' . "\n";
+}
+add_action('wp_head', 'kidazzle_og_tags', 5);
+
+/**
+ * Twitter Card Tags
+ */
+function kidazzle_twitter_cards()
+{
+        echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
+        echo '<meta name="twitter:title" content="' . esc_attr(get_the_title()) . '" />' . "\n";
+
+        if (has_post_thumbnail()) {
+                echo '<meta name="twitter:image" content="' . esc_url(get_the_post_thumbnail_url(null, 'full')) . '" />' . "\n";
+        }
+
+        $description = get_the_excerpt() ?: kidazzle_global_seo_default_description();
+        echo '<meta name="twitter:description" content="' . esc_attr(wp_strip_all_tags($description)) . '" />' . "\n";
+
+        // Optional: Add Twitter site handle if available
+        $twitter_handle = get_option('kidazzle_twitter_handle', '');
+        if ($twitter_handle) {
+                echo '<meta name="twitter:site" content="' . esc_attr($twitter_handle) . '" />' . "\n";
+        }
+}
+add_action('wp_head', 'kidazzle_twitter_cards', 6);
+
+/**
+ * Hreflang Tags for EN/ES
+ */
+function kidazzle_hreflang_tags()
+{
+        $post_id = get_the_ID();
+
+        if (!$post_id) {
+                return;
+        }
+
+        $alternate_en = get_post_meta($post_id, 'alternate_url_en', true);
+        $alternate_es = get_post_meta($post_id, 'alternate_url_es', true);
+
+        if ($alternate_en) {
+                echo '<link rel="alternate" hreflang="en" href="' . esc_url($alternate_en) . '" />' . "\n";
+        }
+
+        if ($alternate_es) {
+                echo '<link rel="alternate" hreflang="es" href="' . esc_url($alternate_es) . '" />' . "\n";
+        }
+}
+add_action('wp_head', 'kidazzle_hreflang_tags', 1);
+
+/**
+ * Shared meta description output with fallbacks
+ */
+/**
+ * Shared meta description output with fallbacks
+ */
+function kidazzle_shared_meta_description()
+{
+        // 1. Manual Override (General SEO Meta Box)
+        $post_id = get_the_ID();
+        $manual_description = $post_id ? get_post_meta($post_id, 'meta_description', true) : '';
+
+        if (!empty($manual_description)) {
+                echo '<meta name="description" content="' . esc_attr(wp_strip_all_tags($manual_description)) . '" />' . "\n";
+                return;
+        }
+
+        // 2. Dynamic Templates
+        $description = '';
+
+        if (is_singular('location')) {
+                // Location Template: "Visit our [Location Name] campus in [City], [State]. [Tagline]. Serving families in [Service Areas]. [Phone]."
+                $city = get_post_meta($post_id, 'location_city', true);
+                $state = get_post_meta($post_id, 'location_state', true);
+                $tagline = get_post_meta($post_id, 'location_tagline', true);
+                $service_areas = get_post_meta($post_id, 'location_service_areas', true);
+                $phone = get_post_meta($post_id, 'location_phone', true);
+
+                $parts = array();
+                $parts[] = 'Visit our ' . get_the_title() . ' campus';
+                if ($city && $state) {
+                        $parts[] = "in $city, $state";
+                }
+                if ($tagline) {
+                        $parts[] = ". $tagline";
+                }
+                if ($service_areas) {
+                        $parts[] = ". Serving families in " . $service_areas;
+                }
+                if ($phone) {
+                        $parts[] = ". Call us at $phone";
+                }
+
+                $description = implode('', $parts) . '.';
+
+        } elseif (is_singular('city')) {
+                // City Template: "Best Daycare & Preschool in [City], GA. [Excerpt]"
+                $excerpt = has_excerpt() ? get_the_excerpt() : kidazzle_trimmed_excerpt(30, $post_id);
+                $description = "Best Daycare & Preschool in " . get_the_title() . ", GA. " . $excerpt;
+
+        } elseif (is_singular('program')) {
+                // Program Template: "[Program Name] at Kidazzle Early Learning Academy. [Excerpt]."
+                $excerpt = has_excerpt() ? get_the_excerpt() : kidazzle_trimmed_excerpt(20, $post_id);
+                $description = get_the_title() . ' at Kidazzle Early Learning Academy. ' . $excerpt;
+
+        } elseif (is_singular('post')) {
+                // Blog Post Template: "[Title] - [Excerpt]"
+                $excerpt = has_excerpt() ? get_the_excerpt() : kidazzle_trimmed_excerpt(30, $post_id);
+                $description = get_the_title() . ' - ' . $excerpt;
+
+        } elseif (is_front_page()) {
+                // Homepage Template: Global Default > Tagline > Constructed Fallback
+                $description = kidazzle_global_seo_default_description();
+                if (empty($description)) {
+                        $description = get_bloginfo('description');
+                }
+                if (empty($description)) {
+                        $description = get_bloginfo('name') . ' offers premier child care, daycare, and early childhood education in the Metro Atlanta area.';
+                }
+        }
+
+        // 3. Global Default / Fallback
+        if (empty($description)) {
+                echo "<!-- Debug: Description empty, trying global fallback -->\n";
+                // Preserve About page specific metadata if defined (legacy support)
+                if (function_exists('kidazzle_is_about_template') && function_exists('kidazzle_get_about_seo_fields') && kidazzle_is_about_template()) {
+                        $about_fields = kidazzle_get_about_seo_fields();
+                        if (!empty($about_fields['description'])) {
+                                $description = $about_fields['description'];
+                        }
+                }
+
+                if (empty($description) && $post_id) {
+                        $description = has_excerpt($post_id) ? get_the_excerpt($post_id) : kidazzle_trimmed_excerpt(32, $post_id);
+                }
+
+                if (empty($description)) {
+                        $description = kidazzle_global_seo_default_description();
+                }
+        }
+
+        if ($description) {
+                echo '<meta name="description" content="' . esc_attr(wp_strip_all_tags($description)) . '" />' . "\n";
+        } else {
+                echo "<!-- Debug: Final Description is EMPTY -->\n";
+        }
+}
+add_action('wp_head', 'kidazzle_shared_meta_description', 2);
+
+/**
+ * Meta Keywords Output
+ */
+function kidazzle_meta_keywords()
+{
+        // 1. Manual Override
+        $post_id = get_the_ID();
+        $manual_keywords = $post_id ? get_post_meta($post_id, 'meta_keywords', true) : '';
+
+        if (!empty($manual_keywords)) {
+                echo '<meta name="keywords" content="' . esc_attr(wp_strip_all_tags($manual_keywords)) . '" />' . "\n";
+                return;
+        }
+
+        // 2. CSV-based Keyword Mapping
+        $keywords = array();
+        $keyword_map_file = get_template_directory() . '/inc/seo-keywords-data.php';
+
+        if (file_exists($keyword_map_file)) {
+                $keyword_map = include $keyword_map_file;
+        } else {
+                $keyword_map = array();
+        }
+
+        $slug = $post_id ? get_post_field('post_name', $post_id) : '';
+
+        // Handle Homepage case
+        if (is_front_page() || is_home()) {
+                $slug = 'home';
+        }
+
+        if (!empty($slug) && isset($keyword_map[$slug]) && is_array($keyword_map[$slug])) {
+                $keywords = array_merge($keywords, $keyword_map[$slug]);
+        }
+
+        // 3. Dynamic Templates (Fallback/Addition)
+        if (is_singular('location')) {
+                $city = get_post_meta($post_id, 'location_city', true);
+                $service_areas = get_post_meta($post_id, 'location_service_areas', true);
+                if (empty($keywords)) {
+                        $keywords[] = get_the_title();
+                }
+
+                if ($city) {
+                        $keywords[] = "child care $city";
+                        $keywords[] = "daycare $city";
+                        $keywords[] = "preschool $city";
+                }
+                if ($service_areas) {
+                        // Split service areas by comma if it's a list
+                        $areas = explode(',', $service_areas);
+                        foreach ($areas as $area) {
+                                $keywords[] = trim($area);
+                        }
+                }
+
+        } elseif (is_singular('city')) {
+                $city_name = get_the_title();
+                $keywords[] = "daycare $city_name";
+                $keywords[] = "child care $city_name";
+                $keywords[] = "preschool $city_name";
+                $keywords[] = "best daycare in $city_name";
+                $keywords[] = "early learning $city_name";
+                $keywords[] = "childcare near me";
+
+        } elseif (is_singular('city')) {
+                $city_name = get_the_title();
+                $keywords[] = "daycare $city_name";
+                $keywords[] = "child care $city_name";
+                $keywords[] = "preschool $city_name";
+                $keywords[] = "best daycare in $city_name";
+                $keywords[] = "early learning $city_name";
+                $keywords[] = "childcare near me";
+
+        } elseif (is_singular('program')) {
+                if (empty($keywords)) {
+                        $keywords[] = get_the_title();
+                }
+                $keywords[] = 'early childhood education';
+                $keywords[] = 'curriculum';
+                $keywords[] = 'child development';
+
+        } else {
+                // Global defaults if still empty
+                if (empty($keywords)) {
+                        $keywords[] = 'child care';
+                        $keywords[] = 'daycare';
+                        $keywords[] = 'preschool';
+                        $keywords[] = 'early learning';
+                        $keywords[] = 'Atlanta';
+                }
+        }
+
+        // Deduplicate and output
+        $keywords = array_unique($keywords);
+
+        if (!empty($keywords)) {
+                echo '<meta name="keywords" content="' . esc_attr(implode(', ', $keywords)) . '" />' . "\n";
+        }
+}
+add_action('wp_head', 'kidazzle_meta_keywords', 3);
+
+/**
+ * Custom Sitemap.xml
+ */
+function kidazzle_custom_sitemap()
+{
+        if (!(isset($_GET['sitemap']) && 'xml' === $_GET['sitemap'])) {
+                return;
+        }
+
+        header('Content-Type: application/xml; charset=utf-8');
+
+        echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+        // Homepage.
+        echo '<url>' . "\n";
+        echo '  <loc>' . esc_url(home_url('/')) . '</loc>' . "\n";
+        echo '  <lastmod>' . date('c') . '</lastmod>' . "\n";
+        echo '  <changefreq>daily</changefreq>' . "\n";
+        echo '  <priority>1.0</priority>' . "\n";
+        echo '</url>' . "\n";
+
+        // Pages.
+        $pages = get_posts(
+                array(
+                        'post_type' => 'page',
+                        'posts_per_page' => -1,
+                )
+        );
+        foreach ($pages as $page) {
+                echo '<url>' . "\n";
+                echo '  <loc>' . esc_url(get_permalink($page->ID)) . '</loc>' . "\n";
+                echo '  <lastmod>' . get_the_modified_date('c', $page->ID) . '</lastmod>' . "\n";
+                echo '  <changefreq>weekly</changefreq>' . "\n";
+                echo '  <priority>0.8</priority>' . "\n";
+                echo '</url>' . "\n";
+        }
+
+        // Programs.
+        $programs = get_posts(
+                array(
+                        'post_type' => 'program',
+                        'posts_per_page' => -1,
+                )
+        );
+        foreach ($programs as $program) {
+                echo '<url>' . "\n";
+                echo '  <loc>' . esc_url(get_permalink($program->ID)) . '</loc>' . "\n";
+                echo '  <lastmod>' . get_the_modified_date('c', $program->ID) . '</lastmod>' . "\n";
+                echo '  <changefreq>monthly</changefreq>' . "\n";
+                echo '  <priority>0.9</priority>' . "\n";
+                echo '</url>' . "\n";
+        }
+
+        // Locations.
+        $locations = get_posts(
+                array(
+                        'post_type' => 'location',
+                        'posts_per_page' => -1,
+                )
+        );
+        foreach ($locations as $location) {
+                echo '<url>' . "\n";
+                echo '  <loc>' . esc_url(get_permalink($location->ID)) . '</loc>' . "\n";
+                echo '  <lastmod>' . get_the_modified_date('c', $location->ID) . '</lastmod>' . "\n";
+                echo '  <changefreq>monthly</changefreq>' . "\n";
+                echo '  <priority>0.9</priority>' . "\n";
+                echo '</url>' . "\n";
+        }
+
+        echo '</urlset>';
+        exit;
+}
+add_action('template_redirect', 'kidazzle_custom_sitemap');
+
+/**
+ * Custom Robots.txt
+ */
+function kidazzle_custom_robots_txt($output)
+{
+        $output .= 'Sitemap: ' . home_url('/?sitemap=xml') . "\n";
+        return $output;
+}
+add_filter('robots_txt', 'kidazzle_custom_robots_txt');
