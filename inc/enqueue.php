@@ -369,6 +369,122 @@ function kidazzle_enqueue_assets()
                         min-height: 48px !important;
                         font-size: 16px !important;
                 }
+                
+                /* ============================================
+                   ADDITIONAL MISSING CLASSES FROM AUDIT
+                   ============================================ */
+                   
+                /* Extra heights */
+                .h-\\[500px\\] { height: 500px; }
+                .h-\\[900px\\] { height: 900px; }
+                .h-14 { height: 3.5rem; }
+                .w-14 { width: 3.5rem; }
+                
+                /* Text & Background variants */
+                .text-white { color: #ffffff; }
+                .bg-white { background-color: #ffffff; }
+                .text-orange-700 { color: #c2410c; }
+                .hover\\:text-orange-700:hover { color: #c2410c; }
+                
+                /* Borders */
+                .border { border-width: 1px; }
+                .border-t { border-top-width: 1px; }
+                .border-b { border-bottom-width: 1px; }
+                .border-dashed { border-style: dashed; }
+                .border-white { border-color: #ffffff; }
+                .border-slate-900 { border-color: #0f172a; }
+                
+                /* Border radius */
+                .rounded { border-radius: 0.25rem; }
+                .rounded-xl { border-radius: 0.75rem; }
+                .rounded-lg { border-radius: 0.5rem; }
+                
+                /* Grid additional */
+                .lg\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+                .lg\\:gap-10 { gap: 2.5rem; }
+                .gap-16 { gap: 4rem; }
+                
+                /* Spacing additional */
+                .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+                .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+                .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+                .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+                .py-2\\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+                .p-1 { padding: 0.25rem; }
+                .p-2 { padding: 0.5rem; }
+                .p-4 { padding: 1rem; }
+                .pt-8 { padding-top: 2rem; }
+                .pt-10 { padding-top: 2.5rem; }
+                .space-y-6 > * + * { margin-top: 1.5rem; }
+                .mt-2 { margin-top: 0.5rem; }
+                .mt-8 { margin-top: 2rem; }
+                .mt-12 { margin-top: 3rem; }
+                .ml-2 { margin-left: 0.5rem; }
+                .mb-24 { margin-bottom: 6rem; }
+                .-top-6 { top: -1.5rem; }
+                
+                /* Typography additional */
+                .tracking-wide { letter-spacing: 0.025em; }
+                .tracking-tighter { letter-spacing: -0.05em; }
+                .text-black { color: #000000; }
+                .text-green-500 { color: #22c55e; }
+                .text-cyan-400 { color: #22d3ee; }
+                .text-slate-300 { color: #cbd5e1; }
+                .underline { text-decoration: underline; }
+                .hover\\:underline:hover { text-decoration: underline; }
+                .hover\\:text-cyan-600:hover { color: #0891b2; }
+                .md\\:text-5xl { font-size: 3rem; line-height: 1; }
+                .md\\:text-left { text-align: left; }
+                
+                /* Additional states */
+                .cursor-pointer { cursor: pointer; }
+                .group { position: relative; }
+                .hover\\:shadow-xl:hover { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+                
+                /* Positioning extras */
+                .sticky { position: sticky; }
+                .top-0 { top: 0; }
+                .left-0 { left: 0; }
+                .top-full { top: 100%; }
+                .z-40 { z-index: 40; }
+                
+                /* Sizing extras */
+                .h-8 { height: 2rem; }
+                .h-10 { height: 2.5rem; }
+                .w-8 { width: 2rem; }
+                .w-auto { width: auto; }
+                
+                /* Border extras */
+                .border-slate-800 { border-color: #1e293b; }
+                
+                /* Responsive row */
+                .sm\\:flex-row { flex-direction: row; }
+                
+                /* Container & Responsive */
+                .container { width: 100%; margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
+                @media (min-width: 640px) { .container { max-width: 640px; } .sm\\:flex-row { flex-direction: row; } }
+                @media (min-width: 768px) { 
+                        .container { max-width: 768px; } 
+                        .md\\:flex { display: flex; }
+                        .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } 
+                        .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } 
+                        .md\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } 
+                        .md\\:col-span-1 { grid-column: span 1 / span 1; } 
+                        .md\\:col-span-2 { grid-column: span 2 / span 2; } 
+                        .md\\:text-5xl { font-size: 3rem; line-height: 1; } 
+                        .md\\:text-7xl { font-size: 4.5rem; line-height: 1; } 
+                        .md\\:text-left { text-align: left; }
+                        .md\\:mx-0 { margin-left: 0; margin-right: 0; }
+                }
+                @media (min-width: 1024px) { 
+                        .container { max-width: 1024px; } 
+                        .lg\\:flex { display: flex; }
+                        .lg\\:hidden { display: none; } 
+                        .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } 
+                        .lg\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } 
+                        .lg\\:gap-10 { gap: 2.5rem; } 
+                }
+                @media (min-width: 1280px) { .container { max-width: 1280px; } }
         ";
         wp_add_inline_style('KIDazzle-main', $custom_css);
 
