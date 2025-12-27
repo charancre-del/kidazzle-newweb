@@ -61,6 +61,17 @@ function kidazzle_enqueue_assets()
                 $script_dependencies[] = 'chartjs';
         }
 
+        // Lucide Icons (used throughout the theme for icons with data-lucide attributes)
+        wp_enqueue_script(
+                'lucide-icons',
+                'https://unpkg.com/lucide@latest',
+                array(),
+                null,
+                true
+        );
+        // Initialize Lucide icons after page load
+        wp_add_inline_script('lucide-icons', 'document.addEventListener("DOMContentLoaded", function() { if(window.lucide) { lucide.createIcons(); } });');
+
         // Compiled Tailwind CSS.
         $css_path = KIDAZZLE_THEME_DIR . '/assets/css/main.css';
         $css_version = file_exists($css_path) ? filemtime($css_path) : kidazzle_VERSION;
@@ -76,6 +87,34 @@ function kidazzle_enqueue_assets()
 
         // CRITICAL ACCESSIBILITY FIXES (Injected Inline to bypass cache/build)
         $custom_css = "
+                /* NEW HOMEPAGE STYLES */
+                html { scroll-behavior: smooth; }
+                
+                /* Growth Journey Graph Animation */
+                .graph-bar { transition: height 1s cubic-bezier(0.4, 0, 0.2, 1); }
+                
+                /* Purple Ombre Gradient for CTA */
+                .bg-ombre-purple { 
+                        background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #c026d3 100%); 
+                }
+                
+                /* Backdrop Blur Support */
+                .backdrop-blur-md {
+                        -webkit-backdrop-filter: blur(12px);
+                        backdrop-filter: blur(12px);
+                }
+                
+                /* Gradient Text */
+                .bg-clip-text {
+                        -webkit-background-clip: text;
+                        background-clip: text;
+                }
+                
+                /* Rounded Extra Large */
+                .rounded-\\[2rem\\] { border-radius: 2rem; }
+                .rounded-\\[2\\.5rem\\] { border-radius: 2.5rem; }
+                .rounded-\\[3rem\\] { border-radius: 3rem; }
+
                 /* Darkened Brand Colors for WCAG AA Compliance (Enhanced) */
                 .text-KIDazzle-red { color: #964030 !important; }
                 .bg-KIDazzle-red { background-color: #964030 !important; }
@@ -144,15 +183,14 @@ function kidazzle_enqueue_assets()
                         margin-bottom: 0.5rem !important;
                 }
 
-                        /* Force CTA Button Visibility */
-                        header .container > a[href*='contact'] {
-                                display: flex !important;
-                        }
+                /* Force CTA Button Visibility */
+                header .container > a[href*='contact'] {
+                        display: flex !important;
                 }
 
                 /* Accessibility: Increase contrast for muted text */
-                .text-brand-ink\/60 { color: rgba(38, 50, 56, 0.9) !important; }
-                .text-brand-ink\/70 { color: rgba(38, 50, 56, 0.95) !important; }
+                .text-brand-ink\\/60 { color: rgba(38, 50, 56, 0.9) !important; }
+                .text-brand-ink\\/70 { color: rgba(38, 50, 56, 0.95) !important; }
         ";
         wp_add_inline_style('KIDazzle-main', $custom_css);
 
