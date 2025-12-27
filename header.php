@@ -70,9 +70,9 @@ if (!defined('ABSPATH')) {
 					'theme_location' => 'primary',
 					'container' => false,
 					'items_wrap' => '%3$s',
-					'fallback_cb' => 'kidazzle_primary_menu_fallback',
+					'fallback_cb' => 'kidazzle_primary_nav_fallback',
 					'depth' => 1,
-					'walker' => new Kidazzle_Desktop_Nav_Walker(),
+					'walker' => new kidazzle_Primary_Nav_Walker(),
 				));
 				?>
 				<a href="<?php echo esc_url(home_url('/contact/')); ?>"
@@ -89,7 +89,7 @@ if (!defined('ABSPATH')) {
 				'theme_location' => 'primary',
 				'container' => false,
 				'menu_class' => 'mobile-nav-menu flex flex-col gap-4',
-				'fallback_cb' => 'kidazzle_mobile_menu_fallback',
+				'fallback_cb' => 'kidazzle_mobile_nav_fallback',
 				'depth' => 1,
 			));
 			?>

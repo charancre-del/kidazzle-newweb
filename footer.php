@@ -50,10 +50,10 @@ if (!defined('ABSPATH')) {
 			<h4 class="text-white font-bold mb-4"><?php esc_html_e('Quick Links', 'kidazzle'); ?></h4>
 			<?php
 			wp_nav_menu(array(
-				'theme_location' => 'footer-quick',
+				'theme_location' => 'footer',
 				'container' => false,
 				'menu_class' => 'space-y-2 text-sm',
-				'fallback_cb' => 'kidazzle_footer_quick_links_fallback',
+				'fallback_cb' => 'kidazzle_footer_nav_fallback',
 				'depth' => 1,
 			));
 			?>
@@ -64,10 +64,10 @@ if (!defined('ABSPATH')) {
 			<h4 class="text-white font-bold mb-4"><?php esc_html_e('Resources', 'kidazzle'); ?></h4>
 			<?php
 			wp_nav_menu(array(
-				'theme_location' => 'footer-resources',
+				'theme_location' => 'footer_contact',
 				'container' => false,
 				'menu_class' => 'space-y-2 text-sm',
-				'fallback_cb' => 'kidazzle_footer_resources_fallback',
+				'fallback_cb' => 'kidazzle_footer_nav_fallback',
 				'depth' => 1,
 			));
 			?>
