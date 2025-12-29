@@ -1,542 +1,827 @@
 <?php
 /**
- * The front page template file
- *
- * @package Chroma_Excellence
+ * Front Page Template
  */
+?>
+<!DOCTYPE html>
+<html lang="en">
 
-get_header(); ?>
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ACH | The Future of Payroll Efficiency</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <style>
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
-<!-- Hero Section -->
-<header class="relative w-full h-[650px] flex items-center overflow-hidden bg-indigo-900">
-        <div class="absolute inset-0 z-0">
-                <?php
-                $hero_image = get_the_post_thumbnail_url(get_the_ID(), 'full');
-                if (!$hero_image) {
-                        $hero_image = 'https://images.unsplash.com/photo-1560785496-0c9018085c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80';
+                body {
+                        font-family: 'Inter', sans-serif;
+                        color: #334155;
+                        background-color: #f8fafc;
                 }
-                ?>
-                <img src="<?php echo esc_url($hero_image); ?>" alt="KIDazzle Classroom"
-                        class="w-full h-full object-cover object-center opacity-40" />
-                <div class="absolute inset-0 bg-gradient-to-r from-indigo-900/90 via-indigo-900/40 to-transparent">
-                </div>
-        </div>
-        <div class="container mx-auto px-4 md:px-6 relative z-10 mt-10">
-                <div class="max-w-3xl text-white">
-                        <div class="flex flex-wrap items-center gap-2 mb-6">
-                                <span
-                                        class="bg-yellow-400 text-indigo-900 px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider shadow-lg">Now
-                                        Enrolling</span>
-                                <span
-                                        class="bg-indigo-800/80 backdrop-blur text-white border border-indigo-400/30 px-4 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                                                viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="text-yellow-400">
-                                                <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                                        </svg>
-                                        31 Years of Excellence
-                                </span>
-                        </div>
-                        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-4 drop-shadow-lg">Where Learning
-                                <br /><span class="text-yellow-400">is Fun!</span></h1>
-                        <p class="text-xl md:text-2xl text-indigo-100 mb-8 leading-relaxed font-medium max-w-lg">More
-                                than a daycare. We are an independent, premier learning academy nurturing diverse bright
-                                minds in Atlanta, Memphis, and Doral.</p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                                <a href="<?php echo esc_url(home_url('/locations')); ?>"
-                                        class="font-bold py-3 px-8 rounded-full shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-yellow-400/50 bg-yellow-400 hover:bg-yellow-500 text-indigo-900 border-b-4 border-yellow-600">
-                                        Find Your Center <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="m9 18 6-6-6-6" />
-                                        </svg>
-                                </a>
-                                <a href="<?php echo esc_url(home_url('/curriculum')); ?>"
-                                        class="font-bold py-3 px-8 rounded-full shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-yellow-400/50 bg-transparent border-2 border-white text-white hover:bg-white/10">
-                                        Explore Curriculum
-                                </a>
-                        </div>
-                </div>
-        </div>
-</header>
 
-<!-- Value Props -->
-<section class="py-24 bg-indigo-50/50">
-        <div class="container mx-auto px-4 md:px-6">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                        <h2 class="text-3xl md:text-5xl font-bold text-indigo-900 mb-6">Why Families Choose KIDazzle
-                        </h2>
-                        <p class="text-gray-600 text-xl">We combine the resources of a large center with the personal
-                                touch of a family-owned school.</p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <!-- Feature 1 -->
-                        <div
-                                class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition duration-300 border-b-4 border-transparent hover:border-yellow-400 group relative overflow-hidden block">
-                                <div
-                                        class="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-full -mr-4 -mt-4 transition group-hover:bg-yellow-50">
-                                </div>
-                                <div
-                                        class="bg-indigo-50 w-16 h-16 rounded-2xl rotate-3 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition duration-300 relative z-10 shadow-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round" class="text-yellow-400">
-                                                <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
-                                                <path d="M7 2v20" />
-                                                <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
-                                        </svg>
-                                </div>
-                                <h3 class="text-xl font-bold text-indigo-900 mb-3 flex items-center gap-2">Chef-Prepared
-                                        Meals</h3>
-                                <p class="text-gray-600 leading-relaxed text-sm">We don't do pre-packaged. Our onsite
-                                        chefs prepare fresh, allergy-conscious meals daily.</p>
-                        </div>
-                        <!-- Feature 2 -->
-                        <div
-                                class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition duration-300 border-b-4 border-transparent hover:border-yellow-400 group relative overflow-hidden block">
-                                <div
-                                        class="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-full -mr-4 -mt-4 transition group-hover:bg-yellow-50">
-                                </div>
-                                <div
-                                        class="bg-indigo-50 w-16 h-16 rounded-2xl rotate-3 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition duration-300 relative z-10 shadow-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round" class="text-pink-500">
-                                                <path
-                                                        d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                                        </svg>
-                                </div>
-                                <h3 class="text-xl font-bold text-indigo-900 mb-3 flex items-center gap-2">Not a
-                                        Franchise. A Family.</h3>
-                                <p class="text-gray-600 leading-relaxed text-sm">Independent provider built on trusted
-                                        relationships, offering corporate-level structure.</p>
-                        </div>
-                        <!-- Feature 3 -->
-                        <div
-                                class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition duration-300 border-b-4 border-transparent hover:border-yellow-400 group relative overflow-hidden block">
-                                <div
-                                        class="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-full -mr-4 -mt-4 transition group-hover:bg-yellow-50">
-                                </div>
-                                <div
-                                        class="bg-indigo-50 w-16 h-16 rounded-2xl rotate-3 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition duration-300 relative z-10 shadow-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round" class="text-indigo-500">
-                                                <path
-                                                        d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
-                                                <path
-                                                        d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
-                                        </svg>
-                                </div>
-                                <h3 class="text-xl font-bold text-indigo-900 mb-3 flex items-center gap-2">Creative
-                                        Curriculum®</h3>
-                                <p class="text-gray-600 leading-relaxed text-sm">Blending rigorous education with
-                                        play-based discovery for every learning style.</p>
-                        </div>
-                        <!-- Feature 4 -->
-                        <div
-                                class="bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition duration-300 border-b-4 border-transparent hover:border-yellow-400 group relative overflow-hidden block">
-                                <div
-                                        class="absolute top-0 right-0 w-24 h-24 bg-indigo-50 rounded-bl-full -mr-4 -mt-4 transition group-hover:bg-yellow-50">
-                                </div>
-                                <div
-                                        class="bg-indigo-50 w-16 h-16 rounded-2xl rotate-3 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition duration-300 relative z-10 shadow-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round" class="text-green-500">
-                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-                                                <path d="m9 12 2 2 4-4" />
-                                        </svg>
-                                </div>
-                                <h3 class="text-xl font-bold text-indigo-900 mb-3 flex items-center gap-2">Safety &
-                                        Transparency</h3>
-                                <p class="text-gray-600 leading-relaxed text-sm">Secure keypad access, wellness
-                                        monitoring, and parent-accessible cameras.</p>
-                        </div>
-                </div>
-        </div>
-</section>
+                h1,
+                h2,
+                h3,
+                h4,
+                h5 {
+                        font-family: 'Playfair Display', serif;
+                }
 
-<!-- Interactive Growth Journey Graph -->
-<section class="py-24 bg-white relative">
-        <div class="container mx-auto px-4 md:px-6">
-                <div class="mb-12 text-center">
-                        <span class="font-bold uppercase tracking-wider text-sm block mb-2 text-indigo-600">Developmental
-                                Milestones</span>
-                        <h2 class="text-3xl md:text-5xl font-bold text-indigo-900">The KIDazzle Growth Journey</h2>
-                </div>
+                /* Visionary Palette */
+                .bg-navy {
+                        background-color: #020617;
+                }
 
-                <div class="bg-gray-50 rounded-3xl p-8 md:p-12 shadow-inner border border-gray-100">
-                        <!-- Stage Selectors -->
-                        <div class="flex flex-wrap justify-center gap-4 mb-12" role="tablist"
-                                aria-label="Development Stages">
-                                <button role="tab" aria-selected="true" data-target="stage-infants"
-                                        class="px-6 py-3 rounded-full font-bold text-sm md:text-base transition-all transform hover:-translate-y-1 shadow-lg ring-4 ring-indigo-200 scale-105 bg-indigo-600 text-white focus:outline-none focus:ring-4 focus:ring-indigo-200">Infants</button>
-                                <button role="tab" aria-selected="false" data-target="stage-toddlers"
-                                        class="px-6 py-3 rounded-full font-bold text-sm md:text-base transition-all transform hover:-translate-y-1 shadow-sm bg-white text-gray-500 hover:bg-white hover:text-indigo-600 border border-gray-200 focus:outline-none focus:ring-4 focus:ring-indigo-200">Toddlers</button>
-                                <button role="tab" aria-selected="false" data-target="stage-preschool"
-                                        class="px-6 py-3 rounded-full font-bold text-sm md:text-base transition-all transform hover:-translate-y-1 shadow-sm bg-white text-gray-500 hover:bg-white hover:text-indigo-600 border border-gray-200 focus:outline-none focus:ring-4 focus:ring-indigo-200">Preschool</button>
-                                <button role="tab" aria-selected="false" data-target="stage-prek"
-                                        class="px-6 py-3 rounded-full font-bold text-sm md:text-base transition-all transform hover:-translate-y-1 shadow-sm bg-white text-gray-500 hover:bg-white hover:text-indigo-600 border border-gray-200 focus:outline-none focus:ring-4 focus:ring-indigo-200">Pre-K</button>
-                        </div>
+                /* Darker, deeper navy */
+                .text-gold {
+                        color: #d4af37;
+                }
 
-                        <!-- Content Areas (Hidden/Shown via JS) -->
-                        <?php
-                        $stages = [
-                                'infants' => ['label' => 'Infants', 'sub' => '6w - 12m', 'desc' => 'Focus on tummy time, sensory discovery, and secure emotional attachment.', 'stats' => [90, 70, 80, 40, 20]],
-                                'toddlers' => ['label' => 'Toddlers', 'sub' => '12m - 24m', 'desc' => 'Explosion of movement, language acquisition, and parallel play.', 'stats' => [85, 60, 70, 85, 40]],
-                                'preschool' => ['label' => 'Preschool', 'sub' => '2y - 4y', 'desc' => 'Developing independence, early literacy, and cooperative play.', 'stats' => [60, 85, 90, 80, 60]],
-                                'prek' => ['label' => 'Pre-K', 'sub' => '4y - 5y', 'desc' => 'Kindergarten readiness: Focus, complex problem solving, and writing.', 'stats' => [50, 70, 85, 95, 90]],
-                        ];
-                        $stat_labels = ['Motor', 'Arts', 'Social', 'Music', 'Logic'];
-                        $stat_icons = [
-                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
-                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>',
-                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>',
-                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
-                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>'
-                        ];
+                .border-gold {
+                        border-color: #d4af37;
+                }
 
-                        foreach ($stages as $key => $data):
-                                $is_active = ($key === 'infants');
-                                $hidden_class = $is_active ? '' : 'hidden';
-                                ?>
-                                <div id="stage-<?php echo esc_attr($key); ?>"
-                                        class="growth-stage-content grid md:grid-cols-12 gap-12 items-center <?php echo $hidden_class; ?>">
-                                        <!-- Text Description -->
-                                        <div class="md:col-span-4 animate-fade-in">
-                                                <h3 class="text-3xl font-bold text-indigo-900 mb-2">
-                                                        <?php echo esc_html($data['label']); ?></h3>
-                                                <span
-                                                        class="inline-block bg-yellow-400 text-indigo-900 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-6">
-                                                        <?php echo esc_html($data['sub']); ?>
-                                                </span>
-                                                <p class="text-gray-600 text-lg leading-relaxed mb-6">
-                                                        <?php echo esc_html($data['desc']); ?></p>
-                                                <a href="<?php echo esc_url(home_url('/curriculum')); ?>"
-                                                        class="font-bold py-3 px-8 rounded-full shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-yellow-400/50 bg-transparent border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 w-full md:w-auto">
-                                                        View Curriculum <svg xmlns="http://www.w3.org/2000/svg" width="18"
-                                                                height="18" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                                stroke-linejoin="round">
-                                                                <path d="M5 12h14" />
-                                                                <path d="m12 5 7 7-7 7" />
-                                                        </svg>
-                                                </a>
-                                        </div>
+                .bg-gold {
+                        background-color: #d4af37;
+                }
 
-                                        <!-- Bar Graph -->
-                                        <div class="md:col-span-8 h-64 flex items-end justify-between gap-2 md:gap-6 px-4">
-                                                <?php foreach ($data['stats'] as $index => $value): ?>
-                                                        <div class="flex flex-col items-center gap-3 w-full group">
-                                                                <div
-                                                                        class="w-full bg-gray-200 rounded-t-2xl relative h-64 flex items-end overflow-hidden">
-                                                                        <div class="w-full bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-2xl transition-all duration-1000 ease-out flex items-start justify-center pt-4 text-white font-bold text-xs"
-                                                                                style="height: <?php echo $value; ?>%">
-                                                                                <span
-                                                                                        class="opacity-0 group-hover:opacity-100 transition-opacity transform -translate-y-2 group-hover:translate-y-0"><?php echo $value; ?>%</span>
-                                                                        </div>
-                                                                </div>
-                                                                <div class="text-center">
-                                                                        <div
-                                                                                class="w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center text-indigo-600 mx-auto mb-2 border border-indigo-100">
-                                                                                <?php echo $stat_icons[$index]; ?>
-                                                                        </div>
-                                                                        <span
-                                                                                class="text-xs font-bold text-gray-500 uppercase tracking-tight md:tracking-normal hidden md:block"><?php echo $stat_labels[$index]; ?></span>
-                                                                </div>
-                                                        </div>
-                                                <?php endforeach; ?>
-                                        </div>
-                                </div>
-                        <?php endforeach; ?>
-                </div>
-        </div>
-</section>
+                /* Gradients & Effects */
+                .hero-gradient {
+                        background: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 100%);
+                }
 
-<!-- Programs Preview Grid -->
-<section id="programs" class="py-24 bg-white">
-        <div class="container mx-auto px-4 md:px-6">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-                        <div class="text-left">
-                                <span class="text-indigo-600 font-bold uppercase tracking-wider text-sm">Our
-                                        Programs</span>
-                                <h2 class="text-4xl md:text-5xl font-bold text-indigo-900 mt-2">Designed for Every Stage
-                                </h2>
-                        </div>
-                        <a href="<?php echo esc_url(home_url('/programs')); ?>"
-                                class="hidden md:flex items-center gap-2 text-indigo-600 font-bold hover:text-indigo-800 bg-indigo-50 px-6 py-3 rounded-full transition focus:outline-none focus:ring-2 focus:ring-indigo-600">
-                                View All Programs <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M5 12h14" />
-                                        <path d="m12 5 7 7-7 7" />
-                                </svg>
-                        </a>
-                </div>
+                .glass-panel {
+                        background: rgba(255, 255, 255, 0.98);
+                        border: 1px solid #e2e8f0;
+                        box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.15);
+                }
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <?php
-                        $programs_query = new WP_Query(array(
-                                'post_type' => 'program',
-                                'posts_per_page' => 3,
-                                'orderby' => 'menu_order',
-                                'order' => 'ASC'
-                        ));
+                .glow-text {
+                        text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+                }
 
-                        if ($programs_query->have_posts()):
-                                while ($programs_query->have_posts()):
-                                        $programs_query->the_post();
-                                        $age_range = get_field('age_range') ?: 'All Ages'; // Fallback if ACF missing
-                                        $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
-                                        if (!$thumb_url)
-                                                $thumb_url = 'https://images.unsplash.com/photo-1544991199-3176cb4025d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-                                        ?>
-                                        <a href="<?php echo esc_url(home_url('/programs')); ?>"
-                                                class="group relative overflow-hidden rounded-3xl h-80 cursor-pointer shadow-lg block focus-within:ring-4 focus-within:ring-yellow-400">
-                                                <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title(); ?>"
-                                                        class="w-full h-full object-cover transition duration-700 group-hover:scale-110" />
-                                                <div
-                                                        class="absolute inset-0 bg-gradient-to-t from-indigo-900/90 via-indigo-900/40 to-transparent flex flex-col justify-end p-8">
-                                                        <div
-                                                                class="transform translate-y-4 group-hover:translate-y-0 transition duration-300">
-                                                                <h3 class="text-white text-3xl font-bold mb-1"><?php the_title(); ?>
-                                                                </h3>
-                                                                <p class="text-indigo-200 mb-3 font-medium text-sm">
-                                                                        <?php echo esc_html($age_range); ?></p>
-                                                                <p
-                                                                        class="text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity mb-2 line-clamp-1">
-                                                                        <?php echo wp_trim_words(get_the_excerpt(), 10); ?></p>
-                                                                <span class="text-yellow-400 font-bold text-sm flex items-center gap-2">
-                                                                        Learn More <div
-                                                                                class="bg-yellow-400 text-indigo-900 rounded-full p-1">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12"
-                                                                                        height="12" viewBox="0 0 24 24" fill="none"
-                                                                                        stroke="currentColor" stroke-width="2"
-                                                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                                                        <path d="m9 18 6-6-6-6" />
-                                                                                </svg></div>
-                                                                </span>
-                                                        </div>
-                                                </div>
-                                        </a>
-                                        <?php
-                                endwhile;
-                                wp_reset_postdata();
-                        else:
-                                // Fallback content if no programs found
-                                echo '<p>No programs found.</p>';
-                        endif;
-                        ?>
-                </div>
-                <div class="mt-8 text-center md:hidden">
-                        <a href="<?php echo esc_url(home_url('/programs')); ?>"
-                                class="font-bold py-3 px-8 rounded-full shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-yellow-400/50 bg-transparent border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50">View
-                                All Programs</a>
-                </div>
-        </div>
-</section>
+                /* Layout & Spacing */
+                .page-header-spacer {
+                        padding-top: 160px;
+                        padding-bottom: 80px;
+                        background: white;
+                        border-bottom: 1px solid #e2e8f0;
+                }
 
-<!-- Dark Locations Section -->
-<section id="locations" class="py-24 bg-indigo-900 text-white relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600 rounded-full blur-[150px] opacity-20">
-        </div>
-        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600 rounded-full blur-[150px] opacity-20">
-        </div>
-        <div class="container mx-auto px-4 md:px-6 relative z-10">
-                <div class="mb-12 text-center">
-                        <span class="font-bold uppercase tracking-wider text-sm block mb-2 text-yellow-400">Our
-                                Locations</span>
-                        <h2 class="text-3xl md:text-5xl font-bold text-white">Serving Communities Where You Live & Work
-                        </h2>
-                </div>
+                .nav-link {
+                        font-size: 0.7rem;
+                        letter-spacing: 0.1em;
+                        text-transform: uppercase;
+                        font-weight: 700;
+                        transition: color 0.3s;
+                }
 
-                <div class="grid lg:grid-cols-3 gap-6">
-                        <?php
-                        $locations_query = new WP_Query(array(
-                                'post_type' => 'location',
-                                'posts_per_page' => 3,
-                                'orderby' => 'menu_order',
-                                'order' => 'ASC'
-                        ));
+                .nav-link:hover {
+                        color: #d4af37;
+                }
 
-                        if ($locations_query->have_posts()):
-                                while ($locations_query->have_posts()):
-                                        $locations_query->the_post();
-                                        $city = get_field('city') ?: 'Atlanta';
-                                        $address = get_field('address') ?: '';
-                                        ?>
+                /* Page Transition */
+                .page-section {
+                        display: none;
+                        animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+
+                .page-section.active {
+                        display: block;
+                }
+
+                @keyframes fadeIn {
+                        from {
+                                opacity: 0;
+                                transform: translateY(20px);
+                        }
+
+                        to {
+                                opacity: 1;
+                                transform: translateY(0);
+                        }
+                }
+
+                /* Custom Timeline */
+                .timeline-line {
+                        position: absolute;
+                        left: 28px;
+                        top: 20px;
+                        bottom: 0;
+                        width: 1px;
+                        background: linear-gradient(to bottom, #d4af37 0%, #cbd5e1 100%);
+                        z-index: 0;
+                }
+        </style>
+        <?php wp_head(); ?>
+</head>
+
+<body class="flex flex-col min-h-screen">
+        <?php
+        if (function_exists('wp_body_open')) {
+                wp_body_open();
+        }
+        ?>
+
+        <!-- NAVIGATION -->
+        <nav
+                class="bg-white/90 backdrop-blur-xl border-b border-slate-200 fixed w-full z-50 transition-all duration-300">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex justify-between h-24">
+                                <div class="flex items-center cursor-pointer" onclick="navigateTo('home')">
                                         <div
-                                                class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:bg-white/15 transition cursor-pointer group hover:-translate-y-1">
-                                                <div class="flex justify-between items-start mb-4">
+                                                class="flex flex-col border-l-4 border-gold pl-4 transition hover:border-navy">
+                                                <span
+                                                        class="text-xl font-bold text-slate-900 tracking-tight font-serif leading-none">Advanced
+                                                        Corporate Health</span>
+                                                <span
+                                                        class="text-[9px] uppercase tracking-[0.25em] text-slate-500 font-semibold mt-1">Architects
+                                                        of the W.I.M.P.E.R. Protocol</span>
+                                        </div>
+                                </div>
+
+                                <div class="hidden lg:flex items-center space-x-12">
+                                        <a href="javascript:void(0)" onclick="navigateTo('home')"
+                                                class="nav-link text-slate-600">The Vision</a>
+                                        <a href="javascript:void(0)" onclick="navigateTo('method')"
+                                                class="nav-link text-slate-600">The Chassis</a>
+                                        <a href="javascript:void(0)" onclick="navigateTo('timeline')"
+                                                class="nav-link text-slate-600">The Execution</a>
+                                        <a href="javascript:void(0)" onclick="navigateTo('contact')"
+                                                class="bg-navy text-white px-8 py-3 rounded-sm text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gold hover:text-navy transition duration-300 shadow-lg">
+                                                Verify Eligibility
+                                        </a>
+                                </div>
+                        </div>
+                </div>
+        </nav>
+
+        <!-- ================================================================================= -->
+        <!-- VIEW: THE VISION (HOME)                                                           -->
+        <!-- ================================================================================= -->
+        <div id="home" class="page-section active flex-grow">
+
+                <!-- Visionary Hero -->
+                <section class="hero-gradient text-white pt-52 pb-40 relative overflow-hidden">
+                        <!-- Subtle Grid Background -->
+                        <div
+                                class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10">
+                        </div>
+
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                                <div class="grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
+
+                                        <!-- Text Side -->
+                                        <div class="lg:col-span-7">
+                                                <div class="flex items-center mb-10 space-x-4">
+                                                        <span class="h-px w-16 bg-gold"></span>
                                                         <span
-                                                                class="text-yellow-400 font-bold uppercase tracking-wide text-xs bg-indigo-950/50 px-2 py-1 rounded"><?php echo esc_html($city); ?></span>
-                                                        <div class="bg-white/20 p-2 rounded-full"><svg
-                                                                        xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="text-white">
-                                                                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                                                                        <circle cx="12" cy="10" r="3" />
-                                                                </svg></div>
+                                                                class="text-gold text-xs font-bold uppercase tracking-[0.2em] glow-text">Financial
+                                                                Architecture</span>
                                                 </div>
-                                                <h3 class="text-2xl font-bold mb-2 group-hover:text-yellow-400 transition">
-                                                        <?php the_title(); ?></h3>
-                                                <p class="text-indigo-100 text-sm mb-6 line-clamp-2">
-                                                        <?php echo wp_trim_words(get_the_excerpt(), 15); ?></p>
-                                                <div class="flex items-center gap-4 pt-6 border-t border-white/10">
-                                                        <a href="<?php echo esc_url(home_url('/contact')); ?>"
-                                                                class="bg-yellow-400 hover:bg-yellow-500 text-indigo-900 text-sm font-bold px-4 py-2 rounded-full flex items-center gap-1 transition focus:outline-none focus:ring-2 focus:ring-white">
-                                                                Schedule Tour
-                                                        </a>
-                                                        <a href="<?php echo esc_url(home_url('/locations')); ?>"
-                                                                class="text-indigo-200 text-sm hover:text-white transition font-medium focus:outline-none focus:underline">
-                                                                View Details
-                                                        </a>
+                                                <h1 class="text-5xl md:text-7xl font-medium mb-8 leading-tight">
+                                                        Reduce Your<br>
+                                                        <span class="italic text-slate-400">Taxable Surface Area.</span>
+                                                </h1>
+                                                <p
+                                                        class="text-lg text-slate-300 mb-12 leading-relaxed max-w-2xl font-light border-l border-white/20 pl-6">
+                                                        We don't sell "wellness." We engineer a proprietary
+                                                        <strong>Section 125/105 Chassis</strong> that physically removes
+                                                        payroll from the FICA taxation zone. The result is a self-funded
+                                                        EBITDA expansion that no competitor can match.
+                                                </p>
+                                                <div class="flex flex-col sm:flex-row gap-6">
+                                                        <button onclick="scrollToId('impact')"
+                                                                class="bg-gold text-navy px-12 py-5 rounded-sm font-bold text-xs uppercase tracking-[0.15em] hover:bg-white transition shadow-2xl hover:scale-105 transform duration-300 text-center">
+                                                                Model The Savings
+                                                        </button>
+                                                        <button onclick="navigateTo('method')"
+                                                                class="group flex items-center text-slate-300 text-xs font-bold uppercase tracking-[0.15em] hover:text-white transition px-6">
+                                                                <span
+                                                                        class="border-b border-slate-600 group-hover:border-gold pb-1 transition duration-300">Inspect
+                                                                        The Engine</span>
+                                                                <i
+                                                                        class="fas fa-chevron-right ml-4 text-[10px] text-gold"></i>
+                                                        </button>
                                                 </div>
                                         </div>
-                                        <?php
-                                endwhile;
-                                wp_reset_postdata();
-                        endif;
-                        ?>
-                </div>
-                <div class="mt-12 text-center">
-                        <a href="<?php echo esc_url(home_url('/locations')); ?>"
-                                class="font-bold py-3 px-8 rounded-full shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-yellow-400/50 bg-transparent border-2 border-white text-white hover:bg-white/10">View
-                                All Locations</a>
-                </div>
-        </div>
-</section>
 
-<!-- Parent Resource Hub (Blog) -->
-<section class="py-24 bg-gray-50">
-        <div class="container mx-auto px-4 md:px-6">
-                <div class="mb-12 text-center">
-                        <span class="font-bold uppercase tracking-wider text-sm block mb-2 text-indigo-600">Parenting
-                                Tips</span>
-                        <h2 class="text-3xl md:text-5xl font-bold text-indigo-900">Resources for Your Journey</h2>
-                </div>
-                <div class="grid md:grid-cols-3 gap-8">
-                        <?php
-                        $blog_query = new WP_Query(array(
-                                'post_type' => 'post',
-                                'posts_per_page' => 3
-                        ));
-
-                        if ($blog_query->have_posts()):
-                                while ($blog_query->have_posts()):
-                                        $blog_query->the_post();
-                                        $category = get_the_category();
-                                        $cat_name = !empty($category) ? $category[0]->name : 'News';
-                                        $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'medium_large');
-                                        if (!$thumb_url)
-                                                $thumb_url = 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-                                        ?>
-                                        <a href="<?php the_permalink(); ?>"
-                                                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition group cursor-pointer border border-gray-100 flex flex-col h-full">
-                                                <div class="relative h-56 overflow-hidden shrink-0">
-                                                        <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title(); ?>"
-                                                                class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
-                                                        <span
-                                                                class="absolute top-4 left-4 bg-white/95 backdrop-blur text-indigo-900 text-xs font-bold px-3 py-1 rounded-full shadow-sm"><?php echo esc_html($cat_name); ?></span>
+                                        <!-- Stats Side (The "Unbelievable" Numbers) -->
+                                        <div class="lg:col-span-5">
+                                                <div
+                                                        class="glass-panel bg-white/5 backdrop-blur-2xl border-white/10 p-12 rounded-sm relative group hover:border-gold/30 transition duration-500">
+                                                        <div
+                                                                class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-100 transition duration-500">
+                                                                <i class="fas fa-fingerprint text-gold text-6xl"></i>
+                                                        </div>
+                                                        <h3 class="text-white font-serif text-3xl mb-10">The New
+                                                                Baseline</h3>
+                                                        <div class="space-y-10">
+                                                                <div>
+                                                                        <p
+                                                                                class="text-slate-400 text-[10px] uppercase tracking-[0.2em] mb-2">
+                                                                                EBITDA Recapture (Per Employee)</p>
+                                                                        <p
+                                                                                class="text-5xl text-white font-light tracking-tight">
+                                                                                ~$1,100<span
+                                                                                        class="text-gold text-lg align-top">/yr</span>
+                                                                        </p>
+                                                                </div>
+                                                                <div
+                                                                        class="w-full h-px bg-gradient-to-r from-white/20 to-transparent">
+                                                                </div>
+                                                                <div>
+                                                                        <p
+                                                                                class="text-slate-400 text-[10px] uppercase tracking-[0.2em] mb-2">
+                                                                                Implementation Velocity</p>
+                                                                        <p
+                                                                                class="text-5xl text-white font-light tracking-tight">
+                                                                                45 <span
+                                                                                        class="text-2xl text-slate-400">Days</span>
+                                                                        </p>
+                                                                </div>
+                                                                <div
+                                                                        class="w-full h-px bg-gradient-to-r from-white/20 to-transparent">
+                                                                </div>
+                                                                <div>
+                                                                        <p
+                                                                                class="text-slate-400 text-[10px] uppercase tracking-[0.2em] mb-2">
+                                                                                Client ROI</p>
+                                                                        <p
+                                                                                class="text-5xl text-gold font-light tracking-tight">
+                                                                                Infinite <span
+                                                                                        class="text-sm text-slate-400 align-middle">(Zero
+                                                                                        Cost)</span></p>
+                                                                </div>
+                                                        </div>
                                                 </div>
-                                                <div class="p-8 flex flex-col flex-grow">
-                                                        <h3
-                                                                class="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-700 transition">
-                                                                <?php the_title(); ?></h3>
-                                                        <p class="text-gray-600 text-sm mb-6 leading-relaxed flex-grow">
-                                                                <?php echo wp_trim_words(get_the_excerpt(), 20); ?></p>
-                                                        <span
-                                                                class="text-indigo-600 text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all">Read
-                                                                Article <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                                        <path d="M5 12h14" />
-                                                                        <path d="m12 5 7 7-7 7" />
-                                                                </svg></span>
-                                                </div>
-                                        </a>
-                                        <?php
-                                endwhile;
-                                wp_reset_postdata();
-                        endif;
-                        ?>
-                </div>
-        </div>
-</section>
-
-<!-- Testimonials -->
-<section class="py-24 bg-gradient-to-br from-indigo-700 to-indigo-900 text-white overflow-hidden relative">
-        <div class="absolute top-0 left-0 w-full h-full opacity-10"
-                style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;">
-        </div>
-        <div class="container mx-auto px-4 md:px-6 text-center relative z-10">
-                <div class="mb-12 text-center">
-                        <span
-                                class="font-bold uppercase tracking-wider text-sm block mb-2 text-yellow-400">Testimonials</span>
-                        <h2 class="text-3xl md:text-5xl font-bold text-white">Trusted by Parents Like You</h2>
-                </div>
-                <div class="grid md:grid-cols-3 gap-8">
-                        <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl relative border border-white/10">
-                                <div class="text-yellow-400 flex justify-center mb-6">
-                                        <?php for ($i = 0; $i < 5; $i++): ?><svg xmlns="http://www.w3.org/2000/svg"
-                                                        width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round">
-                                                        <polygon
-                                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                                                </svg><?php endfor; ?>
+                                        </div>
                                 </div>
-                                <p class="text-indigo-100 italic mb-8 leading-relaxed">"Moving to the Summit Building
-                                        location was the best decision. The teachers actually care, and my son loves the
-                                        food! He comes home singing songs every day."</p>
-                                <div class="font-bold">Sarah J. <span
-                                                class="block text-indigo-300 text-xs font-normal">Midtown Atlanta
-                                                Parent</span></div>
                         </div>
-                        <div
-                                class="bg-white text-indigo-900 p-8 rounded-2xl relative transform md:-translate-y-6 shadow-2xl">
+                </section>
+
+                <!-- The Paradigm Shift -->
+                <section class="py-32 bg-white">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                <div class="text-center mb-20">
+                                        <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-4 block">The
+                                                Paradigm Shift</span>
+                                        <h2 class="text-4xl md:text-5xl font-serif text-navy mb-6">Why "Standard"
+                                                Payroll is Obsolete</h2>
+                                        <p class="text-slate-500 max-w-2xl mx-auto text-lg font-light">
+                                                The old model accepts tax liability as a fixed cost. The new model
+                                                treats tax liability as an engineering problem to be solved.
+                                        </p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-16 border-t border-slate-100 pt-16">
+                                        <div class="group">
+                                                <div
+                                                        class="mb-6 text-slate-300 group-hover:text-gold transition duration-500">
+                                                        <i class="fas fa-layer-group text-5xl"></i>
+                                                </div>
+                                                <h3 class="text-xl font-bold text-navy mb-4">Taxable Surface Area</h3>
+                                                <p class="text-slate-600 font-light leading-relaxed text-sm">
+                                                        Every dollar of gross wage is currently "exposed" to taxation.
+                                                        Our W.I.M.P.E.R. chassis creates a "shielded" layer of income,
+                                                        legally reducing the surface area the IRS can touch.
+                                                </p>
+                                        </div>
+                                        <div class="group">
+                                                <div
+                                                        class="mb-6 text-slate-300 group-hover:text-gold transition duration-500">
+                                                        <i class="fas fa-cogs text-5xl"></i>
+                                                </div>
+                                                <h3 class="text-xl font-bold text-navy mb-4">The Claims Engine</h3>
+                                                <p class="text-slate-600 font-light leading-relaxed text-sm">
+                                                        Competitors fail because they lack the mechanism. We install a
+                                                        proprietary <strong>Claims Adjudication Engine</strong> that
+                                                        automatically validates wellness activities, satisfying the
+                                                        strict IRS "Bona Fide" requirement.
+                                                </p>
+                                        </div>
+                                        <div class="group">
+                                                <div
+                                                        class="mb-6 text-slate-300 group-hover:text-gold transition duration-500">
+                                                        <i class="fas fa-shield-alt text-5xl"></i>
+                                                </div>
+                                                <h3 class="text-xl font-bold text-navy mb-4">Indemnified Compliance</h3>
+                                                <p class="text-slate-600 font-light leading-relaxed text-sm">
+                                                        We don't just provide software; we provide a legal shield. Our
+                                                        program structure is backed by comprehensive indemnification,
+                                                        removing the compliance risk from your boardroom.
+                                                </p>
+                                        </div>
+                                </div>
+                        </div>
+                </section>
+
+                <!-- Financial Impact (Calculator) -->
+                <section id="impact" class="py-32 bg-slate-50">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                <div class="flex justify-between items-end mb-16">
+                                        <div>
+                                                <h2 class="text-4xl font-serif text-navy">Financial Modeling</h2>
+                                                <p class="text-slate-500 mt-4 max-w-xl font-light">
+                                                        Input your workforce data. The model calculates the exact FICA
+                                                        recapture available to your organization and the precise net pay
+                                                        increase for employees.
+                                                </p>
+                                        </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                                        <!-- Employer -->
+                                        <div
+                                                class="bg-white p-12 shadow-2xl border-t-4 border-gold relative overflow-hidden">
+                                                <div class="relative z-10">
+                                                        <div class="flex justify-between items-center mb-10">
+                                                                <h3
+                                                                        class="text-xl font-bold text-navy uppercase tracking-wide">
+                                                                        Corporate Impact</h3>
+                                                                <i class="fas fa-building text-slate-200 text-3xl"></i>
+                                                        </div>
+                                                        <div class="mb-12">
+                                                                <label
+                                                                        class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-4">W-2
+                                                                        Headcount (Min 10)</label>
+                                                                <input type="number" id="employeeCount" value="50"
+                                                                        min="10"
+                                                                        class="w-full bg-slate-50 border-b-2 border-slate-200 p-4 text-3xl text-navy font-serif focus:border-gold focus:outline-none transition"
+                                                                        oninput="calculateBoth()">
+                                                        </div>
+                                                        <div
+                                                                class="bg-navy p-10 text-white relative overflow-hidden rounded-sm">
+                                                                <div
+                                                                        class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white/5 rounded-full blur-2xl">
+                                                                </div>
+                                                                <div class="relative z-10">
+                                                                        <span
+                                                                                class="text-slate-400 text-[10px] uppercase tracking-[0.2em] block mb-2">Projected
+                                                                                EBITDA Recapture</span>
+                                                                        <span class="text-5xl font-serif text-gold"
+                                                                                id="employerSavings">$55,000</span>
+                                                                        <p
+                                                                                class="text-xs text-slate-500 mt-4 border-t border-white/10 pt-4">
+                                                                                Funds realized immediately upon first
+                                                                                payroll run.</p>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+
+                                        <!-- Employee (UPDATED with Accurate Net Pay & Deduction) -->
+                                        <div class="bg-white p-12 shadow-2xl border-t-4 border-slate-200 relative">
+                                                <div class="flex justify-between items-center mb-10">
+                                                        <h3 class="text-xl font-bold text-navy uppercase tracking-wide">
+                                                                Workforce Impact</h3>
+                                                        <i class="fas fa-user text-slate-200 text-3xl"></i>
+                                                </div>
+
+                                                <div class="grid grid-cols-2 gap-6 mb-12">
+                                                        <div>
+                                                                <label
+                                                                        class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-4">Annual
+                                                                        Salary</label>
+                                                                <input type="number" id="annualSalary" value="45000"
+                                                                        step="1000"
+                                                                        class="w-full bg-slate-50 border-b-2 border-slate-200 p-4 text-xl text-navy font-serif focus:border-navy focus:outline-none transition"
+                                                                        oninput="calculateBoth()">
+                                                        </div>
+                                                        <div>
+                                                                <label
+                                                                        class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-4">Pay
+                                                                        Frequency</label>
+                                                                <select id="payFrequency"
+                                                                        class="w-full bg-slate-50 border-b-2 border-slate-200 p-4 text-xl text-navy font-serif focus:border-navy focus:outline-none transition appearance-none"
+                                                                        onchange="calculateBoth()">
+                                                                        <option value="52">Weekly</option>
+                                                                        <option value="26" selected>Bi-Weekly</option>
+                                                                        <option value="24">Semi-Monthly</option>
+                                                                        <option value="12">Monthly</option>
+                                                                </select>
+                                                        </div>
+                                                </div>
+
+                                                <div class="bg-slate-100 p-10 border border-slate-200 relative">
+                                                        <div class="flex justify-between items-start mb-2">
+                                                                <span
+                                                                        class="text-slate-500 text-[10px] uppercase tracking-[0.2em] block mt-2">Net
+                                                                        Pay Increase</span>
+                                                                <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider"
+                                                                        id="freqLabel">Per Paycheck</span>
+                                                        </div>
+                                                        <span class="text-5xl font-serif text-green-700 block my-4"
+                                                                id="employeeSavings">$9.00</span>
+
+                                                        <div
+                                                                class="text-xs text-slate-400 mt-4 border-t border-slate-200 pt-4 flex justify-between">
+                                                                <span>Gross Tax Savings</span>
+                                                                <span class="font-bold text-slate-500"
+                                                                        id="grossSavingsVal">$0.00</span>
+                                                        </div>
+                                                        <div class="text-xs text-slate-400 mt-1 flex justify-between">
+                                                                <span>Program Deduction</span>
+                                                                <span class="font-bold text-red-400"
+                                                                        id="progCostVal">-$0.00</span>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </section>
+        </div>
+
+        <!-- ================================================================================= -->
+        <!-- VIEW: THE CHASSIS (METHOD)                                                        -->
+        <!-- ================================================================================= -->
+        <div id="method" class="page-section flex-grow">
+                <header class="page-header-spacer">
+                        <div class="max-w-4xl mx-auto px-4 text-center">
+                                <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">The
+                                        Proprietary Twist</span>
+                                <h1 class="text-6xl font-serif text-navy mb-6">The W.I.M.P.E.R. Chassis</h1>
+                                <p class="text-slate-500 text-lg font-light max-w-2xl mx-auto leading-relaxed">
+                                        Most companies fail because they try to build this in-house. They lack the
+                                        automated "Claims Trigger." Here is how we engineered the solution.
+                                </p>
+                        </div>
+                </header>
+
+                <div class="max-w-6xl mx-auto px-4 py-24">
+
+                        <!-- SECTION: THE LIFT -->
+                        <div class="mb-32">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+                                        <div class="order-2 md:order-1">
+                                                <div class="relative">
+                                                        <div
+                                                                class="absolute inset-0 bg-gold/10 transform translate-x-4 translate-y-4">
+                                                        </div>
+                                                        <div class="bg-navy p-12 text-white relative z-10">
+                                                                <h3 class="text-2xl font-serif mb-8 text-white">Your
+                                                                        Team's Lift: <span
+                                                                                class="text-gold">Minimal.</span></h3>
+                                                                <ul class="space-y-6">
+                                                                        <li class="flex items-start">
+                                                                                <span
+                                                                                        class="text-gold font-bold mr-4">01.</span>
+                                                                                <p
+                                                                                        class="text-sm text-slate-300 leading-relaxed">
+                                                                                        Send us a census file (CSV).
+                                                                                        That is your primary data entry
+                                                                                        task.</p>
+                                                                        </li>
+                                                                        <li class="flex items-start">
+                                                                                <span
+                                                                                        class="text-gold font-bold mr-4">02.</span>
+                                                                                <p
+                                                                                        class="text-sm text-slate-300 leading-relaxed">
+                                                                                        One 30-minute integration call
+                                                                                        with your payroll provider (ADP,
+                                                                                        Paychex, etc.) where we do the
+                                                                                        talking.</p>
+                                                                        </li>
+                                                                        <li class="flex items-start">
+                                                                                <span
+                                                                                        class="text-gold font-bold mr-4">03.</span>
+                                                                                <p
+                                                                                        class="text-sm text-slate-300 leading-relaxed">
+                                                                                        Approve the employee
+                                                                                        communication email we drafted
+                                                                                        for you.</p>
+                                                                        </li>
+                                                                </ul>
+                                                                <div class="mt-10 pt-10 border-t border-white/10">
+                                                                        <p
+                                                                                class="text-xs uppercase tracking-widest text-gold mb-2">
+                                                                                The Result</p>
+                                                                        <p class="text-lg italic text-slate-400">"We do
+                                                                                the coding. You do the approving."</p>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="order-1 md:order-2">
+                                                <h2 class="text-4xl font-serif text-navy mb-6">We Make The Complex
+                                                        Simple.</h2>
+                                                <p class="text-slate-600 leading-relaxed mb-6 text-lg">
+                                                        Think of this like "Teaching Coding to Babies." The tax code is
+                                                        incredibly complex (Python/C++), but the interface we give you
+                                                        is blocks and shapes.
+                                                </p>
+                                                <p class="text-slate-600 leading-relaxed mb-8 text-lg">
+                                                        We have already built the Plan Documents, the Adjudication
+                                                        Logic, and the Compliance Shield. You simply plug your payroll
+                                                        into our chassis. We handle the heavy actuarial lifting so your
+                                                        HR team doesn't have to become tax experts.
+                                                </p>
+                                                <div class="flex items-center space-x-4">
+                                                        <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                                                        <span class="font-bold text-navy">Fully Managed Service</span>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+
+                        <!-- COMPARISON: General Wellness vs ACH Financial Strategy -->
+                        <div class="bg-white shadow-2xl border border-slate-100 rounded-sm overflow-hidden">
+                                <div class="grid grid-cols-1 md:grid-cols-3">
+                                        <!-- Column 1: Labels -->
+                                        <div
+                                                class="bg-slate-50 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center">
+                                                <h3
+                                                        class="text-xl font-bold text-slate-400 uppercase tracking-widest mb-2">
+                                                        Market Analysis</h3>
+                                                <p class="text-xs text-slate-500">Why general vendors fail.</p>
+                                        </div>
+
+                                        <!-- Column 2: Competitors -->
+                                        <div
+                                                class="p-8 border-b md:border-b-0 md:border-r border-slate-200 bg-white opacity-50">
+                                                <h4 class="text-lg font-bold text-slate-600 mb-6">General Wellness
+                                                        Vendor</h4>
+                                                <ul class="space-y-4 text-sm text-slate-500">
+                                                        <li class="flex items-center"><i
+                                                                        class="fas fa-times text-red-300 mr-3"></i>
+                                                                Focuses on "Steps & Water"</li>
+                                                        <li class="flex items-center"><i
+                                                                        class="fas fa-times text-red-300 mr-3"></i>
+                                                                Costs Money (Line Item Expense)</li>
+                                                        <li class="flex items-center"><i
+                                                                        class="fas fa-times text-red-300 mr-3"></i> Adds
+                                                                HR Admin Work</li>
+                                                        <li class="flex items-center"><i
+                                                                        class="fas fa-times text-red-300 mr-3"></i> No
+                                                                Tax Integration</li>
+                                                </ul>
+                                        </div>
+
+                                        <!-- Column 3: ACH -->
+                                        <div class="p-8 bg-navy text-white relative overflow-hidden">
+                                                <div
+                                                        class="absolute top-0 right-0 w-20 h-20 bg-gold/20 rounded-bl-full">
+                                                </div>
+                                                <h4 class="text-lg font-bold text-white mb-6">ACH Financial Strategists
+                                                </h4>
+                                                <ul class="space-y-4 text-sm text-slate-300">
+                                                        <li class="flex items-center"><i
+                                                                        class="fas fa-check text-gold mr-3"></i> Focuses
+                                                                on FICA & Compliance</li>
+                                                        <li class="flex items-center"><i
+                                                                        class="fas fa-check text-gold mr-3"></i> Makes
+                                                                Money (EBITDA Growth)</li>
+                                                        <li class="flex items-center"><i
+                                                                        class="fas fa-check text-gold mr-3"></i> Zero HR
+                                                                Admin Lift</li>
+                                                        <li class="flex items-center"><i
+                                                                        class="fas fa-check text-gold mr-3"></i> Full
+                                                                Payroll Integration</li>
+                                                </ul>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
+        <!-- ================================================================================= -->
+        <!-- VIEW: THE EXECUTION (TIMELINE)                                                    -->
+        <!-- ================================================================================= -->
+        <div id="timeline" class="page-section flex-grow">
+                <header class="page-header-spacer">
+                        <div class="max-w-4xl mx-auto px-4 text-center">
+                                <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">Speed to
+                                        Savings</span>
+                                <h1 class="text-6xl font-serif text-navy mb-6">The 45-Day Protocol</h1>
+                                <p class="text-slate-500 mt-6 text-lg font-light max-w-2xl mx-auto">
+                                        We don't ask for 9 months. We ask for 45 days. Here is the linear path to
+                                        Go-Live.
+                                </p>
+                        </div>
+                </header>
+
+                <div class="max-w-3xl mx-auto px-4 py-24 relative">
+                        <div class="timeline-line"></div>
+
+                        <!-- Phase 1 -->
+                        <div class="relative pl-24 mb-20 group">
                                 <div
-                                        class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-indigo-900 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-                                        Top Rated</div>
-                                <div class="text-indigo-600 flex justify-center mb-6">
-                                        <?php for ($i = 0; $i < 5; $i++): ?><svg xmlns="http://www.w3.org/2000/svg"
-                                                        width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round">
-                                                        <polygon
-                                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                                                </svg><?php endfor; ?>
+                                        class="absolute left-0 top-0 w-14 h-14 bg-navy text-white rounded-full flex items-center justify-center font-serif text-xl border-4 border-slate-50 z-10 shadow-xl group-hover:scale-110 transition duration-300">
+                                        1</div>
+                                <div
+                                        class="bg-white p-10 border border-slate-100 shadow-lg hover:shadow-2xl transition rounded-sm relative">
+                                        <div
+                                                class="absolute top-0 left-0 w-1 h-full bg-slate-200 group-hover:bg-navy transition">
+                                        </div>
+                                        <span
+                                                class="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Days
+                                                1-7: Ingestion</span>
+                                        <h3 class="font-bold text-2xl text-navy mb-3">Analysis & Architecture</h3>
+                                        <p class="text-slate-600 text-sm leading-relaxed">
+                                                We ingest your census data. Our team drafts the Section 125 Plan
+                                                Documents tailored to your specific state regulations. <span
+                                                        class="font-bold">Your Lift: Emailing us the CSV file.</span>
+                                        </p>
                                 </div>
-                                <p class="italic mb-8 leading-relaxed font-medium">"I love that they aren't a franchise.
-                                        You can feel the difference. The Director knows every single kid by name. It
-                                        really feels like an extended family."</p>
-                                <div class="font-bold">Michael T. <span
-                                                class="block text-gray-500 text-xs font-normal">College Park
-                                                Parent</span></div>
                         </div>
-                        <div class="bg-white/10 backdrop-blur-sm p-8 rounded-2xl relative border border-white/10">
-                                <div class="text-yellow-400 flex justify-center mb-6">
-                                        <?php for ($i = 0; $i < 5; $i++): ?><svg xmlns="http://www.w3.org/2000/svg"
-                                                        width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round">
-                                                        <polygon
-                                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                                                </svg><?php endfor; ?>
+
+                        <!-- Phase 2 -->
+                        <div class="relative pl-24 mb-20 group">
+                                <div
+                                        class="absolute left-0 top-0 w-14 h-14 bg-white text-navy border-2 border-navy rounded-full flex items-center justify-center font-serif text-xl z-10 shadow-xl group-hover:scale-110 transition duration-300">
+                                        2</div>
+                                <div
+                                        class="bg-white p-10 border border-slate-100 shadow-lg hover:shadow-2xl transition rounded-sm relative">
+                                        <div
+                                                class="absolute top-0 left-0 w-1 h-full bg-slate-200 group-hover:bg-navy transition">
+                                        </div>
+                                        <span
+                                                class="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Days
+                                                8-20: Connection</span>
+                                        <h3 class="font-bold text-2xl text-navy mb-3">System Integration</h3>
+                                        <p class="text-slate-600 text-sm leading-relaxed">
+                                                Our experts sync with your payroll provider. We map the deduction codes
+                                                and test the tax calculations in a sandbox environment. <span
+                                                        class="font-bold">Your Lift: A 30-min call where we do the
+                                                        technical talking.</span>
+                                        </p>
                                 </div>
-                                <p class="text-indigo-100 italic mb-8 leading-relaxed">"The STEM program is real. My
-                                        4-year-old came home explaining how plants grow. Amazing preparation for
-                                        Kindergarten. Highly recommend!"</p>
-                                <div class="font-bold">Elena R. <span
-                                                class="block text-indigo-300 text-xs font-normal">Doral, FL
-                                                Parent</span></div>
+                        </div>
+
+                        <!-- Go Live -->
+                        <div class="relative pl-24 group">
+                                <div
+                                        class="absolute left-0 top-0 w-14 h-14 bg-gold text-navy rounded-full flex items-center justify-center font-serif text-xl border-4 border-slate-50 z-10 shadow-xl group-hover:scale-110 transition duration-300">
+                                        <i class="fas fa-check"></i></div>
+                                <div
+                                        class="bg-navy p-10 border border-navy shadow-2xl rounded-sm relative overflow-hidden">
+                                        <div
+                                                class="absolute -right-10 -top-10 w-40 h-40 bg-gold/10 rounded-full blur-3xl">
+                                        </div>
+                                        <span
+                                                class="text-white/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Day
+                                                45: Activation</span>
+                                        <h3 class="font-bold text-2xl text-white mb-3">Go Live</h3>
+                                        <p class="text-white/80 text-sm leading-relaxed">
+                                                First payroll execution. FICA savings are realized immediately. Benefits
+                                                become active. The system begins its automated cycle. <span
+                                                        class="font-bold text-white">Your Lift: Zero.</span>
+                                        </p>
+                                </div>
                         </div>
                 </div>
         </div>
-</section>
 
-<?php get_footer(); ?>
+        <!-- ================================================================================= -->
+        <!-- VIEW: CONTACT (AUDIT)                                                             -->
+        <!-- ================================================================================= -->
+        <div id="contact" class="page-section flex-grow">
+                <header class="page-header-spacer bg-slate-50">
+                        <div class="max-w-4xl mx-auto px-4 text-center">
+                                <h1 class="text-5xl font-serif text-navy">Feasibility Audit</h1>
+                                <p class="text-slate-500 mt-6 text-lg font-light">
+                                        We do not conduct sales calls. We conduct audits to determine eligibility for
+                                        the W.I.M.P.E.R. protocol.
+                                </p>
+                        </div>
+                </header>
+
+                <div class="max-w-2xl mx-auto px-4 py-20">
+                        <div class="bg-white p-12 shadow-2xl border-t-4 border-navy rounded-sm relative">
+                                <form class="space-y-8">
+                                        <div class="grid grid-cols-2 gap-8">
+                                                <div>
+                                                        <label
+                                                                class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-3">Company
+                                                                Name</label>
+                                                        <input type="text"
+                                                                class="w-full p-3 border-b border-slate-200 bg-transparent focus:border-navy outline-none transition font-serif text-lg">
+                                                </div>
+                                                <div>
+                                                        <label
+                                                                class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-3">W-2
+                                                                Count</label>
+                                                        <input type="number"
+                                                                class="w-full p-3 border-b border-slate-200 bg-transparent focus:border-navy outline-none transition font-serif text-lg">
+                                                </div>
+                                        </div>
+                                        <div>
+                                                <label
+                                                        class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-3">Payroll
+                                                        Provider</label>
+                                                <input type="text"
+                                                        class="w-full p-3 border-b border-slate-200 bg-transparent focus:border-navy outline-none transition font-serif text-lg"
+                                                        placeholder="e.g. ADP, Paychex, Workday">
+                                        </div>
+                                        <div>
+                                                <label
+                                                        class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-3">Executive
+                                                        Contact Email</label>
+                                                <input type="email"
+                                                        class="w-full p-3 border-b border-slate-200 bg-transparent focus:border-navy outline-none transition font-serif text-lg">
+                                        </div>
+                                        <div class="pt-8">
+                                                <button type="button"
+                                                        class="w-full bg-navy text-white font-bold py-5 hover:bg-slate-800 transition tracking-[0.2em] text-xs uppercase shadow-lg">
+                                                        Request FICA Analysis
+                                                </button>
+                                        </div>
+                                </form>
+                        </div>
+                </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="bg-navy text-slate-400 py-20 border-t border-slate-800 mt-auto">
+                <div
+                        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-xs">
+                        <div class="mb-8 md:mb-0 text-center md:text-left">
+                                <span class="text-white font-serif text-xl tracking-wide block mb-2">ACH</span>
+                                <span class="text-slate-500 uppercase tracking-widest text-[10px]">Advanced Corporate
+                                        Health &copy; 2025</span>
+                        </div>
+                        <div class="flex space-x-10">
+                                <a href="#"
+                                        class="hover:text-white transition uppercase tracking-widest text-[10px]">W.I.M.P.E.R.
+                                        Compliance</a>
+                                <a href="#"
+                                        class="hover:text-white transition uppercase tracking-widest text-[10px]">Privacy
+                                        Protocol</a>
+                                <a href="#"
+                                        class="hover:text-white transition uppercase tracking-widest text-[10px]">Legal</a>
+                        </div>
+                </div>
+        </footer>
+
+        <!-- LOGIC -->
+        <script>
+                function navigateTo(pageId) {
+                        document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+                        document.getElementById(pageId).classList.add('active');
+                        window.scrollTo(0, 0);
+                }
+
+                function scrollToId(elementId) {
+                        const element = document.getElementById(elementId);
+                        if (element) element.scrollIntoView({ behavior: 'smooth' });
+                }
+
+                const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+                const roundFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+                function calculateBoth() {
+                        // Employer
+                        const countInput = document.getElementById('employeeCount');
+                        let count = parseInt(countInput.value) || 0;
+                        if (count < 0) count = 0;
+
+                        const savingsPerEmployee = 1100;
+                        const totalEmployerSavings = count * savingsPerEmployee;
+                        const employerEl = document.getElementById('employerSavings');
+                        if (employerEl) employerEl.innerText = roundFormatter.format(totalEmployerSavings);
+
+                        // Employee
+                        const salaryInput = document.getElementById('annualSalary');
+                        let salary = parseFloat(salaryInput.value) || 0;
+
+                        const freqInput = document.getElementById('payFrequency');
+                        let payPeriods = parseInt(freqInput.value) || 26; // Default Bi-Weekly
+
+                        // --- Updated Logic based on User Request ---
+                        // 1. Calculate Estimated Tax Savings on $1200 premium (approx 30% tax rate)
+                        const monthlyPremium = 1200;
+                        const estTaxRate = 0.30;
+                        const monthlyTaxSavings = monthlyPremium * estTaxRate; // ~$360
+
+                        // 2. Deduction of $129 "comes out"
+                        const monthlyDeduction = 129;
+                        const monthlyNetIncrease = monthlyTaxSavings - monthlyDeduction; // ~$231 Net
+
+                        // 3. Convert to Paycheck frequency
+                        // Formula: (Monthly Net * 12) / PayPeriods
+                        const annualNetIncrease = monthlyNetIncrease * 12;
+                        const perPaycheckIncrease = annualNetIncrease / payPeriods;
+
+                        const employeeEl = document.getElementById('employeeSavings');
+                        if (employeeEl) employeeEl.innerText = formatter.format(perPaycheckIncrease);
+
+                        // Sub-values for transparency
+                        const grossSavingsMonthly = monthlyTaxSavings;
+                        const grossSavingsPaycheck = (grossSavingsMonthly * 12) / payPeriods;
+
+                        const deductionPaycheck = (monthlyDeduction * 12) / payPeriods;
+
+                        document.getElementById('grossSavingsVal').innerText = formatter.format(grossSavingsPaycheck);
+                        document.getElementById('progCostVal').innerText = "-" + formatter.format(deductionPaycheck);
+                }
+
+                // Init
+                calculateBoth();
+        </script>
+        <?php wp_footer(); ?>
+</body>
+
+</html>

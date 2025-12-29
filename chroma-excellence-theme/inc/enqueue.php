@@ -63,14 +63,16 @@ function chroma_enqueue_assets()
         $css_path = CHROMA_THEME_DIR . '/assets/css/main.css';
         $css_version = file_exists($css_path) ? filemtime($css_path) : CHROMA_VERSION;
 
-        // Compiled Tailwind CSS - loads synchronously
-        wp_enqueue_style(
-                'chroma-main',
-                CHROMA_THEME_URI . '/assets/css/main.css',
-                array(),
-                $css_version,
-                'all' // Load normally to prevent FOUC
-        );
+        // Compiled Tailwind CSS - load everywhere EXCEPT front page (using CDN there)
+        if (!is_front_page()) {
+            wp_enqueue_style(
+                    'chroma-main',
+                    CHROMA_THEME_URI . '/assets/css/main.css',
+                    array(),
+                    $css_version,
+                    'all'
+            );
+        }
 
         // CRITICAL ACCESSIBILITY FIXES (Injected Inline to bypass cache/build)
         $custom_css = "
