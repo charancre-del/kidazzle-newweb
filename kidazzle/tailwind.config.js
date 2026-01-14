@@ -33,8 +33,19 @@ module.exports = {
           blueLight: '#EFF6FF',
           purple: '#A855F7',
           purpleLight: '#F3E8FF',
+          teal: '#06B6D4',
+          tealLight: '#ECFEFF',
           slate: '#475569',
         },
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 30s linear infinite',
       },
     },
   },

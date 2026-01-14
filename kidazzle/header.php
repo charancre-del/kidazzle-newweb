@@ -72,7 +72,7 @@
 		<div class="container mx-auto px-4 md:px-6 flex justify-between items-center">
 			<!-- Logo -->
 			<a href="<?php echo home_url(); ?>" class="flex items-center gap-2 cursor-pointer">
-				<div class="h-12 md:h-16 flex items-center relative">
+				<div class="h-12 md:h-16 flex items-center relative custom-logo-wrapper">
 					<?php
 					if (has_custom_logo()) {
 						the_custom_logo();
@@ -81,6 +81,13 @@
 					}
 					?>
 				</div>
+<style>
+.custom-logo-wrapper img {
+	max-height: 100% !important;
+	width: auto !important;
+	object-fit: contain !important;
+}
+</style>
 			</a>
 
 			<!-- Desktop Links -->

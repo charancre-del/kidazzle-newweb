@@ -42,14 +42,14 @@ $program_slug = kidazzle_get_program_base_slug();
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                     data-program="<?php echo esc_attr(sanitize_title($program['title'])); ?>">
                     <div class="p-8">
-                        <div class="text-KIDazzle-teal text-4xl mb-4">
+                        <div class="text-kidazzle-teal text-4xl mb-4">
                             <i class="<?php echo esc_attr($icon); ?>"></i>
                         </div>
                         <h3 class="text-2xl font-bold text-brand-ink mb-2">
                             <?php echo esc_html($program['title']); ?>
                         </h3>
                         <?php if ($age_range): ?>
-                            <div class="text-KIDazzle-yellow font-semibold mb-4">
+                            <div class="text-kidazzle-yellow font-semibold mb-4">
                                 Ages <?php echo esc_html($age_range); ?>
                             </div>
                         <?php endif; ?>
@@ -57,7 +57,7 @@ $program_slug = kidazzle_get_program_base_slug();
                             <?php echo esc_html($excerpt); ?>
                         </p>
                         <a href="<?php echo esc_url($url); ?>"
-                            class="inline-block bg-KIDazzle-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-KIDazzle-teal/90 transition-colors"
+                            class="inline-block bg-kidazzle-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-kidazzle-teal/90 transition-colors"
                             aria-label="Learn more about <?php echo esc_attr($program['title']); ?>">
                             Learn More
                         </a>

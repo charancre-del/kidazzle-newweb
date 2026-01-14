@@ -310,7 +310,7 @@ add_filter('script_loader_tag', 'kidazzle_defer_scripts', 10, 3);
 function kidazzle_preload_lcp_image()
 {
     // Using optimized logo as LCP candidate since specific hero image is missing
-    $logo_url = get_template_directory_uri() . '/assets/images/logo_Kidazzlecropped_140x140.webp';
+    $logo_url = get_template_directory_uri() . '/assets/images/kidazzle-logo-140x140.webp';
     echo '<link rel="preload" as="image" href="' . esc_url($logo_url) . '" fetchpriority="high">' . "\n";
 }
 add_action('wp_head', 'kidazzle_preload_lcp_image', 1);

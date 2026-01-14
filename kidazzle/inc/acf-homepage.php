@@ -128,23 +128,64 @@ function kidazzle_home_hero()
  */
 function kidazzle_home_stats()
 {
-        $stats = kidazzle_home_get_theme_mod_json('kidazzle_home_stats_json', kidazzle_home_default_stats());
-        $cleaned = array();
+	$stats = kidazzle_home_get_theme_mod_json('kidazzle_home_stats_json', kidazzle_home_default_stats());
+	$cleaned = array();
 
-        // Define color cycle for stats (red, yellow, blue, green)
-        $colors = array('kidazzle-red', 'kidazzle-yellow', 'kidazzle-blue', 'kidazzle-green');
-        $index = 0;
+	// Define color cycle for stats (red, yellow, blue, green)
+	$colors = array('kidazzle-red', 'kidazzle-yellow', 'kidazzle-blue', 'kidazzle-green');
+	$index = 0;
 
-        foreach ($stats as $stat) {
-                $cleaned[] = array(
-                        'value' => sanitize_text_field($stat['value'] ?? ''),
-                        'label' => sanitize_text_field($stat['label'] ?? ''),
-                        'color' => $colors[$index % count($colors)],
-                );
-                $index++;
-        }
+	foreach ($stats as $stat) {
+		$cleaned[] = array(
+			'value' => sanitize_text_field($stat['value'] ?? ''),
+			'label' => sanitize_text_field($stat['label'] ?? ''),
+			'color' => $colors[$index % count($colors)],
+		);
+		$index++;
+	}
 
-        return $cleaned;
+	return $cleaned;
+}
+
+/**
+ * Featured Programs Preview
+ */
+function kidazzle_home_programs_preview()
+{
+	// Query all published programs
+	$programs_query = new WP_Query(array(
+		'post_type' => 'program',
+		'posts_per_page' => 3,
+		'orderby' => 'menu_order',
+		'order' => 'ASC',
+		'post_status' => 'publish',
+	));
+
+	$featured = array();
+
+	if ($programs_query->have_posts()) {
+		while ($programs_query->have_posts()) {
+			$programs_query->the_post();
+			$post_id = get_the_ID();
+
+			$featured[] = array(
+				'title' => get_the_title(),
+				'excerpt' => get_the_excerpt(),
+				'icon' => get_post_meta($post_id, 'program_icon', true) ?: 'fas fa-child',
+				'age_range' => get_post_meta($post_id, 'program_age_range', true),
+				'url' => get_permalink(),
+			);
+		}
+		wp_reset_postdata();
+	}
+
+	return array(
+		'heading' => get_theme_mod('kidazzle_home_programs_heading', 'Our Programs'),
+		'subheading' => get_theme_mod('kidazzle_home_programs_subheading', 'Nurturing diverse bright minds through expert care and proprietary curriculum.'),
+		'cta_label' => get_theme_mod('kidazzle_home_programs_cta_label', 'View All Programs'),
+		'cta_link' => get_theme_mod('kidazzle_home_programs_cta_link', get_post_type_archive_link('program')),
+		'featured' => $featured,
+	);
 }
 
 /**
