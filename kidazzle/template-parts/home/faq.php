@@ -3,7 +3,7 @@
  * Template Part: FAQ Section
  * Accordion-based frequently asked questions
  *
- * @package kidazzle_Excellence
+ * @package kidazzle
  */
 
 $faq_data = kidazzle_home_faq();
@@ -35,7 +35,7 @@ if (!$faq_data || empty($faq_data['items'])) {
                 }
                 $faq_id = 'faq-' . ($index + 1);
                 ?>
-                <div class="bg-brand-cream rounded-2xl px-5 py-4 border border-kidazzle-blue/10" data-accordion>
+                <div class="bg-brand-cream rounded-2xl px-5 py-4 border border-KIDazzle-blue/10" data-accordion>
                     <button class="w-full text-left flex items-center justify-between gap-3" data-accordion-trigger
                         aria-expanded="false" aria-controls="<?php echo esc_attr($faq_id); ?>">
                         <span class="font-semibold text-sm text-brand-ink">
@@ -58,7 +58,7 @@ if (!$faq_data || empty($faq_data['items'])) {
                     <?php echo esc_html($faq_data['cta_text']); ?>
                 </p>
                 <a href="<?php echo esc_url($faq_data['cta_link']); ?>"
-                    class="inline-block bg-kidazzle-red text-white px-8 py-3 rounded-full font-bold hover:bg-kidazzle-red/90 transition-colors">
+                    class="inline-block bg-KIDazzle-red text-white px-8 py-3 rounded-full font-bold hover:bg-KIDazzle-red/90 transition-colors">
                     <?php echo esc_html($faq_data['cta_label'] ?: 'Contact Us'); ?>
                 </a>
             </div>
@@ -66,3 +66,5 @@ if (!$faq_data || empty($faq_data['items'])) {
 
     </div>
 </section>
+
+

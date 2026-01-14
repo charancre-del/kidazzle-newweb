@@ -4,7 +4,7 @@
  * Template Part: Schedule Tabs
  * "A Day in the Life" - Daily rhythm tabs for different age groups
  *
- * @package kidazzle_Excellence
+ * @package kidazzle
  */
 
 $tracks = kidazzle_home_schedule_tracks();
@@ -16,12 +16,12 @@ if (empty($tracks)) {
 
 <section id="schedule" class="py-20 bg-brand-cream relative" data-section="schedule">
 	<div
-		class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-kidazzle-red via-kidazzle-yellow to-kidazzle-blue opacity-40">
+		class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-KIDazzle-red via-KIDazzle-yellow to-KIDazzle-blue opacity-40">
 	</div>
 	<div class="max-w-6xl mx-auto px-4 lg:px-6" data-schedule
 		data-tracks='<?php echo esc_attr(wp_json_encode($tracks)); ?>'>
 		<div class="text-center mb-12">
-			<span class="text-kidazzle-green font-bold tracking-[0.2em] text-xs uppercase mb-4 block">Day by
+			<span class="text-KIDazzle-green font-bold tracking-[0.2em] text-xs uppercase mb-4 block">Day by
 				Day</span>
 			<h2 class="text-3xl md:text-4xl font-serif text-brand-ink mb-3">A Daily Rhythm of Joy</h2>
 			<p class="text-brand-ink max-w-2xl mx-auto">We don't just fill time. Every classroom follows
@@ -29,13 +29,14 @@ if (empty($tracks)) {
 		</div>
 
 		<div class="flex justify-center mb-12">
-			<div class="bg-white border border-kidazzle-blue/15 p-1 rounded-full inline-flex" data-schedule-tabs>
+			<div class="bg-white border border-KIDazzle-blue/15 p-1 rounded-2xl flex flex-wrap gap-2 justify-center"
+				data-schedule-tabs>
 				<?php foreach ($tracks as $index => $track): ?>
 					<?php
 					$is_active = 0 === $index;
 					$tab_classes = $is_active
-						? 'bg-kidazzle-blue text-white shadow-soft'
-						: 'text-brand-ink hover:text-kidazzle-blue';
+						? 'bg-KIDazzle-blue text-white shadow-soft'
+						: 'text-brand-ink hover:text-KIDazzle-blue';
 					?>
 					<button
 						class="schedule-tab px-8 py-3 rounded-full text-sm font-bold transition-all duration-300 <?php echo esc_attr($tab_classes); ?>"
@@ -55,7 +56,7 @@ if (empty($tracks)) {
 				data-schedule-panel="<?php echo esc_attr($track['key']); ?>">
 				<?php
 				// Get track-specific colors
-				$track_color = !empty($track['color']) ? $track['color'] : 'kidazzle-blue';
+				$track_color = !empty($track['color']) ? $track['color'] : 'KIDazzle-blue';
 				$badge_bg = 'bg-' . $track_color; // Solid background for active state
 				$badge_text = 'text-' . $track_color;
 				?>
@@ -78,7 +79,7 @@ if (empty($tracks)) {
 								<img src="<?php echo esc_url($track['image']); ?>"
 									alt="<?php echo esc_attr($track['title']); ?>" class="w-full h-full object-cover" />
 							<?php else: ?>
-								<div class="w-full h-full flex items-center justify-center text-kidazzle-blueDark/20 text-6xl">
+								<div class="w-full h-full flex items-center justify-center text-KIDazzle-blueDark/20 text-6xl">
 									<i class="fa-solid fa-image"></i>
 								</div>
 							<?php endif; ?>
@@ -148,3 +149,5 @@ if (empty($tracks)) {
 		<?php endforeach; ?>
 	</div>
 </section>
+
+

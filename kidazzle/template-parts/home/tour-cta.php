@@ -1,65 +1,44 @@
 <?php
 /**
- * Template Part: Tour CTA
- * Final conversion section with tour form
- *
- * @package kidazzle_Excellence
+ * Tour CTA Section with Embedded Form
+ * 
+ * KIDazzle Child Care Theme
+ * 
+ * @package Kidazzle
  */
 
-$tour_cta = kidazzle_home_tour_cta();
-if (!$tour_cta) {
-    return;
+if (!defined('ABSPATH')) {
+    exit;
 }
+
+$cta_headline = get_theme_mod('kidazzle_cta_headline', 'Ready to Start Your Journey?');
+$cta_subheadline = get_theme_mod('kidazzle_cta_subheadline', 'Schedule a tour today and see why families have trusted us for 31 years.');
+$form_embed_url = get_theme_mod('kidazzle_form_embed_url', 'https://api.leadconnectorhq.com/widget/form/N8RYaUY1SuORexcyA6la');
 ?>
 
-<section id="tour" class="py-20 bg-brand-cream border-t border-kidazzle-blue/10" data-section="tour-cta">
-    <div class="max-w-5xl mx-auto px-4 lg:px-6">
-        <div
-            class="bg-white rounded-[2.5rem] shadow-soft border border-kidazzle-blue/10 overflow-hidden grid md:grid-cols-[1.1fr,1fr]">
-            <div class="p-8 md:p-10">
-                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-ink mb-3">
-                    <?php echo esc_html($tour_cta['heading'] ?: 'Schedule a private tour'); ?>
-                </h2>
-                <p class="text-brand-ink text-sm md:text-base mb-6">
-                    <?php echo esc_html($tour_cta['subheading']); ?>
-                </p>
-                <div class="space-y-4">
-                    <?php
-                    if (shortcode_exists('kidazzle_tour_form')) {
-                        echo do_shortcode('[kidazzle_tour_form]');
-                    } else {
-                        ?>
-                        <div class="text-brand-ink text-sm">Please activate the "Kidazzle Tour Form" plugin to display the
-                            tour booking form.</div>
-                        <?php
-                    }
-                    ?>
+<!-- CTA & Embed -->
+<section class="py-16 bg-white">
+    <div
+        class="max-w-6xl mx-auto px-6 bg-ombre-purple rounded-[3rem] p-12 text-center text-white shadow-2xl relative overflow-hidden">
+        <div class="relative z-10">
+            <h3 class="text-3xl font-extrabold mb-4"><?php echo esc_html($cta_headline); ?></h3>
+            <p class="text-purple-100 text-lg mb-8"><?php echo esc_html($cta_subheadline); ?></p>
+
+            <!-- EMBEDDED FORM -->
+            <?php if ($form_embed_url): ?>
+                <div
+                    class="bg-white/10 border-2 border-dashed border-white/30 rounded-2xl p-4 mb-8 max-w-4xl mx-auto h-[900px] overflow-hidden">
+                    <iframe src="<?php echo esc_url($form_embed_url); ?>"
+                        style="width:100%;height:100%;border:none;border-radius:20px" id="kidazzle-contact-form"
+                        title="<?php esc_attr_e('KIDazzle Contact Form', 'kidazzle'); ?>" loading="lazy">
+                    </iframe>
+                    <script src="https://link.msgsndr.com/js/form_embed.js" defer></script>
                 </div>
-                <?php if (!empty($tour_cta['trust_text'])): ?>
-                    <p class="text-[11px] text-brand-ink mt-3"><?php echo esc_html($tour_cta['trust_text']); ?></p>
-                <?php endif; ?>
-            </div>
-            <div
-                class="bg-gradient-to-br from-kidazzle-blue via-kidazzle-green to-kidazzle-yellow text-white p-7 md:p-8 flex flex-col justify-between">
-                <div>
-                    <p class="text-[11px] font-semibold tracking-[0.2em] uppercase mb-2">Why families choose Kidazzle</p>
-                    <ul class="space-y-3 text-sm">
-                        <li class="flex gap-2"><span class="mt-0.5 text-white">✓</span><span>Warm, consistent teachers
-                                who know your child well</span></li>
-                        <li class="flex gap-2"><span class="mt-0.5 text-white">✓</span><span>Daily parent communication
-                                with photos and updates</span></li>
-                        <li class="flex gap-2"><span class="mt-0.5 text-white">✓</span><span>Healthy meals included
-                                through CACFP participation</span></li>
-                        <li class="flex gap-2"><span class="mt-0.5 text-white">✓</span><span>Age-appropriate security
-                                and safety protocols</span></li>
-                        <li class="flex gap-2"><span class="mt-0.5 text-white">✓</span><span>GA Lottery Pre-K at many
-                                locations</span></li>
-                    </ul>
-                </div>
-                <div class="mt-6 text-xs text-white">
-                    <p class="font-semibold mb-1">Typical tour length: 20–30 minutes</p>
-                    <p>Meet the Director, walk classrooms, and get tuition details for your child’s age group.</p>
-                </div>
+            <?php endif; ?>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="<?php echo esc_url(get_post_type_archive_link('location')); ?>"
+                    class="bg-white text-purple-700 px-8 py-3 rounded-xl font-bold hover:bg-purple-50 transition shadow-lg"><?php esc_html_e('View Locations', 'kidazzle'); ?></a>
             </div>
         </div>
     </div>

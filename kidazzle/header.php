@@ -3,39 +3,43 @@
 
 <head>
 	<meta charset="<?php bloginfo('charset'); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php wp_title('|', true, 'right'); ?></title>
-	<!-- Tailwind CSS (CDN for immediate design fidelity) -->
-	<script src="https://cdn.tailwindcss.com"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<?php // Canonical URL is handled by Yoast SEO or framework canonical enforcer ?>
+	<link rel="preload" as="font"
+		href="<?php echo get_template_directory_uri(); ?>/assets/webfonts/Outfit-Regular.woff2" type="font/woff2"
+		crossorigin>
+	<link rel="preload" as="font" href="<?php echo get_template_directory_uri(); ?>/assets/webfonts/Outfit-SemiBold.woff2"
+		type="font/woff2" crossorigin>
+	<link rel="preload" as="font" href="<?php echo get_template_directory_uri(); ?>/assets/webfonts/Outfit-Bold.woff2"
+		type="font/woff2" crossorigin>
+
+	<!-- Tier 3: Instant Navigation (Speculation Rules API) -->
+	<script type="speculationrules">
+	{
+		"prerender": [
+			{
+				"source": "document",
+				"where": {
+					"and": [
+						{ "href_matches": "/*" },
+						{ "not": { "href_matches": "/wp-admin/*" } }
+					]
+				},
+				"eagerness": "moderate"
+			}
+		]
+	}
+	</script>
 
 	<?php wp_head(); ?>
-	<style>
-		.graph-bar {
-			transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
-		}
-
-		.fade-in {
-			animation: fadeIn 0.5s ease-in;
-		}
-
-		@keyframes fadeIn {
-			from {
-				opacity: 0;
-			}
-
-			to {
-				opacity: 1;
-			}
-		}
-
-		html {
-			scroll-behavior: smooth;
-		}
-	</style>
 </head>
 
 <body <?php body_class('font-sans text-slate-800 bg-white'); ?>>
 	<?php wp_body_open(); ?>
+
+	<!-- Skip Links for Accessibility -->
+	<a href="#main-content"
+		class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-white text-brand-ink p-4 z-[100] rounded-lg shadow-lg"><?php _e('Skip to content', 'kidazzle-theme'); ?></a>
 
 	<!-- TOP UTILITY BAR -->
 	<div

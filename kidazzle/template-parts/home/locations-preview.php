@@ -3,7 +3,7 @@
  * Template Part: Locations Preview
  * Interactive map + featured locations cards
  *
- * @package kidazzle_Excellence
+ * @package kidazzle
  */
 
 $locations_data = kidazzle_home_locations_preview();
@@ -33,8 +33,8 @@ $grouped = $locations_data['grouped'] ?? array();
         <!-- Interactive Map -->
         <?php if (!empty($map_json)): ?>
             <div class="mb-12">
-                <div id="kidazzle-locations-map" data-kidazzle-map
-                    data-kidazzle-locations='<?php echo esc_attr(wp_json_encode($map_json)); ?>'
+                <div id="KIDazzle-locations-map" data-KIDazzle-map
+                    data-KIDazzle-locations='<?php echo esc_attr(wp_json_encode($map_json)); ?>'
                     class="w-full h-96 rounded-xl shadow-lg"></div>
             </div>
         <?php endif; ?>
@@ -85,13 +85,13 @@ $grouped = $locations_data['grouped'] ?? array();
                                                 <?php endif; ?>
                                                 <?php if ($address): ?>
                                                     <p class="text-brand-ink text-[11px] mt-2">
-                                                        <i class="fas fa-map-marker-alt text-kidazzle-red mr-2"></i>
+                                                        <i class="fas fa-map-marker-alt text-KIDazzle-red mr-2"></i>
                                                         <?php echo esc_html($address); ?>
                                                     </p>
                                                 <?php endif; ?>
                                                 <?php if ($phone): ?>
                                                     <p class="text-brand-ink text-[11px] mt-1">
-                                                        <i class="fas fa-phone text-kidazzle-yellow mr-2"></i>
+                                                        <i class="fas fa-phone text-KIDazzle-yellow mr-2"></i>
                                                         <?php echo esc_html($phone); ?>
                                                     </p>
                                                 <?php endif; ?>
@@ -110,7 +110,7 @@ $grouped = $locations_data['grouped'] ?? array();
         <?php if (!empty($locations_data['cta_link'])): ?>
             <div class="text-center">
                 <a href="<?php echo esc_url($locations_data['cta_link']); ?>"
-                    class="inline-block bg-brand-ink text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-kidazzle-blueDark transition-colors">
+                    class="inline-block bg-brand-ink text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-KIDazzle-blueDark transition-colors">
                     <?php echo esc_html($locations_data['cta_label'] ?: get_theme_mod('kidazzle_locations_label', 'View All Locations')); ?>
                 </a>
             </div>
@@ -118,3 +118,5 @@ $grouped = $locations_data['grouped'] ?? array();
 
     </div>
 </section>
+
+

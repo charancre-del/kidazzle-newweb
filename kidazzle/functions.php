@@ -42,6 +42,8 @@ require_once KIDAZZLE_THEME_DIR . '/inc/cpt-programs.php';
 require_once KIDAZZLE_THEME_DIR . '/inc/cpt-locations.php';
 require_once KIDAZZLE_THEME_DIR . '/inc/cpt-cities.php';
 require_once KIDAZZLE_THEME_DIR . '/inc/cpt-team-members.php';
+require_once KIDAZZLE_THEME_DIR . '/inc/class-program-enhancements.php';
+require_once KIDAZZLE_THEME_DIR . '/inc/class-amp-blog.php';
 
 // API Handlers
 require_once KIDAZZLE_THEME_DIR . '/inc/careers-api.php';
@@ -61,11 +63,14 @@ require_once KIDAZZLE_THEME_DIR . '/inc/general-seo-meta.php';
 
 // Utility Functions
 require_once KIDAZZLE_THEME_DIR . '/inc/template-tags.php';
+require_once KIDAZZLE_THEME_DIR . '/inc/dynamic-links.php';
 require_once KIDAZZLE_THEME_DIR . '/inc/about-seo.php';
 require_once KIDAZZLE_THEME_DIR . '/inc/customizer-home.php';
 require_once KIDAZZLE_THEME_DIR . '/inc/customizer-header.php';
 require_once KIDAZZLE_THEME_DIR . '/inc/customizer-footer.php';
 require_once KIDAZZLE_THEME_DIR . '/inc/customizer-locations.php';
+require_once KIDAZZLE_THEME_DIR . '/inc/customizer-seo.php';
+require_once KIDAZZLE_THEME_DIR . '/inc/customizer-scripts.php';
 
 // Legacy helper files (ACF plugin optional; helpers run on core WP functions only)
 require_once KIDAZZLE_THEME_DIR . '/inc/acf-options.php';
@@ -85,10 +90,11 @@ require_once KIDAZZLE_THEME_DIR . '/inc/monthly-seo-cron.php';
 // Advanced SEO/LLM Module (Editable Fields)
 require_once KIDAZZLE_THEME_DIR . '/inc/advanced-seo-llm/bootstrap.php';
 
-
+// SEO Automations (Internal Linking, Geo SEO, etc.)
+require_once KIDAZZLE_THEME_DIR . '/inc/seo-automations/bootstrap.php';
 
 require_once KIDAZZLE_THEME_DIR . '/inc/security.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/critical-css.php';
+require_once KIDAZZLE_THEME_DIR . '/inc/force-trailing-slashes.php';
 
 /**
  * Remove Legacy JavaScript & Styles
@@ -112,6 +118,88 @@ function kidazzle_remove_legacy_assets()
     }
 }
 add_action('init', 'kidazzle_remove_legacy_assets');
+
+/**
+ * Remove Gutenberg Block Library CSS on Frontend
+ * This theme doesn't use Gutenberg blocks, so we can remove these render-blocking styles
+ */
+function kidazzle_remove_block_library_css() {
+    if (!is_admin()) {
+        // Remove core block library CSS
+        wp_dequeue_style('wp-block-library');
+        wp_dequeue_style('wp-block-library-theme');
+        
+        // Remove WooCommerce block CSS (if any)
+        wp_dequeue_style('wc-blocks-style');
+        
+        // Remove global styles (theme.json generated)
+        wp_dequeue_style('global-styles');
+        wp_dequeue_style('wp-block-navigation');
+        wp_dequeue_style('classic-theme-styles');
+    }
+}
+add_action('wp_enqueue_scripts', 'kidazzle_remove_block_library_css', 100);
+
+// Disable separate block assets loading (WordPress 5.8+)
+add_filter('should_load_separate_core_block_assets', '__return_false');
+
+// Remove inline block styles for specific blocks
+add_action('wp_enqueue_scripts', function() {
+    // Get all registered block styles and remove them
+    $blocks_to_remove = ['heading', 'paragraph', 'list', 'list-item', 'quote', 'image', 'separator'];
+    foreach ($blocks_to_remove as $block) {
+        wp_dequeue_style("wp-block-{$block}");
+        wp_deregister_style("wp-block-{$block}");
+    }
+}, 200);
+
+/**
+ * Exclude images with 'no-lazy' class from LiteSpeed lazy loading
+ * This prevents CLS on hero images and other critical above-the-fold images
+ */
+add_filter('litespeed_media_lazy_img_excludes', function($excludes) {
+    $excludes[] = 'no-lazy';
+    $excludes[] = 'fetchpriority';
+    return $excludes;
+});
+
+// Also exclude from native WordPress lazy loading
+add_filter('wp_img_tag_add_loading_attr', function($value, $image, $context) {
+    if (strpos($image, 'no-lazy') !== false || strpos($image, 'fetchpriority') !== false) {
+        return false; // Don't add loading="lazy"
+    }
+    return $value;
+}, 10, 3);
+
+/**
+ * Add CORS Headers for Font Files
+ * Fixes: Cross-origin font loading when site is accessed via www vs non-www
+ */
+function kidazzle_add_cors_headers()
+{
+    // Only add headers for font file requests
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+
+    if (preg_match('/\.(woff2?|ttf|otf|eot)$/i', $request_uri)) {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, OPTIONS');
+        header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
+    }
+}
+add_action('send_headers', 'kidazzle_add_cors_headers');
+
+/**
+ * Add CORS headers to font files served by WordPress
+ * This filter adds headers when fonts are served through WordPress
+ */
+function kidazzle_cors_font_headers($headers, $path)
+{
+    if (preg_match('/\.(woff2?|ttf|otf|eot)$/i', $path)) {
+        $headers['Access-Control-Allow-Origin'] = '*';
+    }
+    return $headers;
+}
+add_filter('wp_get_attachment_headers', 'kidazzle_cors_font_headers', 10, 2);
 
 
 /**
@@ -310,4 +398,64 @@ function kidazzle_lazy_load_leadconnector()
     <?php
 }
 add_action('wp_footer', 'kidazzle_lazy_load_leadconnector', 999);
+
+/**
+ * URL Consistency: Force trailing slashes on all URLs
+ * This prevents duplicate content issues like /programs vs /programs/
+ */
+function kidazzle_enforce_trailing_slash($url, $type)
+{
+    // Skip files (anything with an extension)
+    if (preg_match('/\.[a-zA-Z0-9]+(\?|$)/', $url)) {
+        return $url;
+    }
+
+    // Skip feed URLs
+    if ($type === 'single_feed' || $type === 'category_feed') {
+        return $url;
+    }
+
+    return trailingslashit($url);
+}
+add_filter('user_trailingslashit', 'kidazzle_enforce_trailing_slash', 10, 2);
+
+/**
+ * Title Length Optimization for SEO
+ * Ensures titles stay within recommended limits
+ */
+function kidazzle_optimize_title_length($title_parts)
+{
+    // Truncate very long titles
+    if (isset($title_parts['title']) && mb_strlen($title_parts['title']) > 50) {
+        $title_parts['title'] = mb_substr($title_parts['title'], 0, 47) . '...';
+    }
+
+    // Use shorter site name suffix on blog posts
+    if (is_single() && isset($title_parts['site'])) {
+        $title_parts['site'] = 'Kidazzle';
+    }
+
+    return $title_parts;
+}
+add_filter('document_title_parts', 'kidazzle_optimize_title_length', 10);
+
+/**
+ * Use shorter title separator for cleaner titles
+ */
+function kidazzle_title_separator($sep)
+{
+    return '|';
+}
+add_filter('document_title_separator', 'kidazzle_title_separator');
+
+/**
+ * Disable Speculation Rules
+ * Prevents browser prefetching/prerendering which can cause issues with dynamic content
+ */
+// Programmatically disable Speculation Rules API from WordPress Core or Performance Lab plugin
+remove_action('wp_head', 'wp_speculation_rules');
+remove_action('wp_footer', 'wp_speculation_rules');
+add_filter('wp_speculation_rules_configuration', '__return_empty_array', PHP_INT_MAX);
+add_filter('pl_speculation_rules_configuration', '__return_empty_array', PHP_INT_MAX);
+
 

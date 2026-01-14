@@ -2,7 +2,7 @@
 /**
  * Template Part: Programs Wizard
  *
- * @package kidazzle_Excellence
+ * @package kidazzle
  */
 
 $options = kidazzle_home_program_wizard_options();
@@ -17,28 +17,28 @@ if (empty($options)) {
 function kidazzle_get_wizard_color_classes($key)
 {
     $map = array(
-        'infant-care' => 'bg-kidazzle-redLight border-kidazzle-red/30 text-brand-ink hover:border-kidazzle-red hover:text-kidazzle-red',
-        'toddlers' => 'bg-white border-kidazzle-blue/20 text-brand-ink hover:border-kidazzle-blue hover:text-kidazzle-blue',
-        'preschool' => 'bg-white border-kidazzle-yellow/20 text-brand-ink hover:border-kidazzle-yellow hover:text-kidazzle-yellow',
-        'pre-k-prep' => 'bg-white border-kidazzle-blue/20 text-brand-ink hover:border-kidazzle-blue hover:text-kidazzle-blue',
-        'pre-k-ga-pre-k' => 'bg-white border-kidazzle-blue/20 text-brand-ink hover:border-kidazzle-blue hover:text-kidazzle-blue',
-        'schoolagers' => 'bg-white border-kidazzle-green/20 text-brand-ink hover:border-kidazzle-green hover:text-kidazzle-green',
-        'camp' => 'bg-white border-kidazzle-orange/20 text-brand-ink hover:border-kidazzle-orange hover:text-kidazzle-orange',
-        'parents-day-out' => 'bg-white border-kidazzle-teal/20 text-brand-ink hover:border-kidazzle-teal hover:text-kidazzle-teal',
+        'infant-care' => 'bg-KIDazzle-redLight border-KIDazzle-red/30 text-brand-ink hover:border-KIDazzle-red hover:text-KIDazzle-red',
+        'toddlers' => 'bg-white border-KIDazzle-blue/20 text-brand-ink hover:border-KIDazzle-blue hover:text-KIDazzle-blue',
+        'preschool' => 'bg-white border-KIDazzle-yellow/20 text-brand-ink hover:border-KIDazzle-yellow hover:text-KIDazzle-yellow',
+        'pre-k-prep' => 'bg-white border-KIDazzle-blue/20 text-brand-ink hover:border-KIDazzle-blue hover:text-KIDazzle-blue',
+        'pre-k-ga-pre-k' => 'bg-white border-KIDazzle-blue/20 text-brand-ink hover:border-KIDazzle-blue hover:text-KIDazzle-blue',
+        'schoolagers' => 'bg-white border-KIDazzle-green/20 text-brand-ink hover:border-KIDazzle-green hover:text-KIDazzle-green',
+        'camp' => 'bg-white border-KIDazzle-orange/20 text-brand-ink hover:border-KIDazzle-orange hover:text-KIDazzle-orange',
+        'parents-day-out' => 'bg-white border-KIDazzle-teal/20 text-brand-ink hover:border-KIDazzle-teal hover:text-KIDazzle-teal',
         // Fallbacks for old keys just in case
-        'infant' => 'bg-kidazzle-redLight border-kidazzle-red/30 text-brand-ink hover:border-kidazzle-red hover:text-kidazzle-red',
-        'toddler' => 'bg-white border-kidazzle-blue/20 text-brand-ink hover:border-kidazzle-blue hover:text-kidazzle-blue',
-        'prep' => 'bg-white border-kidazzle-blue/20 text-brand-ink hover:border-kidazzle-blue hover:text-kidazzle-blue',
-        'prek' => 'bg-white border-kidazzle-blue/20 text-brand-ink hover:border-kidazzle-blue hover:text-kidazzle-blue',
-        'afterschool' => 'bg-white border-kidazzle-green/20 text-brand-ink hover:border-kidazzle-green hover:text-kidazzle-green',
+        'infant' => 'bg-KIDazzle-redLight border-KIDazzle-red/30 text-brand-ink hover:border-KIDazzle-red hover:text-KIDazzle-red',
+        'toddler' => 'bg-white border-KIDazzle-blue/20 text-brand-ink hover:border-KIDazzle-blue hover:text-KIDazzle-blue',
+        'prep' => 'bg-white border-KIDazzle-blue/20 text-brand-ink hover:border-KIDazzle-blue hover:text-KIDazzle-blue',
+        'prek' => 'bg-white border-KIDazzle-blue/20 text-brand-ink hover:border-KIDazzle-blue hover:text-KIDazzle-blue',
+        'afterschool' => 'bg-white border-KIDazzle-green/20 text-brand-ink hover:border-KIDazzle-green hover:text-KIDazzle-green',
     );
 
     // Default fallback
-    return $map[$key] ?? 'bg-white border-kidazzle-blue/20 text-brand-ink hover:border-kidazzle-blue hover:text-kidazzle-blue';
+    return $map[$key] ?? 'bg-white border-KIDazzle-blue/20 text-brand-ink hover:border-KIDazzle-blue hover:text-KIDazzle-blue';
 }
 ?>
 
-<section id="<?php echo esc_attr($program_slug); ?>" class="py-20 bg-brand-cream border-b border-kidazzle-blue/10"
+<section id="<?php echo esc_attr($program_slug); ?>" class="py-20 bg-brand-cream border-b border-KIDazzle-blue/10"
     data-section="<?php echo esc_attr($program_slug); ?>">
     <div class="max-w-5xl mx-auto px-4 lg:px-6">
 
@@ -46,10 +46,10 @@ function kidazzle_get_wizard_color_classes($key)
             <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-ink mb-3">Find the right program in 10
                 seconds</h2>
             <p class="text-brand-ink text-sm md:text-base max-w-2xl mx-auto">Choose your child's age and we'll
-                suggest the Kidazzle program designed for their development stage and your family's needs.</p>
+                suggest the KIDazzle program designed for their development stage and your family's needs.</p>
         </div>
 
-        <div class="bg-white rounded-3xl p-6 md:p-8 border border-kidazzle-blue/10 shadow-soft fade-in-up"
+        <div class="bg-white rounded-3xl p-6 md:p-8 border border-KIDazzle-blue/10 shadow-soft fade-in-up"
             data-program-wizard data-options='<?php echo esc_attr(wp_json_encode($options)); ?>'>
 
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" data-program-wizard-options>
@@ -80,13 +80,13 @@ function kidazzle_get_wizard_color_classes($key)
                             Description goes here.</p>
 
                         <div class="flex flex-wrap gap-3 text-xs pt-2 justify-center md:justify-start">
-                            <a class="inline-flex items-center justify-center px-6 py-3 rounded-full border border-kidazzle-blue/20 bg-white text-brand-ink font-semibold hover:border-kidazzle-blue hover:text-kidazzle-blue transition shadow-sm"
+                            <a class="inline-flex items-center justify-center px-6 py-3 rounded-full border border-KIDazzle-blue/20 bg-white text-brand-ink font-semibold hover:border-KIDazzle-blue hover:text-KIDazzle-blue transition shadow-sm"
                                 data-program-wizard-link href="<?php echo esc_url($program_archive_url); ?>"
                                 aria-label="Learn more about our programs">
                                 Learn More
                             </a>
                             <a href="#tour"
-                                class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-kidazzle-red text-white font-semibold hover:bg-kidazzle-red/90 transition shadow-soft">
+                                class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-KIDazzle-red text-white font-semibold hover:bg-KIDazzle-red/90 transition shadow-soft">
                                 Speak to an enrollment specialist
                             </a>
 
@@ -104,7 +104,7 @@ function kidazzle_get_wizard_color_classes($key)
                 <!-- Start Over (Centered Below) -->
                 <div class="text-center mt-8 w-full">
                     <button type="button"
-                        class="text-brand-ink hover:text-kidazzle-blue underline decoration-dotted text-sm transition-colors"
+                        class="text-brand-ink hover:text-KIDazzle-blue underline decoration-dotted text-sm transition-colors"
                         data-program-wizard-reset>
                         Start Over
                     </button>
@@ -115,3 +115,5 @@ function kidazzle_get_wizard_color_classes($key)
         </div>
     </div>
 </section>
+
+

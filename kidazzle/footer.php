@@ -55,10 +55,50 @@
 			</div>
 		</div>
 		<div class="border-t border-slate-800 pt-8 text-center text-xs text-slate-500">
-			<span>&copy; <?php echo date('Y'); ?> KIDazzle Child Care Inc.</span>
+			<span>&copy; <?php echo date('Y'); ?> KIDAZZLE Child Care Inc. All rights reserved.</span>
 		</div>
+
+		<!-- Footer SEO Text -->
+		<?php
+		$seo_text = get_theme_mod('kidazzle_footer_seo_text');
+		if ($seo_text): ?>
+			<div class="border-t border-white/10 pt-6 mt-6 text-[11px] text-white/60 leading-relaxed text-center max-w-5xl mx-auto">
+				<?php echo wp_kses_post($seo_text); ?>
+			</div>
+		<?php endif; ?>
 	</div>
 </footer>
+
+<!-- Global Sticky CTA -->
+<?php
+$show_sticky_cta = true;
+$sticky_text = __('Ready to experience the KIDAZZLE difference?', 'kidazzle-theme');
+$sticky_btn_text = __('Schedule a Tour', 'kidazzle-theme');
+$sticky_url = home_url('/contact');
+
+if (is_page('contact') || is_page('careers')) {
+	$show_sticky_cta = false;
+} elseif (is_singular('program')) {
+	$sticky_text = sprintf( __('Ready to enroll in <strong>%s</strong>?', 'kidazzle-theme'), get_the_title() );
+} elseif (is_singular('location')) {
+	$sticky_text = sprintf( __('Ready to visit our <strong>%s</strong> campus?', 'kidazzle-theme'), get_the_title() );
+}
+
+if ($show_sticky_cta):
+	?>
+	<div id="sticky-cta"
+		class="md:hidden will-change-transform transform translate-y-full fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md text-white py-4 px-6 z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.1)] border-t border-white/10 transition-transform duration-500 ease-out">
+		<div class="max-w-7xl mx-auto flex flex-col items-center justify-between gap-4 text-center">
+			<span class="text-sm font-medium tracking-wide">
+				<?php echo $sticky_text; ?>
+			</span>
+			<a href="<?php echo esc_url($sticky_url); ?>"
+				class="inline-block bg-orange-500 text-white text-xs font-bold uppercase tracking-wider px-8 py-3 rounded-full hover:bg-white hover:text-orange-500 transition-all shadow-md">
+				<?php echo esc_html($sticky_btn_text); ?>
+			</a>
+		</div>
+	</div>
+<?php endif; ?>
 
 <!-- Contact Modal (Global) - Hidden by default -->
 <div id="contact-modal"
@@ -100,9 +140,40 @@
 	if (typeof lucide !== 'undefined') {
 		lucide.createIcons();
 	}
+
+    // Sticky CTA Scroll Logic
+    window.addEventListener('scroll', function() {
+        const cta = document.getElementById('sticky-cta');
+        if (!cta) return;
+        if (window.scrollY > 300) {
+            cta.classList.remove('translate-y-full');
+        } else {
+            cta.classList.add('translate-y-full');
+        }
+    }, { passive: true });
 </script>
 
 <?php wp_footer(); ?>
+<?php
+// Footer scripts from Customizer
+$footer_scripts = get_theme_mod('kidazzle_footer_scripts');
+if ($footer_scripts) {
+    if (current_user_can('unfiltered_html')) {
+        echo $footer_scripts;
+    } else {
+        echo wp_kses($footer_scripts, array(
+            'script' => array(
+                'src' => true,
+                'async' => true,
+                'defer' => true,
+                'type' => true,
+                'id' => true,
+            ),
+            'noscript' => array(),
+        ));
+    }
+}
+?>
 </body>
 
 </html>
