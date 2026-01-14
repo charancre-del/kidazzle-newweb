@@ -259,7 +259,8 @@ function kidazzle_print_critical_css()
 
         @media(min-width:1024px) {
             .lg\:h-\[500px\] {
-                height: 500px
+                /* Kidazzle Logo Fix */
+                .custom-logo-link img { max-height: 80px; width: auto; }
             }
         }
 

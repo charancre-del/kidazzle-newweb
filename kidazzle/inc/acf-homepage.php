@@ -1045,13 +1045,32 @@ function kidazzle_home_parent_reviews()
                 $reviews
         );
 }
+/**
+ * Curriculum Data
+ */
+function kidazzle_home_curriculum()
+{
+	return array(
+		'heading' => get_theme_mod('kidazzle_home_curriculum_heading', 'The KIDazzle Creative Curriculum'),
+		'subheading' => get_theme_mod('kidazzle_home_curriculum_subheading', 'Nurturing diverse bright minds through expert care and proprietary curriculum.'),
+		'description' => get_theme_mod('kidazzle_home_curriculum_description', ''),
+		'card_1_heading' => get_theme_mod('kidazzle_home_curriculum_card_1_heading', 'Philosophy'),
+		'card_1_text' => get_theme_mod('kidazzle_home_curriculum_card_1_text', 'We believe every child is unique and deserves a tailored approach to learning.'),
+		'card_2_heading' => get_theme_mod('kidazzle_home_curriculum_card_2_heading', 'Approach'),
+		'card_2_text' => get_theme_mod('kidazzle_home_curriculum_card_2_text', 'Our play-based methodology encourages exploration and critical thinking.'),
+		'card_3_heading' => get_theme_mod('kidazzle_home_curriculum_card_3_heading', 'Outcomes'),
+		'card_3_text' => get_theme_mod('kidazzle_home_curriculum_card_3_text', 'Graduates leave ready for kindergarten with confidence and social skills.'),
+		'cta_label' => get_theme_mod('kidazzle_home_curriculum_cta_label', 'Learn About KIDazzle Creative Curriculum'),
+		'cta_link' => get_theme_mod('kidazzle_home_curriculum_cta_link', home_url('/curriculum/')),
+	);
+}
 
 /**
  * Checkers for optional sections
  */
 function kidazzle_home_has_curriculum_panels()
 {
-        return true;
+	return true;
 }
 
 function kidazzle_home_has_program_wizard()

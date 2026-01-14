@@ -1304,6 +1304,19 @@ a:focus:not(:focus-visible),
 .animate-bounce {
   animation: bounce 1s infinite;
 }
+@keyframes marquee {
+
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
 @keyframes pulse {
 
   50% {
@@ -2697,6 +2710,10 @@ a:focus:not(:focus-visible),
 .bg-kidazzle-slate\/90 {
   background-color: rgb(71 85 105 / 0.9);
 }
+.bg-kidazzle-teal {
+  --tw-bg-opacity: 1;
+  background-color: rgb(6 182 212 / var(--tw-bg-opacity, 1));
+}
 .bg-kidazzle-yellow {
   --tw-bg-opacity: 1;
   background-color: rgb(234 179 8 / var(--tw-bg-opacity, 1));
@@ -3525,6 +3542,16 @@ a:focus:not(:focus-visible),
   --tw-gradient-to: rgb(71 85 105 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
+.from-kidazzle-teal {
+  --tw-gradient-from: #06B6D4 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(6 182 212 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-kidazzle-teal\/10 {
+  --tw-gradient-from: rgb(6 182 212 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(6 182 212 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
 .from-kidazzle-yellow {
   --tw-gradient-from: #EAB308 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(234 179 8 / 0) var(--tw-gradient-to-position);
@@ -4054,6 +4081,9 @@ a:focus:not(:focus-visible),
 }
 .to-kidazzle-slate\/90 {
   --tw-gradient-to: rgb(71 85 105 / 0.9) var(--tw-gradient-to-position);
+}
+.to-kidazzle-teal\/5 {
+  --tw-gradient-to: rgb(6 182 212 / 0.05) var(--tw-gradient-to-position);
 }
 .to-kidazzle-yellow {
   --tw-gradient-to: #EAB308 var(--tw-gradient-to-position);
@@ -4958,6 +4988,10 @@ a:focus:not(:focus-visible),
 }
 .text-kidazzle-slate\/90 {
   color: rgb(71 85 105 / 0.9);
+}
+.text-kidazzle-teal {
+  --tw-text-opacity: 1;
+  color: rgb(6 182 212 / var(--tw-text-opacity, 1));
 }
 .text-kidazzle-yellow {
   --tw-text-opacity: 1;
@@ -6707,6 +6741,10 @@ a:focus:not(:focus-visible),
 
 .hover\:bg-kidazzle-slate\/90:hover {
   background-color: rgb(71 85 105 / 0.9);
+}
+
+.hover\:bg-kidazzle-teal\/90:hover {
+  background-color: rgb(6 182 212 / 0.9);
 }
 
 .hover\:bg-kidazzle-yellow:hover {
@@ -8980,6 +9018,11 @@ a:focus:not(:focus-visible),
 
 .hover\:text-kidazzle-slate\/90:hover {
   color: rgb(71 85 105 / 0.9);
+}
+
+.hover\:text-kidazzle-teal:hover {
+  --tw-text-opacity: 1;
+  color: rgb(6 182 212 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-kidazzle-yellow:hover {
