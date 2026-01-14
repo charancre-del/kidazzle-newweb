@@ -41,7 +41,7 @@ function kidazzle_home_default_stats()
         );
 }
 
-function kidazzle_home_default_KIDazzle Creative Curriculum()
+function kidazzle_home_default_curriculum()
 {
         return array(
                 'feature' => array(
@@ -150,20 +150,20 @@ function kidazzle_home_stats()
 /**
  * KIDazzle Creative Curriculum expertise panels
  */
-function kidazzle_home_KIDazzle Creative Curriculum_panels()
+function kidazzle_home_curriculum_panels()
 {
-        $defaults = kidazzle_home_default_KIDazzle Creative Curriculum();
+        $defaults = kidazzle_home_default_curriculum();
 
         $feature = $defaults['feature'];
         $feature = array(
-                'eyebrow' => sanitize_text_field(get_theme_mod('kidazzle_home_KIDazzle Creative Curriculum_eyebrow', $feature['eyebrow'])),
-                'heading' => sanitize_text_field(get_theme_mod('kidazzle_home_KIDazzle Creative Curriculum_heading', $feature['heading'])),
-                'subheading' => sanitize_text_field(get_theme_mod('kidazzle_home_KIDazzle Creative Curriculum_subheading', $feature['subheading'])),
-                'cta_label' => sanitize_text_field(get_theme_mod('kidazzle_home_KIDazzle Creative Curriculum_cta_label', $feature['cta_label'])),
-                'cta_url' => esc_url_raw(get_theme_mod('kidazzle_home_KIDazzle Creative Curriculum_cta_url', $feature['cta_url'])),
+                'eyebrow' => sanitize_text_field(get_theme_mod('kidazzle_home_curriculum_eyebrow', $feature['eyebrow'])),
+                'heading' => sanitize_text_field(get_theme_mod('kidazzle_home_curriculum_heading', $feature['heading'])),
+                'subheading' => sanitize_text_field(get_theme_mod('kidazzle_home_curriculum_subheading', $feature['subheading'])),
+                'cta_label' => sanitize_text_field(get_theme_mod('kidazzle_home_curriculum_cta_label', $feature['cta_label'])),
+                'cta_url' => esc_url_raw(get_theme_mod('kidazzle_home_curriculum_cta_url', $feature['cta_url'])),
         );
 
-        $cards = kidazzle_home_get_theme_mod_json('kidazzle_home_KIDazzle Creative Curriculum_cards_json', $defaults['cards']);
+        $cards = kidazzle_home_get_theme_mod_json('kidazzle_home_curriculum_cards_json', $defaults['cards']);
         $cards = array_map(
                 function ($card, $index) use ($defaults) {
                         // Get default card for this index
@@ -190,8 +190,8 @@ function kidazzle_home_KIDazzle Creative Curriculum_panels()
 
         $readiness = $defaults['readiness'];
         $readiness = array(
-                'heading' => sanitize_text_field(get_theme_mod('kidazzle_home_KIDazzle Creative Curriculum_readiness_heading', $readiness['heading'])),
-                'description' => sanitize_textarea_field(get_theme_mod('kidazzle_home_KIDazzle Creative Curriculum_readiness_desc', $readiness['description'])),
+                'heading' => sanitize_text_field(get_theme_mod('kidazzle_home_curriculum_readiness_heading', $readiness['heading'])),
+                'description' => sanitize_textarea_field(get_theme_mod('kidazzle_home_curriculum_readiness_desc', $readiness['description'])),
         );
 
         return array(
@@ -1008,7 +1008,7 @@ function kidazzle_home_parent_reviews()
 /**
  * Checkers for optional sections
  */
-function kidazzle_home_has_KIDazzle Creative Curriculum_panels()
+function kidazzle_home_has_curriculum_panels()
 {
         return true;
 }

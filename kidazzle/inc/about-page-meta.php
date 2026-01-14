@@ -880,6 +880,9 @@ function kidazzle_save_about_page_meta( $post_id ) {
 				$value = call_user_func( $sanitize_function, $_POST[ $field_name ] );
 				update_post_meta( $post_id, $field_name, $value );
 			}
+		}
+	}
+}
 add_action( 'save_post', 'kidazzle_save_about_page_meta' );
 
 /**
