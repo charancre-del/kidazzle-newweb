@@ -16,40 +16,16 @@ $hero_badge = get_post_meta($page_id, 'curriculum_hero_badge', true) ?: 'Our Cur
 $hero_title = get_post_meta($page_id, 'curriculum_hero_title', true) ?: 'Scientific rigor. <br><span class="italic text-kidazzle-green">Joyful delivery.</span>';
 $hero_description = get_post_meta($page_id, 'curriculum_hero_description', true) ?: 'At KIDazzle, we utilize The Creative Curriculum®, a research-based program that honors creativity and respects the role that teachers play in making learning relevant.';
 
-// Framework Pillars
-$pillars = array(
-	array(
-		'borderClass' => 'border-kidazzle-red',
-		'bgClass' => 'bg-kidazzle-red/10',
-		'textClass' => 'text-kidazzle-red',
-		'icon' => 'fa-solid fa-heart',
-		'title' => 'Social-Emotional',
-		'desc' => 'Regulating emotions, building relationships, and developing a secure sense of self.',
-	),
-	array(
-		'borderClass' => 'border-kidazzle-blue',
-		'bgClass' => 'bg-kidazzle-blue/10',
-		'textClass' => 'text-kidazzle-blue',
-		'icon' => 'fa-solid fa-person-running',
-		'title' => 'Physical',
-		'desc' => 'Gross and fine motor coordination, sensory integration, and health practices.',
-	),
-	array(
-		'borderClass' => 'border-kidazzle-orange',
-		'bgClass' => 'bg-kidazzle-orange/10',
-		'textClass' => 'text-kidazzle-orange',
-		'icon' => 'fa-solid fa-comments',
-		'title' => 'Language',
-		'desc' => 'Listening, speaking, vocabulary, and early literacy skills.',
-	),
-	array(
-		'borderClass' => 'border-kidazzle-green',
-		'bgClass' => 'bg-kidazzle-green/10',
-		'textClass' => 'text-kidazzle-green',
-		'icon' => 'fa-solid fa-brain',
-		'title' => 'Cognitive',
-		'desc' => 'Learning, problem-solving, logical thinking, and scientific inquiry.',
-	),
+// Framework Pillars (Fetched from Meta in Framework Section)
+$framework_title = get_post_meta($page_id, 'curriculum_framework_title', true) ?: 'The KIDazzle Creative Curriculum™ Framework';
+$framework_description = get_post_meta($page_id, 'curriculum_framework_description', true) ?: 'Just as a prism refracts light into a spectrum, our curriculum refracts "play" into five distinct pillars of development.';
+
+$framework_pillars = array(
+	'physical' => array('icon' => 'fa-solid fa-person-running', 'color' => 'kidazzle-red'),
+	'emotional' => array('icon' => 'fa-solid fa-face-smile', 'color' => 'kidazzle-yellow'),
+	'social' => array('icon' => 'fa-solid fa-users', 'color' => 'kidazzle-green'),
+	'academic' => array('icon' => 'fa-solid fa-brain', 'color' => 'kidazzle-blue'),
+	'creative' => array('icon' => 'fa-solid fa-palette', 'color' => 'kidazzle-blueDark'),
 );
 
 // Environment Section
@@ -91,22 +67,70 @@ $zones = array(
         </div>
     </section>
 
-    <!-- Pillars Section -->
+    <!-- Core Curriculum Section (Foundation) -->
     <section class="py-24 bg-brand-cream border-t border-brand-ink/5">
         <div class="max-w-7xl mx-auto px-4 lg:px-6">
-            <div class="text-center mb-16">
-                <span class="text-kidazzle-blue font-bold tracking-[0.2em] text-[10px] uppercase mb-3 block">Developmental Focus</span>
-                <h2 class="text-3xl md:text-5xl font-serif font-bold text-brand-ink mb-6">Four Pillars of Growth</h2>
-                <p class="text-brand-ink/70 max-w-2xl mx-auto text-lg leading-relaxed">By balancing teacher-directed instruction with child-initiated exploration, we ensure every activity supports specific developmental goals.</p>
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-kidazzle-blue font-bold uppercase tracking-widest text-xs mb-3 block">The Foundation</span>
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-brand-ink mb-6">Creative Curriculum® <span class="text-2xl block mt-2 text-brand-ink/60 md:inline md:mt-0 font-sans md:ml-4">(Infant - 3 Years)</span></h2>
+                    <p class="text-lg text-brand-ink/70 leading-relaxed mb-6">
+                        For our youngest learners, we utilize the nationally recognized <strong>Creative Curriculum®</strong>. This research-based framework focuses on the vital connection between caregiver and child, turning everyday moments into learning opportunities.
+                    </p>
+                    <p class="text-lg text-brand-ink/70 leading-relaxed">
+                        By balancing teacher-directed instruction with child-initiated exploration, we ensure every activity—whether it's sensory play, block building, or storytime—supports specific developmental goals in <strong>Social-Emotional, Physical, Language, and Cognitive</strong> domains.
+                    </p>
+                </div>
+                <div class="bg-white rounded-[3rem] p-10 shadow-soft border border-brand-ink/5 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-kidazzle-blue/5 rounded-bl-[100px]"></div>
+                    <h3 class="text-2xl font-serif font-bold text-brand-ink mb-8 relative z-10">Why It Works</h3>
+                    <ul class="space-y-6 relative z-10">
+                        <li class="flex items-start gap-5">
+                            <div class="bg-kidazzle-green/10 p-3 rounded-xl text-kidazzle-green">
+                                <i class="fa-solid fa-heart-pulse"></i>
+                            </div>
+                            <div>
+                                <strong class="block text-brand-ink text-lg">Individualized Care</strong>
+                                <span class="text-brand-ink/60">Teachers adapt lessons to fit each child's unique temperament and pace.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-5">
+                            <div class="bg-kidazzle-blue/10 p-3 rounded-xl text-kidazzle-blue">
+                                <i class="fa-solid fa-child-reaching"></i>
+                            </div>
+                            <div>
+                                <strong class="block text-brand-ink text-lg">Active Learning</strong>
+                                <span class="text-brand-ink/60">Children learn by doing—touching, moving, and interacting with their world.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="grid md:grid-cols-4 gap-6">
-                <?php foreach ($pillars as $pillar): ?>
-                    <div class="bg-white p-8 rounded-[2rem] shadow-soft border border-brand-ink/5 hover:<?php echo esc_attr($pillar['borderClass']); ?> transition-all group">
-                        <div class="w-14 h-14 <?php echo esc_attr($pillar['bgClass']); ?> <?php echo esc_attr($pillar['textClass']); ?> rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
-                            <i class="<?php echo esc_attr($pillar['icon']); ?>"></i>
+        </div>
+    </section>
+
+    <!-- KIDazzle Creative Curriculum™ Framework (5 Pillars) -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 lg:px-6">
+            <div class="text-center mb-16">
+                <span class="text-kidazzle-green font-bold tracking-[0.2em] text-[10px] uppercase mb-3 block">Refractive Learning</span>
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-brand-ink mb-6"><?php echo esc_html($framework_title); ?></h2>
+                <div class="text-brand-ink/70 max-w-3xl mx-auto text-lg leading-relaxed"><?php echo wp_kses_post(wpautop($framework_description)); ?></div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <?php foreach ($framework_pillars as $key => $meta): 
+                    $p_title = get_post_meta($page_id, "curriculum_pillar_{$key}_title", true);
+                    $p_desc = get_post_meta($page_id, "curriculum_pillar_{$key}_desc", true);
+                    $p_icon = get_post_meta($page_id, "curriculum_pillar_{$key}_icon", true) ?: $meta['icon'];
+                    $color = $meta['color'];
+                ?>
+                    <div class="bg-brand-cream p-8 rounded-[2.5rem] border border-brand-ink/5 hover:shadow-xl transition-all group text-center">
+                        <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-sm text-<?php echo esc_attr($color); ?> text-2xl group-hover:scale-110 transition-transform">
+                            <i class="<?php echo esc_attr($p_icon); ?>"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-brand-ink mb-3"><?php echo esc_html($pillar['title']); ?></h3>
-                        <p class="text-sm text-brand-ink/80 leading-relaxed"><?php echo esc_html($pillar['desc']); ?></p>
+                        <h3 class="font-bold text-lg text-brand-ink mb-2"><?php echo esc_html($p_title); ?></h3>
+                        <p class="text-xs text-brand-ink/60 leading-relaxed"><?php echo esc_html($p_desc); ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
