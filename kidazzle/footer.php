@@ -25,9 +25,9 @@ $has_social = $footer_facebook || $footer_instagram || $footer_linkedin || $foot
 <footer class="bg-brand-ink text-white/60 py-16 relative mt-12">
 	<div
 		class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-white p-2 rounded-full shadow-lg border border-brand-ink/5">
-		<img src="<?php echo get_template_directory_uri(); ?>/assets/images/kidazzle-logo-140x140.webp"
+		<img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo_optimized_140x140.webp"
 			alt="KIDazzle Logo" class="h-10 w-auto"
-			onerror="this.src='https://storage.googleapis.com/msgsndr/ZR2UvxPL2wlZNSvHjmJD/media/64ef561bad8c716760dfd435.png'">
+			onerror="this.src='<?php echo get_template_directory_uri(); ?>/assets/images/kidazzle-logo.png'">
 	</div>
 
 	<div class="container mx-auto px-4 md:px-6 pt-8">
