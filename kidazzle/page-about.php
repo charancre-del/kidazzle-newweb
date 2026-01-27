@@ -91,8 +91,8 @@ while (have_posts()):
 
 	// Philanthropy Section
 	$philanthropy_title = get_post_meta($page_id, 'about_philanthropy_title', true) ?: 'Giving back to our future.';
-	$philanthropy_subtitle = get_post_meta($page_id, 'about_philanthropy_subtitle', true) ?: 'Foundations For Learning Inc.';
-	$philanthropy_description = get_post_meta($page_id, 'about_philanthropy_description', true) ?: 'At KIDazzle, our commitment extends beyond our classroom walls. Through our partnership with <strong>Foundations For Learning Inc.</strong>, we work to ensure that quality early education is accessible to every child in our community.';
+	$philanthropy_subtitle = get_post_meta($page_id, 'about_philanthropy_subtitle', true) ?: 'KIDazzle System Services : K.I.S.S Inc.';
+	$philanthropy_description = get_post_meta($page_id, 'about_philanthropy_description', true) ?: 'At KIDazzle, our commitment extends beyond our classroom walls. Through our partnership with <strong>KIDazzle System Services : K.I.S.S Inc.</strong>, we work to ensure that quality early education is accessible to every child in our community.';
 	$philanthropy_image = get_post_meta($page_id, 'about_philanthropy_image', true) ?: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=800&auto=format&fit=crop';
 
 	$philanthropy_bullet1_icon = get_post_meta($page_id, 'about_philanthropy_bullet1_icon', true) ?: '💙';
