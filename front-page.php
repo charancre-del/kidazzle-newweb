@@ -396,52 +396,70 @@ get_header();
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">Speed to Savings</span>
             <h1 class="text-6xl font-serif text-navy mb-6">The 45-Day Protocol</h1>
-            <p class="text-slate-500 mt-6 text-lg font-light max-w-2xl mx-auto">We don't ask for 9 months. We ask for 45
-                days. Here is the linear path to Go-Live.</p>
+            <p class="text-slate-500 mt-6 text-lg font-light max-w-2xl mx-auto">
+                We don't ask for 9 months. We ask for 45 days. Here is the linear path to Go-Live.
+            </p>
         </div>
     </header>
     <div class="max-w-3xl mx-auto px-4 py-24 relative">
         <div class="timeline-line"></div>
-        <!-- Steps -->
+
+        <!-- Phase 1 -->
         <div class="relative pl-24 mb-20 group">
             <div
-                class="absolute left-0 top-0 w-14 h-14 bg-navy text-white rounded-full flex items-center justify-center font-serif text-xl border-4 border-slate-50 z-10 shadow-xl">
+                class="absolute left-0 top-0 w-14 h-14 bg-navy text-white rounded-full flex items-center justify-center font-serif text-xl border-4 border-slate-50 z-10 shadow-xl group-hover:scale-110 transition duration-300">
                 1</div>
-            <div class="bg-white p-10 border border-slate-100 shadow-lg rounded-sm"><span
-                    class="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Days 1-7:
+            <div
+                class="bg-white p-10 border border-slate-100 shadow-lg hover:shadow-2xl transition rounded-sm relative">
+                <div class="absolute top-0 left-0 w-1 h-full bg-slate-200 group-hover:bg-navy transition"></div>
+                <span class="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Days 1-7:
                     Ingestion</span>
                 <h3 class="font-bold text-2xl text-navy mb-3">Analysis & Architecture</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">We ingest your census data. Our team drafts the Plan
-                    Documents. <span class="font-bold">Your Lift: Emailing us the CSV file.</span></p>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    We ingest your census data. Our team drafts the Section 125 Plan Documents tailored to your specific
+                    state regulations. <span class="font-bold">Your Lift: Emailing us the CSV file.</span>
+                </p>
             </div>
         </div>
+
+        <!-- Phase 2 -->
         <div class="relative pl-24 mb-20 group">
             <div
-                class="absolute left-0 top-0 w-14 h-14 bg-white text-navy border-2 border-navy rounded-full flex items-center justify-center font-serif text-xl z-10 shadow-xl">
+                class="absolute left-0 top-0 w-14 h-14 bg-white text-navy border-2 border-navy rounded-full flex items-center justify-center font-serif text-xl z-10 shadow-xl group-hover:scale-110 transition duration-300">
                 2</div>
-            <div class="bg-white p-10 border border-slate-100 shadow-lg rounded-sm"><span
-                    class="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Days 8-20:
+            <div
+                class="bg-white p-10 border border-slate-100 shadow-lg hover:shadow-2xl transition rounded-sm relative">
+                <div class="absolute top-0 left-0 w-1 h-full bg-slate-200 group-hover:bg-navy transition"></div>
+                <span class="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Days 8-20:
                     Connection</span>
                 <h3 class="font-bold text-2xl text-navy mb-3">System Integration</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">Our experts sync with your payroll provider. <span
-                        class="font-bold">Your Lift: A 30-min call.</span></p>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Our experts sync with your payroll provider. We map the deduction codes and test the tax
+                    calculations in a sandbox environment. <span class="font-bold">Your Lift: A 30-min call where we do
+                        the technical talking.</span>
+                </p>
             </div>
         </div>
+
+        <!-- Go Live -->
         <div class="relative pl-24 group">
             <div
-                class="absolute left-0 top-0 w-14 h-14 bg-gold text-navy rounded-full flex items-center justify-center font-serif text-xl border-4 border-slate-50 z-10 shadow-xl">
-                <i class="fas fa-check"></i>
-            </div>
-            <div class="bg-navy p-10 border border-navy shadow-2xl rounded-sm"><span
-                    class="text-white/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Day 45:
+                class="absolute left-0 top-0 w-14 h-14 bg-gold text-navy rounded-full flex items-center justify-center font-serif text-xl border-4 border-slate-50 z-10 shadow-xl group-hover:scale-110 transition duration-300">
+                <i class="fas fa-check"></i></div>
+            <div class="bg-navy p-10 border border-navy shadow-2xl rounded-sm relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+                <span class="text-white/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Day 45:
                     Activation</span>
                 <h3 class="font-bold text-2xl text-white mb-3">Go Live</h3>
-                <p class="text-white/80 text-sm leading-relaxed">First payroll execution. FICA savings are realized
-                    immediately. <span class="font-bold text-white">Your Lift: Standard Monthly Deduction
-                        Processing.</span></p>
+                <p class="text-white/80 text-sm leading-relaxed">
+                    First payroll execution. FICA savings are realized immediately. Benefits become active. The system
+                    begins its automated cycle. <span class="font-bold text-white">Your Lift: Standard Monthly Payroll
+                        Deduction Processing.</span>
+                </p>
             </div>
         </div>
-        <!-- CTA Bar -->
+
+        <!-- CTA BAR -->
         <div class="relative pl-24 mt-12 group">
             <button onclick="navigateTo('contact')"
                 class="block w-full bg-gold text-navy font-bold py-5 text-center uppercase tracking-[0.2em] text-xs hover:bg-navy hover:text-white hover:border-gold border border-transparent transition-all duration-300 shadow-xl rounded-sm">
