@@ -709,60 +709,45 @@ get_header();
 </div>
 
 <!-- ================================================================================= -->
-<!-- VIEW 6: CONTACT (AUDIT FORM)                                                      -->
+<!-- VIEW 6: CONTACT (FEASIBILITY AUDIT)                                               -->
 <!-- ================================================================================= -->
 <div id="contact" class="page-view flex-grow">
     <header class="page-header-spacer bg-slate-50">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <h1 class="text-5xl font-serif text-navy">Feasibility Audit</h1>
-            <p class="text-slate-500 mt-6 text-lg font-light">No Sales Calls. Just Data. Submit your preliminary data to
-                initiate the analysis.</p>
+            <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">No Sales Calls. Just Data.</span>
+            <h1 class="text-5xl md:text-6xl font-serif text-navy mb-6">Feasibility Audit</h1>
+            <p class="text-slate-500 mt-6 text-lg font-light max-w-2xl mx-auto leading-relaxed">
+                We conduct comprehensive audits to determine if your organization qualifies for the W.I.M.P.E.R. protocol. Submit your preliminary data below to initiate the analysis.
+            </p>
         </div>
     </header>
+
+    <!-- EMBEDDED FORM CONTAINER -->
     <div class="max-w-3xl mx-auto px-4 py-20">
-        <div class="bg-white p-12 shadow-2xl border-t-4 border-navy rounded-sm relative custom-form">
-            <div class="absolute top-0 right-0 p-6 opacity-5"><i class="fas fa-file-contract text-6xl text-navy"></i>
-            </div>
-            <form class="space-y-10">
-                <div>
-                    <h3 class="text-navy font-serif text-xl mb-6 border-b border-slate-100 pb-2">Corporate Profile</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div><label
-                                class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-3">Company
-                                Legal Name</label><input type="text" class="w-full"></div>
-                        <div><label
-                                class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-3">State
-                                of Incorporation</label><input type="text" class="w-full"></div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-navy font-serif text-xl mb-6 border-b border-slate-100 pb-2">Workforce Data</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div><label
-                                class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-3">Total
-                                W-2 Count</label><input type="number" class="w-full">
-                            <p class="text-[10px] text-slate-400 mt-2 italic">*Minimum 10 employees.</p>
-                        </div>
-                        <div><label
-                                class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-3">Payroll
-                                Provider</label><input type="text" class="w-full" placeholder="e.g. ADP"></div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-navy font-serif text-xl mb-6 border-b border-slate-100 pb-2">Executive Contact</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div><label
-                                class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-3">Executive
-                                Name</label><input type="text" class="w-full"></div>
-                        <div><label
-                                class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-3">Direct
-                                Email</label><input type="email" class="w-full"></div>
-                    </div>
-                </div>
-                <div class="pt-8"><button type="button"
-                        class="w-full bg-navy text-white font-bold py-6 hover:bg-slate-800 transition tracking-[0.2em] text-xs uppercase shadow-xl hover:shadow-2xl transform hover:-translate-y-1 duration-300">Request
-                        FICA Analysis</button></div>
-            </form>
+        <div class="form-container">
+            <iframe
+                src="https://api.leadconnectorhq.com/widget/form/bnJjCYqGaVFUFp4v8wp6"
+                style="width:100%;height:1200px;border:none;border-radius:4px"
+                id="inline-bnJjCYqGaVFUFp4v8wp6" 
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-trigger-value=""
+                data-activation-type="alwaysActivated"
+                data-activation-value=""
+                data-deactivation-type="neverDeactivate"
+                data-deactivation-value=""
+                data-form-name="Calendar Form"
+                data-height="1200"
+                data-layout-iframe-id="inline-bnJjCYqGaVFUFp4v8wp6"
+                data-form-id="bnJjCYqGaVFUFp4v8wp6"
+                title="Calendar Form"
+            >
+            </iframe>
+            <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+        </div>
+        
+        <div class="mt-8 text-center text-xs text-slate-400 max-w-lg mx-auto">
+            <p>Data transmission is encrypted via 256-bit SSL. Information provided is used strictly for eligibility calculation and is not sold to third parties.</p>
         </div>
     </div>
 </div>

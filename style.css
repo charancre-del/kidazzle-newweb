@@ -168,6 +168,17 @@ h5 {
     z-index: 0;
 }
 
+/* Integrated Form Container */
+.form-container {
+    background-color: #ffffff;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border-top: 4px solid #020617;
+    border-radius: 2px;
+    overflow: hidden;
+    min-height: 1200px;
+    /* Increased to avoid scrollbars per user request */
+}
+
 .custom-form input,
 .custom-form select {
     background-color: #f8fafc;
