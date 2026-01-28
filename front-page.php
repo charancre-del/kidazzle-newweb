@@ -474,6 +474,7 @@ get_header();
 <!-- VIEW 4: IUL (WEALTH STRATEGY)                                                     -->
 <!-- ================================================================================= -->
 <div id="iul" class="page-view flex-grow">
+    <!-- PAGE HEADER -->
     <header class="page-header-spacer">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">Phase 2: Wealth
@@ -485,21 +486,28 @@ get_header();
             </p>
         </div>
     </header>
+
+    <!-- STRATEGY SECTION -->
     <div class="max-w-6xl mx-auto px-4 py-24">
+
+        <!-- The "Found Money" Concept -->
         <div class="mb-32 grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
             <div class="order-2 md:order-1 relative">
                 <div class="bg-navy p-12 text-white relative z-10 shadow-2xl rounded-sm">
                     <h3 class="text-2xl font-serif mb-8 text-white">The Funding Mechanism</h3>
                     <div class="space-y-8">
-                        <div class="flex items-center justify-between border-b border-white/10 pb-4"><span
-                                class="text-sm text-slate-400 uppercase tracking-widest">Source</span><span
-                                class="text-lg font-bold text-green-400">W.I.M.P.E.R. Tax Savings</span></div>
-                        <div class="flex items-center justify-between border-b border-white/10 pb-4"><span
-                                class="text-sm text-slate-400 uppercase tracking-widest">Amount</span><span
-                                class="text-lg font-bold text-white">~$150 / Month</span></div>
-                        <div class="flex items-center justify-between border-b border-white/10 pb-4"><span
-                                class="text-sm text-slate-400 uppercase tracking-widest">Allocation</span><span
-                                class="text-lg font-bold text-gold">IUL Premium</span></div>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                            <span class="text-sm text-slate-400 uppercase tracking-widest">Source</span>
+                            <span class="text-lg font-bold text-green-400">W.I.M.P.E.R. Tax Savings</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                            <span class="text-sm text-slate-400 uppercase tracking-widest">Amount</span>
+                            <span class="text-lg font-bold text-white">~$150 / Month</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                            <span class="text-sm text-slate-400 uppercase tracking-widest">Allocation</span>
+                            <span class="text-lg font-bold text-gold">IUL Premium</span>
+                        </div>
                         <div class="mt-4 bg-white/5 p-4 rounded text-center">
                             <p class="text-xs uppercase tracking-[0.2em] text-slate-400 mb-1">Employee Out-of-Pocket
                                 Cost</p>
@@ -510,57 +518,106 @@ get_header();
             </div>
             <div class="order-1 md:order-2">
                 <h2 class="text-4xl font-serif text-navy mb-6">Why Wait? The Timing is Mathematical.</h2>
-                <p class="text-slate-600 leading-relaxed mb-6 text-lg">The optimal time to implement an IUL strategy is
-                    <strong>immediately following W.I.M.P.E.R. adoption.</strong>
+                <p class="text-slate-600 leading-relaxed mb-6 text-lg">
+                    The optimal time to implement an IUL strategy is <strong>immediately following W.I.M.P.E.R.
+                        adoption.</strong>
                 </p>
-                <p class="text-slate-600 leading-relaxed mb-8 text-lg">By lowering your tax liability, the W.I.M.P.E.R.
-                    protocol effectively "finds" money in your paycheck that was previously going to the IRS. Instead of
-                    letting that surplus vanish into daily spending, we capture it instantly to fund a tax-free
-                    retirement vehicle.</p>
-                <div class="flex items-center space-x-4 mb-8"><i
-                        class="fas fa-check-circle text-gold text-2xl"></i><span class="font-bold text-navy">No
-                        reduction in take-home pay.</span></div>
-                <div class="flex items-center space-x-4"><i class="fas fa-check-circle text-gold text-2xl"></i><span
-                        class="font-bold text-navy">Permanent Cash Value Accumulation.</span></div>
+                <p class="text-slate-600 leading-relaxed mb-8 text-lg">
+                    By lowering your tax liability, the W.I.M.P.E.R. protocol effectively "finds" money in your paycheck
+                    that was previously going to the IRS. Instead of letting that surplus vanish into daily spending, we
+                    capture it instantly to fund a tax-free retirement vehicle.
+                </p>
+                <div class="flex items-center space-x-4 mb-8">
+                    <i class="fas fa-check-circle text-gold text-2xl"></i>
+                    <span class="font-bold text-navy">No reduction in take-home pay.</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-check-circle text-gold text-2xl"></i>
+                    <span class="font-bold text-navy">Permanent Cash Value Accumulation.</span>
+                </div>
             </div>
         </div>
-        <div class="text-center mb-16"><span
-                class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-4 block">Fiscal Velocity</span>
+
+        <!-- The "Financial Festival" / Benefits Grid -->
+        <div class="text-center mb-16">
+            <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-4 block">Fiscal Velocity</span>
             <h2 class="text-4xl font-serif text-navy mb-6">More Than Just Insurance</h2>
         </div>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Benefit 1 -->
             <div
                 class="group bg-white border border-slate-200 p-10 hover:border-gold hover:shadow-xl transition duration-300">
                 <i class="fas fa-chart-line text-4xl text-navy mb-6 group-hover:text-gold transition"></i>
                 <h3 class="text-xl font-bold text-navy mb-4">Cash Value Growth</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">Linked to market indexes (like the S&P 500) with a 0%
-                    floor. You participate in the gains but never the losses.</p>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Linked to market indexes (like the S&P 500) with a 0% floor. You participate in the gains but never
+                    the losses.
+                </p>
             </div>
+
+            <!-- Benefit 2 -->
             <div
                 class="group bg-white border border-slate-200 p-10 hover:border-gold hover:shadow-xl transition duration-300">
                 <i class="fas fa-university text-4xl text-navy mb-6 group-hover:text-gold transition"></i>
                 <h3 class="text-xl font-bold text-navy mb-4">Tax-Free Retirement</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">Access your cash value via tax-free loans. Create a
-                    retirement income stream that the IRS cannot touch.</p>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Access your cash value via tax-free loans. Create a retirement income stream that the IRS cannot
+                    touch.
+                </p>
             </div>
+
+            <!-- Benefit 3 -->
             <div
                 class="group bg-white border border-slate-200 p-10 hover:border-gold hover:shadow-xl transition duration-300">
                 <i class="fas fa-heartbeat text-4xl text-navy mb-6 group-hover:text-gold transition"></i>
                 <h3 class="text-xl font-bold text-navy mb-4">Living Benefits</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">Critical, Chronic, and Terminal illness riders allow
-                    you to access the death benefit while you are still alive.</p>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Critical, Chronic, and Terminal illness riders allow you to access the death benefit while you are
+                    still alive.
+                </p>
             </div>
         </div>
-        <div class="mt-24 bg-slate-50 border border-slate-200 p-12 text-center relative overflow-hidden">
-            <div class="relative z-10">
-                <h2 class="text-3xl font-serif text-navy mb-6">Ready to upgrade your financial architecture?</h2>
-                <p class="text-slate-600 mb-8 max-w-xl mx-auto">This strategy requires the W.I.M.P.E.R. chassis to be
-                    installed first to generate the funding.</p>
-                <div class="flex justify-center gap-4"><button onclick="navigateTo('contact')"
-                        class="bg-navy text-white px-8 py-4 rounded-sm text-xs font-bold uppercase tracking-widest hover:bg-gold hover:text-navy transition shadow-lg">Verify
-                        W.I.M.P.E.R. Eligibility</button></div>
+
+        <!-- CALL TO ACTION SPLIT -->
+        <div class="mt-24 grid grid-cols-1 lg:grid-cols-2 gap-0 border border-slate-200 shadow-xl">
+
+            <!-- Corporate Path -->
+            <div class="bg-slate-50 p-12 text-center border-b lg:border-b-0 lg:border-r border-slate-200">
+                <span class="text-gold text-xs font-bold uppercase tracking-widest mb-4 block">Corporate Path</span>
+                <h2 class="text-3xl font-serif text-navy mb-6">For W.I.M.P.E.R. Clients</h2>
+                <p class="text-slate-600 mb-8 max-w-sm mx-auto text-sm leading-relaxed">
+                    If your company is installing the W.I.M.P.E.R. chassis, use your tax savings to fund this policy
+                    with zero out-of-pocket cost.
+                </p>
+                <button onclick="navigateTo('contact')"
+                    class="bg-navy text-white px-8 py-4 rounded-sm text-xs font-bold uppercase tracking-widest hover:bg-gold hover:text-navy transition shadow-lg inline-block">
+                    Verify Eligibility
+                </button>
             </div>
+
+            <!-- Independent Path -->
+            <div class="bg-navy text-white p-12 text-center relative overflow-hidden group">
+                <div
+                    class="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl group-hover:bg-gold/20 transition duration-700">
+                </div>
+                <div class="relative z-10">
+                    <span class="text-gold text-xs font-bold uppercase tracking-widest mb-4 block">Individual
+                        Access</span>
+                    <h2 class="text-3xl font-serif text-white mb-6">Not in the Program?</h2>
+                    <p class="text-slate-300 mb-8 max-w-sm mx-auto text-sm leading-relaxed">
+                        You don't need a corporate sponsor to build wealth. You can structure an individual IUL policy
+                        directly with our wealth architects.
+                    </p>
+                    <a href="tel:5551234567"
+                        class="border border-gold text-gold px-8 py-4 rounded-sm text-xs font-bold uppercase tracking-widest hover:bg-gold hover:text-navy transition inline-block">
+                        Call for IUL Quote
+                    </a>
+                </div>
+            </div>
+
         </div>
+
     </div>
 </div>
 
@@ -714,10 +771,12 @@ get_header();
 <div id="contact" class="page-view flex-grow">
     <header class="page-header-spacer bg-slate-50">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">No Sales Calls. Just Data.</span>
+            <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">No Sales Calls. Just
+                Data.</span>
             <h1 class="text-5xl md:text-6xl font-serif text-navy mb-6">Feasibility Audit</h1>
             <p class="text-slate-500 mt-6 text-lg font-light max-w-2xl mx-auto leading-relaxed">
-                We conduct comprehensive audits to determine if your organization qualifies for the W.I.M.P.E.R. protocol. Submit your preliminary data below to initiate the analysis.
+                We conduct comprehensive audits to determine if your organization qualifies for the W.I.M.P.E.R.
+                protocol. Submit your preliminary data below to initiate the analysis.
             </p>
         </div>
     </header>
@@ -725,29 +784,20 @@ get_header();
     <!-- EMBEDDED FORM CONTAINER -->
     <div class="max-w-3xl mx-auto px-4 py-20">
         <div class="form-container">
-            <iframe
-                src="https://api.leadconnectorhq.com/widget/form/bnJjCYqGaVFUFp4v8wp6"
-                style="width:100%;height:1200px;border:none;border-radius:4px"
-                id="inline-bnJjCYqGaVFUFp4v8wp6" 
-                data-layout="{'id':'INLINE'}"
-                data-trigger-type="alwaysShow"
-                data-trigger-value=""
-                data-activation-type="alwaysActivated"
-                data-activation-value=""
-                data-deactivation-type="neverDeactivate"
-                data-deactivation-value=""
-                data-form-name="Calendar Form"
-                data-height="1200"
-                data-layout-iframe-id="inline-bnJjCYqGaVFUFp4v8wp6"
-                data-form-id="bnJjCYqGaVFUFp4v8wp6"
-                title="Calendar Form"
-            >
+            <iframe src="https://api.leadconnectorhq.com/widget/form/bnJjCYqGaVFUFp4v8wp6"
+                style="width:100%;height:1200px;border:none;border-radius:4px" id="inline-bnJjCYqGaVFUFp4v8wp6"
+                data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value=""
+                data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate"
+                data-deactivation-value="" data-form-name="Calendar Form" data-height="1200"
+                data-layout-iframe-id="inline-bnJjCYqGaVFUFp4v8wp6" data-form-id="bnJjCYqGaVFUFp4v8wp6"
+                title="Calendar Form">
             </iframe>
             <script src="https://link.msgsndr.com/js/form_embed.js"></script>
         </div>
-        
+
         <div class="mt-8 text-center text-xs text-slate-400 max-w-lg mx-auto">
-            <p>Data transmission is encrypted via 256-bit SSL. Information provided is used strictly for eligibility calculation and is not sold to third parties.</p>
+            <p>Data transmission is encrypted via 256-bit SSL. Information provided is used strictly for eligibility
+                calculation and is not sold to third parties.</p>
         </div>
     </div>
 </div>
