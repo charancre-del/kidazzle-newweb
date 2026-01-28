@@ -75,12 +75,17 @@ function kidazzle_enqueue_assets()
                 'all'
         );
 
+        // Dequeue legacy main CSS on front page to prevent WIMPER style overrides
+        if (is_front_page()) {
+                wp_dequeue_style('kidazzle-main');
+        }
+
         // Main Theme Stylesheet (style.css)
         wp_enqueue_style(
                 'kidazzle-style',
                 get_stylesheet_uri(),
-                array('kidazzle-main'),
-                KIDAZZLE_VERSION,
+                array(),
+                $css_version,
                 'all'
         );
 

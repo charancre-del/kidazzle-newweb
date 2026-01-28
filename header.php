@@ -53,7 +53,7 @@
 </head>
 
 
-<body <?php body_class('font-sans text-brand-ink bg-white'); ?>>
+<body <?php body_class('font-sans antialiased bg-navy'); ?>>
 	<?php wp_body_open(); ?>
 
 	<!-- Skip Links for Accessibility -->
