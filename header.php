@@ -35,8 +35,8 @@
 
 	<?php
 	// Get Customizer settings
-	$header_phone = get_theme_mod('kidazzle_footer_phone', '877-410-1002'); // Reusing footer phone for consistency
-	$header_cta_text = get_theme_mod('kidazzle_header_cta_text', 'Contact Us');
+	$header_phone = get_theme_mod('kidazzle_footer_phone', '1 678-940-6099'); // Updated branding phone
+	$header_cta_text = get_theme_mod('kidazzle_header_cta_text', 'Verify Eligibility');
 	$header_cta_url = get_theme_mod('kidazzle_book_tour_url', home_url('/contact'));
 	$header_scripts = get_theme_mod('kidazzle_header_scripts', '');
 
@@ -61,9 +61,9 @@
 	<div
 		class="bg-brand-cream text-brand-ink/60 text-[10px] font-bold uppercase tracking-widest py-2 px-4 hidden md:flex justify-between items-center border-b border-brand-ink/5 fixed w-full top-0 z-50 h-10">
 		<div class="flex gap-4 items-center">
-			<a href="<?php echo home_url('/locations'); ?>"
+			<a href="<?php echo home_url('/feasibility-audit'); ?>"
 				class="flex items-center gap-1 cursor-pointer hover:text-kidazzle-blue transition">
-				<i class="fa-solid fa-location-dot text-kidazzle-red"></i> Locations in GA, TN, & FL
+				<i class="fa-solid fa-location-dot text-kidazzle-red"></i> W.I.M.P.E.R. Feasibility Audit
 			</a>
 			<span class="flex items-center gap-1">
 				<i class="fa-solid fa-phone text-kidazzle-green"></i> <?php echo esc_html($header_phone); ?>

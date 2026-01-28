@@ -6,9 +6,9 @@
  */
 
 // Get Footer Customizer Settings
-$footer_phone = get_theme_mod('kidazzle_footer_phone', '877-410-1002');
-$footer_email = get_theme_mod('kidazzle_footer_email', 'info@kidazzle.com');
-$footer_address = get_theme_mod('kidazzle_footer_address', '674 Joseph E Lowery Blvd, Atlanta, GA 30310');
+$footer_phone = get_theme_mod('kidazzle_footer_phone', '1 678-940-6099');
+$footer_email = get_theme_mod('kidazzle_footer_email', 'info@thewimperprogram.com');
+$footer_address = get_theme_mod('kidazzle_footer_address', '');
 
 // Social Links
 $footer_facebook = get_theme_mod('kidazzle_footer_facebook', '');
@@ -101,7 +101,7 @@ $has_social = $footer_facebook || $footer_instagram || $footer_linkedin || $foot
 		</div>
 
 		<div class="border-t border-white/10 pt-8 text-center text-xs text-white/40">
-			<span>&copy; <?php echo date('Y'); ?> KIDAZZLE Child Care Inc. All rights reserved.</span>
+			<span>&copy; 2026 W.I.M.P.E.R. Program Inc. All rights reserved.</span>
 		</div>
 
 		<!-- Footer SEO Text -->
@@ -138,12 +138,12 @@ if ($show_sticky_cta):
 		class="md:hidden will-change-transform transform translate-y-full fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md text-white py-4 px-6 z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.1)] border-t border-white/10 transition-transform duration-500 ease-out">
 		<div class="max-w-7xl mx-auto flex flex-col items-center justify-between gap-4 text-center">
 			<span class="text-sm font-medium tracking-wide">
-				<?php echo $sticky_text; ?>
+				Ready to recaptue your EBITDA?
 			</span>
-			<a href="<?php echo esc_url($sticky_url); ?>"
+			<button onclick="openContactModal()"
 				class="inline-block bg-orange-500 text-white text-xs font-bold uppercase tracking-wider px-8 py-3 rounded-full hover:bg-white hover:text-orange-500 transition-all shadow-md">
-				<?php echo esc_html($sticky_btn_text); ?>
-			</a>
+				Verify Eligibility
+			</button>
 		</div>
 	</div>
 <?php endif; ?>

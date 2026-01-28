@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W.I.M.P.E.R. | The Chassis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #334155;
+            background-color: #f8fafc;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Visionary Palette */
+        .bg-navy {
+            background-color: #020617;
+        }
+
+        .text-gold {
+            color: #d4af37;
+        }
+
+        .border-gold {
+            border-color: #d4af37;
+        }
+
+        .bg-gold {
+            background-color: #d4af37;
+        }
+
+        /* Layout & Spacing */
+        .page-header-spacer {
+            padding-top: 160px;
+            padding-bottom: 80px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Navigation Links */
+        .nav-link {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #d4af37;
+        }
+
+        .nav-link.active {
+            color: #d4af37;
+            border-bottom: 1px solid #d4af37;
+            padding-bottom: 2px;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+    <!-- NAVIGATION -->
+    <nav class="bg-white/90 backdrop-blur-xl border-b border-slate-200 fixed w-full z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-24">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex flex-col border-l-4 border-gold pl-4 transition hover:border-navy">
+                        <span
+                            class="text-xl font-bold text-slate-900 tracking-tight font-serif leading-none">W.I.M.P.E.R.</span>
+                        <span class="text-[9px] uppercase tracking-[0.1em] text-slate-500 font-semibold mt-1">Wellness &
+                            Integrated Medical Plan Expense Reimbursement</span>
+                    </a>
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-12">
+                    <a href="index.html" class="nav-link text-slate-600">The Vision</a>
+                    <a href="method.html" class="nav-link active text-slate-600">The Chassis</a>
+                    <a href="timeline.html" class="nav-link text-slate-600">The Execution</a>
+                    <a href="blog.html" class="nav-link text-slate-600">Insights</a>
+                    <a href="contact.html"
+                        class="bg-navy text-white px-8 py-3 rounded-sm text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gold hover:text-navy transition duration-300 shadow-lg">
+                        Verify Eligibility
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <header class="page-header-spacer">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">The Proprietary Twist</span>
+            <h1 class="text-5xl md:text-6xl font-serif text-navy mb-6">The W.I.M.P.E.R. Chassis</h1>
+            <p class="text-slate-500 text-lg font-light max-w-2xl mx-auto leading-relaxed">
+                Most organizations fail because they lack the automated "Claims Trigger." Here is how we engineered the
+                compliant solution.
+            </p>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="max-w-6xl mx-auto px-4 py-24">
+
+        <!-- SECTION: THE LIFT (Light Lift) -->
+        <div class="mb-32">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+                <div class="order-2 md:order-1">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gold/10 transform translate-x-4 translate-y-4"></div>
+                        <div class="bg-navy p-12 text-white relative z-10">
+                            <h3 class="text-2xl font-serif mb-8 text-white">Your Team's Lift: <span
+                                    class="text-gold">Light.</span></h3>
+                            <p class="text-slate-400 text-sm mb-6">We handle the actuarial complexity. Your team handles
+                                standard payroll processing.</p>
+                            <ul class="space-y-6">
+                                <li class="flex items-start">
+                                    <span class="text-gold font-bold mr-4 text-lg">01.</span>
+                                    <div>
+                                        <strong class="text-white text-sm block mb-1">Data Ingestion</strong>
+                                        <p class="text-xs text-slate-400 leading-relaxed">Send us a census file (CSV).
+                                            That is your primary data entry task.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-gold font-bold mr-4 text-lg">02.</span>
+                                    <div>
+                                        <strong class="text-white text-sm block mb-1">The Handshake</strong>
+                                        <p class="text-xs text-slate-400 leading-relaxed">One 30-minute integration call
+                                            with your payroll provider (ADP, Paychex, etc.) where we lead the technical
+                                            setup.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-gold font-bold mr-4 text-lg">03.</span>
+                                    <div>
+                                        <strong class="text-white text-sm block mb-1">The Routine</strong>
+                                        <p class="text-xs text-slate-400 leading-relaxed">Processing the monthly
+                                            deduction during your standard payroll cycle.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2">
+                    <h2 class="text-4xl font-serif text-navy mb-6">We Make The Complex Simple.</h2>
+                    <p class="text-slate-600 leading-relaxed mb-6 text-lg">
+                        Think of this like "Teaching Coding to Babies." The tax code is incredibly complex (Python/C++),
+                        but the interface we give you is blocks and shapes.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed mb-8 text-lg">
+                        We have already built the Plan Documents, the Adjudication Logic, and the Compliance Shield. You
+                        simply plug your payroll into our chassis. We handle the heavy actuarial lifting so your HR team
+                        doesn't have to become tax experts.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                        <span class="font-bold text-navy">Fully Managed Compliance Service</span>
+                    </div>
+                    <div class="mt-8">
+                        <a href="contact.html"
+                            class="inline-flex items-center text-navy font-bold hover:text-gold transition border-b border-navy hover:border-gold pb-1">
+                            Request Audit <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPARISON TABLE -->
+        <div class="bg-white shadow-2xl border border-slate-100 rounded-sm overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-3">
+                <!-- Column 1: Labels -->
+                <div
+                    class="bg-slate-50 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-center">
+                    <h3 class="text-xl font-bold text-slate-400 uppercase tracking-widest mb-2">Market Analysis</h3>
+                    <p class="text-xs text-slate-500">Why general vendors fail.</p>
+                </div>
+
+                <!-- Column 2: Competitors -->
+                <div
+                    class="p-8 border-b md:border-b-0 md:border-r border-slate-200 bg-white opacity-50 hover:opacity-100 transition">
+                    <h4 class="text-lg font-bold text-slate-600 mb-6">General Wellness Vendor</h4>
+                    <ul class="space-y-4 text-sm text-slate-500">
+                        <li class="flex items-center"><i class="fas fa-times text-red-300 mr-3 w-4"></i> Focuses on
+                            "Steps & Water"</li>
+                        <li class="flex items-center"><i class="fas fa-times text-red-300 mr-3 w-4"></i> Costs Money
+                            (Line Item Expense)</li>
+                        <li class="flex items-center"><i class="fas fa-times text-red-300 mr-3 w-4"></i> No Tax
+                            Integration</li>
+                        <li class="flex items-center"><i class="fas fa-times text-red-300 mr-3 w-4"></i> Internal
+                            Compliance Risk</li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: WIMPER -->
+                <div class="p-8 bg-navy text-white relative overflow-hidden group">
+                    <div
+                        class="absolute top-0 right-0 w-20 h-20 bg-gold/20 rounded-bl-full group-hover:bg-gold/30 transition">
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-6">W.I.M.P.E.R. Protocol</h4>
+                    <ul class="space-y-4 text-sm text-slate-300">
+                        <li class="flex items-center"><i class="fas fa-check text-gold mr-3 w-4"></i> Focuses on FICA
+                            Mitigation</li>
+                        <li class="flex items-center"><i class="fas fa-check text-gold mr-3 w-4"></i> Makes Money
+                            (EBITDA Growth)</li>
+                        <li class="flex items-center"><i class="fas fa-check text-gold mr-3 w-4"></i> Light Admin
+                            (Standard Payroll)</li>
+                        <li class="flex items-center"><i class="fas fa-check text-gold mr-3 w-4"></i> Indemnified
+                            Compliance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy text-slate-400 py-20 border-t border-slate-800 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-xs">
+            <div class="mb-8 md:mb-0 text-center md:text-left">
+                <span class="text-white font-serif text-xl tracking-wide block mb-2">W.I.M.P.E.R.</span>
+                <span class="text-slate-500 uppercase tracking-widest text-[10px] block mb-2">
+                    <a href="tel:16789406099" class="hover:text-gold transition"><i class="fas fa-phone mr-2"></i>1
+                        678-940-6099</a>
+                </span>
+                <span class="text-slate-500 uppercase tracking-widest text-[10px] block mb-2">
+                    <a href="https://thewimperprogram.com/" target="_blank" class="hover:text-gold transition"><i
+                            class="fas fa-globe mr-2"></i>thewimperprogram.com</a>
+                </span>
+                <span class="text-slate-500 uppercase tracking-widest text-[10px]">Copyright &copy; 2026</span>
+            </div>
+            <div class="flex space-x-10">
+                <a href="method.html"
+                    class="hover:text-white transition uppercase tracking-widest text-[10px]">Methodology</a>
+                <a href="contact.html"
+                    class="hover:text-white transition uppercase tracking-widest text-[10px]">Feasibility Audit</a>
+                <a href="#" class="hover:text-white transition uppercase tracking-widest text-[10px]">Legal</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

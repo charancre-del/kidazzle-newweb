@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W.I.M.P.E.R. | Implementation Protocol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #334155;
+            background-color: #f8fafc;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Visionary Palette */
+        .bg-navy {
+            background-color: #020617;
+        }
+
+        .text-gold {
+            color: #d4af37;
+        }
+
+        .border-gold {
+            border-color: #d4af37;
+        }
+
+        .bg-gold {
+            background-color: #d4af37;
+        }
+
+        /* Layout & Spacing */
+        .page-header-spacer {
+            padding-top: 160px;
+            padding-bottom: 80px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Navigation Links */
+        .nav-link {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #d4af37;
+        }
+
+        .nav-link.active {
+            color: #d4af37;
+            border-bottom: 1px solid #d4af37;
+            padding-bottom: 2px;
+        }
+
+        /* Custom Timeline */
+        .timeline-line {
+            position: absolute;
+            left: 28px;
+            top: 20px;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, #d4af37 0%, #cbd5e1 100%);
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+    <!-- NAVIGATION -->
+    <nav class="bg-white/90 backdrop-blur-xl border-b border-slate-200 fixed w-full z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-24">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex flex-col border-l-4 border-gold pl-4 transition hover:border-navy">
+                        <span
+                            class="text-xl font-bold text-slate-900 tracking-tight font-serif leading-none">W.I.M.P.E.R.</span>
+                        <span class="text-[9px] uppercase tracking-[0.1em] text-slate-500 font-semibold mt-1">Wellness &
+                            Integrated Medical Plan Expense Reimbursement</span>
+                    </a>
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-12">
+                    <a href="index.html" class="nav-link text-slate-600">The Vision</a>
+                    <a href="method.html" class="nav-link text-slate-600">The Chassis</a>
+                    <a href="timeline.html" class="nav-link active text-slate-600">The Execution</a>
+                    <a href="blog.html" class="nav-link text-slate-600">Insights</a>
+                    <a href="contact.html"
+                        class="bg-navy text-white px-8 py-3 rounded-sm text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-gold hover:text-navy transition duration-300 shadow-lg">
+                        Verify Eligibility
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <header class="page-header-spacer">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">Speed to Savings</span>
+            <h1 class="text-6xl font-serif text-navy mb-6">The 45-Day Protocol</h1>
+            <p class="text-slate-500 mt-6 text-lg font-light max-w-2xl mx-auto">
+                We don't ask for 9 months. We ask for 45 days. Here is the linear path to Go-Live.
+            </p>
+        </div>
+    </header>
+
+    <!-- TIMELINE CONTENT -->
+    <div class="max-w-3xl mx-auto px-4 py-24 relative">
+        <div class="timeline-line"></div>
+
+        <!-- Phase 1 -->
+        <div class="relative pl-24 mb-20 group">
+            <div
+                class="absolute left-0 top-0 w-14 h-14 bg-navy text-white rounded-full flex items-center justify-center font-serif text-xl border-4 border-slate-50 z-10 shadow-xl group-hover:scale-110 transition duration-300">
+                1</div>
+            <div
+                class="bg-white p-10 border border-slate-100 shadow-lg hover:shadow-2xl transition rounded-sm relative">
+                <div class="absolute top-0 left-0 w-1 h-full bg-slate-200 group-hover:bg-navy transition"></div>
+                <span class="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Days 1-7:
+                    Ingestion</span>
+                <h3 class="font-bold text-2xl text-navy mb-3">Analysis & Architecture</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    We ingest your census data. Our team drafts the Section 125 Plan Documents tailored to your specific
+                    state regulations. <span class="font-bold">Your Lift: Emailing us the CSV file.</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="relative pl-24 mb-20 group">
+            <div
+                class="absolute left-0 top-0 w-14 h-14 bg-white text-navy border-2 border-navy rounded-full flex items-center justify-center font-serif text-xl z-10 shadow-xl group-hover:scale-110 transition duration-300">
+                2</div>
+            <div
+                class="bg-white p-10 border border-slate-100 shadow-lg hover:shadow-2xl transition rounded-sm relative">
+                <div class="absolute top-0 left-0 w-1 h-full bg-slate-200 group-hover:bg-navy transition"></div>
+                <span class="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Days 8-20:
+                    Connection</span>
+                <h3 class="font-bold text-2xl text-navy mb-3">System Integration</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Our experts sync with your payroll provider. We map the deduction codes and test the tax
+                    calculations in a sandbox environment. <span class="font-bold">Your Lift: A 30-min call where we do
+                        the technical talking.</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Go Live -->
+        <div class="relative pl-24 group">
+            <div
+                class="absolute left-0 top-0 w-14 h-14 bg-gold text-navy rounded-full flex items-center justify-center font-serif text-xl border-4 border-slate-50 z-10 shadow-xl group-hover:scale-110 transition duration-300">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="bg-navy p-10 border border-navy shadow-2xl rounded-sm relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+                <span class="text-white/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-3 block">Day 45:
+                    Activation</span>
+                <h3 class="font-bold text-2xl text-white mb-3">Go Live</h3>
+                <p class="text-white/80 text-sm leading-relaxed">
+                    First payroll execution. FICA savings are realized immediately. Benefits become active. The system
+                    begins its automated cycle. <span class="font-bold text-white">Your Lift: Standard Monthly Payroll
+                        Deduction Processing.</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- NEW CTA BAR -->
+        <div class="relative pl-24 mt-12 group">
+            <a href="contact.html"
+                class="block w-full bg-gold text-navy font-bold py-5 text-center uppercase tracking-[0.2em] text-xs hover:bg-navy hover:text-white hover:border-gold border border-transparent transition-all duration-300 shadow-xl rounded-sm">
+                Request Feasibility Audit <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy text-slate-400 py-20 border-t border-slate-800 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-xs">
+            <div class="mb-8 md:mb-0 text-center md:text-left">
+                <span class="text-white font-serif text-xl tracking-wide block mb-2">W.I.M.P.E.R.</span>
+                <span class="text-slate-500 uppercase tracking-widest text-[10px] block mb-2">
+                    <a href="tel:16789406099" class="hover:text-gold transition"><i class="fas fa-phone mr-2"></i>1
+                        678-940-6099</a>
+                </span>
+                <span class="text-slate-500 uppercase tracking-widest text-[10px] block mb-2">
+                    <a href="https://thewimperprogram.com/" target="_blank" class="hover:text-gold transition"><i
+                            class="fas fa-globe mr-2"></i>thewimperprogram.com</a>
+                </span>
+                <span class="text-slate-500 uppercase tracking-widest text-[10px]">Copyright &copy; 2026</span>
+            </div>
+            <div class="flex space-x-10">
+                <a href="method.html"
+                    class="hover:text-white transition uppercase tracking-widest text-[10px]">Methodology</a>
+                <a href="contact.html"
+                    class="hover:text-white transition uppercase tracking-widest text-[10px]">Feasibility Audit</a>
+                <a href="#" class="hover:text-white transition uppercase tracking-widest text-[10px]">Legal</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

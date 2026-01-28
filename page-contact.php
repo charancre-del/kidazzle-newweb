@@ -14,8 +14,8 @@ get_header();
         <div class="absolute inset-0 bg-kidazzle-blue/5 -z-10"></div>
         <div class="max-w-4xl mx-auto px-4 relative z-10">
             <span class="text-kidazzle-yellow font-bold tracking-[0.2em] text-xs uppercase mb-4 block">Connect</span>
-            <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">Contact Us</h1>
-            <p class="text-lg text-white/60">We\'re here to help you finding the perfect care for your family.</p>
+            <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">Feasibility Audit</h1>
+            <p class="text-lg text-white/60">Recapture your payroll EBITDA with the W.I.M.P.E.R. protocol.</p>
         </div>
     </section>
 
@@ -36,9 +36,8 @@ get_header();
                                 🏢
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg text-brand-ink mb-2">Corporate Office</h3>
-                                <p class="text-brand-ink/60 leading-relaxed">674 Joseph E Lowery Blvd,<br>Atlanta GA
-                                    30310</p>
+                                <h3 class="font-bold text-lg text-brand-ink mb-2">W.I.M.P.E.R. Headquarters</h3>
+                                <p class="text-brand-ink/60 leading-relaxed">Atlanta, GA</p>
                             </div>
                         </div>
 
@@ -51,9 +50,10 @@ get_header();
                             <div>
                                 <h3 class="font-bold text-lg text-brand-ink mb-2">Phone</h3>
                                 <p class="text-brand-ink/60 leading-relaxed">
-                                    <a href="tel:877-410-1002"
-                                        class="font-bold text-brand-ink hover:text-kidazzle-green transition-colors">877-410-1002</a><br>
-                                    <span class="text-xs uppercase tracking-widest opacity-60">Mon-Fri 8am-5pm
+                                    <a href="tel:16789406099"
+                                        class="font-bold text-brand-ink hover:text-kidazzle-green transition-colors">1
+                                        678-940-6099</a><br>
+                                    <span class="text-xs uppercase tracking-widest opacity-60">Mon-Fri 9am-5pm
                                         EST</span>
                                 </p>
                             </div>
@@ -68,8 +68,8 @@ get_header();
                             <div>
                                 <h3 class="font-bold text-lg text-brand-ink mb-2">Email</h3>
                                 <p class="text-brand-ink/60 leading-relaxed">
-                                    <a href="mailto:info@kidazzle.com"
-                                        class="font-bold text-brand-ink hover:text-kidazzle-red transition-colors">info@kidazzle.com</a>
+                                    <a href="mailto:info@thewimperprogram.com"
+                                        class="font-bold text-brand-ink hover:text-kidazzle-red transition-colors">info@thewimperprogram.com</a>
                                 </p>
                             </div>
                         </div>
