@@ -1,5 +1,24 @@
-Wptstchroma/
+# Dependencies
+node_modules/
+vendor/
 
-# Lighthouse Generated Reports (prevent filename too long errors)
-lighthouse-automation/lighthouse-out/reports/
-lighthouse-automation/lighthouse-out/json/
+# Environment
+.env
+.env.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+debug.log
+*.log
+
+# Build
+dist/
+build/
