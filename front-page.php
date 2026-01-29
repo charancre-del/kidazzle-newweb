@@ -82,7 +82,9 @@ get_header();
     <section class="py-32 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-20">
-                <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-4 block">The Paradigm
+                <span
+                    class="text-navy text-xs font-black uppercase tracking-[0.2em] mb-4 block drop-shadow-sm opacity-80">The
+                    Paradigm
                     Shift</span>
                 <h2 class="text-4xl md:text-5xl font-serif text-navy mb-6">Why "Standard" Payroll is Obsolete</h2>
                 <p class="text-slate-500 max-w-2xl mx-auto text-lg font-light">
@@ -126,7 +128,8 @@ get_header();
             <div class="flex justify-between items-end mb-16">
                 <div>
                     <h2 class="text-4xl font-serif text-navy">Financial Modeling</h2>
-                    <p class="text-slate-500 mt-4 max-w-xl font-light">Input your workforce data. Our model applies
+                    <p class="text-slate-800 text-lg font-medium max-w-xl font-light">Input your workforce data. Our
+                        model applies
                         progressive tax bracket logic.</p>
                 </div>
             </div>
@@ -281,10 +284,11 @@ get_header();
 <div id="method" class="page-view flex-grow">
     <header class="page-header-spacer">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="text-gold text-xs font-black uppercase tracking-[0.2em] mb-6 block drop-shadow-sm">The
+            <span
+                class="text-navy text-xs font-black uppercase tracking-[0.2em] mb-6 block drop-shadow-sm opacity-80">The
                 Proprietary Twist</span>
             <h1 class="text-5xl md:text-6xl font-serif text-navy mb-6">The W.I.M.P.E.R. Chassis</h1>
-            <p class="text-slate-500 text-lg font-light max-w-2xl mx-auto leading-relaxed">
+            <p class="text-slate-800 text-lg font-medium max-w-2xl mx-auto leading-relaxed">
                 Most organizations fail because they lack the automated "Claims Trigger." Here is how we engineered the
                 compliant solution.
             </p>
@@ -395,7 +399,9 @@ get_header();
 <div id="timeline" class="page-view flex-grow">
     <header class="page-header-spacer">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="text-gold text-xs font-black uppercase tracking-[0.2em] mb-6 block drop-shadow-sm">Speed to
+            <span
+                class="text-navy text-xs font-black uppercase tracking-[0.2em] mb-6 block drop-shadow-sm opacity-80">Speed
+                to
                 Savings</span>
             <h1 class="text-6xl font-serif text-navy mb-6">The 45-Day Protocol</h1>
             <p class="text-slate-500 mt-6 text-lg font-light max-w-2xl mx-auto">
@@ -479,10 +485,12 @@ get_header();
     <!-- PAGE HEADER -->
     <header class="page-header-spacer">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="text-gold text-xs font-black uppercase tracking-[0.2em] mb-6 block drop-shadow-sm">Phase 2:
+            <span
+                class="text-navy text-xs font-black uppercase tracking-[0.2em] mb-6 block drop-shadow-sm opacity-80">Phase
+                2:
                 Wealth Accumulation</span>
             <h1 class="text-5xl md:text-6xl font-serif text-navy mb-6">The Zero-Cost Wealth Engine</h1>
-            <p class="text-slate-500 text-lg font-light max-w-2xl mx-auto leading-relaxed">
+            <p class="text-slate-800 text-lg font-medium max-w-2xl mx-auto leading-relaxed">
                 You’ve stabilized the paycheck. Now, secure the future. Using W.I.M.P.E.R. savings to fund tax-free
                 Indexed Universal Life (IUL) strategies.
             </p>
@@ -519,12 +527,13 @@ get_header();
                 </div>
             </div>
             <div class="order-1 md:order-2">
-                <h2 class="text-4xl font-serif text-navy mb-6">Why Wait? The Timing is Mathematical.</h2>
-                <p class="text-slate-600 leading-relaxed mb-6 text-lg">
+                <h2 class="text-4xl font-serif text-navy mb-6 font-black tracking-tight">Why Wait? The Timing is
+                    Mathematical.</h2>
+                <p class="text-slate-700 leading-relaxed mb-6 text-lg font-medium">
                     The optimal time to implement an IUL strategy is <strong>immediately following W.I.M.P.E.R.
                         adoption.</strong>
                 </p>
-                <p class="text-slate-600 leading-relaxed mb-8 text-lg">
+                <p class="text-slate-700 leading-relaxed mb-8 text-lg font-medium">
                     By lowering your tax liability, the W.I.M.P.E.R. protocol effectively "finds" money in your paycheck
                     that was previously going to the IRS. Instead of letting that surplus vanish into daily spending, we
                     capture it instantly to fund a tax-free retirement vehicle.
@@ -542,7 +551,9 @@ get_header();
 
         <!-- The "Financial Festival" / Benefits Grid -->
         <div class="text-center mb-16">
-            <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-4 block">Fiscal Velocity</span>
+            <span
+                class="text-navy text-xs font-black uppercase tracking-[0.2em] mb-4 block drop-shadow-sm opacity-80">Fiscal
+                Velocity</span>
             <h2 class="text-4xl font-serif text-navy mb-6">More Than Just Insurance</h2>
         </div>
 
