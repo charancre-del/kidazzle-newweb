@@ -20,7 +20,7 @@ All rights reserved. This theme is proprietary software.
 
 :root {
     --navy: #020617;
-    --gold: #d4af37;
+    --gold: #C5A021;
     --slate-50: #f8fafc;
     --slate-100: #f1f5f9;
     --slate-200: #e2e8f0;
@@ -123,7 +123,7 @@ h5 {
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 900;
     transition: color 0.3s;
     cursor: pointer;
     margin-left: 2rem;
@@ -182,7 +182,7 @@ h5 {
     border-top: 4px solid #020617;
     border-radius: 2px;
     overflow: hidden;
-    min-height: 1200px;
+    min-height: 1500px;
     /* Increased to avoid scrollbars per user request */
 }
 

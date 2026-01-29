@@ -74,26 +74,34 @@ $has_social = $footer_facebook || $footer_instagram || $footer_linkedin || $foot
 </footer>
 
 
-// Sticky CTA Scroll Logic
-window.addEventListener('scroll', function () {
-const cta = document.getElementById('sticky-cta');
-if (!cta) return;
-if (window.scrollY > 300) {
-cta.classList.remove('translate-y-full');
-} else {
-cta.classList.add('translate-y-full');
-}
-}, { passive: true });
+<script>
+	// Sticky CTA Scroll Logic
+	window.addEventListener('scroll', function () {
+		const cta = document.getElementById('sticky-cta');
+		if (!cta) return;
+		if (window.scrollY > 300) {
+			cta.classList.remove('translate-y-full');
+		} else {
+			cta.classList.add('translate-y-full');
+		}
+	}, {
+		passive: true
+	});
 
-// Initialize Lucide Icons
-if (typeof lucide !== 'undefined') {
-lucide.createIcons();
-}
+	// Initialize Lucide Icons
+	if (typeof lucide !== 'undefined') {
+		lucide.createIcons();
+	}
 </script>
 
 <?php wp_footer(); ?>
 <?php
-// Footer scripts from Customizer
+/**
+ * Note: We have commented out legacy footer scripts to prioritize the W.I.M.P.E.R. identity.
+ * If you need to re-enable tracking or external scripts, please use a dedicated plugin or 
+ * add them directly to this file within a <script> tag.
+ */
+/*
 $footer_scripts = get_theme_mod('kidazzle_footer_scripts');
 if ($footer_scripts) {
 	if (current_user_can('unfiltered_html')) {
@@ -111,6 +119,7 @@ if ($footer_scripts) {
 		));
 	}
 }
+*/
 ?>
 </body>
 

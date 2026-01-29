@@ -92,7 +92,7 @@ get_header();
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-16 border-t border-slate-100 pt-16">
                 <div class="group">
-                    <div class="mb-6 text-slate-100/50 group-hover:text-gold transition duration-500"><i
+                    <div class="mb-6 text-gold text-6xl mb-8 drop-shadow-[0_0_15px_rgba(197,160,33,0.3)] transition"><i
                             class="fas fa-layer-group text-5xl"></i></div>
                     <h3 class="text-xl font-bold text-navy mb-4">Taxable Surface Area</h3>
                     <p class="text-slate-600 font-light leading-relaxed text-sm">Every dollar of gross wage is currently
@@ -100,7 +100,7 @@ get_header();
                         reducing the surface area the IRS can touch.</p>
                 </div>
                 <div class="group">
-                    <div class="mb-6 text-slate-100 group-hover:text-gold transition duration-500"><i
+                    <div class="mb-6 text-gold text-6xl mb-8 drop-shadow-[0_0_15px_rgba(197,160,33,0.3)] transition"><i
                             class="fas fa-cogs text-5xl"></i></div>
                     <h3 class="text-xl font-bold text-navy mb-4">The Claims Engine</h3>
                     <p class="text-slate-600 font-light leading-relaxed text-sm">Competitors fail because they lack the
@@ -109,7 +109,7 @@ get_header();
                     </p>
                 </div>
                 <div class="group">
-                    <div class="mb-6 text-slate-100 group-hover:text-gold transition duration-500"><i
+                    <div class="mb-6 text-gold text-6xl mb-8 drop-shadow-[0_0_15px_rgba(197,160,33,0.3)] transition"><i
                             class="fas fa-shield-alt text-5xl"></i></div>
                     <h3 class="text-xl font-bold text-navy mb-4">Indemnified Compliance</h3>
                     <p class="text-slate-600 font-light leading-relaxed text-sm">We don't just provide software; we
@@ -281,7 +281,8 @@ get_header();
 <div id="method" class="page-view flex-grow">
     <header class="page-header-spacer">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">The Proprietary Twist</span>
+            <span class="text-gold text-xs font-black uppercase tracking-[0.2em] mb-6 block drop-shadow-sm">The
+                Proprietary Twist</span>
             <h1 class="text-5xl md:text-6xl font-serif text-navy mb-6">The W.I.M.P.E.R. Chassis</h1>
             <p class="text-slate-500 text-lg font-light max-w-2xl mx-auto leading-relaxed">
                 Most organizations fail because they lack the automated "Claims Trigger." Here is how we engineered the
@@ -394,7 +395,8 @@ get_header();
 <div id="timeline" class="page-view flex-grow">
     <header class="page-header-spacer">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">Speed to Savings</span>
+            <span class="text-gold text-xs font-black uppercase tracking-[0.2em] mb-6 block drop-shadow-sm">Speed to
+                Savings</span>
             <h1 class="text-6xl font-serif text-navy mb-6">The 45-Day Protocol</h1>
             <p class="text-slate-500 mt-6 text-lg font-light max-w-2xl mx-auto">
                 We don't ask for 9 months. We ask for 45 days. Here is the linear path to Go-Live.
@@ -477,8 +479,8 @@ get_header();
     <!-- PAGE HEADER -->
     <header class="page-header-spacer">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="text-gold text-xs font-bold uppercase tracking-[0.2em] mb-6 block">Phase 2: Wealth
-                Accumulation</span>
+            <span class="text-gold text-xs font-black uppercase tracking-[0.2em] mb-6 block drop-shadow-sm">Phase 2:
+                Wealth Accumulation</span>
             <h1 class="text-5xl md:text-6xl font-serif text-navy mb-6">The Zero-Cost Wealth Engine</h1>
             <p class="text-slate-500 text-lg font-light max-w-2xl mx-auto leading-relaxed">
                 You’ve stabilized the paycheck. Now, secure the future. Using W.I.M.P.E.R. savings to fund tax-free
@@ -548,7 +550,8 @@ get_header();
             <!-- Benefit 1 -->
             <div
                 class="group bg-white border border-slate-200 p-10 hover:border-gold hover:shadow-xl transition duration-300">
-                <i class="fas fa-chart-line text-4xl text-navy mb-6 group-hover:text-gold transition"></i>
+                <i
+                    class="fas fa-chart-line text-4xl text-gold text-5xl mb-8 drop-shadow-[0_0_15px_rgba(197,160,33,0.3)] transition"></i>
                 <h3 class="text-xl font-bold text-navy mb-4">Cash Value Growth</h3>
                 <p class="text-slate-600 text-sm leading-relaxed">
                     Linked to market indexes (like the S&P 500) with a 0% floor. You participate in the gains but never
@@ -559,7 +562,8 @@ get_header();
             <!-- Benefit 2 -->
             <div
                 class="group bg-white border border-slate-200 p-10 hover:border-gold hover:shadow-xl transition duration-300">
-                <i class="fas fa-university text-4xl text-navy mb-6 group-hover:text-gold transition"></i>
+                <i
+                    class="fas fa-university text-4xl text-gold text-5xl mb-8 drop-shadow-[0_0_15px_rgba(197,160,33,0.3)] transition"></i>
                 <h3 class="text-xl font-bold text-navy mb-4">Tax-Free Retirement</h3>
                 <p class="text-slate-600 text-sm leading-relaxed">
                     Access your cash value via tax-free loans. Create a retirement income stream that the IRS cannot
@@ -570,7 +574,8 @@ get_header();
             <!-- Benefit 3 -->
             <div
                 class="group bg-white border border-slate-200 p-10 hover:border-gold hover:shadow-xl transition duration-300">
-                <i class="fas fa-heartbeat text-4xl text-navy mb-6 group-hover:text-gold transition"></i>
+                <i
+                    class="fas fa-heartbeat text-4xl text-gold text-5xl mb-8 drop-shadow-[0_0_15px_rgba(197,160,33,0.3)] transition"></i>
                 <h3 class="text-xl font-bold text-navy mb-4">Living Benefits</h3>
                 <p class="text-slate-600 text-sm leading-relaxed">
                     Critical, Chronic, and Terminal illness riders allow you to access the death benefit while you are

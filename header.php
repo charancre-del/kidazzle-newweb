@@ -23,7 +23,7 @@
 				extend: {
 					colors: {
 						navy: '#0A192F',
-						gold: '#F7E7CE',
+						gold: '#C5A021',
 					},
 					fontFamily: {
 						serif: ['Playfair Display', 'serif'],
