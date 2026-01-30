@@ -2,8 +2,8 @@
 /**
  * Template Helper Functions
  *
- * @package kidazzle_Theme
- * @since 1.0.0
+ * @package wimper_Theme
+ * @since 2.0.0
  */
 
 // Exit if accessed directly
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 /**
  * Trimmed Excerpt
  */
-function kidazzle_trimmed_excerpt($length = 20, $post_id = null)
+function wimper_trimmed_excerpt($length = 20, $post_id = null)
 {
     $post_id = $post_id ?: get_the_ID();
     $excerpt = has_excerpt($post_id) ? get_the_excerpt($post_id) : get_the_content(null, false, $post_id);
@@ -31,7 +31,7 @@ function kidazzle_trimmed_excerpt($length = 20, $post_id = null)
 /**
  * Safe meta accessor
  */
-function kidazzle_get_meta_value($post_id, $key, $default = '')
+function wimper_get_meta_value($post_id, $key, $default = '')
 {
     $value = get_post_meta($post_id, $key, true);
 
@@ -45,31 +45,31 @@ function kidazzle_get_meta_value($post_id, $key, $default = '')
 /**
  * Location meta bundle
  */
-function kidazzle_get_location_fields($post_id = null)
+function wimper_get_location_fields($post_id = null)
 {
     $post_id = $post_id ?: get_the_ID();
 
     return array(
-        'address' => kidazzle_get_meta_value($post_id, 'location_address', ''),
-        'city' => kidazzle_get_meta_value($post_id, 'location_city', ''),
-        'state' => kidazzle_get_meta_value($post_id, 'location_state', 'GA'),
-        'zip' => kidazzle_get_meta_value($post_id, 'location_zip', ''),
-        'phone' => kidazzle_get_meta_value($post_id, 'location_phone', ''),
-        'email' => kidazzle_get_meta_value($post_id, 'location_email', ''),
-        'latitude' => kidazzle_get_meta_value($post_id, 'location_latitude', ''),
-        'longitude' => kidazzle_get_meta_value($post_id, 'location_longitude', ''),
+        'address' => wimper_get_meta_value($post_id, 'location_address', ''),
+        'city' => wimper_get_meta_value($post_id, 'location_city', ''),
+        'state' => wimper_get_meta_value($post_id, 'location_state', 'GA'),
+        'zip' => wimper_get_meta_value($post_id, 'location_zip', ''),
+        'phone' => wimper_get_meta_value($post_id, 'location_phone', ''),
+        'email' => wimper_get_meta_value($post_id, 'location_email', ''),
+        'latitude' => wimper_get_meta_value($post_id, 'location_latitude', ''),
+        'longitude' => wimper_get_meta_value($post_id, 'location_longitude', ''),
     );
 }
 
 /**
  * Program meta bundle
  */
-function kidazzle_get_program_fields($post_id = null)
+function wimper_get_program_fields($post_id = null)
 {
     $post_id = $post_id ?: get_the_ID();
 
     // Get manual icon override
-    $icon = kidazzle_get_meta_value($post_id, 'program_icon', '');
+    $icon = wimper_get_meta_value($post_id, 'program_icon', '');
 
     // Smart Defaults if no manual icon set
     if (empty($icon)) {
@@ -99,20 +99,20 @@ function kidazzle_get_program_fields($post_id = null)
     }
 
     return array(
-        'age_range' => kidazzle_get_meta_value($post_id, 'program_age_range', ''),
-        'excerpt' => kidazzle_get_meta_value($post_id, 'program_short_description', ''),
+        'age_range' => wimper_get_meta_value($post_id, 'program_age_range', ''),
+        'excerpt' => wimper_get_meta_value($post_id, 'program_short_description', ''),
         'icon' => $icon,
-        'color' => kidazzle_get_meta_value($post_id, 'program_color', 'kidazzle-teal'),
+        'color' => wimper_get_meta_value($post_id, 'program_color', 'kidazzle-teal'),
     );
 }
 
 /**
  * Program anchor slug helper
  */
-function kidazzle_get_program_anchor_slug($post_id = null)
+function wimper_get_program_anchor_slug($post_id = null)
 {
     $post_id = $post_id ?: get_the_ID();
-    $anchor = kidazzle_get_meta_value($post_id, 'program_anchor_slug', '');
+    $anchor = wimper_get_meta_value($post_id, 'program_anchor_slug', '');
 
     if (!$anchor) {
         $anchor = get_post_field('post_name', $post_id);
@@ -124,17 +124,17 @@ function kidazzle_get_program_anchor_slug($post_id = null)
 /**
  * Program SEO intro fields
  */
-function kidazzle_get_program_seo_fields($post_id = null)
+function wimper_get_program_seo_fields($post_id = null)
 {
     $post_id = $post_id ?: get_the_ID();
 
-    $highlights = kidazzle_get_meta_value($post_id, 'program_seo_highlights', '');
+    $highlights = wimper_get_meta_value($post_id, 'program_seo_highlights', '');
     $highlights = preg_split('/\r\n|\r|\n/', $highlights);
     $highlights = array_filter(array_map('trim', (array) $highlights));
 
     return array(
-        'heading' => kidazzle_get_meta_value($post_id, 'program_seo_heading', ''),
-        'summary' => kidazzle_get_meta_value($post_id, 'program_seo_summary', ''),
+        'heading' => wimper_get_meta_value($post_id, 'program_seo_heading', ''),
+        'summary' => wimper_get_meta_value($post_id, 'program_seo_summary', ''),
         'highlights' => $highlights,
     );
 }
@@ -142,17 +142,17 @@ function kidazzle_get_program_seo_fields($post_id = null)
 /**
  * Program SEO meta tags
  */
-function kidazzle_get_program_meta_tags($post_id = null)
+function wimper_get_program_meta_tags($post_id = null)
 {
     $post_id = $post_id ?: get_the_ID();
-    $meta_desc = kidazzle_get_meta_value($post_id, 'program_meta_description', '');
+    $meta_desc = wimper_get_meta_value($post_id, 'program_meta_description', '');
 
     if (!$meta_desc) {
-        $meta_desc = has_excerpt($post_id) ? get_the_excerpt($post_id) : kidazzle_trimmed_excerpt(32, $post_id);
+        $meta_desc = has_excerpt($post_id) ? get_the_excerpt($post_id) : wimper_trimmed_excerpt(32, $post_id);
     }
 
     return array(
-        'title' => kidazzle_get_meta_value($post_id, 'program_meta_title', get_the_title($post_id)),
+        'title' => wimper_get_meta_value($post_id, 'program_meta_title', get_the_title($post_id)),
         'description' => $meta_desc,
     );
 }
@@ -160,10 +160,10 @@ function kidazzle_get_program_meta_tags($post_id = null)
 /**
  * Program FAQ items as structured array
  */
-function kidazzle_get_program_faq_items($post_id = null)
+function wimper_get_program_faq_items($post_id = null)
 {
     $post_id = $post_id ?: get_the_ID();
-    $raw = kidazzle_get_meta_value($post_id, 'program_faq_items', '');
+    $raw = wimper_get_meta_value($post_id, 'program_faq_items', '');
 
     if (!$raw) {
         return array();
@@ -192,7 +192,7 @@ function kidazzle_get_program_faq_items($post_id = null)
 /**
  * Render FAQ schema JSON-LD
  */
-function kidazzle_render_program_faq_schema($faq_items)
+function wimper_render_program_faq_schema($faq_items)
 {
     if (empty($faq_items)) {
         return;
@@ -223,7 +223,7 @@ function kidazzle_render_program_faq_schema($faq_items)
 /**
  * Cached lookup of program anchors keyed by slug and title
  */
-function kidazzle_get_program_anchor_lookup()
+function wimper_get_program_anchor_lookup()
 {
     static $lookup;
 
@@ -245,7 +245,7 @@ function kidazzle_get_program_anchor_lookup()
     );
 
     foreach ($programs as $program_id) {
-        $anchor = kidazzle_get_program_anchor_slug($program_id);
+        $anchor = wimper_get_program_anchor_slug($program_id);
         $slug = get_post_field('post_name', $program_id);
         $title_anchor = sanitize_title(get_the_title($program_id));
 
@@ -260,9 +260,9 @@ function kidazzle_get_program_anchor_lookup()
 /**
  * Resolve an anchor slug for a given program key
  */
-function kidazzle_program_anchor_for_key($key)
+function wimper_program_anchor_for_key($key)
 {
-    $lookup = kidazzle_get_program_anchor_lookup();
+    $lookup = wimper_get_program_anchor_lookup();
     $key = sanitize_title($key);
 
     return $lookup[$key] ?? $key;
@@ -271,7 +271,7 @@ function kidazzle_program_anchor_for_key($key)
 /**
  * Program color class mapping
  */
-function kidazzle_program_color_classes($color_key)
+function wimper_program_color_classes($color_key)
 {
     $map = array(
         'kidazzle-teal' => array(
@@ -312,7 +312,7 @@ function kidazzle_program_color_classes($color_key)
 /**
  * Eyebrow Badge
  */
-function kidazzle_eyebrow($text, $color = 'blue')
+function wimper_eyebrow($text, $color = 'blue')
 {
     $color_class = 'text-kidazzle-' . $color;
     echo '<span class="' . esc_attr($color_class) . ' font-bold tracking-[0.2em] text-[11px] uppercase mb-3 block">' . esc_html($text) . '</span>';
@@ -321,12 +321,12 @@ function kidazzle_eyebrow($text, $color = 'blue')
 /**
  * Archive Pagination
  */
-function kidazzle_archive_pagination()
+function wimper_archive_pagination()
 {
     the_posts_pagination(array(
         'mid_size' => 2,
-        'prev_text' => __('← Previous', 'kidazzle-theme'),
-        'next_text' => __('Next →', 'kidazzle-theme'),
+        'prev_text' => __('← Previous', 'wimper-theme'),
+        'next_text' => __('Next →', 'wimper-theme'),
         'class' => 'flex items-center justify-center gap-2 mt-12',
     ));
 }
@@ -334,9 +334,9 @@ function kidazzle_archive_pagination()
 /**
  * Location Address Line
  */
-function kidazzle_location_address_line($post_id = null)
+function wimper_location_address_line($post_id = null)
 {
-    $fields = kidazzle_get_location_fields($post_id);
+    $fields = wimper_get_location_fields($post_id);
     $address = $fields['address'];
 
     return $address ?: '';
@@ -345,9 +345,9 @@ function kidazzle_location_address_line($post_id = null)
 /**
  * Location City State
  */
-function kidazzle_location_city_state($post_id = null)
+function wimper_location_city_state($post_id = null)
 {
-    $fields = kidazzle_get_location_fields($post_id);
+    $fields = wimper_get_location_fields($post_id);
     $city = $fields['city'];
     $state = $fields['state'];
 
@@ -361,7 +361,7 @@ function kidazzle_location_city_state($post_id = null)
 /**
  * Badge Helper
  */
-function kidazzle_badge($text, $color = 'blue')
+function wimper_badge($text, $color = 'blue')
 {
     $bg_class = 'bg-kidazzle-' . $color . '/10';
     $text_class = 'text-kidazzle-' . $color;
@@ -378,7 +378,7 @@ function kidazzle_badge($text, $color = 'blue')
  * @param string $url The URL to sanitize
  * @return string Sanitized URL or empty string if invalid
  */
-function kidazzle_sanitize_url_field($url)
+function wimper_sanitize_url_field($url)
 {
     if (empty($url)) {
         return '';
@@ -419,7 +419,7 @@ function kidazzle_sanitize_url_field($url)
  * @param string $hours_string e.g., "7am - 6pm"
  * @return boolean
  */
-function kidazzle_is_location_open($hours_string)
+function wimper_is_location_open($hours_string)
 {
     if (empty($hours_string)) {
         return false;
@@ -463,7 +463,7 @@ function kidazzle_is_location_open($hours_string)
 /**
  * Helper function to get region color from term meta
  */
-function kidazzle_get_region_color_from_term($term_id)
+function wimper_get_region_color_from_term($term_id)
 {
     $color_bg = get_term_meta($term_id, 'region_color_bg', true);
     $color_text = get_term_meta($term_id, 'region_color_text', true);
@@ -480,7 +480,7 @@ function kidazzle_get_region_color_from_term($term_id)
 /**
  * Region Emoji Helper
  */
-function kidazzle_region_emoji($label)
+function wimper_region_emoji($label)
 {
     $map = array(
         'Cobb County' => '🍑',

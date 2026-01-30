@@ -3,7 +3,7 @@
  * Keyword Linker - Auto-link keywords in content
  * Automatically creates internal links when keywords appear
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class kidazzle_Keyword_Linker
+class wimper_Keyword_Linker
 {
     private $keywords = [];
     private $linked_this_post = [];
@@ -30,7 +30,7 @@ class kidazzle_Keyword_Linker
             return $this->keywords;
         }
         
-        $this->keywords = get_option('kidazzle_seo_keyword_links', []);
+        $this->keywords = get_option('wimper_seo_keyword_links', []);
         
         // Add default keywords if empty
         if (empty($this->keywords)) {
@@ -81,7 +81,7 @@ class kidazzle_Keyword_Linker
      * Auto-link keywords in content
      */
     public function auto_link_keywords($content) {
-        if (!get_option('kidazzle_seo_enable_keyword_linking', true)) {
+        if (!get_option('wimper_seo_enable_keyword_linking', true)) {
             return $content;
         }
         
@@ -145,7 +145,7 @@ class kidazzle_Keyword_Linker
             $count++;
             $this->linked_this_post[$keyword] = ($this->linked_this_post[$keyword] ?? 0) + 1;
             
-            return '<a href="' . esc_url($url) . '" class="kidazzle-auto-link">' . $matches[1] . '</a>';
+            return '<a href="' . esc_url($url) . '" class="wimper-auto-link">' . $matches[1] . '</a>';
         }, $content, $max);
         
         return $content;
@@ -156,11 +156,11 @@ class kidazzle_Keyword_Linker
      */
     public function add_settings_page() {
         add_submenu_page(
-            'kidazzle-seo-dashboard',
+            'wimper-seo-dashboard',
             'Keyword Linking',
             'Keyword Linking',
             'manage_options',
-            'kidazzle-keyword-linking',
+            'wimper-keyword-linking',
             [$this, 'render_settings_page']
         );
     }
@@ -169,30 +169,30 @@ class kidazzle_Keyword_Linker
      * Register settings
      */
     public function register_settings() {
-        register_setting('kidazzle_keyword_linking', 'kidazzle_seo_enable_keyword_linking');
-        register_setting('kidazzle_keyword_linking', 'kidazzle_seo_keyword_links');
+        register_setting('wimper_keyword_linking', 'wimper_seo_enable_keyword_linking');
+        register_setting('wimper_keyword_linking', 'wimper_seo_keyword_links');
     }
     
     /**
      * Render settings page
      */
     public function render_settings_page() {
-        $enabled = get_option('kidazzle_seo_enable_keyword_linking', true);
-        $keywords = get_option('kidazzle_seo_keyword_links', []);
+        $enabled = get_option('wimper_seo_enable_keyword_linking', true);
+        $keywords = get_option('wimper_seo_keyword_links', []);
         $auto_keywords = $this->get_auto_keywords();
         ?>
         <div class="wrap">
             <h1>Keyword Linking</h1>
             
             <form method="post" action="options.php">
-                <?php settings_fields('kidazzle_keyword_linking'); ?>
+                <?php settings_fields('wimper_keyword_linking'); ?>
                 
                 <table class="form-table">
                     <tr>
                         <th>Enable Auto-Linking</th>
                         <td>
                             <label>
-                                <input type="checkbox" name="kidazzle_seo_enable_keyword_linking" 
+                                <input type="checkbox" name="wimper_seo_enable_keyword_linking" 
                                     value="1" <?php checked($enabled); ?>>
                                 Automatically link keywords in blog posts
                             </label>
@@ -229,11 +229,11 @@ class kidazzle_Keyword_Linker
                 <div id="custom-keywords">
                     <?php foreach ($keywords as $i => $kw): ?>
                     <div class="keyword-row">
-                        <input type="text" name="kidazzle_seo_keyword_links[<?php echo $i; ?>][keyword]" 
+                        <input type="text" name="wimper_seo_keyword_links[<?php echo $i; ?>][keyword]" 
                             value="<?php echo esc_attr($kw['keyword']); ?>" placeholder="Keyword">
-                        <input type="url" name="kidazzle_seo_keyword_links[<?php echo $i; ?>][url]" 
+                        <input type="url" name="wimper_seo_keyword_links[<?php echo $i; ?>][url]" 
                             value="<?php echo esc_url($kw['url']); ?>" placeholder="URL">
-                        <input type="number" name="kidazzle_seo_keyword_links[<?php echo $i; ?>][max]" 
+                        <input type="number" name="wimper_seo_keyword_links[<?php echo $i; ?>][max]" 
                             value="<?php echo intval($kw['max'] ?? 1); ?>" min="1" max="5" style="width:60px">
                         <button type="button" class="button remove-keyword">×</button>
                     </div>
@@ -258,9 +258,9 @@ class kidazzle_Keyword_Linker
             $('#add-keyword').on('click', function() {
                 $('#custom-keywords').append(
                     '<div class="keyword-row">' +
-                    '<input type="text" name="kidazzle_seo_keyword_links[' + i + '][keyword]" placeholder="Keyword">' +
-                    '<input type="url" name="kidazzle_seo_keyword_links[' + i + '][url]" placeholder="URL">' +
-                    '<input type="number" name="kidazzle_seo_keyword_links[' + i + '][max]" value="1" min="1" max="5" style="width:60px">' +
+                    '<input type="text" name="wimper_seo_keyword_links[' + i + '][keyword]" placeholder="Keyword">' +
+                    '<input type="url" name="wimper_seo_keyword_links[' + i + '][url]" placeholder="URL">' +
+                    '<input type="number" name="wimper_seo_keyword_links[' + i + '][max]" value="1" min="1" max="5" style="width:60px">' +
                     '<button type="button" class="button remove-keyword">×</button>' +
                     '</div>'
                 );
@@ -276,4 +276,4 @@ class kidazzle_Keyword_Linker
     }
 }
 
-new kidazzle_Keyword_Linker();
+new wimper_Keyword_Linker();

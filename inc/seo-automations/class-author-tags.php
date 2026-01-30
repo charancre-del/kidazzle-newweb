@@ -3,7 +3,7 @@
  * Author Tags - E-E-A-T Enhancement
  * Adds proper author attribution to content
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -11,76 +11,80 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class kidazzle_Author_Tags
+class wimper_Author_Tags
 {
-    public function __construct() {
+    public function __construct()
+    {
         add_action('wp_head', [$this, 'output_author_meta']);
         add_filter('the_content', [$this, 'append_author_box'], 30);
     }
-    
+
     /**
      * Output author meta tag
      */
-    public function output_author_meta() {
-        if (!get_option('kidazzle_seo_show_author_meta', true)) {
+    public function output_author_meta()
+    {
+        if (!get_option('wimper_seo_show_author_meta', true)) {
             return;
         }
-        
+
         if (!is_singular(['post', 'page'])) {
             return;
         }
-        
+
         $author = $this->get_author_info(get_the_ID());
-        
+
         if ($author) {
             echo '<meta name="author" content="' . esc_attr($author['name']) . '">' . "\n";
-            
+
             // Schema.org Person
             $schema = [
                 '@context' => 'https://schema.org',
                 '@type' => 'Person',
                 'name' => $author['name']
             ];
-            
+
             if ($author['url']) {
                 $schema['url'] = $author['url'];
             }
-            
+
             if ($author['avatar']) {
                 $schema['image'] = $author['avatar'];
             }
-            
+
             if ($author['description']) {
                 $schema['description'] = $author['description'];
             }
-            
+
             echo '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
         }
     }
-    
+
     /**
      * Append author box after content
      */
-    public function append_author_box($content) {
-        if (!get_option('kidazzle_seo_show_author_box', true)) {
+    public function append_author_box($content)
+    {
+        if (!get_option('wimper_seo_show_author_box', true)) {
             return $content;
         }
-        
+
         if (!is_singular('post')) {
             return $content;
         }
-        
+
         $author = $this->get_author_info(get_the_ID());
-        
+
         if (!$author) {
             return $content;
         }
-        
+
         ob_start();
         ?>
-        <div class="kidazzle-author-box">
+        <div class="wimper-author-box">
             <?php if ($author['avatar']): ?>
-                <img src="<?php echo esc_url($author['avatar']); ?>" alt="<?php echo esc_attr($author['name']); ?>" class="author-avatar">
+                <img src="<?php echo esc_url($author['avatar']); ?>" alt="<?php echo esc_attr($author['name']); ?>"
+                    class="author-avatar">
             <?php endif; ?>
             <div class="author-info">
                 <p class="author-label">Written by</p>
@@ -100,7 +104,7 @@ class kidazzle_Author_Tags
             </div>
         </div>
         <style>
-            .kidazzle-author-box {
+            .wimper-author-box {
                 display: flex;
                 gap: 20px;
                 padding: 25px;
@@ -108,13 +112,18 @@ class kidazzle_Author_Tags
                 border-radius: 12px;
                 margin: 40px 0;
             }
+
             .author-avatar {
                 width: 80px;
                 height: 80px;
                 border-radius: 50%;
                 object-fit: cover;
             }
-            .author-info { flex: 1; }
+
+            .author-info {
+                flex: 1;
+            }
+
             .author-label {
                 margin: 0;
                 font-size: 12px;
@@ -122,20 +131,27 @@ class kidazzle_Author_Tags
                 letter-spacing: 1px;
                 color: #888;
             }
+
             .author-name {
                 margin: 5px 0 10px;
                 font-size: 18px;
             }
+
             .author-name a {
                 color: inherit;
                 text-decoration: none;
             }
-            .author-name a:hover { text-decoration: underline; }
+
+            .author-name a:hover {
+                text-decoration: underline;
+            }
+
             .author-title {
                 margin: 0 0 10px;
                 color: #666;
                 font-size: 14px;
             }
+
             .author-bio {
                 margin: 0;
                 font-size: 14px;
@@ -144,25 +160,26 @@ class kidazzle_Author_Tags
             }
         </style>
         <?php
-        
+
         return $content . ob_get_clean();
     }
-    
+
     /**
      * Get author info
      */
-    private function get_author_info($post_id) {
+    private function get_author_info($post_id)
+    {
         $post = get_post($post_id);
-        
+
         if (!$post) {
             return null;
         }
-        
+
         $author_id = $post->post_author;
-        
+
         // Check for team member association
         $team_member_id = get_post_meta($post_id, '_author_team_member', true);
-        
+
         if ($team_member_id) {
             $team_member = get_post($team_member_id);
             if ($team_member) {
@@ -175,7 +192,7 @@ class kidazzle_Author_Tags
                 ];
             }
         }
-        
+
         // Default to WP user
         return [
             'name' => get_the_author_meta('display_name', $author_id),
@@ -187,4 +204,4 @@ class kidazzle_Author_Tags
     }
 }
 
-new kidazzle_Author_Tags();
+new wimper_Author_Tags();

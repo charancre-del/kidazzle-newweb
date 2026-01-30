@@ -2,7 +2,7 @@
 /**
  * Footer Customizer Settings
  *
- * @package kidazzle_Theme
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -14,12 +14,12 @@ if (!defined('ABSPATH')) {
 /**
  * Register Footer Customizer Settings
  */
-function kidazzle_footer_customizer_settings($wp_customize)
+function wimper_footer_customizer_settings($wp_customize)
 {
 
 	// Add Footer Section
-	$wp_customize->add_section('kidazzle_footer_settings', array(
-		'title' => __('Footer Settings', 'kidazzle-theme'),
+	$wp_customize->add_section('wimper_footer_settings', array(
+		'title' => __('Footer Settings', 'wimper-theme'),
 		'priority' => 40,
 	));
 
@@ -27,16 +27,16 @@ function kidazzle_footer_customizer_settings($wp_customize)
 	 * Contact Section
 	 */
 	// Phone Number
-	$wp_customize->add_setting('kidazzle_footer_phone', array(
+	$wp_customize->add_setting('wimper_footer_phone', array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_text_field',
 		'transport' => 'refresh',
 	));
 
-	$wp_customize->add_control('kidazzle_footer_phone', array(
-		'label' => __('Contact Phone', 'kidazzle-theme'),
-		'description' => __('Phone number to display in footer contact section', 'kidazzle-theme'),
-		'section' => 'kidazzle_footer_settings',
+	$wp_customize->add_control('wimper_footer_phone', array(
+		'label' => __('Contact Phone', 'wimper-theme'),
+		'description' => __('Phone number to display in footer contact section', 'wimper-theme'),
+		'section' => 'wimper_footer_settings',
 		'type' => 'text',
 		'input_attrs' => array(
 			'placeholder' => '(404) 555-1234',
@@ -44,16 +44,16 @@ function kidazzle_footer_customizer_settings($wp_customize)
 	));
 
 	// Email Address
-	$wp_customize->add_setting('kidazzle_footer_email', array(
+	$wp_customize->add_setting('wimper_footer_email', array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_email',
 		'transport' => 'refresh',
 	));
 
-	$wp_customize->add_control('kidazzle_footer_email', array(
-		'label' => __('Contact Email', 'kidazzle-theme'),
-		'description' => __('Email address to display in footer contact section', 'kidazzle-theme'),
-		'section' => 'kidazzle_footer_settings',
+	$wp_customize->add_control('wimper_footer_email', array(
+		'label' => __('Contact Email', 'wimper-theme'),
+		'description' => __('Email address to display in footer contact section', 'wimper-theme'),
+		'section' => 'wimper_footer_settings',
 		'type' => 'email',
 		'input_attrs' => array(
 			'placeholder' => 'hello@example.com',
@@ -61,16 +61,16 @@ function kidazzle_footer_customizer_settings($wp_customize)
 	));
 
 	// Address
-	$wp_customize->add_setting('kidazzle_footer_address', array(
+	$wp_customize->add_setting('wimper_footer_address', array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_textarea_field',
 		'transport' => 'refresh',
 	));
 
-	$wp_customize->add_control('kidazzle_footer_address', array(
-		'label' => __('Contact Address', 'kidazzle-theme'),
-		'description' => __('Physical address to display in footer contact section', 'kidazzle-theme'),
-		'section' => 'kidazzle_footer_settings',
+	$wp_customize->add_control('wimper_footer_address', array(
+		'label' => __('Contact Address', 'wimper-theme'),
+		'description' => __('Physical address to display in footer contact section', 'wimper-theme'),
+		'section' => 'wimper_footer_settings',
 		'type' => 'textarea',
 		'input_attrs' => array(
 			'placeholder' => '123 Main St, Atlanta, GA 30301',
@@ -82,16 +82,16 @@ function kidazzle_footer_customizer_settings($wp_customize)
 	 * Social Links Section
 	 */
 	// Facebook URL
-	$wp_customize->add_setting('kidazzle_footer_facebook', array(
+	$wp_customize->add_setting('wimper_footer_facebook', array(
 		'default' => '',
 		'sanitize_callback' => 'esc_url_raw',
 		'transport' => 'refresh',
 	));
 
-	$wp_customize->add_control('kidazzle_footer_facebook', array(
-		'label' => __('Facebook URL', 'kidazzle-theme'),
-		'description' => __('Full URL to your Facebook page', 'kidazzle-theme'),
-		'section' => 'kidazzle_footer_settings',
+	$wp_customize->add_control('wimper_footer_facebook', array(
+		'label' => __('Facebook URL', 'wimper-theme'),
+		'description' => __('Full URL to your Facebook page', 'wimper-theme'),
+		'section' => 'wimper_footer_settings',
 		'type' => 'url',
 		'input_attrs' => array(
 			'placeholder' => 'https://facebook.com/yourpage',
@@ -99,16 +99,16 @@ function kidazzle_footer_customizer_settings($wp_customize)
 	));
 
 	// Instagram URL
-	$wp_customize->add_setting('kidazzle_footer_instagram', array(
+	$wp_customize->add_setting('wimper_footer_instagram', array(
 		'default' => '',
 		'sanitize_callback' => 'esc_url_raw',
 		'transport' => 'refresh',
 	));
 
-	$wp_customize->add_control('kidazzle_footer_instagram', array(
-		'label' => __('Instagram URL', 'kidazzle-theme'),
-		'description' => __('Full URL to your Instagram profile', 'kidazzle-theme'),
-		'section' => 'kidazzle_footer_settings',
+	$wp_customize->add_control('wimper_footer_instagram', array(
+		'label' => __('Instagram URL', 'wimper-theme'),
+		'description' => __('Full URL to your Instagram profile', 'wimper-theme'),
+		'section' => 'wimper_footer_settings',
 		'type' => 'url',
 		'input_attrs' => array(
 			'placeholder' => 'https://instagram.com/yourprofile',
@@ -116,16 +116,16 @@ function kidazzle_footer_customizer_settings($wp_customize)
 	));
 
 	// LinkedIn URL
-	$wp_customize->add_setting('kidazzle_footer_linkedin', array(
+	$wp_customize->add_setting('wimper_footer_linkedin', array(
 		'default' => '',
 		'sanitize_callback' => 'esc_url_raw',
 		'transport' => 'refresh',
 	));
 
-	$wp_customize->add_control('kidazzle_footer_linkedin', array(
-		'label' => __('LinkedIn URL', 'kidazzle-theme'),
-		'description' => __('Full URL to your LinkedIn page', 'kidazzle-theme'),
-		'section' => 'kidazzle_footer_settings',
+	$wp_customize->add_control('wimper_footer_linkedin', array(
+		'label' => __('LinkedIn URL', 'wimper-theme'),
+		'description' => __('Full URL to your LinkedIn page', 'wimper-theme'),
+		'section' => 'wimper_footer_settings',
 		'type' => 'url',
 		'input_attrs' => array(
 			'placeholder' => 'https://linkedin.com/company/yourcompany',
@@ -133,16 +133,16 @@ function kidazzle_footer_customizer_settings($wp_customize)
 	));
 
 	// Twitter/X URL
-	$wp_customize->add_setting('kidazzle_footer_twitter', array(
+	$wp_customize->add_setting('wimper_footer_twitter', array(
 		'default' => '',
 		'sanitize_callback' => 'esc_url_raw',
 		'transport' => 'refresh',
 	));
 
-	$wp_customize->add_control('kidazzle_footer_twitter', array(
-		'label' => __('Twitter/X URL', 'kidazzle-theme'),
-		'description' => __('Full URL to your Twitter/X profile', 'kidazzle-theme'),
-		'section' => 'kidazzle_footer_settings',
+	$wp_customize->add_control('wimper_footer_twitter', array(
+		'label' => __('Twitter/X URL', 'wimper-theme'),
+		'description' => __('Full URL to your Twitter/X profile', 'wimper-theme'),
+		'section' => 'wimper_footer_settings',
 		'type' => 'url',
 		'input_attrs' => array(
 			'placeholder' => 'https://twitter.com/yourprofile',
@@ -150,16 +150,16 @@ function kidazzle_footer_customizer_settings($wp_customize)
 	));
 
 	// YouTube URL
-	$wp_customize->add_setting('kidazzle_footer_youtube', array(
+	$wp_customize->add_setting('wimper_footer_youtube', array(
 		'default' => '',
 		'sanitize_callback' => 'esc_url_raw',
 		'transport' => 'refresh',
 	));
 
-	$wp_customize->add_control('kidazzle_footer_youtube', array(
-		'label' => __('YouTube URL', 'kidazzle-theme'),
-		'description' => __('Full URL to your YouTube channel', 'kidazzle-theme'),
-		'section' => 'kidazzle_footer_settings',
+	$wp_customize->add_control('wimper_footer_youtube', array(
+		'label' => __('YouTube URL', 'wimper-theme'),
+		'description' => __('Full URL to your YouTube channel', 'wimper-theme'),
+		'section' => 'wimper_footer_settings',
 		'type' => 'url',
 		'input_attrs' => array(
 			'placeholder' => 'https://youtube.com/@yourchannel',
@@ -167,18 +167,18 @@ function kidazzle_footer_customizer_settings($wp_customize)
 	));
 
 	// Footer Scripts
-	$wp_customize->add_setting('kidazzle_footer_scripts', array(
+	$wp_customize->add_setting('wimper_footer_scripts', array(
 		'default' => '',
-		'sanitize_callback' => 'kidazzle_sanitize_raw_html',
+		'sanitize_callback' => 'wimper_sanitize_raw_html',
 		'transport' => 'refresh',
 	));
 
-	$wp_customize->add_control('kidazzle_footer_scripts', array(
-		'label' => __('Footer Scripts', 'kidazzle-theme'),
-		'description' => __('Scripts to be output before </body>.', 'kidazzle-theme'),
-		'section' => 'kidazzle_footer_settings',
+	$wp_customize->add_control('wimper_footer_scripts', array(
+		'label' => __('Footer Scripts', 'wimper-theme'),
+		'description' => __('Scripts to be output before </body>.', 'wimper-theme'),
+		'section' => 'wimper_footer_settings',
 		'type' => 'textarea',
 	));
 
 }
-add_action('customize_register', 'kidazzle_footer_customizer_settings');
+add_action('customize_register', 'wimper_footer_customizer_settings');

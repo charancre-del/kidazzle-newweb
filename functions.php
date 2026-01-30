@@ -4,8 +4,8 @@
  *
  * Homepage Template: front-page.php (WordPress default)
  *
- * @package kidazzle_Theme
- * @since 1.0.0
+ * @package wimper_Theme
+ * @since 2.0.0
  */
 
 // Exit if accessed directly
@@ -30,9 +30,9 @@ if (!is_admin()) {
 /**
  * Define theme constants
  */
-define('KIDAZZLE_VERSION', '1.0.0');
-define('KIDAZZLE_THEME_DIR', get_template_directory());
-define('KIDAZZLE_THEME_URI', get_template_directory_uri());
+define('WIMPER_VERSION', '2.0.0');
+define('WIMPER_THEME_DIR', get_template_directory());
+define('WIMPER_THEME_URI', get_template_directory_uri());
 
 /**
  * Load core theme functionality
@@ -40,77 +40,80 @@ define('KIDAZZLE_THEME_URI', get_template_directory_uri());
  */
 
 // Core setup and configuration
-require_once KIDAZZLE_THEME_DIR . '/inc/setup.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/critical-css.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/enqueue.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/program-settings.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/nav-menus.php';
+require_once WIMPER_THEME_DIR . '/inc/setup.php';
+require_once WIMPER_THEME_DIR . '/inc/critical-css.php';
+require_once WIMPER_THEME_DIR . '/inc/enqueue.php';
+require_once WIMPER_THEME_DIR . '/inc/program-settings.php';
+require_once WIMPER_THEME_DIR . '/inc/nav-menus.php';
 
 // Custom Post Types
-require_once KIDAZZLE_THEME_DIR . '/inc/cpt-programs.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/cpt-locations.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/cpt-cities.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/cpt-team-members.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/class-program-enhancements.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/class-amp-blog.php';
+require_once WIMPER_THEME_DIR . '/inc/cpt-programs.php';
+require_once WIMPER_THEME_DIR . '/inc/cpt-locations.php';
+require_once WIMPER_THEME_DIR . '/inc/cpt-cities.php';
+require_once WIMPER_THEME_DIR . '/inc/cpt-team-members.php';
+require_once WIMPER_THEME_DIR . '/inc/class-program-enhancements.php';
+require_once WIMPER_THEME_DIR . '/inc/class-amp-blog.php';
 
 // API Handlers
-require_once KIDAZZLE_THEME_DIR . '/inc/careers-api.php';
+require_once WIMPER_THEME_DIR . '/inc/careers-api.php';
 
 // Page Meta Boxes
-require_once KIDAZZLE_THEME_DIR . '/inc/about-page-meta.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/curriculum-page-meta.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/contact-page-meta.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/stories-page-meta.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/parents-page-meta.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/careers-page-meta.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/employers-page-meta.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/privacy-page-meta.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/schema-meta-boxes.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/general-seo-meta.php';
+require_once WIMPER_THEME_DIR . '/inc/about-page-meta.php';
+require_once WIMPER_THEME_DIR . '/inc/curriculum-page-meta.php';
+require_once WIMPER_THEME_DIR . '/inc/contact-page-meta.php';
+require_once WIMPER_THEME_DIR . '/inc/stories-page-meta.php';
+require_once WIMPER_THEME_DIR . '/inc/parents-page-meta.php';
+require_once WIMPER_THEME_DIR . '/inc/careers-page-meta.php';
+require_once WIMPER_THEME_DIR . '/inc/employers-page-meta.php';
+require_once WIMPER_THEME_DIR . '/inc/privacy-page-meta.php';
+require_once WIMPER_THEME_DIR . '/inc/schema-meta-boxes.php';
+require_once WIMPER_THEME_DIR . '/inc/general-seo-meta.php';
 
 
 // Utility Functions
-require_once KIDAZZLE_THEME_DIR . '/inc/template-tags.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/dynamic-links.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/about-seo.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/customizer-home.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/customizer-header.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/customizer-footer.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/customizer-locations.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/customizer-seo.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/customizer-scripts.php';
+require_once WIMPER_THEME_DIR . '/inc/template-tags.php';
+require_once WIMPER_THEME_DIR . '/inc/dynamic-links.php';
+require_once WIMPER_THEME_DIR . '/inc/about-seo.php';
+require_once WIMPER_THEME_DIR . '/inc/customizer-home.php';
+require_once WIMPER_THEME_DIR . '/inc/customizer-header.php';
+require_once WIMPER_THEME_DIR . '/inc/customizer-footer.php';
+require_once WIMPER_THEME_DIR . '/inc/customizer-locations.php';
+require_once WIMPER_THEME_DIR . '/inc/customizer-seo.php';
+require_once WIMPER_THEME_DIR . '/inc/customizer-scripts.php';
 
 // Legacy helper files (ACF plugin optional; helpers run on core WP functions only)
-require_once KIDAZZLE_THEME_DIR . '/inc/acf-options.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/acf-homepage.php';
+require_once WIMPER_THEME_DIR . '/inc/acf-options.php';
+require_once WIMPER_THEME_DIR . '/inc/acf-homepage.php';
 
-require_once KIDAZZLE_THEME_DIR . '/inc/cleanup.php';
+require_once WIMPER_THEME_DIR . '/inc/cleanup.php';
 
 // SEO and Internationalization
-require_once KIDAZZLE_THEME_DIR . '/inc/seo-engine.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/city-slug-logic.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/spanish-variant-generator.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/monthly-seo-cron.php';
+require_once WIMPER_THEME_DIR . '/inc/seo-engine.php';
+require_once WIMPER_THEME_DIR . '/inc/city-slug-logic.php';
+require_once WIMPER_THEME_DIR . '/inc/spanish-variant-generator.php';
+require_once WIMPER_THEME_DIR . '/inc/monthly-seo-cron.php';
 
 // LLM SEO / Citation Module (Legacy - Disabled to prevent conflict with Advanced SEO/LLM)
-// require_once KIDAZZLE_THEME_DIR . '/inc/llm-seo/bootstrap.php';
+// require_once WIMPER_THEME_DIR . '/inc/llm-seo/bootstrap.php';
+
+// SEO Automations (Refactored WIMPER Module)
+require_once WIMPER_THEME_DIR . '/inc/seo-automations/bootstrap.php';
 
 // Advanced SEO/LLM Module (Editable Fields)
-require_once KIDAZZLE_THEME_DIR . '/inc/advanced-seo-llm/bootstrap.php';
+require_once WIMPER_THEME_DIR . '/inc/advanced-seo-llm/bootstrap.php';
 
 // SEO Automations (Internal Linking, Geo SEO, etc.)
-require_once KIDAZZLE_THEME_DIR . '/inc/seo-automations/bootstrap.php';
+require_once WIMPER_THEME_DIR . '/inc/seo-automations/bootstrap.php';
 
-require_once KIDAZZLE_THEME_DIR . '/inc/security.php';
-require_once KIDAZZLE_THEME_DIR . '/inc/force-trailing-slashes.php';
+require_once WIMPER_THEME_DIR . '/inc/security.php';
+require_once WIMPER_THEME_DIR . '/inc/force-trailing-slashes.php';
 
 /**
  * Remove Legacy JavaScript & Styles
  * - WP Emoji
  * - WP Embeds
  */
-function kidazzle_remove_legacy_assets()
+function wimper_remove_legacy_assets()
 {
     // Remove Emoji - DISABLED (User requested emojis back)
     // remove_action('wp_head', 'print_emoji_detection_script', 7);
@@ -126,34 +129,35 @@ function kidazzle_remove_legacy_assets()
         wp_deregister_script('wp-embed');
     }
 }
-add_action('init', 'kidazzle_remove_legacy_assets');
+add_action('init', 'wimper_remove_legacy_assets');
 
 /**
  * Remove Gutenberg Block Library CSS on Frontend
  * This theme doesn't use Gutenberg blocks, so we can remove these render-blocking styles
  */
-function kidazzle_remove_block_library_css() {
+function wimper_remove_block_library_css()
+{
     if (!is_admin()) {
         // Remove core block library CSS
         wp_dequeue_style('wp-block-library');
         wp_dequeue_style('wp-block-library-theme');
-        
+
         // Remove WooCommerce block CSS (if any)
         wp_dequeue_style('wc-blocks-style');
-        
+
         // Remove global styles (theme.json generated)
         wp_dequeue_style('global-styles');
         wp_dequeue_style('wp-block-navigation');
         wp_dequeue_style('classic-theme-styles');
     }
 }
-add_action('wp_enqueue_scripts', 'kidazzle_remove_block_library_css', 100);
+add_action('wp_enqueue_scripts', 'wimper_remove_block_library_css', 100);
 
 // Disable separate block assets loading (WordPress 5.8+)
 add_filter('should_load_separate_core_block_assets', '__return_false');
 
 // Remove inline block styles for specific blocks
-add_action('wp_enqueue_scripts', function() {
+add_action('wp_enqueue_scripts', function () {
     // Get all registered block styles and remove them
     $blocks_to_remove = ['heading', 'paragraph', 'list', 'list-item', 'quote', 'image', 'separator'];
     foreach ($blocks_to_remove as $block) {
@@ -166,14 +170,14 @@ add_action('wp_enqueue_scripts', function() {
  * Exclude images with 'no-lazy' class from LiteSpeed lazy loading
  * This prevents CLS on hero images and other critical above-the-fold images
  */
-add_filter('litespeed_media_lazy_img_excludes', function($excludes) {
+add_filter('litespeed_media_lazy_img_excludes', function ($excludes) {
     $excludes[] = 'no-lazy';
     $excludes[] = 'fetchpriority';
     return $excludes;
 });
 
 // Also exclude from native WordPress lazy loading
-add_filter('wp_img_tag_add_loading_attr', function($value, $image, $context) {
+add_filter('wp_img_tag_add_loading_attr', function ($value, $image, $context) {
     if (strpos($image, 'no-lazy') !== false || strpos($image, 'fetchpriority') !== false) {
         return false; // Don't add loading="lazy"
     }
@@ -184,7 +188,7 @@ add_filter('wp_img_tag_add_loading_attr', function($value, $image, $context) {
  * Add CORS Headers for Font Files
  * Fixes: Cross-origin font loading when site is accessed via www vs non-www
  */
-function kidazzle_add_cors_headers()
+function wimper_add_cors_headers()
 {
     // Only add headers for font file requests
     $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
@@ -195,20 +199,20 @@ function kidazzle_add_cors_headers()
         header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
     }
 }
-add_action('send_headers', 'kidazzle_add_cors_headers');
+add_action('send_headers', 'wimper_add_cors_headers');
 
 /**
  * Add CORS headers to font files served by WordPress
  * This filter adds headers when fonts are served through WordPress
  */
-function kidazzle_cors_font_headers($headers, $path)
+function wimper_cors_font_headers($headers, $path)
 {
     if (preg_match('/\.(woff2?|ttf|otf|eot)$/i', $path)) {
         $headers['Access-Control-Allow-Origin'] = '*';
     }
     return $headers;
 }
-add_filter('wp_get_attachment_headers', 'kidazzle_cors_font_headers', 10, 2);
+add_filter('wp_get_attachment_headers', 'wimper_cors_font_headers', 10, 2);
 
 
 /**
@@ -226,32 +230,32 @@ add_filter('elementor/image/print_dimensions', '__return_true');
  * Add width and height attributes to post thumbnails for CLS optimization
  * Filter: post_thumbnail_html
  */
-function kidazzle_add_post_thumbnail_dims($html, $post_id, $post_thumbnail_id)
+function wimper_add_post_thumbnail_dims($html, $post_id, $post_thumbnail_id)
 {
     if (!$post_thumbnail_id) {
         return $html;
     }
-    return kidazzle_inject_dimensions($html, $post_thumbnail_id);
+    return wimper_inject_dimensions($html, $post_thumbnail_id);
 }
-add_filter('post_thumbnail_html', 'kidazzle_add_post_thumbnail_dims', 10, 3);
+add_filter('post_thumbnail_html', 'wimper_add_post_thumbnail_dims', 10, 3);
 
 /**
  * Add width and height attributes to content images
  * Filter: get_image_tag
  */
-function kidazzle_add_content_image_dims($html, $id, $alt)
+function wimper_add_content_image_dims($html, $id, $alt)
 {
     if (!$id) {
         return $html;
     }
-    return kidazzle_inject_dimensions($html, $id);
+    return wimper_inject_dimensions($html, $id);
 }
-add_filter('get_image_tag', 'kidazzle_add_content_image_dims', 10, 3);
+add_filter('get_image_tag', 'wimper_add_content_image_dims', 10, 3);
 
 /**
  * Helper function to inject dimensions
  */
-function kidazzle_inject_dimensions($html, $attachment_id)
+function wimper_inject_dimensions($html, $attachment_id)
 {
     // If width is already defined, skip
     if (empty($html) || strpos($html, 'width=') !== false) {
@@ -273,12 +277,12 @@ function kidazzle_inject_dimensions($html, $attachment_id)
 /**
  * Allow WebP uploads
  */
-function kidazzle_mime_types($mimes)
+function wimper_mime_types($mimes)
 {
     $mimes['webp'] = 'image/webp';
     return $mimes;
 }
-add_filter('upload_mimes', 'kidazzle_mime_types');
+add_filter('upload_mimes', 'wimper_mime_types');
 
 
 
@@ -290,7 +294,7 @@ add_filter('upload_mimes', 'kidazzle_mime_types');
 /**
  * Defer non-critical third-party scripts.
  */
-function kidazzle_defer_scripts($tag, $handle, $src)
+function wimper_defer_scripts($tag, $handle, $src)
 {
     // List of scripts to defer
     $defer_scripts = array('jquery.min.js', 'jquery-migrate.min.js', 'gtag', 'did-0014');
@@ -303,26 +307,26 @@ function kidazzle_defer_scripts($tag, $handle, $src)
 
     return $tag;
 }
-add_filter('script_loader_tag', 'kidazzle_defer_scripts', 10, 3);
+add_filter('script_loader_tag', 'wimper_defer_scripts', 10, 3);
 /**
  * LCP Optimization: Preload hero image to improve Largest Content Paint
  */
-function kidazzle_preload_lcp_image()
+function wimper_preload_lcp_image()
 {
     // Using optimized logo as LCP candidate since specific hero image is missing
     $logo_url = get_template_directory_uri() . '/assets/images/kidazzle-logo-140x140.webp';
     echo '<link rel="preload" as="image" href="' . esc_url($logo_url) . '" fetchpriority="high">' . "\n";
 }
-add_action('wp_head', 'kidazzle_preload_lcp_image', 1);
+add_action('wp_head', 'wimper_preload_lcp_image', 1);
 
 /**
  * LiteSpeed Cache: Exclude LCP/hero images from lazy loading
  */
-function kidazzle_litespeed_exclude_lcp()
+function wimper_litespeed_exclude_lcp()
 {
     return array('logo_optimized', 'kidazzle-logo', 'hero', 'kidazzle-1920w', 'kidazzle-1920w.webp', 'logo');
 }
-add_filter('litespeed_img_lazy_exclude', 'kidazzle_litespeed_exclude_lcp');
+add_filter('litespeed_img_lazy_exclude', 'wimper_litespeed_exclude_lcp');
 
 /**
  * SEO: Dynamic Meta Descriptions
@@ -334,7 +338,7 @@ add_filter('litespeed_img_lazy_exclude', 'kidazzle_litespeed_exclude_lcp');
  * The plugin loads scripts immediately, blocking render
  * We dequeue them and load manually with lazy-loading below
  */
-function kidazzle_dequeue_leadconnector_plugin()
+function wimper_dequeue_leadconnector_plugin()
 {
     // Always dequeue to allow JS to handle loading logic (Cloudflare compatible)
     // Dequeue all LeadConnector plugin scripts
@@ -349,14 +353,14 @@ function kidazzle_dequeue_leadconnector_plugin()
     wp_dequeue_style('leadconnector');
     wp_deregister_style('leadconnector');
 }
-add_action('wp_enqueue_scripts', 'kidazzle_dequeue_leadconnector_plugin', 9999);
+add_action('wp_enqueue_scripts', 'wimper_dequeue_leadconnector_plugin', 9999);
 
 /**
  * Lazy Load LeadConnector Widget
  * Delays loading until 3 seconds after page load or on first user interaction
  * This prevents the widget from blocking initial render and improves LCP/FCP
  */
-function kidazzle_lazy_load_leadconnector()
+function wimper_lazy_load_leadconnector()
 {
 
     ?>
@@ -406,13 +410,13 @@ function kidazzle_lazy_load_leadconnector()
     </script>
     <?php
 }
-add_action('wp_footer', 'kidazzle_lazy_load_leadconnector', 999);
+add_action('wp_footer', 'wimper_lazy_load_leadconnector', 999);
 
 /**
  * URL Consistency: Force trailing slashes on all URLs
  * This prevents duplicate content issues like /programs vs /programs/
  */
-function kidazzle_enforce_trailing_slash($url, $type)
+function wimper_enforce_trailing_slash($url, $type)
 {
     // Skip files (anything with an extension)
     if (preg_match('/\.[a-zA-Z0-9]+(\?|$)/', $url)) {
@@ -426,13 +430,13 @@ function kidazzle_enforce_trailing_slash($url, $type)
 
     return trailingslashit($url);
 }
-add_filter('user_trailingslashit', 'kidazzle_enforce_trailing_slash', 10, 2);
+add_filter('user_trailingslashit', 'wimper_enforce_trailing_slash', 10, 2);
 
 /**
  * Title Length Optimization for SEO
  * Ensures titles stay within recommended limits
  */
-function kidazzle_optimize_title_length($title_parts)
+function wimper_optimize_title_length($title_parts)
 {
     // Truncate very long titles
     if (isset($title_parts['title']) && mb_strlen($title_parts['title']) > 50) {
@@ -441,21 +445,21 @@ function kidazzle_optimize_title_length($title_parts)
 
     // Use shorter site name suffix on blog posts
     if (is_single() && isset($title_parts['site'])) {
-        $title_parts['site'] = 'Kidazzle';
+        $title_parts['site'] = 'WIMPER';
     }
 
     return $title_parts;
 }
-add_filter('document_title_parts', 'kidazzle_optimize_title_length', 10);
+add_filter('document_title_parts', 'wimper_optimize_title_length', 10);
 
 /**
  * Use shorter title separator for cleaner titles
  */
-function kidazzle_title_separator($sep)
+function wimper_title_separator($sep)
 {
     return '|';
 }
-add_filter('document_title_separator', 'kidazzle_title_separator');
+add_filter('document_title_separator', 'wimper_title_separator');
 
 /**
  * Disable Speculation Rules

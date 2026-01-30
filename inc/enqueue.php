@@ -2,7 +2,7 @@
 /**
  * Enqueue scripts and styles.
  *
- * @package kidazzle_Theme
+ * @package wimper_Theme
  */
 
 if (!defined('ABSPATH')) {
@@ -12,12 +12,12 @@ if (!defined('ABSPATH')) {
 /**
  * Determine whether map assets should be enqueued.
  */
-function kidazzle_should_load_maps()
+function wimper_should_load_maps()
 {
         $should_load_maps = is_post_type_archive('location') || is_singular('location') || is_page('locations');
 
-        if (is_front_page() && function_exists('kidazzle_home_locations_preview')) {
-                $locations_preview = kidazzle_home_locations_preview();
+        if (is_front_page() && function_exists('wimper_home_locations_preview')) {
+                $locations_preview = wimper_home_locations_preview();
                 $should_load_maps = $should_load_maps || (!empty($locations_preview['map_points']));
         }
 
@@ -27,19 +27,19 @@ function kidazzle_should_load_maps()
 /**
  * Enqueue theme styles and scripts
  */
-function kidazzle_enqueue_assets()
+function wimper_enqueue_assets()
 {
         // DEBUG: Confirm this function is executing
-        echo '<!-- DEBUG: kidazzle_enqueue_assets is running -->';
+        echo '<!-- DEBUG: wimper_enqueue_assets is running -->';
 
         $script_dependencies = array('jquery');
 
         // Font Awesome (Subset)
-        $fa_path = KIDAZZLE_THEME_DIR . '/assets/css/font-awesome-subset.css';
+        $fa_path = WIMPER_THEME_DIR . '/assets/css/font-awesome-subset.css';
         $fa_version = file_exists($fa_path) ? filemtime($fa_path) : '6.4.0';
         wp_enqueue_style(
-                'kidazzle-font-awesome',
-                KIDAZZLE_THEME_URI . '/assets/css/font-awesome-subset.css',
+                'wimper-font-awesome',
+                WIMPER_THEME_URI . '/assets/css/font-awesome-subset.css',
                 array(),
                 $fa_version,
                 'all'
@@ -47,12 +47,12 @@ function kidazzle_enqueue_assets()
 
 
         if (is_front_page()) {
-                $chart_js_path = KIDAZZLE_THEME_DIR . '/assets/js/chart.min.js';
+                $chart_js_path = WIMPER_THEME_DIR . '/assets/js/chart.min.js';
                 $chart_js_version = file_exists($chart_js_path) ? filemtime($chart_js_path) : '4.4.1';
 
                 wp_enqueue_script(
                         'chartjs',
-                        KIDAZZLE_THEME_URI . '/assets/js/chart.min.js',
+                        WIMPER_THEME_URI . '/assets/js/chart.min.js',
                         array(),
                         $chart_js_version,
                         true
@@ -63,13 +63,13 @@ function kidazzle_enqueue_assets()
         }
 
         // Compiled Tailwind CSS.
-        $css_path = KIDAZZLE_THEME_DIR . '/assets/css/main.css';
-        $css_version = file_exists($css_path) ? filemtime($css_path) : KIDAZZLE_VERSION;
+        $css_path = WIMPER_THEME_DIR . '/assets/css/main.css';
+        $css_version = file_exists($css_path) ? filemtime($css_path) : WIMPER_VERSION;
 
         // Compiled Tailwind CSS - loads synchronously
         wp_enqueue_style(
-                'kidazzle-main',
-                KIDAZZLE_THEME_URI . '/assets/css/main.css',
+                'wimper-main',
+                WIMPER_THEME_URI . '/assets/css/main.css',
                 array(),
                 $css_version,
                 'all'
@@ -77,12 +77,12 @@ function kidazzle_enqueue_assets()
 
         // Dequeue legacy main CSS on front page to prevent WIMPER style overrides
         if (is_front_page()) {
-                wp_dequeue_style('kidazzle-main');
+                wp_dequeue_style('wimper-main');
         }
 
         // Main Theme Stylesheet (style.css)
         wp_enqueue_style(
-                'kidazzle-style',
+                'wimper-style',
                 get_stylesheet_uri(),
                 array(),
                 $css_version,
@@ -172,57 +172,57 @@ function kidazzle_enqueue_assets()
         wp_add_inline_style('kidazzle-main', $custom_css);
 
         // Main JavaScript.
-        $js_path = KIDAZZLE_THEME_DIR . '/assets/js/main.js';
-        $js_version = file_exists($js_path) ? filemtime($js_path) : KIDAZZLE_VERSION;
+        $js_path = WIMPER_THEME_DIR . '/assets/js/main.js';
+        $js_version = file_exists($js_path) ? filemtime($js_path) : WIMPER_VERSION;
 
         wp_enqueue_script(
-                'kidazzle-main-js',
-                KIDAZZLE_THEME_URI . '/assets/js/main.js',
+                'wimper-main-js',
+                WIMPER_THEME_URI . '/assets/js/main.js',
                 $script_dependencies,
                 $js_version,
                 true
         );
 
         // DEBUG: Confirm script was enqueued
-        echo '<!-- DEBUG: Enqueued kidazzle-main-js with URL: ' . KIDAZZLE_THEME_URI . '/assets/js/main.js and version: ' . $js_version . ' -->';
+        echo '<!-- DEBUG: Enqueued wimper-main-js with URL: ' . WIMPER_THEME_URI . '/assets/js/main.js and version: ' . $js_version . ' -->';
 
         // Defer re-enabled for FCP optimization
-        wp_script_add_data('kidazzle-main-js', 'defer', true);
+        wp_script_add_data('wimper-main-js', 'defer', true);
 
         // Map Facade (Lazy Load Leaflet).
-        $should_load_maps = kidazzle_should_load_maps();
+        $should_load_maps = wimper_should_load_maps();
 
         if ($should_load_maps) {
                 wp_enqueue_script(
-                        'kidazzle-map-facade',
-                        KIDAZZLE_THEME_URI . '/assets/js/map-facade.js',
-                        array('kidazzle-main-js'), // Depend on main to ensure kidazzleData is available
+                        'wimper-map-facade',
+                        WIMPER_THEME_URI . '/assets/js/map-facade.js',
+                        array('wimper-main-js'), // Depend on main to ensure wimperData is available
                         $js_version,
                         true
                 );
-                wp_script_add_data('kidazzle-map-facade', 'defer', true);
+                wp_script_add_data('wimper-map-facade', 'defer', true);
         }
 
         // Localize script for AJAX and dynamic data.
         wp_localize_script(
-                'kidazzle-main-js',
-                'kidazzleData',
+                'wimper-main-js',
+                'wimperData',
                 array(
                         'ajaxUrl' => admin_url('admin-ajax.php'),
-                        'nonce' => wp_create_nonce('kidazzle_nonce'),
-                        'themeUrl' => KIDAZZLE_THEME_URI,
+                        'nonce' => wp_create_nonce('wimper_nonce'),
+                        'themeUrl' => WIMPER_THEME_URI,
                         'homeUrl' => home_url(),
                 )
         );
 }
-add_action('wp_enqueue_scripts', 'kidazzle_enqueue_assets');
+add_action('wp_enqueue_scripts', 'wimper_enqueue_assets');
 
 
 
 /**
  * Add resource hints for external assets to improve initial page performance.
  */
-function kidazzle_resource_hints($urls, $relation_type)
+function wimper_resource_hints($urls, $relation_type)
 {
         if ('preconnect' === $relation_type) {
 
@@ -230,7 +230,7 @@ function kidazzle_resource_hints($urls, $relation_type)
                         $urls[] = 'https://cdn.jsdelivr.net';
                 }
 
-                if (kidazzle_should_load_maps()) {
+                if (wimper_should_load_maps()) {
                         $urls[] = 'https://unpkg.com';
                 }
 
@@ -248,7 +248,7 @@ function kidazzle_resource_hints($urls, $relation_type)
                         $urls[] = '//cdn.jsdelivr.net';
                 }
 
-                if (kidazzle_should_load_maps()) {
+                if (wimper_should_load_maps()) {
                         $urls[] = '//unpkg.com';
                 }
                 $urls[] = '//widgets.leadconnectorhq.com';
@@ -260,12 +260,12 @@ function kidazzle_resource_hints($urls, $relation_type)
 
         return array_unique($urls, SORT_REGULAR);
 }
-add_filter('wp_resource_hints', 'kidazzle_resource_hints', 10, 2);
+add_filter('wp_resource_hints', 'wimper_resource_hints', 10, 2);
 
 /**
  * Enqueue admin assets
  */
-function kidazzle_enqueue_admin_assets($hook)
+function wimper_enqueue_admin_assets($hook)
 {
         // Only load on post edit screens
         if ('post.php' !== $hook && 'post-new.php' !== $hook) {
@@ -273,12 +273,12 @@ function kidazzle_enqueue_admin_assets($hook)
         }
 
         // Font Awesome for icon previews in admin (using local version)
-        $fa_path = KIDAZZLE_THEME_DIR . '/assets/css/font-awesome.css';
+        $fa_path = WIMPER_THEME_DIR . '/assets/css/font-awesome.css';
         $fa_version = file_exists($fa_path) ? filemtime($fa_path) : '6.4.0';
 
         wp_enqueue_style(
                 'font-awesome-admin',
-                KIDAZZLE_THEME_URI . '/assets/css/font-awesome.css',
+                WIMPER_THEME_URI . '/assets/css/font-awesome.css',
                 array(),
                 $fa_version // Use same version as frontend for consistency
         );
@@ -288,22 +288,22 @@ function kidazzle_enqueue_admin_assets($hook)
 
         // Custom admin script for media uploader
         wp_enqueue_script(
-                'kidazzle-admin',
-                KIDAZZLE_THEME_URI . '/assets/js/admin.js',
+                'wimper-admin',
+                WIMPER_THEME_URI . '/assets/js/admin.js',
                 array('jquery'),
-                KIDAZZLE_VERSION,
+                WIMPER_VERSION,
                 true
         );
 }
-add_action('admin_enqueue_scripts', 'kidazzle_enqueue_admin_assets');
+add_action('admin_enqueue_scripts', 'wimper_enqueue_admin_assets');
 
 /**
  * Async load CSS for fonts only (not main CSS to prevent FOUC)
  */
-function kidazzle_async_styles($html, $handle, $href, $media)
+function wimper_async_styles($html, $handle, $href, $media)
 {
         // Defer Font Awesome AND Main CSS (Critical CSS inlined in header)
-        if (in_array($handle, array('kidazzle-font-awesome'))) {
+        if (in_array($handle, array('wimper-font-awesome'))) {
                 // Add data-no-optimize to prevent LiteSpeed from combining/blocking this file
                 $html = str_replace('<link', '<link data-no-optimize="1"', $html);
 
@@ -317,26 +317,26 @@ function kidazzle_async_styles($html, $handle, $href, $media)
         }
         return $html;
 }
-add_filter('style_loader_tag', 'kidazzle_async_styles', 10, 4);
+add_filter('style_loader_tag', 'wimper_async_styles', 10, 4);
 
 /**
  * Dequeue Dashicons for non-logged in users to improve performance
  */
-function kidazzle_dequeue_dashicons()
+function wimper_dequeue_dashicons()
 {
         if (!is_user_logged_in()) {
                 wp_dequeue_style('dashicons');
                 wp_deregister_style('dashicons');
         }
 }
-add_action('wp_enqueue_scripts', 'kidazzle_dequeue_dashicons');
+add_action('wp_enqueue_scripts', 'wimper_dequeue_dashicons');
 
 
 /**
  * Dequeue CDN styles (specifically Font Awesome) to force local loading.
  * Runs at priority 100 to ensure it runs after plugins.
  */
-function kidazzle_dequeue_cdn_styles()
+function wimper_dequeue_cdn_styles()
 {
         global $wp_styles;
         if (empty($wp_styles->queue)) {
@@ -360,4 +360,4 @@ function kidazzle_dequeue_cdn_styles()
                 }
         }
 }
-add_action('wp_enqueue_scripts', 'kidazzle_dequeue_cdn_styles', 100);
+add_action('wp_enqueue_scripts', 'wimper_dequeue_cdn_styles', 100);

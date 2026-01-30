@@ -1,122 +1,75 @@
 <?php
 /**
- * Spanish Variant Generator and Language Switcher
+ * Spanish Variant Generator
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (!defined('ABSPATH')) {
+    exit;
 }
 
 /**
- * Detect Current Language
- * Delegates to plugin if available, otherwise uses basic URL check.
+ * Detect current language
+ * 
+ * @return string 'en' or 'es'
  */
-function kidazzle_detect_current_language() {
-    // Plugin integration
-    if (class_exists('kidazzle_Multilingual_Manager')) {
-        return kidazzle_Multilingual_Manager::is_spanish() ? 'es' : 'en';
+function wimper_detect_current_language()
+{
+    // Check if Polylang or WPML is active
+    if (function_exists('pll_current_language')) {
+        return pll_current_language();
     }
 
-	$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	if ( strpos( $current_url, '/es/' ) !== false || strpos( $current_url, '-es' ) !== false ) {
-		return 'es';
-	}
-	return 'en';
+    // Fallback: Check for 'lang' query param (useful for testing without plugin)
+    if (isset($_GET['lang']) && $_GET['lang'] === 'es') {
+        return 'es';
+    }
+
+    return 'en';
 }
 
 /**
- * Get Alternate URL
- * Delegates to plugin logic.
+ * Get alternate language URL
+ * 
+ * @param string $target_lang Target language code ('es' or 'en')
+ * @return string URL of the alternate language version
  */
-function kidazzle_get_alternate_url( $target_lang = 'es' ) {
-    // Plugin integration
-    if (function_exists('kidazzle_get_alternates')) {
-        $alternates = kidazzle_get_alternates();
-        return $alternates[$target_lang] ?? '';
+function wimper_get_alternate_url($target_lang = 'es')
+{
+    // If using Polylang/WPML
+    if (function_exists('pll_the_languages')) {
+        $translations = pll_the_languages(array('raw' => 1));
+        if (isset($translations[$target_lang]['url'])) {
+            return $translations[$target_lang]['url'];
+        }
     }
 
-    // Fallback logic (Manual Only)
-	$current_lang = kidazzle_detect_current_language();
-	if ( $current_lang === $target_lang ) {
-		return '';
-	}
-    $meta_key = ($target_lang === 'es') ? 'alternate_url_es' : 'alternate_url_en';
-    return get_post_meta( get_the_ID(), $meta_key, true );
+    // Fallback: Simple query param toggle
+    $current_url = home_url(add_query_arg(array(), $wp->request));
+    return add_query_arg('lang', $target_lang, $current_url);
 }
 
 /**
  * Render Language Switcher
+ * 
+ * Outputs a simple language switcher button.
  */
-function kidazzle_render_language_switcher() {
-	$current_lang = kidazzle_detect_current_language();
+function wimper_render_language_switcher()
+{
+    $current_lang = wimper_detect_current_language();
     $target_lang = ($current_lang === 'en') ? 'es' : 'en';
-	$alternate_url = kidazzle_get_alternate_url( $target_lang );
+    $alternate_url = wimper_get_alternate_url($target_lang);
+    $label = ($target_lang === 'es') ? 'Español' : 'English';
+    $flag = ($target_lang === 'es') ? '🇪🇸' : '🇺🇸';
 
-	if ( ! $alternate_url ) {
-		return;
-	}
-
-	$label = $current_lang === 'en' ? 'Español' : 'English';
-    $flag = $current_lang === 'en' ? '🇪🇸' : '🇺🇸';
-
-	?>
-    <style>
-    .kidazzle-language-switcher {
-        display: inline-flex;
-    }
-    .kidazzle-language-switcher a {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        border-radius: 9999px;
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        color: #333;
-        font-size: 13px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.2s ease;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    }
-    .kidazzle-language-switcher a:hover {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-color: rgba(0, 0, 0, 0.2);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-        transform: translateY(-1px);
-    }
-    .kidazzle-language-switcher .lang-flag {
-        font-size: 16px;
-        line-height: 1;
-    }
-    .kidazzle-language-switcher .lang-label {
-        letter-spacing: 0.025em;
-    }
-    /* RTL Support */
-    [dir="rtl"] .kidazzle-language-switcher a {
-        flex-direction: row-reverse;
-    }
-    /* Dark mode variant */
-    .lang-es .kidazzle-language-switcher a,
-    body.dark-mode .kidazzle-language-switcher a {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        color: #fff;
-        border-color: rgba(255, 255, 255, 0.1);
-    }
-    body.dark-mode .kidazzle-language-switcher a:hover {
-        background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
-        border-color: rgba(255, 255, 255, 0.2);
-    }
-    </style>
-	<div class="kidazzle-language-switcher">
-		<a href="<?php echo esc_url( $alternate_url ); ?>">
-            <span class="lang-flag"><?php echo $flag; ?></span>
-			<span class="lang-label"><?php echo esc_html( $label ); ?></span>
-		</a>
-	</div>
-	<?php
+    ?>
+    <a href="<?php echo esc_url($alternate_url); ?>" class="wimper-lang-switcher"
+        aria-label="Switch to <?php echo esc_attr($label); ?>">
+        <span class="text-xl"><?php echo $flag; ?></span>
+        <span class="hidden md:inline ml-2 text-sm font-medium"><?php echo esc_html($label); ?></span>
+    </a>
+    <?php
 }

@@ -1,20 +1,20 @@
 /**
  * Admin JavaScript for Media Uploader
  *
- * @package kidazzle_Theme
+ * @package wimper-theme
  */
 
 jQuery(document).ready(function ($) {
     'use strict';
 
     // Media uploader for location images
-    $('.kidazzle-upload-button').on('click', function (e) {
+    $('.wimper-upload-button').on('click', function (e) {
         e.preventDefault();
 
         const button = $(this);
         const fieldId = button.data('field');
         const inputField = $('#' + fieldId);
-        const previewContainer = button.siblings('.kidazzle-image-preview');
+        const previewContainer = button.siblings('.wimper-image-preview');
 
         // Create WordPress media frame
         const mediaUploader = wp.media({
@@ -41,23 +41,23 @@ jQuery(document).ready(function ($) {
     });
 
     // Clear image button
-    $('.kidazzle-clear-button').on('click', function (e) {
+    $('.wimper-clear-button').on('click', function (e) {
         e.preventDefault();
 
         const button = $(this);
         const fieldId = button.data('field');
         const inputField = $('#' + fieldId);
-        const previewContainer = button.siblings('.kidazzle-image-preview');
+        const previewContainer = button.siblings('.wimper-image-preview');
 
         inputField.val('');
         previewContainer.empty();
     });
 
     // Show preview for existing images
-    $('.kidazzle-image-field').each(function () {
+    $('.wimper-image-field').each(function () {
         const inputField = $(this);
         const imageUrl = inputField.val();
-        const previewContainer = inputField.siblings('.kidazzle-image-preview');
+        const previewContainer = inputField.siblings('.wimper-image-preview');
 
         if (imageUrl && previewContainer.length) {
             previewContainer.html('<img src="' + imageUrl + '" style="max-width: 200px; height: auto; margin-top: 10px; border: 1px solid #ddd; padding: 5px; border-radius: 4px;" />');

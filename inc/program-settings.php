@@ -2,7 +2,7 @@
 /**
  * Program settings and helpers.
  *
- * @package kidazzle_Theme
+ * @package wimper_Theme
  */
 
 if (!defined('ABSPATH')) {
@@ -12,7 +12,10 @@ if (!defined('ABSPATH')) {
 /**
  * Default slug for the Program archive.
  */
-function kidazzle_program_base_slug_default()
+/**
+ * Default slug for the Program archive.
+ */
+function wimper_program_base_slug_default()
 {
 	return 'programs';
 }
@@ -20,77 +23,80 @@ function kidazzle_program_base_slug_default()
 /**
  * Sanitize a program base slug value.
  */
-function kidazzle_sanitize_program_base_slug($slug)
+function wimper_sanitize_program_base_slug($slug)
 {
 	$slug = sanitize_title($slug);
 
-	return $slug ?: kidazzle_program_base_slug_default();
+	return $slug ?: wimper_program_base_slug_default();
 }
 
 /**
  * Retrieve the Program archive slug.
  */
-function kidazzle_get_program_base_slug()
+function wimper_get_program_base_slug()
 {
-	$slug = get_option('kidazzle_program_base_slug', '');
+	$slug = get_option('wimper_program_base_slug', '');
 
-	return kidazzle_sanitize_program_base_slug($slug);
+	return wimper_sanitize_program_base_slug($slug);
 }
 
 /**
  * Retrieve the Program archive URL.
  */
-function kidazzle_get_program_archive_url()
+function wimper_get_program_archive_url()
 {
-	return home_url('/' . kidazzle_get_program_base_slug());
+	return home_url('/' . wimper_get_program_base_slug());
 }
 
 /**
  * Register Customizer controls for the Program archive slug.
  */
-function kidazzle_program_settings_customize_register(WP_Customize_Manager $wp_customize)
+function wimper_program_settings_customize_register(WP_Customize_Manager $wp_customize)
 {
 	$wp_customize->add_section(
-		'kidazzle_program_settings',
+		'wimper_program_settings',
 		array(
-			'title' => __('Programs', 'kidazzle-theme'),
-			'description' => __('Control the URL slug for the Program archive and permalinks.', 'kidazzle-theme'),
+			'title' => __('Programs', 'wimper-theme'),
+			'description' => __('Control the URL slug for the Program archive and permalinks.', 'wimper-theme'),
 			'priority' => 131,
 		)
 	);
 
 	$wp_customize->add_setting(
-		'kidazzle_program_base_slug',
+		'wimper_program_base_slug',
 		array(
 			'type' => 'option',
-			'default' => kidazzle_program_base_slug_default(),
-			'sanitize_callback' => 'kidazzle_sanitize_program_base_slug',
+			'default' => wimper_program_base_slug_default(),
+			'sanitize_callback' => 'wimper_sanitize_program_base_slug',
 		)
 	);
 
 	$wp_customize->add_control(
-		'kidazzle_program_base_slug',
+		'wimper_program_base_slug',
 		array(
-			'label' => __('Program base slug', 'kidazzle-theme'),
-			'description' => __('Used for the Programs archive URL and individual program permalinks.', 'kidazzle-theme'),
-			'section' => 'kidazzle_program_settings',
+			'label' => __('Program base slug', 'wimper-theme'),
+			'description' => __('Used for the Programs archive URL and individual program permalinks.', 'wimper-theme'),
+			'section' => 'wimper_program_settings',
 			'type' => 'text',
 		)
 	);
 }
-add_action('customize_register', 'kidazzle_program_settings_customize_register');
+add_action('customize_register', 'wimper_program_settings_customize_register');
 
 /**
  * Flush rewrites when the Program base slug changes.
  */
-function kidazzle_maybe_flush_rewrite_on_program_slug_change($option, $old_value = '', $value = '')
+/**
+ * Flush rewrites when the Program base slug changes.
+ */
+function wimper_maybe_flush_rewrite_on_program_slug_change($option, $old_value = '', $value = '')
 {
-	if ('kidazzle_program_base_slug' !== $option) {
+	if ('wimper_program_base_slug' !== $option) {
 		return;
 	}
 
-	$previous = kidazzle_sanitize_program_base_slug($old_value);
-	$new = kidazzle_sanitize_program_base_slug($value ?: $old_value);
+	$previous = wimper_sanitize_program_base_slug($old_value);
+	$new = wimper_sanitize_program_base_slug($value ?: $old_value);
 
 	if ($previous === $new) {
 		return;
@@ -98,14 +104,14 @@ function kidazzle_maybe_flush_rewrite_on_program_slug_change($option, $old_value
 
 	flush_rewrite_rules();
 }
-add_action('updated_option', 'kidazzle_maybe_flush_rewrite_on_program_slug_change', 10, 3);
-add_action('added_option', 'kidazzle_maybe_flush_rewrite_on_program_slug_change', 10, 2);
+add_action('updated_option', 'wimper_maybe_flush_rewrite_on_program_slug_change', 10, 3);
+add_action('added_option', 'wimper_maybe_flush_rewrite_on_program_slug_change', 10, 2);
 
 /**
  * Ensure rewrites are refreshed on theme activation.
  */
-function kidazzle_flush_rewrite_on_activation()
+function wimper_flush_rewrite_on_activation()
 {
 	flush_rewrite_rules();
 }
-add_action('after_switch_theme', 'kidazzle_flush_rewrite_on_activation');
+add_action('after_switch_theme', 'wimper_flush_rewrite_on_activation');

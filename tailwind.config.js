@@ -17,8 +17,8 @@ module.exports = {
           ink: '#0F172A', // Slate 900
           cream: '#F8FAFC', // Slate 50
         },
-        // Kidazzle Colors (Extracted from HTML)
-        kidazzle: {
+        // Wimper Colors (Extracted from HTML)
+        wimper: {
           red: '#EF4444',
           redLight: '#FEF2F2',
           orange: '#F97316',
@@ -61,14 +61,14 @@ module.exports = {
     // Static utilities
     'w-2', 'h-2', 'rounded-full',
 
-    // Kidazzle base colors (no opacity) - ALL prefixes
+    // Wimper base colors (no opacity) - ALL prefixes
     {
-      pattern: /(bg|text|border|from|to)-kidazzle-(red|orange|yellow|green|cyan|blue|blueDark|purple|slate|teal)(Light)?$/,
+      pattern: /(bg|text|border|from|to)-wimper-(red|orange|yellow|green|cyan|blue|blueDark|purple|slate|teal)(Light)?$/,
       variants: ['hover', 'group-hover', 'focus'],
     },
-    // Kidazzle opacity variants - limit to actually used values
+    // Wimper opacity variants - limit to actually used values
     {
-      pattern: /(bg|text|border|from|to)-kidazzle-(red|orange|yellow|green|cyan|blue|blueDark|purple|slate|teal)(Light)?\/(5|10|15|20|30|40|50|80|90)$/,
+      pattern: /(bg|text|border|from|to)-wimper-(red|orange|yellow|green|cyan|blue|blueDark|purple|slate|teal)(Light)?\/(5|10|15|20|30|40|50|80|90)$/,
       variants: ['hover'],
     },
 

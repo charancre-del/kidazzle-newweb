@@ -3,7 +3,7 @@
  * Footer City Links - Auto-generate city links in footer
  * Helps crawlers discover all location pages
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class kidazzle_Footer_City_Links
+class wimper_Footer_City_Links
 {
     public function __construct()
     {
@@ -72,7 +72,7 @@ class kidazzle_Footer_City_Links
      */
     public function render_footer_links()
     {
-        if (!get_option('kidazzle_seo_show_footer_cities', true)) {
+        if (!get_option('wimper_seo_show_footer_cities', true)) {
             return;
         }
 
@@ -90,7 +90,7 @@ class kidazzle_Footer_City_Links
         }
 
         ?>
-        <div class="kidazzle-footer-cities">
+        <div class="wimper-footer-cities">
             <div class="footer-cities-container">
                 <?php foreach ($by_state as $state => $state_cities): ?>
                     <div class="footer-cities-group">
@@ -109,7 +109,7 @@ class kidazzle_Footer_City_Links
             </div>
         </div>
         <style>
-            .kidazzle-footer-cities {
+            .wimper-footer-cities {
                 background: #1a1a1a;
                 padding: 20px 0;
                 text-align: center;
@@ -152,7 +152,7 @@ class kidazzle_Footer_City_Links
      */
     public function register_widget()
     {
-        register_widget('kidazzle_City_Links_Widget');
+        register_widget('wimper_City_Links_Widget');
     }
 
     /**
@@ -178,12 +178,12 @@ class kidazzle_Footer_City_Links
 /**
  * City Links Widget
  */
-class kidazzle_City_Links_Widget extends WP_Widget
+class wimper_City_Links_Widget extends WP_Widget
 {
     public function __construct()
     {
         parent::__construct(
-            'kidazzle_city_links',
+            'wimper_city_links',
             'SEO City Links',
             ['description' => 'Display links to all location cities']
         );
@@ -196,7 +196,7 @@ class kidazzle_City_Links_Widget extends WP_Widget
         $title = !empty($instance['title']) ? $instance['title'] : 'Our Locations';
         echo $args['before_title'] . esc_html($title) . $args['after_title'];
 
-        $cities = kidazzle_Footer_City_Links::get_cities();
+        $cities = wimper_Footer_City_Links::get_cities();
 
         if (!empty($cities)) {
             echo '<ul class="city-links-widget">';
@@ -229,5 +229,5 @@ class kidazzle_City_Links_Widget extends WP_Widget
     }
 }
 
-add_shortcode('city_links', ['kidazzle_Footer_City_Links', 'shortcode']);
-new kidazzle_Footer_City_Links();
+add_shortcode('city_links', ['wimper_Footer_City_Links', 'shortcode']);
+new wimper_Footer_City_Links();

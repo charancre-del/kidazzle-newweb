@@ -2,7 +2,7 @@
 /**
  * Global Scripts Customizer Settings
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -14,26 +14,26 @@ if (!defined('ABSPATH')) {
 /**
  * Register Global Scripts Customizer Settings
  */
-function kidazzle_scripts_customizer_settings($wp_customize)
+function wimper_scripts_customizer_settings($wp_customize)
 {
     // Add Scripts Section
-    $wp_customize->add_section('kidazzle_scripts_settings', array(
-        'title' => __('Global Scripts', 'kidazzle-theme'),
-        'description' => __('Add custom scripts (Google Analytics, Pixels, etc.) to your site header and footer.', 'kidazzle-theme'),
+    $wp_customize->add_section('wimper_scripts_settings', array(
+        'title' => __('Global Scripts', 'wimper-theme'),
+        'description' => __('Add custom scripts (Google Analytics, Pixels, etc.) to your site header and footer.', 'wimper-theme'),
         'priority' => 120,
     ));
 
     // Header Scripts (wp_head)
-    $wp_customize->add_setting('kidazzle_header_scripts', array(
+    $wp_customize->add_setting('wimper_header_scripts', array(
         'default' => '',
-        'sanitize_callback' => 'kidazzle_sanitize_scripts', // Custom callback to allow tags
+        'sanitize_callback' => 'wimper_sanitize_scripts', // Custom callback to allow tags
         'transport' => 'refresh',
     ));
 
-    $wp_customize->add_control('kidazzle_header_scripts', array(
-        'label' => __('Header Scripts (Head)', 'kidazzle-theme'),
-        'description' => __('These scripts will be printed in the &lt;head&gt; section. Use for Google Analytics, GTM, etc.', 'kidazzle-theme'),
-        'section' => 'kidazzle_scripts_settings',
+    $wp_customize->add_control('wimper_header_scripts', array(
+        'label' => __('Header Scripts (Head)', 'wimper-theme'),
+        'description' => __('These scripts will be printed in the &lt;head&gt; section. Use for Google Analytics, GTM, etc.', 'wimper-theme'),
+        'section' => 'wimper_scripts_settings',
         'type' => 'textarea',
         'input_attrs' => array(
             'class' => 'code', // specific font for code
@@ -42,16 +42,16 @@ function kidazzle_scripts_customizer_settings($wp_customize)
     ));
 
     // Footer Scripts (wp_footer)
-    $wp_customize->add_setting('kidazzle_footer_scripts', array(
+    $wp_customize->add_setting('wimper_footer_scripts', array(
         'default' => '',
-        'sanitize_callback' => 'kidazzle_sanitize_scripts', 
+        'sanitize_callback' => 'wimper_sanitize_scripts',
         'transport' => 'refresh',
     ));
 
-    $wp_customize->add_control('kidazzle_footer_scripts', array(
-        'label' => __('Footer Scripts (Body End)', 'kidazzle-theme'),
-        'description' => __('These scripts will be printed before the closing &lt;/body&gt; tag.', 'kidazzle-theme'),
-        'section' => 'kidazzle_scripts_settings',
+    $wp_customize->add_control('wimper_footer_scripts', array(
+        'label' => __('Footer Scripts (Body End)', 'wimper-theme'),
+        'description' => __('These scripts will be printed before the closing &lt;/body&gt; tag.', 'wimper-theme'),
+        'section' => 'wimper_scripts_settings',
         'type' => 'textarea',
         'input_attrs' => array(
             'class' => 'code',
@@ -59,12 +59,13 @@ function kidazzle_scripts_customizer_settings($wp_customize)
         ),
     ));
 }
-add_action('customize_register', 'kidazzle_scripts_customizer_settings');
+add_action('customize_register', 'wimper_scripts_customizer_settings');
 
 /**
  * Sanitize callback for scripts (allow standard HTML/JS)
  */
-function kidazzle_sanitize_scripts($input) {
+function wimper_sanitize_scripts($input)
+{
     if (current_user_can('unfiltered_html')) {
         return $input;
     }
@@ -74,25 +75,27 @@ function kidazzle_sanitize_scripts($input) {
 /**
  * Output Header Scripts
  */
-function kidazzle_output_header_scripts() {
-    $scripts = get_theme_mod('kidazzle_header_scripts');
+function wimper_output_header_scripts()
+{
+    $scripts = get_theme_mod('wimper_header_scripts');
     if ($scripts) {
         echo "<!-- Global Header Scripts -->\n";
         echo $scripts . "\n";
         echo "<!-- End Global Header Scripts -->\n";
     }
 }
-add_action('wp_head', 'kidazzle_output_header_scripts', 1);
+add_action('wp_head', 'wimper_output_header_scripts', 1);
 
 /**
  * Output Footer Scripts
  */
-function kidazzle_output_footer_scripts() {
-    $scripts = get_theme_mod('kidazzle_footer_scripts');
+function wimper_output_footer_scripts()
+{
+    $scripts = get_theme_mod('wimper_footer_scripts');
     if ($scripts) {
         echo "<!-- Global Footer Scripts -->\n";
         echo $scripts . "\n";
         echo "<!-- End Global Footer Scripts -->\n";
     }
 }
-add_action('wp_footer', 'kidazzle_output_footer_scripts', 99);
+add_action('wp_footer', 'wimper_output_footer_scripts', 99);

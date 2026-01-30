@@ -3,7 +3,7 @@
  * Near Me Pages - Hybrid approach
  * Pre-generated for SEO + JS personalization for UX
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -11,23 +11,25 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class kidazzle_Near_Me_Pages
+class wimper_Near_Me_Pages
 {
-    const REWRITE_TAG = 'kidazzle_near_me';
-    
+    const REWRITE_TAG = 'wimper_near_me';
+
     private $keywords = ['daycare', 'preschool', 'childcare', 'pre-k', 'infant-care'];
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         add_action('init', [$this, 'add_rewrite_rules']);
         add_filter('query_vars', [$this, 'add_query_vars']);
         add_action('template_redirect', [$this, 'handle_near_me_page']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
     }
-    
+
     /**
      * Add rewrite rules
      */
-    public function add_rewrite_rules() {
+    public function add_rewrite_rules()
+    {
         // Generic: /daycare-near-me/
         foreach ($this->keywords as $kw) {
             add_rewrite_rule(
@@ -35,7 +37,7 @@ class kidazzle_Near_Me_Pages
                 'index.php?' . self::REWRITE_TAG . '=' . $kw,
                 'top'
             );
-            
+
             // City-specific: /daycare-near-cumming-ga/
             add_rewrite_rule(
                 '^' . $kw . '-near-([a-z-]+)-([a-z]{2})/?$',
@@ -44,52 +46,55 @@ class kidazzle_Near_Me_Pages
             );
         }
     }
-    
+
     /**
      * Add query vars
      */
-    public function add_query_vars($vars) {
+    public function add_query_vars($vars)
+    {
         $vars[] = self::REWRITE_TAG;
         $vars[] = 'near_city';
         $vars[] = 'near_state';
         return $vars;
     }
-    
+
     /**
      * Handle near me page request
      */
-    public function handle_near_me_page() {
+    public function handle_near_me_page()
+    {
         $keyword = get_query_var(self::REWRITE_TAG);
-        
+
         if (!$keyword) {
             return;
         }
-        
+
         $city_slug = sanitize_title(get_query_var('near_city'));
         $state = strtoupper(sanitize_text_field(get_query_var('near_state')));
-        
+
         $this->render_near_me_page($keyword, $city_slug, $state);
         exit;
     }
-    
+
     /**
      * Get all locations with geo data
      */
-    private function get_locations_with_geo() {
+    private function get_locations_with_geo()
+    {
         $locations = get_posts([
             'post_type' => 'location',
             'posts_per_page' => -1,
             'post_status' => 'publish'
         ]);
-        
+
         $result = [];
-        
+
         foreach ($locations as $loc) {
-            $lat = get_post_meta($loc->ID, 'geo_lat', true) 
+            $lat = get_post_meta($loc->ID, 'geo_lat', true)
                 ?: get_post_meta($loc->ID, 'location_latitude', true);
-            $lng = get_post_meta($loc->ID, 'geo_lng', true) 
+            $lng = get_post_meta($loc->ID, 'geo_lng', true)
                 ?: get_post_meta($loc->ID, 'location_longitude', true);
-            
+
             $result[] = [
                 'id' => $loc->ID,
                 'title' => $loc->post_title,
@@ -103,17 +108,18 @@ class kidazzle_Near_Me_Pages
                 'image' => get_the_post_thumbnail_url($loc, 'medium')
             ];
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Render near me page
      */
-    private function render_near_me_page($keyword, $city_slug = '', $state = '') {
+    private function render_near_me_page($keyword, $city_slug = '', $state = '')
+    {
         $keyword_label = ucwords(str_replace('-', ' ', $keyword));
         $locations = $this->get_locations_with_geo();
-        
+
         // If city-specific, filter/sort by that city
         $city_name = '';
         if ($city_slug && $state) {
@@ -122,99 +128,193 @@ class kidazzle_Near_Me_Pages
         } else {
             $page_title = $keyword_label . ' Near Me';
         }
-        
+
         get_header();
         ?>
         <main class="near-me-page">
             <header class="near-me-header">
                 <h1><?php echo esc_html($page_title); ?></h1>
                 <p>Find quality <?php echo esc_html(strtolower($keyword_label)); ?> locations near you.</p>
-                
+
                 <div id="nearest-highlight" style="display:none;">
                     <span class="nearest-badge">📍 Nearest to you:</span>
                     <strong id="nearest-name"></strong>
                     <span id="nearest-distance"></span>
                 </div>
             </header>
-            
+
             <section class="locations-grid" id="locations-grid">
                 <?php foreach ($locations as $loc): ?>
-                <article class="location-card" 
-                    data-lat="<?php echo esc_attr($loc['lat']); ?>" 
-                    data-lng="<?php echo esc_attr($loc['lng']); ?>"
-                    data-id="<?php echo esc_attr($loc['id']); ?>">
-                    <?php if ($loc['image']): ?>
-                        <img src="<?php echo esc_url($loc['image']); ?>" alt="<?php echo esc_attr($loc['title']); ?>">
-                    <?php endif; ?>
-                    <div class="card-content">
-                        <h2><a href="<?php echo esc_url($loc['url']); ?>"><?php echo esc_html($loc['title']); ?></a></h2>
-                        <p class="location-city"><?php echo esc_html($loc['city'] . ', ' . $loc['state']); ?></p>
-                        <?php if ($loc['address']): ?>
-                            <p class="address"><?php echo esc_html($loc['address']); ?></p>
+                    <article class="location-card" data-lat="<?php echo esc_attr($loc['lat']); ?>"
+                        data-lng="<?php echo esc_attr($loc['lng']); ?>" data-id="<?php echo esc_attr($loc['id']); ?>">
+                        <?php if ($loc['image']): ?>
+                            <img src="<?php echo esc_url($loc['image']); ?>" alt="<?php echo esc_attr($loc['title']); ?>">
                         <?php endif; ?>
-                        <p class="distance-display" style="display:none;"></p>
-                        <div class="card-actions">
-                            <a href="<?php echo esc_url($loc['url']); ?>" class="btn-view">View Location</a>
-                            <?php if ($loc['phone']): ?>
-                                <a href="tel:<?php echo esc_attr($loc['phone']); ?>" class="btn-call">Call Now</a>
+                        <div class="card-content">
+                            <h2><a href="<?php echo esc_url($loc['url']); ?>"><?php echo esc_html($loc['title']); ?></a></h2>
+                            <p class="location-city"><?php echo esc_html($loc['city'] . ', ' . $loc['state']); ?></p>
+                            <?php if ($loc['address']): ?>
+                                <p class="address"><?php echo esc_html($loc['address']); ?></p>
                             <?php endif; ?>
+                            <p class="distance-display" style="display:none;"></p>
+                            <div class="card-actions">
+                                <a href="<?php echo esc_url($loc['url']); ?>" class="btn-view">View Location</a>
+                                <?php if ($loc['phone']): ?>
+                                    <a href="tel:<?php echo esc_attr($loc['phone']); ?>" class="btn-call">Call Now</a>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
                 <?php endforeach; ?>
             </section>
         </main>
-        
+
         <style>
-            .near-me-page { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-            .near-me-header { text-align: center; margin-bottom: 40px; }
-            .near-me-header h1 { font-size: 36px; margin-bottom: 10px; }
-            #nearest-highlight { margin-top: 20px; padding: 15px 25px; background: #e8f5e9; border-radius: 8px; display: inline-block; }
-            .nearest-badge { background: #4caf50; color: #fff; padding: 3px 10px; border-radius: 4px; margin-right: 10px; }
-            .locations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-            .location-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.08); transition: transform 0.2s; }
-            .location-card:hover { transform: translateY(-4px); }
-            .location-card.nearest { border: 3px solid #4caf50; }
-            .location-card img { width: 100%; height: 180px; object-fit: cover; }
-            .card-content { padding: 20px; }
-            .card-content h2 { font-size: 20px; margin: 0 0 8px; }
-            .card-content h2 a { text-decoration: none; color: inherit; }
-            .location-city { color: #666; margin: 0; }
-            .address { color: #888; font-size: 14px; margin: 10px 0; }
-            .distance-display { color: #0066cc; font-weight: 600; margin: 10px 0; }
-            .card-actions { display: flex; gap: 10px; margin-top: 15px; }
-            .btn-view, .btn-call { padding: 10px 20px; border-radius: 6px; text-decoration: none; font-size: 14px; }
-            .btn-view { background: #0066cc; color: #fff; }
-            .btn-call { background: #f0f0f0; color: #333; }
+            .near-me-page {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 40px 20px;
+            }
+
+            .near-me-header {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            .near-me-header h1 {
+                font-size: 36px;
+                margin-bottom: 10px;
+            }
+
+            #nearest-highlight {
+                margin-top: 20px;
+                padding: 15px 25px;
+                background: #e8f5e9;
+                border-radius: 8px;
+                display: inline-block;
+            }
+
+            .nearest-badge {
+                background: #4caf50;
+                color: #fff;
+                padding: 3px 10px;
+                border-radius: 4px;
+                margin-right: 10px;
+            }
+
+            .locations-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 25px;
+            }
+
+            .location-card {
+                background: #fff;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+                transition: transform 0.2s;
+            }
+
+            .location-card:hover {
+                transform: translateY(-4px);
+            }
+
+            .location-card.nearest {
+                border: 3px solid #4caf50;
+            }
+
+            .location-card img {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+            }
+
+            .card-content {
+                padding: 20px;
+            }
+
+            .card-content h2 {
+                font-size: 20px;
+                margin: 0 0 8px;
+            }
+
+            .card-content h2 a {
+                text-decoration: none;
+                color: inherit;
+            }
+
+            .location-city {
+                color: #666;
+                margin: 0;
+            }
+
+            .address {
+                color: #888;
+                font-size: 14px;
+                margin: 10px 0;
+            }
+
+            .distance-display {
+                color: #0066cc;
+                font-weight: 600;
+                margin: 10px 0;
+            }
+
+            .card-actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 15px;
+            }
+
+            .btn-view,
+            .btn-call {
+                padding: 10px 20px;
+                border-radius: 6px;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .btn-view {
+                background: #0066cc;
+                color: #fff;
+            }
+
+            .btn-call {
+                background: #f0f0f0;
+                color: #333;
+            }
         </style>
-        
+
         <!-- Location data for JS -->
         <script type="application/json" id="locations-data">
-            <?php echo json_encode($locations); ?>
-        </script>
-        
+                    <?php echo json_encode($locations); ?>
+                </script>
+
         <?php
         // Output schema
         $this->output_schema($keyword_label, $locations);
-        
+
         get_footer();
     }
-    
+
     /**
      * Enqueue personalization script
      */
-    public function enqueue_scripts() {
+    public function enqueue_scripts()
+    {
         if (!get_query_var(self::REWRITE_TAG)) {
             return;
         }
-        
+
         wp_add_inline_script('jquery', $this->get_personalization_script());
     }
-    
+
     /**
      * Get personalization JS
      */
-    private function get_personalization_script() {
+    private function get_personalization_script()
+    {
         return "
         document.addEventListener('DOMContentLoaded', function() {
             var locationsData = JSON.parse(document.getElementById('locations-data').textContent);
@@ -291,11 +391,12 @@ class kidazzle_Near_Me_Pages
         });
         ";
     }
-    
+
     /**
      * Output schema
      */
-    private function output_schema($keyword, $locations) {
+    private function output_schema($keyword, $locations)
+    {
         $items = [];
         foreach ($locations as $i => $loc) {
             $items[] = [
@@ -309,7 +410,7 @@ class kidazzle_Near_Me_Pages
                 ]
             ];
         }
-        
+
         $schema = [
             '@context' => 'https://schema.org',
             '@type' => 'ItemList',
@@ -317,32 +418,33 @@ class kidazzle_Near_Me_Pages
             'numberOfItems' => count($locations),
             'itemListElement' => $items
         ];
-        
+
         echo '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_SLASHES) . '</script>';
     }
-    
+
     /**
      * Get all near me URLs for sitemap
      */
-    public static function get_sitemap_urls() {
+    public static function get_sitemap_urls()
+    {
         $urls = [];
         $keywords = ['daycare', 'preschool', 'childcare', 'pre-k'];
-        
+
         // Generic
         foreach ($keywords as $kw) {
             $urls[] = home_url('/' . $kw . '-near-me/');
         }
-        
+
         // City-specific
-        $cities = kidazzle_Combo_Page_Generator::get_all_cities();
+        $cities = wimper_Combo_Page_Generator::get_all_cities();
         foreach ($keywords as $kw) {
             foreach ($cities as $city) {
                 $urls[] = home_url('/' . $kw . '-near-' . sanitize_title($city['city']) . '-' . strtolower($city['state']) . '/');
             }
         }
-        
+
         return $urls;
     }
 }
 
-new kidazzle_Near_Me_Pages();
+new wimper_Near_Me_Pages();

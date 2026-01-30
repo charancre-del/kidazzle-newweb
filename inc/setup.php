@@ -2,8 +2,8 @@
 /**
  * Theme Setup and Configuration
  *
- * @package kidazzle_Theme
- * @since 1.0.0
+ * @package wimper_Theme
+ * @since 2.0.0
  */
 
 // Exit if accessed directly
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 /**
  * Theme setup
  */
-function kidazzle_theme_setup()
+function wimper_theme_setup()
 {
 	// Add default posts and comments RSS feed links to head
 	add_theme_support('automatic-feed-links');
@@ -63,22 +63,22 @@ function kidazzle_theme_setup()
 	// Add support for wide alignment
 	add_theme_support('align-wide');
 }
-add_action('after_setup_theme', 'kidazzle_theme_setup');
+add_action('after_setup_theme', 'wimper_theme_setup');
 
 /**
  * Set the content width in pixels
  */
-function kidazzle_content_width()
+function wimper_content_width()
 {
-	$GLOBALS['content_width'] = apply_filters('kidazzle_content_width', 1200);
+	$GLOBALS['content_width'] = apply_filters('wimper_content_width', 1200);
 }
-add_action('after_setup_theme', 'kidazzle_content_width', 0);
+add_action('after_setup_theme', 'wimper_content_width', 0);
 
 /**
  * Sanitize raw HTML/Scripts for Customizer.
  * Allows admins to insert scripts.
  */
-function kidazzle_sanitize_raw_html($html)
+function wimper_sanitize_raw_html($html)
 {
 	if (current_user_can('unfiltered_html')) {
 		return $html;

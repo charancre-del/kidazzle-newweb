@@ -2,7 +2,7 @@
 /**
  * Homepage data helpers (hardcoded)
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -14,12 +14,12 @@ if (!defined('ABSPATH')) {
 /**
  * Get Home Page ID (for thumbnail rendering)
  */
-function kidazzle_get_home_page_id()
+function wimper_get_home_page_id()
 {
         return get_option('page_on_front') ?: 0;
 }
 
-function kidazzle_home_default_hero()
+function wimper_home_default_hero()
 {
         return array(
                 'heading' => 'Where Learning <br /><span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-yellow-600 to-cyan-700">is Fun!</span>',
@@ -32,7 +32,7 @@ function kidazzle_home_default_hero()
 }
 
 
-function kidazzle_home_default_stats()
+function wimper_home_default_stats()
 {
         return array(
                 array('value' => '19+', 'label' => 'Metro campuses'),
@@ -42,11 +42,11 @@ function kidazzle_home_default_stats()
         );
 }
 
-function kidazzle_home_default_curriculum()
+function wimper_home_default_curriculum()
 {
         return array(
                 'feature' => array(
-                        'eyebrow' => 'The Kidazzle Standard',
+                        'eyebrow' => 'The WIMPER Standard',
                         'heading' => 'Grounded in Expertise. Wrapped in Love.',
                         'subheading' => '',
                         'cta_label' => 'Meet the Team',
@@ -55,8 +55,8 @@ function kidazzle_home_default_curriculum()
                 'cards' => array(
                         array(
                                 'badge' => 'Proprietary Model',
-                                'heading' => 'The KIDazzle Creative Curriculum™ Curriculum',
-                                'text' => 'Just as a prism refracts light into a full spectrum of color, KIDazzle Creative Curriculum™ refracts play into a full spectrum of development.',
+                                'heading' => 'The WIMPER Creative Curriculum™ Curriculum',
+                                'text' => 'Just as a prism refracts light into a full spectrum of color, WIMPER Creative Curriculum™ refracts play into a full spectrum of development.',
                                 'icon_bg' => 'fa-solid fa-shapes',
                                 'icon_badge' => 'fa-brands fa-connectdevelop',
                                 'icon_check' => 'fa-solid fa-check-circle',
@@ -90,7 +90,7 @@ function kidazzle_home_default_curriculum()
         );
 }
 
-function kidazzle_home_get_theme_mod_json($key, $default = array())
+function wimper_home_get_theme_mod_json($key, $default = array())
 {
         $raw = get_theme_mod($key, '');
 
@@ -110,102 +110,102 @@ function kidazzle_home_get_theme_mod_json($key, $default = array())
 /**
  * Home Hero Data
  */
-function kidazzle_home_hero()
+function wimper_home_hero()
 {
-        $defaults = kidazzle_home_default_hero();
+        $defaults = wimper_home_default_hero();
 
         return array(
-                'heading' => wp_kses_post(get_theme_mod('kidazzle_home_hero_heading', $defaults['heading'])),
-                'subheading' => sanitize_text_field(get_theme_mod('kidazzle_home_hero_subheading', $defaults['subheading'])),
-                'cta_label' => sanitize_text_field(get_theme_mod('kidazzle_home_hero_cta_label', $defaults['cta_label'])),
-                'cta_url' => esc_url_raw(get_theme_mod('kidazzle_home_hero_cta_url', $defaults['cta_url'])),
-                'secondary_label' => sanitize_text_field(get_theme_mod('kidazzle_home_hero_secondary_label', $defaults['secondary_label'])),
-                'secondary_url' => esc_url_raw(get_theme_mod('kidazzle_home_hero_secondary_url', $defaults['secondary_url'])),
+                'heading' => wp_kses_post(get_theme_mod('wimper_home_hero_heading', $defaults['heading'])),
+                'subheading' => sanitize_text_field(get_theme_mod('wimper_home_hero_subheading', $defaults['subheading'])),
+                'cta_label' => sanitize_text_field(get_theme_mod('wimper_home_hero_cta_label', $defaults['cta_label'])),
+                'cta_url' => esc_url_raw(get_theme_mod('wimper_home_hero_cta_url', $defaults['cta_url'])),
+                'secondary_label' => sanitize_text_field(get_theme_mod('wimper_home_hero_secondary_label', $defaults['secondary_label'])),
+                'secondary_url' => esc_url_raw(get_theme_mod('wimper_home_hero_secondary_url', $defaults['secondary_url'])),
         );
 }
 
 /**
  * Home Stats
  */
-function kidazzle_home_stats()
+function wimper_home_stats()
 {
-	$stats = kidazzle_home_get_theme_mod_json('kidazzle_home_stats_json', kidazzle_home_default_stats());
-	$cleaned = array();
+        $stats = wimper_home_get_theme_mod_json('wimper_home_stats_json', wimper_home_default_stats());
+        $cleaned = array();
 
-	// Define color cycle for stats (red, yellow, blue, green)
-	$colors = array('kidazzle-red', 'kidazzle-yellow', 'kidazzle-blue', 'kidazzle-green');
-	$index = 0;
+        // Define color cycle for stats (red, yellow, blue, green)
+        $colors = array('wimper-red', 'wimper-yellow', 'wimper-blue', 'wimper-green');
+        $index = 0;
 
-	foreach ($stats as $stat) {
-		$cleaned[] = array(
-			'value' => sanitize_text_field($stat['value'] ?? ''),
-			'label' => sanitize_text_field($stat['label'] ?? ''),
-			'color' => $colors[$index % count($colors)],
-		);
-		$index++;
-	}
+        foreach ($stats as $stat) {
+                $cleaned[] = array(
+                        'value' => sanitize_text_field($stat['value'] ?? ''),
+                        'label' => sanitize_text_field($stat['label'] ?? ''),
+                        'color' => $colors[$index % count($colors)],
+                );
+                $index++;
+        }
 
-	return $cleaned;
+        return $cleaned;
 }
 
 /**
  * Featured Programs Preview
  */
-function kidazzle_home_programs_preview()
+function wimper_home_programs_preview()
 {
-	// Query all published programs
-	$programs_query = new WP_Query(array(
-		'post_type' => 'program',
-		'posts_per_page' => 3,
-		'orderby' => 'menu_order',
-		'order' => 'ASC',
-		'post_status' => 'publish',
-	));
+        // Query all published programs
+        $programs_query = new WP_Query(array(
+                'post_type' => 'program',
+                'posts_per_page' => 3,
+                'orderby' => 'menu_order',
+                'order' => 'ASC',
+                'post_status' => 'publish',
+        ));
 
-	$featured = array();
+        $featured = array();
 
-	if ($programs_query->have_posts()) {
-		while ($programs_query->have_posts()) {
-			$programs_query->the_post();
-			$post_id = get_the_ID();
+        if ($programs_query->have_posts()) {
+                while ($programs_query->have_posts()) {
+                        $programs_query->the_post();
+                        $post_id = get_the_ID();
 
-			$featured[] = array(
-				'title' => get_the_title(),
-				'excerpt' => get_the_excerpt(),
-				'icon' => get_post_meta($post_id, 'program_icon', true) ?: 'fas fa-child',
-				'age_range' => get_post_meta($post_id, 'program_age_range', true),
-				'url' => get_permalink(),
-			);
-		}
-		wp_reset_postdata();
-	}
+                        $featured[] = array(
+                                'title' => get_the_title(),
+                                'excerpt' => get_the_excerpt(),
+                                'icon' => get_post_meta($post_id, 'program_icon', true) ?: 'fas fa-child',
+                                'age_range' => get_post_meta($post_id, 'program_age_range', true),
+                                'url' => get_permalink(),
+                        );
+                }
+                wp_reset_postdata();
+        }
 
-	return array(
-		'heading' => get_theme_mod('kidazzle_home_programs_heading', 'Our Programs'),
-		'subheading' => get_theme_mod('kidazzle_home_programs_subheading', 'Nurturing diverse bright minds through expert care and proprietary curriculum.'),
-		'cta_label' => get_theme_mod('kidazzle_home_programs_cta_label', 'View All Programs'),
-		'cta_link' => get_theme_mod('kidazzle_home_programs_cta_link', get_post_type_archive_link('program')),
-		'featured' => $featured,
-	);
+        return array(
+                'heading' => get_theme_mod('wimper_home_programs_heading', 'Our Programs'),
+                'subheading' => get_theme_mod('wimper_home_programs_subheading', 'Nurturing diverse bright minds through expert care and proprietary curriculum.'),
+                'cta_label' => get_theme_mod('wimper_home_programs_cta_label', 'View All Programs'),
+                'cta_link' => get_theme_mod('wimper_home_programs_cta_link', get_post_type_archive_link('program')),
+                'featured' => $featured,
+        );
 }
 
 /**
- * KIDazzle Creative Curriculum expertise panels
+ * WIMPER Creative Curriculum expertise panels
  */
-function kidazzle_home_curriculum_panels()
+function wimper_home_curriculum_panels()
 {
-        $defaults = kidazzle_home_default_curriculum();
+        $defaults = wimper_home_default_curriculum();
 
         $feature = $defaults['feature'];
         $feature = array(
-                'eyebrow' => sanitize_text_field(get_theme_mod('kidazzle_home_curriculum_eyebrow', $feature['eyebrow'])),
-                'heading' => sanitize_text_field(get_theme_mod('kidazzle_home_curriculum_heading', $feature['heading'])),
-                'subheading' => sanitize_text_field(get_theme_mod('kidazzle_home_curriculum_subheading', $feature['subheading'])),
-                'cta_label' => sanitize_text_field(get_theme_mod('kidazzle_home_curriculum_cta_label', $feature['cta_label'])),
-                'cta_url' => esc_url_raw(get_theme_mod('kidazzle_home_curriculum_cta_url', $feature['cta_url'])),
+                'eyebrow' => sanitize_text_field(get_theme_mod('wimper_home_curriculum_eyebrow', $feature['eyebrow'])),
+                'heading' => sanitize_text_field(get_theme_mod('wimper_home_curriculum_heading', $feature['heading'])),
+                'subheading' => sanitize_text_field(get_theme_mod('wimper_home_curriculum_subheading', $feature['subheading'])),
+                'cta_label' => sanitize_text_field(get_theme_mod('wimper_home_curriculum_cta_label', $feature['cta_label'])),
+                'cta_url' => esc_url_raw(get_theme_mod('wimper_home_curriculum_cta_url', $feature['cta_url'])),
         );
 
-        $cards = kidazzle_home_get_theme_mod_json('kidazzle_home_curriculum_cards_json', $defaults['cards']);
+        $cards = wimper_home_get_theme_mod_json('wimper_home_curriculum_cards_json', $defaults['cards']);
         $cards = array_map(
                 function ($card, $index) use ($defaults) {
                         // Get default card for this index
@@ -232,8 +232,8 @@ function kidazzle_home_curriculum_panels()
 
         $readiness = $defaults['readiness'];
         $readiness = array(
-                'heading' => sanitize_text_field(get_theme_mod('kidazzle_home_curriculum_readiness_heading', $readiness['heading'])),
-                'description' => sanitize_textarea_field(get_theme_mod('kidazzle_home_curriculum_readiness_desc', $readiness['description'])),
+                'heading' => sanitize_text_field(get_theme_mod('wimper_home_curriculum_readiness_heading', $readiness['heading'])),
+                'description' => sanitize_textarea_field(get_theme_mod('wimper_home_curriculum_readiness_desc', $readiness['description'])),
         );
 
         return array(
@@ -243,9 +243,9 @@ function kidazzle_home_curriculum_panels()
         );
 }
 
-function kidazzle_home_default_program_wizard_options()
+function wimper_home_default_program_wizard_options()
 {
-        $program_url = kidazzle_get_program_archive_url();
+        $program_url = wimper_get_program_archive_url();
 
         return array(
                 array(
@@ -293,7 +293,7 @@ function kidazzle_home_default_program_wizard_options()
         );
 }
 
-function kidazzle_home_default_curriculum_profiles()
+function wimper_home_default_curriculum_profiles()
 {
         return array(
                 'labels' => array('Physical', 'Emotional', 'Social', 'Academic', 'Creative'),
@@ -353,12 +353,12 @@ function kidazzle_home_default_curriculum_profiles()
 /**
  * Home FAQ Items
  */
-function kidazzle_home_default_faq_items()
+function wimper_home_default_faq_items()
 {
         return array(
                 array(
                         'question' => 'Do you offer GA Lottery Pre-K?',
-                        'answer' => 'Yes. Many Kidazzle locations offer free GA Lottery Pre-K for 4-year-olds.',
+                        'answer' => 'Yes. Many WIMPER locations offer free GA Lottery Pre-K for 4-year-olds.',
                 ),
                 array(
                         'question' => 'What ages do you serve?',
@@ -379,12 +379,12 @@ function kidazzle_home_default_faq_items()
         );
 }
 
-function kidazzle_home_default_faq()
+function wimper_home_default_faq()
 {
         return array(
                 'heading' => 'Common questions from parents',
                 'subheading' => 'We’ve answered a few of the questions parents ask most when choosing childcare and early learning.',
-                'items' => kidazzle_home_default_faq_items(),
+                'items' => wimper_home_default_faq_items(),
                 'cta_text' => '',
                 'cta_label' => '',
                 'cta_link' => '',
@@ -394,7 +394,7 @@ function kidazzle_home_default_faq()
 /**
  * Curriculum radar profiles
  */
-function kidazzle_home_default_schedule_tracks()
+function wimper_home_default_schedule_tracks()
 {
         return array(
                 array(
@@ -402,8 +402,8 @@ function kidazzle_home_default_schedule_tracks()
                         'label' => 'Infants',
                         'title' => 'The Nurturing Nest',
                         'description' => 'Individualized schedules follow infants’ cues for sleeping and eating, with gentle sensory play.',
-                        'color' => 'kidazzle-blue',
-                        'background' => 'bg-kidazzle-blueLight',
+                        'color' => 'wimper-blue',
+                        'background' => 'bg-wimper-blueLight',
                         'image' => 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?q=80&w=800&auto=format&fit=crop',
                         'steps' => array(
                                 array(
@@ -428,8 +428,8 @@ function kidazzle_home_default_schedule_tracks()
                         'label' => 'Toddlers',
                         'title' => 'Explorers & Builders',
                         'description' => 'Structured circle time and communal meals help toddlers understand social cues and transitions.',
-                        'color' => 'kidazzle-yellow',
-                        'background' => 'bg-kidazzle-yellowLight',
+                        'color' => 'wimper-yellow',
+                        'background' => 'bg-wimper-yellowLight',
                         'image' => 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=800&auto=format&fit=crop',
                         'steps' => array(
                                 array(
@@ -439,7 +439,7 @@ function kidazzle_home_default_schedule_tracks()
                                 ),
                                 array(
                                         'time' => '10:30',
-                                        'title' => 'KIDazzle Creative Curriculum Play',
+                                        'title' => 'WIMPER Creative Curriculum Play',
                                         'copy' => 'Block building, art stations, and guided motor skills.',
                                 ),
                                 array(
@@ -454,8 +454,8 @@ function kidazzle_home_default_schedule_tracks()
                         'label' => 'Pre-K',
                         'title' => 'Kindergarten Readiness',
                         'description' => 'The Pre-K rhythm mirrors elementary flow, building stamina and focus.',
-                        'color' => 'kidazzle-red',
-                        'background' => 'bg-kidazzle-redLight',
+                        'color' => 'wimper-red',
+                        'background' => 'bg-wimper-redLight',
                         'image' => 'https://images.unsplash.com/photo-1503919545874-86c1d9a04595?q=80&w=800&auto=format&fit=crop',
                         'steps' => array(
                                 array(
@@ -481,7 +481,7 @@ function kidazzle_home_default_schedule_tracks()
 /**
  * Age-based program wizard options - Pull from Program CPT
  */
-function kidazzle_home_program_wizard_options()
+function wimper_home_program_wizard_options()
 {
         // Query all published programs
         $programs = new WP_Query(array(
@@ -494,13 +494,13 @@ function kidazzle_home_program_wizard_options()
 
         if (!$programs->have_posts()) {
                 // Fallback to theme mod options if no programs exist
-                $options = kidazzle_home_get_theme_mod_json('kidazzle_home_program_wizard_json', kidazzle_home_default_program_wizard_options());
-                $program_url = kidazzle_get_program_archive_url();
+                $options = wimper_home_get_theme_mod_json('wimper_home_program_wizard_json', wimper_home_default_program_wizard_options());
+                $program_url = wimper_get_program_archive_url();
 
                 return array_map(
                         function ($item) use ($program_url) {
                                 $key = sanitize_title($item['key'] ?? '');
-                                $anchor_slug = kidazzle_program_anchor_for_key($key);
+                                $anchor_slug = wimper_program_anchor_for_key($key);
                                 $link_target = $anchor_slug ?: $key;
 
                                 return array(
@@ -556,10 +556,10 @@ function kidazzle_home_program_wizard_options()
         return $options;
 }
 
-function kidazzle_home_curriculum_profiles()
+function wimper_home_curriculum_profiles()
 {
-        $defaults = kidazzle_home_default_curriculum_profiles();
-        $profiles = kidazzle_home_get_theme_mod_json('kidazzle_home_curriculum_profiles_json', $defaults['profiles']);
+        $defaults = wimper_home_default_curriculum_profiles();
+        $profiles = wimper_home_get_theme_mod_json('wimper_home_curriculum_profiles_json', $defaults['profiles']);
 
         $profiles = array_map(
                 function ($profile) {
@@ -591,7 +591,7 @@ function kidazzle_home_curriculum_profiles()
 /**
  * Daily schedule tracks - Pull from Program CPT
  */
-function kidazzle_home_schedule_tracks()
+function wimper_home_schedule_tracks()
 {
         // Query all published programs with schedule data
         $programs = new WP_Query(array(
@@ -611,7 +611,7 @@ function kidazzle_home_schedule_tracks()
 
         if (!$programs->have_posts()) {
                 // Fallback to theme mod/defaults if no programs have schedule data
-                $tracks = kidazzle_home_get_theme_mod_json('kidazzle_home_schedule_tracks_json', kidazzle_home_default_schedule_tracks());
+                $tracks = wimper_home_get_theme_mod_json('wimper_home_schedule_tracks_json', wimper_home_default_schedule_tracks());
 
                 return array_map(
                         function ($track) {
@@ -699,11 +699,11 @@ function kidazzle_home_schedule_tracks()
 
                 // Map color scheme to Tailwind classes
                 $color_map = array(
-                        'red' => array('color' => 'kidazzle-red', 'background' => 'bg-kidazzle-redLight'),
-                        'blue' => array('color' => 'kidazzle-blue', 'background' => 'bg-kidazzle-blueLight'),
-                        'yellow' => array('color' => 'kidazzle-yellow', 'background' => 'bg-kidazzle-yellowLight'),
-                        'blueDark' => array('color' => 'kidazzle-blueDark', 'background' => 'bg-kidazzle-blueDark/10'),
-                        'green' => array('color' => 'kidazzle-green', 'background' => 'bg-kidazzle-greenLight'),
+                        'red' => array('color' => 'wimper-red', 'background' => 'bg-wimper-redLight'),
+                        'blue' => array('color' => 'wimper-blue', 'background' => 'bg-wimper-blueLight'),
+                        'yellow' => array('color' => 'wimper-yellow', 'background' => 'bg-wimper-yellowLight'),
+                        'blueDark' => array('color' => 'wimper-blueDark', 'background' => 'bg-wimper-blueDark/10'),
+                        'green' => array('color' => 'wimper-green', 'background' => 'bg-wimper-greenLight'),
                 );
 
                 $colors = $color_map[$color_scheme] ?? $color_map['blue'];
@@ -728,9 +728,9 @@ function kidazzle_home_schedule_tracks()
 /**
  * Home FAQ block
  */
-function kidazzle_home_faq_items()
+function wimper_home_faq_items()
 {
-        $items = kidazzle_home_get_theme_mod_json('kidazzle_home_faq_items_json', kidazzle_home_default_faq_items());
+        $items = wimper_home_get_theme_mod_json('wimper_home_faq_items_json', wimper_home_default_faq_items());
 
         return array_map(
                 function ($item) {
@@ -743,21 +743,21 @@ function kidazzle_home_faq_items()
         );
 }
 
-function kidazzle_home_faq()
+function wimper_home_faq()
 {
-        $defaults = kidazzle_home_default_faq();
+        $defaults = wimper_home_default_faq();
 
         return array(
-                'heading' => sanitize_text_field(get_theme_mod('kidazzle_home_faq_heading', $defaults['heading'])),
-                'subheading' => sanitize_text_field(get_theme_mod('kidazzle_home_faq_subheading', $defaults['subheading'])),
-                'items' => kidazzle_home_faq_items(),
+                'heading' => sanitize_text_field(get_theme_mod('wimper_home_faq_heading', $defaults['heading'])),
+                'subheading' => sanitize_text_field(get_theme_mod('wimper_home_faq_subheading', $defaults['subheading'])),
+                'items' => wimper_home_faq_items(),
                 'cta_text' => '',
                 'cta_label' => '',
                 'cta_link' => '',
         );
 }
 
-function kidazzle_home_locations_preview()
+function wimper_home_locations_preview()
 {
         static $cached;
 
@@ -765,13 +765,13 @@ function kidazzle_home_locations_preview()
                 return $cached;
         }
 
-        $heading = sanitize_text_field(get_theme_mod('kidazzle_home_locations_heading', '19+ neighborhood locations across Metro Atlanta'));
-        $subheading = sanitize_text_field(get_theme_mod('kidazzle_home_locations_subheading', 'Find a Kidazzle campus near your home or work. All locations share the same safety standards, curriculum framework, and warm Kidazzle culture.'));
-        $cta_label = sanitize_text_field(get_theme_mod('kidazzle_home_locations_cta_label', 'View All Locations'));
-        $cta_link = esc_url_raw(get_theme_mod('kidazzle_home_locations_cta_link', '/locations'));
+        $heading = sanitize_text_field(get_theme_mod('wimper_home_locations_heading', '19+ neighborhood locations across Metro Atlanta'));
+        $subheading = sanitize_text_field(get_theme_mod('wimper_home_locations_subheading', 'Find a WIMPER campus near your home or work. All locations share the same safety standards, curriculum framework, and warm WIMPER culture.'));
+        $cta_label = sanitize_text_field(get_theme_mod('wimper_home_locations_cta_label', 'View All Locations'));
+        $cta_link = esc_url_raw(get_theme_mod('wimper_home_locations_cta_link', '/locations'));
         $taxonomy = 'location_region';
         $fallback = (object) array(
-                'name' => __('Other Areas', 'kidazzle-theme'),
+                'name' => __('Other Areas', 'wimper-theme'),
                 'slug' => 'other-areas',
         );
 
@@ -795,7 +795,7 @@ function kidazzle_home_locations_preview()
                 $title = get_the_title($post_id);
                 $permalink = get_permalink($post_id);
 
-                $fields = kidazzle_get_location_fields($post_id);
+                $fields = wimper_get_location_fields($post_id);
                 $city = $fields['city'];
                 $state = $fields['state'];
                 $phone = $fields['phone'];
@@ -961,11 +961,11 @@ function kidazzle_home_locations_preview()
 /**
  * Tour CTA content
  */
-function kidazzle_home_tour_cta()
+function wimper_home_tour_cta()
 {
         return array(
                 'heading' => 'Schedule a private tour',
-                'subheading' => 'Share a few details and your preferred campus. A Kidazzle Director will reach out to confirm tour times.',
+                'subheading' => 'Share a few details and your preferred campus. A WIMPER Director will reach out to confirm tour times.',
                 'trust_text' => 'No obligation. We’ll never share your information.',
         );
 }
@@ -973,25 +973,25 @@ function kidazzle_home_tour_cta()
 /**
  * Home Featured Locations (static)
  */
-function kidazzle_home_featured_locations()
+function wimper_home_featured_locations()
 {
-        $locations = kidazzle_home_locations_preview();
+        $locations = wimper_home_locations_preview();
         return $locations['featured'];
 }
 
 /**
  * Home Featured Stories (static placeholders)
  */
-function kidazzle_home_featured_stories()
+function wimper_home_featured_stories()
 {
         return array(
                 array(
-                        'title' => 'Inside the KIDazzle Creative Curriculum™ Classroom',
+                        'title' => 'Inside the WIMPER Creative Curriculum™ Classroom',
                         'excerpt' => 'Take a peek at how our educators weave play and academics together each day.',
-                        'url' => '/stories/KIDazzle Creative Curriculum-classroom',
+                        'url' => '/stories/wimper-creative-curriculum-classroom',
                 ),
                 array(
-                        'title' => 'Family-Style Dining at Kidazzle',
+                        'title' => 'Family-Style Dining at WIMPER',
                         'excerpt' => 'Why shared meals matter for social-emotional growth and independence.',
                         'url' => '/stories/family-style-dining',
                 ),
@@ -1006,33 +1006,33 @@ function kidazzle_home_featured_stories()
 /**
  * Parent Reviews for homepage carousel
  */
-function kidazzle_home_default_parent_reviews()
+function wimper_home_default_parent_reviews()
 {
         return array(
                 array(
                         'name' => 'Sarah M.',
                         'location' => 'Marietta Campus',
                         'rating' => '5',
-                        'review' => 'Our daughter has flourished at Kidazzle. The teachers genuinely care, and The KIDazzle Creative Curriculum has her excited to learn every day. We couldn\'t ask for a better early learning experience.',
+                        'review' => 'Our daughter has flourished at WIMPER. The teachers genuinely care, and The WIMPER Creative Curriculum has her excited to learn every day. We couldn\'t ask for a better early learning experience.',
                 ),
                 array(
                         'name' => 'James & Lisa T.',
                         'location' => 'Johns Creek Campus',
                         'rating' => '5',
-                        'review' => 'After touring several centers, Kidazzle stood out immediately. The transparency, the warmth, and the expert care made our decision easy. Our son has been there for two years and we\'ve never looked back.',
+                        'review' => 'After touring several centers, WIMPER stood out immediately. The transparency, the warmth, and the expert care made our decision easy. Our son has been there for two years and we\'ve never looked back.',
                 ),
                 array(
                         'name' => 'Maria G.',
                         'location' => 'Austell Campus',
                         'rating' => '5',
-                        'review' => 'The family-style meals, the daily communication, the beautiful facilities — everything exceeds expectations. Kidazzle feels like an extension of our family, and our twins are thriving.',
+                        'review' => 'The family-style meals, the daily communication, the beautiful facilities — everything exceeds expectations. WIMPER feels like an extension of our family, and our twins are thriving.',
                 ),
         );
 }
 
-function kidazzle_home_parent_reviews()
+function wimper_home_parent_reviews()
 {
-        $reviews = kidazzle_home_get_theme_mod_json('kidazzle_home_parent_reviews_json', kidazzle_home_default_parent_reviews());
+        $reviews = wimper_home_get_theme_mod_json('wimper_home_parent_reviews_json', wimper_home_default_parent_reviews());
 
         return array_map(
                 function ($review) {
@@ -1049,58 +1049,58 @@ function kidazzle_home_parent_reviews()
 /**
  * Curriculum Data
  */
-function kidazzle_home_curriculum()
+function wimper_home_curriculum()
 {
-	return array(
-		'heading' => get_theme_mod('kidazzle_home_curriculum_heading', 'The KIDazzle Creative Curriculum'),
-		'subheading' => get_theme_mod('kidazzle_home_curriculum_subheading', 'Nurturing diverse bright minds through expert care and proprietary curriculum.'),
-		'description' => get_theme_mod('kidazzle_home_curriculum_description', ''),
-		'card_1_heading' => get_theme_mod('kidazzle_home_curriculum_card_1_heading', 'Philosophy'),
-		'card_1_text' => get_theme_mod('kidazzle_home_curriculum_card_1_text', 'We believe every child is unique and deserves a tailored approach to learning.'),
-		'card_2_heading' => get_theme_mod('kidazzle_home_curriculum_card_2_heading', 'Approach'),
-		'card_2_text' => get_theme_mod('kidazzle_home_curriculum_card_2_text', 'Our play-based methodology encourages exploration and critical thinking.'),
-		'card_3_heading' => get_theme_mod('kidazzle_home_curriculum_card_3_heading', 'Outcomes'),
-		'card_3_text' => get_theme_mod('kidazzle_home_curriculum_card_3_text', 'Graduates leave ready for kindergarten with confidence and social skills.'),
-		'cta_label' => get_theme_mod('kidazzle_home_curriculum_cta_label', 'Learn About KIDazzle Creative Curriculum'),
-		'cta_link' => get_theme_mod('kidazzle_home_curriculum_cta_link', home_url('/curriculum/')),
-	);
+        return array(
+                'heading' => get_theme_mod('wimper_home_curriculum_heading', 'The WIMPER Creative Curriculum'),
+                'subheading' => get_theme_mod('wimper_home_curriculum_subheading', 'Nurturing diverse bright minds through expert care and proprietary curriculum.'),
+                'description' => get_theme_mod('wimper_home_curriculum_description', ''),
+                'card_1_heading' => get_theme_mod('wimper_home_curriculum_card_1_heading', 'Philosophy'),
+                'card_1_text' => get_theme_mod('wimper_home_curriculum_card_1_text', 'We believe every child is unique and deserves a tailored approach to learning.'),
+                'card_2_heading' => get_theme_mod('wimper_home_curriculum_card_2_heading', 'Approach'),
+                'card_2_text' => get_theme_mod('wimper_home_curriculum_card_2_text', 'Our play-based methodology encourages exploration and critical thinking.'),
+                'card_3_heading' => get_theme_mod('wimper_home_curriculum_card_3_heading', 'Outcomes'),
+                'card_3_text' => get_theme_mod('wimper_home_curriculum_card_3_text', 'Graduates leave ready for kindergarten with confidence and social skills.'),
+                'cta_label' => get_theme_mod('wimper_home_curriculum_cta_label', 'Learn About WIMPER Creative Curriculum'),
+                'cta_link' => get_theme_mod('wimper_home_curriculum_cta_link', home_url('/curriculum/')),
+        );
 }
 
 /**
  * Checkers for optional sections
  */
-function kidazzle_home_has_curriculum_panels()
-{
-	return true;
-}
-
-function kidazzle_home_has_program_wizard()
+function wimper_home_has_curriculum_panels()
 {
         return true;
 }
 
-function kidazzle_home_has_curriculum_profiles()
+function wimper_home_has_program_wizard()
 {
         return true;
 }
 
-function kidazzle_home_has_schedule_tracks()
+function wimper_home_has_curriculum_profiles()
 {
         return true;
 }
 
-function kidazzle_home_has_faq()
+function wimper_home_has_schedule_tracks()
 {
         return true;
 }
 
-function kidazzle_home_has_stats()
+function wimper_home_has_faq()
 {
         return true;
 }
 
-function kidazzle_home_has_parent_reviews()
+function wimper_home_has_stats()
 {
-        $reviews = kidazzle_home_parent_reviews();
+        return true;
+}
+
+function wimper_home_has_parent_reviews()
+{
+        $reviews = wimper_home_parent_reviews();
         return !empty($reviews);
 }

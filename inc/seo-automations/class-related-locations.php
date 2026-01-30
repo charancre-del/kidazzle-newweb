@@ -3,7 +3,7 @@
  * Related Locations - Auto-link nearby locations
  * Shows "Other Locations Near You" on each location page
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -11,47 +11,50 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class kidazzle_Related_Locations
+class wimper_Related_Locations
 {
-    public function __construct() {
+    public function __construct()
+    {
         add_filter('the_content', [$this, 'append_related_locations'], 20);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
     }
-    
+
     /**
      * Append related locations after content
      */
-    public function append_related_locations($content) {
+    public function append_related_locations($content)
+    {
         if (!is_singular('location')) {
             return $content;
         }
-        
-        if (!get_option('kidazzle_seo_show_related_locations', true)) {
+
+        if (!get_option('wimper_seo_show_related_locations', true)) {
             return $content;
         }
-        
+
         $related = $this->get_nearby_locations(get_the_ID());
-        
+
         if (empty($related)) {
             return $content;
         }
-        
+
         ob_start();
         $this->render_related_locations($related);
         $html = ob_get_clean();
-        
+
         return $content . $html;
     }
-    
+
     /**
      * Get nearby locations sorted by distance
      */
-    public function get_nearby_locations($post_id, $limit = 4) {
-        $current_lat = get_post_meta($post_id, 'geo_lat', true) 
+    public function get_nearby_locations($post_id, $limit = 4)
+    {
+        $current_lat = get_post_meta($post_id, 'geo_lat', true)
             ?: get_post_meta($post_id, 'location_latitude', true);
-        $current_lng = get_post_meta($post_id, 'geo_lng', true) 
+        $current_lng = get_post_meta($post_id, 'geo_lng', true)
             ?: get_post_meta($post_id, 'location_longitude', true);
-        
+
         if (!$current_lat || !$current_lng) {
             // Fallback: just get other locations
             return get_posts([
@@ -61,7 +64,7 @@ class kidazzle_Related_Locations
                 'post_status' => 'publish'
             ]);
         }
-        
+
         // Get all locations with coordinates
         $locations = get_posts([
             'post_type' => 'location',
@@ -69,15 +72,15 @@ class kidazzle_Related_Locations
             'post__not_in' => [$post_id],
             'post_status' => 'publish'
         ]);
-        
+
         $distances = [];
-        
+
         foreach ($locations as $loc) {
-            $lat = get_post_meta($loc->ID, 'geo_lat', true) 
+            $lat = get_post_meta($loc->ID, 'geo_lat', true)
                 ?: get_post_meta($loc->ID, 'location_latitude', true);
-            $lng = get_post_meta($loc->ID, 'geo_lng', true) 
+            $lng = get_post_meta($loc->ID, 'geo_lng', true)
                 ?: get_post_meta($loc->ID, 'location_longitude', true);
-            
+
             if ($lat && $lng) {
                 $distance = $this->calculate_distance($current_lat, $current_lng, $lat, $lng);
                 $distances[$loc->ID] = [
@@ -86,87 +89,91 @@ class kidazzle_Related_Locations
                 ];
             }
         }
-        
+
         // Sort by distance
-        uasort($distances, function($a, $b) {
+        uasort($distances, function ($a, $b) {
             return $a['distance'] <=> $b['distance'];
         });
-        
+
         // Return only posts, limited
-        return array_map(function($item) {
+        return array_map(function ($item) {
             $item['post']->distance = $item['distance'];
             return $item['post'];
         }, array_slice($distances, 0, $limit, true));
     }
-    
+
     /**
      * Calculate distance between two points using Haversine formula
      */
-    private function calculate_distance($lat1, $lon1, $lat2, $lon2) {
+    private function calculate_distance($lat1, $lon1, $lat2, $lon2)
+    {
         $earth_radius = 3959; // miles
-        
+
         $lat1 = deg2rad(floatval($lat1));
         $lon1 = deg2rad(floatval($lon1));
         $lat2 = deg2rad(floatval($lat2));
         $lon2 = deg2rad(floatval($lon2));
-        
+
         $dlat = $lat2 - $lat1;
         $dlon = $lon2 - $lon1;
-        
+
         $a = sin($dlat / 2) ** 2 + cos($lat1) * cos($lat2) * sin($dlon / 2) ** 2;
         $c = 2 * asin(sqrt($a));
-        
+
         return $earth_radius * $c;
     }
-    
+
     /**
      * Render related locations HTML
      */
-    private function render_related_locations($locations) {
+    private function render_related_locations($locations)
+    {
         ?>
-        <section class="kidazzle-related-locations">
+        <section class="wimper-related-locations">
             <h2>Other Locations Near You</h2>
             <div class="related-locations-grid">
-                <?php foreach ($locations as $loc): 
+                <?php foreach ($locations as $loc):
                     $city = get_post_meta($loc->ID, 'location_city', true);
                     $distance = isset($loc->distance) ? round($loc->distance, 1) : null;
-                ?>
-                <a href="<?php echo get_permalink($loc); ?>" class="related-location-card">
-                    <?php if (has_post_thumbnail($loc)): ?>
-                        <div class="card-image">
-                            <?php echo get_the_post_thumbnail($loc, 'medium'); ?>
+                    ?>
+                    <a href="<?php echo get_permalink($loc); ?>" class="related-location-card">
+                        <?php if (has_post_thumbnail($loc)): ?>
+                            <div class="card-image">
+                                <?php echo get_the_post_thumbnail($loc, 'medium'); ?>
+                            </div>
+                        <?php endif; ?>
+                        <div class="card-content">
+                            <h3><?php echo esc_html($loc->post_title); ?></h3>
+                            <?php if ($city): ?>
+                                <p class="location-city">Daycare in <?php echo esc_html($city); ?></p>
+                            <?php endif; ?>
+                            <?php if ($distance !== null): ?>
+                                <p class="location-distance"><?php echo $distance; ?> miles away</p>
+                            <?php endif; ?>
                         </div>
-                    <?php endif; ?>
-                    <div class="card-content">
-                        <h3><?php echo esc_html($loc->post_title); ?></h3>
-                        <?php if ($city): ?>
-                            <p class="location-city">Daycare in <?php echo esc_html($city); ?></p>
-                        <?php endif; ?>
-                        <?php if ($distance !== null): ?>
-                            <p class="location-distance"><?php echo $distance; ?> miles away</p>
-                        <?php endif; ?>
-                    </div>
-                </a>
+                    </a>
                 <?php endforeach; ?>
             </div>
         </section>
         <?php
     }
-    
+
     /**
      * Enqueue styles
      */
-    public function enqueue_styles() {
-        if (!is_singular('location')) return;
-        
-        wp_add_inline_style('kidazzle-main', '
-            .kidazzle-related-locations {
+    public function enqueue_styles()
+    {
+        if (!is_singular('location'))
+            return;
+
+        wp_add_inline_style('wimper-theme-main', '
+            .wimper-related-locations {
                 margin: 40px 0;
                 padding: 30px;
                 background: #f9f9f9;
                 border-radius: 12px;
             }
-            .kidazzle-related-locations h2 {
+            .wimper-related-locations h2 {
                 margin: 0 0 20px;
                 font-size: 24px;
             }
@@ -213,29 +220,30 @@ class kidazzle_Related_Locations
             }
         ');
     }
-    
+
     /**
      * Shortcode: [related_locations count="4"]
      */
-    public static function shortcode($atts) {
+    public static function shortcode($atts)
+    {
         $atts = shortcode_atts(['count' => 4], $atts);
-        
+
         if (!is_singular('location')) {
             return '';
         }
-        
+
         $instance = new self();
         $related = $instance->get_nearby_locations(get_the_ID(), intval($atts['count']));
-        
+
         if (empty($related)) {
             return '';
         }
-        
+
         ob_start();
         $instance->render_related_locations($related);
         return ob_get_clean();
     }
 }
 
-add_shortcode('related_locations', ['kidazzle_Related_Locations', 'shortcode']);
-new kidazzle_Related_Locations();
+add_shortcode('related_locations', ['wimper_Related_Locations', 'shortcode']);
+new wimper_Related_Locations();

@@ -3,7 +3,7 @@
  * SEO Automations Bootstrap
  * Loads all SEO automation classes
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -44,18 +44,18 @@ require_once __DIR__ . '/class-accessibility-seo.php';
 add_action('after_setup_theme', function() {
     // Set defaults if not already set
     $defaults = [
-        'kidazzle_seo_show_related_locations' => true,
-        'kidazzle_seo_link_programs_locations' => true,
-        'kidazzle_seo_enable_keyword_linking' => true,
-        'kidazzle_seo_show_footer_cities' => true,
-        'kidazzle_seo_enable_dynamic_titles' => true,
-        'kidazzle_seo_enable_canonical' => true,
-        'kidazzle_seo_trailing_slash' => true,
-        'kidazzle_seo_show_author_meta' => true,
-        'kidazzle_seo_show_author_box' => true,
-        'kidazzle_seo_show_credential_badges' => true,
-        'kidazzle_seo_enable_skip_nav' => true,
-        'kidazzle_seo_enable_focus_indicators' => true
+        'wimper_seo_show_related_locations' => true,
+        'wimper_seo_link_programs_locations' => true,
+        'wimper_seo_enable_keyword_linking' => true,
+        'wimper_seo_show_footer_cities' => true,
+        'wimper_seo_enable_dynamic_titles' => true,
+        'wimper_seo_enable_canonical' => true,
+        'wimper_seo_trailing_slash' => true,
+        'wimper_seo_show_author_meta' => true,
+        'wimper_seo_show_author_box' => true,
+        'wimper_seo_show_credential_badges' => true,
+        'wimper_seo_enable_skip_nav' => true,
+        'wimper_seo_enable_focus_indicators' => true
     ];
     
     foreach ($defaults as $key => $default) {
@@ -70,33 +70,33 @@ add_action('after_setup_theme', function() {
  */
 add_action('admin_menu', function() {
     add_submenu_page(
-        'kidazzle-seo-dashboard',
+        'wimper-seo-dashboard',
         'SEO Automations',
         'SEO Automations',
         'manage_options',
-        'kidazzle-seo-automations',
-        'kidazzle_render_seo_settings'
+        'wimper-seo-automations',
+        'wimper_render_seo_settings'
     );
 }, 20);
 
 /**
  * Render settings page
  */
-function kidazzle_render_seo_settings() {
-    if (isset($_POST['save_seo_settings']) && check_admin_referer('kidazzle_seo_settings')) {
+function wimper_render_seo_settings() {
+    if (isset($_POST['save_seo_settings']) && check_admin_referer('wimper_seo_settings')) {
         $options = [
-            'kidazzle_seo_show_related_locations',
-            'kidazzle_seo_link_programs_locations',
-            'kidazzle_seo_enable_keyword_linking',
-            'kidazzle_seo_show_footer_cities',
-            'kidazzle_seo_enable_dynamic_titles',
-            'kidazzle_seo_enable_canonical',
-            'kidazzle_seo_trailing_slash',
-            'kidazzle_seo_show_author_meta',
-            'kidazzle_seo_show_author_box',
-            'kidazzle_seo_show_credential_badges',
-            'kidazzle_seo_enable_skip_nav',
-            'kidazzle_seo_enable_focus_indicators'
+            'wimper_seo_show_related_locations',
+            'wimper_seo_link_programs_locations',
+            'wimper_seo_enable_keyword_linking',
+            'wimper_seo_show_footer_cities',
+            'wimper_seo_enable_dynamic_titles',
+            'wimper_seo_enable_canonical',
+            'wimper_seo_trailing_slash',
+            'wimper_seo_show_author_meta',
+            'wimper_seo_show_author_box',
+            'wimper_seo_show_credential_badges',
+            'wimper_seo_enable_skip_nav',
+            'wimper_seo_enable_focus_indicators'
         ];
         
         foreach ($options as $opt) {
@@ -110,7 +110,7 @@ function kidazzle_render_seo_settings() {
         <h1>🚀 SEO Automations</h1>
         
         <form method="post">
-            <?php wp_nonce_field('kidazzle_seo_settings'); ?>
+            <?php wp_nonce_field('wimper_seo_settings'); ?>
             
             <h2>Internal Linking</h2>
             <table class="form-table">
@@ -118,8 +118,8 @@ function kidazzle_render_seo_settings() {
                     <th>Related Locations</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_show_related_locations" 
-                                <?php checked(get_option('kidazzle_seo_show_related_locations')); ?>>
+                            <input type="checkbox" name="wimper_seo_show_related_locations" 
+                                <?php checked(get_option('wimper_seo_show_related_locations')); ?>>
                             Show "Other Locations Near You" on location pages
                         </label>
                     </td>
@@ -128,8 +128,8 @@ function kidazzle_render_seo_settings() {
                     <th>Related Programs</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_link_programs_locations" 
-                                <?php checked(get_option('kidazzle_seo_link_programs_locations')); ?>>
+                            <input type="checkbox" name="wimper_seo_link_programs_locations" 
+                                <?php checked(get_option('wimper_seo_link_programs_locations')); ?>>
                             Auto-link programs ↔ locations
                         </label>
                     </td>
@@ -138,8 +138,8 @@ function kidazzle_render_seo_settings() {
                     <th>Keyword Linking</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_enable_keyword_linking" 
-                                <?php checked(get_option('kidazzle_seo_enable_keyword_linking')); ?>>
+                            <input type="checkbox" name="wimper_seo_enable_keyword_linking" 
+                                <?php checked(get_option('wimper_seo_enable_keyword_linking')); ?>>
                             Auto-link keywords in blog posts
                         </label>
                     </td>
@@ -148,8 +148,8 @@ function kidazzle_render_seo_settings() {
                     <th>Footer City Links</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_show_footer_cities" 
-                                <?php checked(get_option('kidazzle_seo_show_footer_cities')); ?>>
+                            <input type="checkbox" name="wimper_seo_show_footer_cities" 
+                                <?php checked(get_option('wimper_seo_show_footer_cities')); ?>>
                             Show city links in footer
                         </label>
                     </td>
@@ -162,8 +162,8 @@ function kidazzle_render_seo_settings() {
                     <th>Dynamic Titles</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_enable_dynamic_titles" 
-                                <?php checked(get_option('kidazzle_seo_enable_dynamic_titles')); ?>>
+                            <input type="checkbox" name="wimper_seo_enable_dynamic_titles" 
+                                <?php checked(get_option('wimper_seo_enable_dynamic_titles')); ?>>
                             Use pattern-based title generation
                         </label>
                     </td>
@@ -172,8 +172,8 @@ function kidazzle_render_seo_settings() {
                     <th>Canonical URLs</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_enable_canonical" 
-                                <?php checked(get_option('kidazzle_seo_enable_canonical')); ?>>
+                            <input type="checkbox" name="wimper_seo_enable_canonical" 
+                                <?php checked(get_option('wimper_seo_enable_canonical')); ?>>
                             Enforce canonical URLs
                         </label>
                     </td>
@@ -182,8 +182,8 @@ function kidazzle_render_seo_settings() {
                     <th>Trailing Slash</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_trailing_slash" 
-                                <?php checked(get_option('kidazzle_seo_trailing_slash')); ?>>
+                            <input type="checkbox" name="wimper_seo_trailing_slash" 
+                                <?php checked(get_option('wimper_seo_trailing_slash')); ?>>
                             Enforce trailing slashes on URLs
                         </label>
                     </td>
@@ -196,8 +196,8 @@ function kidazzle_render_seo_settings() {
                     <th>Author Meta</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_show_author_meta" 
-                                <?php checked(get_option('kidazzle_seo_show_author_meta')); ?>>
+                            <input type="checkbox" name="wimper_seo_show_author_meta" 
+                                <?php checked(get_option('wimper_seo_show_author_meta')); ?>>
                             Add author meta tags
                         </label>
                     </td>
@@ -206,8 +206,8 @@ function kidazzle_render_seo_settings() {
                     <th>Author Box</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_show_author_box" 
-                                <?php checked(get_option('kidazzle_seo_show_author_box')); ?>>
+                            <input type="checkbox" name="wimper_seo_show_author_box" 
+                                <?php checked(get_option('wimper_seo_show_author_box')); ?>>
                             Show author box after posts
                         </label>
                     </td>
@@ -216,8 +216,8 @@ function kidazzle_render_seo_settings() {
                     <th>Credential Badges</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_show_credential_badges" 
-                                <?php checked(get_option('kidazzle_seo_show_credential_badges')); ?>>
+                            <input type="checkbox" name="wimper_seo_show_credential_badges" 
+                                <?php checked(get_option('wimper_seo_show_credential_badges')); ?>>
                             Show trust badges on location pages
                         </label>
                     </td>
@@ -230,8 +230,8 @@ function kidazzle_render_seo_settings() {
                     <th>Skip Navigation</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_enable_skip_nav" 
-                                <?php checked(get_option('kidazzle_seo_enable_skip_nav')); ?>>
+                            <input type="checkbox" name="wimper_seo_enable_skip_nav" 
+                                <?php checked(get_option('wimper_seo_enable_skip_nav')); ?>>
                             Add skip-to-content link
                         </label>
                     </td>
@@ -240,8 +240,8 @@ function kidazzle_render_seo_settings() {
                     <th>Focus Indicators</th>
                     <td>
                         <label>
-                            <input type="checkbox" name="kidazzle_seo_enable_focus_indicators" 
-                                <?php checked(get_option('kidazzle_seo_enable_focus_indicators')); ?>>
+                            <input type="checkbox" name="wimper_seo_enable_focus_indicators" 
+                                <?php checked(get_option('wimper_seo_enable_focus_indicators')); ?>>
                             Enhanced keyboard focus indicators
                         </label>
                     </td>
@@ -257,10 +257,10 @@ function kidazzle_render_seo_settings() {
         
         <h2>Quick Links</h2>
         <ul>
-            <li><a href="<?php echo admin_url('admin.php?page=kidazzle-auto-pages'); ?>">Auto Pages Dashboard</a></li>
-            <li><a href="<?php echo admin_url('admin.php?page=kidazzle-keyword-linking'); ?>">Keyword Linking</a></li>
-            <li><a href="<?php echo admin_url('admin.php?page=kidazzle-title-patterns'); ?>">Title Patterns</a></li>
-            <li><a href="<?php echo admin_url('admin.php?page=kidazzle-link-equity'); ?>">Link Equity Report</a></li>
+            <li><a href="<?php echo admin_url('admin.php?page=wimper-auto-pages'); ?>">Auto Pages Dashboard</a></li>
+            <li><a href="<?php echo admin_url('admin.php?page=wimper-keyword-linking'); ?>">Keyword Linking</a></li>
+            <li><a href="<?php echo admin_url('admin.php?page=wimper-title-patterns'); ?>">Title Patterns</a></li>
+            <li><a href="<?php echo admin_url('admin.php?page=wimper-link-equity'); ?>">Link Equity Report</a></li>
         </ul>
     </div>
     <?php

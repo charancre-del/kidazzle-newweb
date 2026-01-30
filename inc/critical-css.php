@@ -3,13 +3,13 @@
  * Critical CSS Injection
  * Inlines essential above-the-fold styles to prevent render-blocking
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  */
 
-function kidazzle_print_critical_css()
+function wimper_print_critical_css()
 {
     ?>
-    <style id="kidazzle-critical-css">
+    <style id="wimper-critical-css">
         /* Critical Fonts */
         @font-face {
             font-family: 'Outfit';
@@ -18,6 +18,7 @@ function kidazzle_print_critical_css()
             font-display: swap;
             src: url('<?php echo get_template_directory_uri(); ?>/assets/webfonts/Outfit-Light.woff2') format('woff2');
         }
+
         @font-face {
             font-family: 'Outfit';
             font-style: normal;
@@ -25,6 +26,7 @@ function kidazzle_print_critical_css()
             font-display: swap;
             src: url('<?php echo get_template_directory_uri(); ?>/assets/webfonts/Outfit-Regular.woff2') format('woff2');
         }
+
         @font-face {
             font-family: 'Outfit';
             font-style: normal;
@@ -32,6 +34,7 @@ function kidazzle_print_critical_css()
             font-display: swap;
             src: url('<?php echo get_template_directory_uri(); ?>/assets/webfonts/Outfit-Medium.woff2') format('woff2');
         }
+
         @font-face {
             font-family: 'Outfit';
             font-style: normal;
@@ -39,6 +42,7 @@ function kidazzle_print_critical_css()
             font-display: swap;
             src: url('<?php echo get_template_directory_uri(); ?>/assets/webfonts/Outfit-SemiBold.woff2') format('woff2');
         }
+
         @font-face {
             font-family: 'Outfit';
             font-style: normal;
@@ -46,6 +50,7 @@ function kidazzle_print_critical_css()
             font-display: swap;
             src: url('<?php echo get_template_directory_uri(); ?>/assets/webfonts/Outfit-Bold.woff2') format('woff2');
         }
+
         @font-face {
             font-family: 'Playfair Display';
             font-style: normal;
@@ -53,6 +58,7 @@ function kidazzle_print_critical_css()
             font-display: swap;
             src: url('<?php echo get_template_directory_uri(); ?>/assets/webfonts/PlayfairDisplay-SemiBold.woff2') format('woff2');
         }
+
         @font-face {
             font-family: 'Playfair Display';
             font-style: normal;
@@ -60,6 +66,7 @@ function kidazzle_print_critical_css()
             font-display: swap;
             src: url('<?php echo get_template_directory_uri(); ?>/assets/webfonts/PlayfairDisplay-Bold.woff2') format('woff2');
         }
+
         @font-face {
             font-family: 'Playfair Display';
             font-style: normal;
@@ -85,31 +92,40 @@ function kidazzle_print_critical_css()
         body {
             margin: 0;
             line-height: inherit;
-           	/* Font Metric Overrides to prevent CLS */
-	@font-face {
-		font-family: 'Outfit-Fallback';
-		src: local('Arial');
-		ascent-override: 98%;
-		descent-override: 24%;
-		line-gap-override: 0%;
-		size-adjust: 100%;
-	}
-	@font-face {
-		font-family: 'Playfair-Fallback';
-		src: local('Georgia');
-		ascent-override: 95%;
-		descent-override: 20%;
-		line-gap-override: 0%;
-		size-adjust: 100%;
-	}
 
-	body {
-		font-family: Outfit, "Outfit-Fallback", system-ui, sans-serif;
-	}
+            /* Font Metric Overrides to prevent CLS */
+            @font-face {
+                font-family: 'Outfit-Fallback';
+                src: local('Arial');
+                ascent-override: 98%;
+                descent-override: 24%;
+                line-gap-override: 0%;
+                size-adjust: 100%;
+            }
 
-	h1, h2, h3, h4, h5, h6, .font-serif {
-		font-family: "Playfair Display", "Playfair-Fallback", serif;
-	}
+            @font-face {
+                font-family: 'Playfair-Fallback';
+                src: local('Georgia');
+                ascent-override: 95%;
+                descent-override: 20%;
+                line-gap-override: 0%;
+                size-adjust: 100%;
+            }
+
+            body {
+                font-family: Outfit, "Outfit-Fallback", system-ui, sans-serif;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            .font-serif {
+                font-family: "Playfair Display", "Playfair-Fallback", serif;
+            }
+
             overflow-x: hidden
         }
 
@@ -180,19 +196,19 @@ function kidazzle_print_critical_css()
             color: rgb(255 255 255)
         }
 
-        .text-kidazzle-blue {
+        .text-wimper-blue {
             color: rgb(74 108 124)
         }
 
-        .bg-kidazzle-blue {
+        .bg-wimper-blue {
             background-color: rgb(74 108 124)
         }
 
-        .bg-kidazzle-green {
+        .bg-wimper-green {
             background-color: rgb(141 163 153)
         }
 
-        .border-kidazzle-blue\/10 {
+        .border-wimper-blue\/10 {
             border-color: rgba(74, 108, 124, .1)
         }
 
@@ -259,8 +275,12 @@ function kidazzle_print_critical_css()
 
         @media(min-width:1024px) {
             .lg\:h-\[500px\] {
-                /* Kidazzle Logo Fix */
-                .custom-logo-link img { max-height: 80px; width: auto; }
+
+                /* Wimper Logo Fix */
+                .custom-logo-link img {
+                    max-height: 80px;
+                    width: auto;
+                }
             }
         }
 
@@ -317,7 +337,7 @@ function kidazzle_print_critical_css()
             .lg\:pt-24 {
                 padding-top: 6rem
             }
-        
+
             .lg\:block {
                 display: block
             }
@@ -330,6 +350,7 @@ function kidazzle_print_critical_css()
                 display: none
             }
         }
+
         .font-bold {
             font-weight: 700
         }
@@ -429,7 +450,7 @@ function kidazzle_print_critical_css()
             .lg\:pt-24 {
                 padding-top: 6rem
             }
-        
+
             .lg\:block {
                 display: block
             }
@@ -495,13 +516,16 @@ function kidazzle_print_critical_css()
             .sm\:mt-0 {
                 margin-top: 0
             }
+
             .sm\:inset-y-0 {
                 top: 0;
                 bottom: 0
             }
+
             .sm\:left-12 {
                 left: 3rem
             }
+
             .sm\:right-0 {
                 right: 0
             }
@@ -511,6 +535,7 @@ function kidazzle_print_critical_css()
             .lg\:grid-cols-2 {
                 grid-template-columns: repeat(2, minmax(0, 1fr))
             }
+
             .lg\:left-16 {
                 left: 4rem
             }
@@ -531,7 +556,7 @@ function kidazzle_print_critical_css()
         .right-0 {
             right: 0
         }
-        
+
         .rounded-full {
             border-radius: 9999px
         }
@@ -614,9 +639,11 @@ function kidazzle_print_critical_css()
         }
 
         /* Critical Icons (Prevent CLS) */
-        .fa-solid, .fas {
+        .fa-solid,
+        .fas {
             display: inline-block;
-            width: 1.25em; /* Default width for standard icons */
+            width: 1.25em;
+            /* Default width for standard icons */
             height: 1em;
             overflow: visible;
             vertical-align: -0.125em;
@@ -638,5 +665,5 @@ function kidazzle_print_critical_css()
     <?php
 }
 // Critical CSS enabled to support main.css deferral
-add_action('wp_head', 'kidazzle_print_critical_css', 1);
+add_action('wp_head', 'wimper_print_critical_css', 1);
 

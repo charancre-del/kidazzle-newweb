@@ -3,7 +3,7 @@
  * Dynamic Title Patterns
  * Auto-generate SEO-optimized titles based on patterns
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class kidazzle_Dynamic_Titles
+class wimper_Dynamic_Titles
 {
     private $patterns = [];
     
@@ -30,7 +30,7 @@ class kidazzle_Dynamic_Titles
             return $this->patterns;
         }
         
-        $this->patterns = get_option('kidazzle_seo_title_patterns', $this->get_default_patterns());
+        $this->patterns = get_option('wimper_seo_title_patterns', $this->get_default_patterns());
         
         return $this->patterns;
     }
@@ -40,15 +40,15 @@ class kidazzle_Dynamic_Titles
      */
     private function get_default_patterns() {
         return [
-            'location' => '{title} | Daycare in {city}, {state} | Kidazzle',
-            'program' => '{title} Program | Ages {age_range} | Kidazzle',
-            'post' => '{title} | Parenting Tips | Kidazzle Blog',
-            'page' => '{title} | Kidazzle Early Learning',
-            'team_member' => '{title} | Meet Our Team | Kidazzle',
-            'archive_location' => 'Our Daycare Locations | Kidazzle Early Learning',
-            'archive_program' => 'Early Learning Programs | Kidazzle',
-            'home' => 'Kidazzle Early Learning | Quality Childcare & Preschool',
-            'search' => 'Search Results for "{query}" | Kidazzle'
+            'location' => '{title} | Daycare in {city}, {state} | WIMPER',
+            'program' => '{title} Program | Ages {age_range} | WIMPER',
+            'post' => '{title} | Parenting Tips | WIMPER Blog',
+            'page' => '{title} | WIMPER Early Learning',
+            'team_member' => '{title} | Meet Our Team | WIMPER',
+            'archive_location' => 'Our Daycare Locations | WIMPER Early Learning',
+            'archive_program' => 'Early Learning Programs | WIMPER',
+            'home' => 'WIMPER Early Learning | Quality Childcare & Preschool',
+            'search' => 'Search Results for "{query}" | WIMPER'
         ];
     }
     
@@ -56,7 +56,7 @@ class kidazzle_Dynamic_Titles
      * Filter document title
      */
     public function filter_title($title) {
-        if (!get_option('kidazzle_seo_enable_dynamic_titles', true)) {
+        if (!get_option('wimper_seo_enable_dynamic_titles', true)) {
             return $title;
         }
         
@@ -141,7 +141,7 @@ class kidazzle_Dynamic_Titles
         
         // Author
         $author = get_the_author_meta('display_name', $post->post_author);
-        $placeholders['author'] = $author ?: 'Kidazzle Team';
+        $placeholders['author'] = $author ?: 'WIMPER Team';
         
         // Date
         $placeholders['year'] = get_the_date('Y', $post_id);
@@ -159,11 +159,11 @@ class kidazzle_Dynamic_Titles
      */
     public function add_settings_page() {
         add_submenu_page(
-            'kidazzle-seo-dashboard',
+            'wimper-seo-dashboard',
             'Title Patterns',
             'Title Patterns',
             'manage_options',
-            'kidazzle-title-patterns',
+            'wimper-title-patterns',
             [$this, 'render_settings_page']
         );
     }
@@ -172,29 +172,29 @@ class kidazzle_Dynamic_Titles
      * Register settings
      */
     public function register_settings() {
-        register_setting('kidazzle_title_patterns', 'kidazzle_seo_enable_dynamic_titles');
-        register_setting('kidazzle_title_patterns', 'kidazzle_seo_title_patterns');
+        register_setting('wimper_title_patterns', 'wimper_seo_enable_dynamic_titles');
+        register_setting('wimper_title_patterns', 'wimper_seo_title_patterns');
     }
     
     /**
      * Render settings page
      */
     public function render_settings_page() {
-        $enabled = get_option('kidazzle_seo_enable_dynamic_titles', true);
+        $enabled = get_option('wimper_seo_enable_dynamic_titles', true);
         $patterns = $this->get_patterns();
         ?>
         <div class="wrap">
             <h1>Dynamic Title Patterns</h1>
             
             <form method="post" action="options.php">
-                <?php settings_fields('kidazzle_title_patterns'); ?>
+                <?php settings_fields('wimper_title_patterns'); ?>
                 
                 <table class="form-table">
                     <tr>
                         <th>Enable Dynamic Titles</th>
                         <td>
                             <label>
-                                <input type="checkbox" name="kidazzle_seo_enable_dynamic_titles" 
+                                <input type="checkbox" name="wimper_seo_enable_dynamic_titles" 
                                     value="1" <?php checked($enabled); ?>>
                                 Use pattern-based title generation
                             </label>
@@ -210,7 +210,7 @@ class kidazzle_Dynamic_Titles
                     <tr>
                         <th><?php echo esc_html(ucwords(str_replace('_', ' ', $key))); ?></th>
                         <td>
-                            <input type="text" name="kidazzle_seo_title_patterns[<?php echo esc_attr($key); ?>]" 
+                            <input type="text" name="wimper_seo_title_patterns[<?php echo esc_attr($key); ?>]" 
                                 value="<?php echo esc_attr($pattern); ?>" class="large-text">
                         </td>
                     </tr>
@@ -248,4 +248,4 @@ class kidazzle_Dynamic_Titles
     }
 }
 
-new kidazzle_Dynamic_Titles();
+new wimper_Dynamic_Titles();

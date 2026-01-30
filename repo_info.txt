@@ -1,0 +1,7 @@
+The repository URL for the WIMPER program is:
+
+`https://github.com/bullmight703A/wimper-program-webb.git`
+
+You can use this URL to connect your local environment with WP Pusher or your preferred git client to push the refactored theme updates.
+
+I will continue refactoring the remaining meta files in `inc/` while you set that up.

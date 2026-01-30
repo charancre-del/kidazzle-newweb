@@ -3,7 +3,7 @@
  * Combo Page AI Generator
  * Uses LLM to generate content for combo pages
  *
- * @package kidazzle_Excellence
+ * @package wimper-theme
  * @since 1.0.0
  */
 
@@ -11,95 +11,98 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class kidazzle_Combo_AI_Generator
+class wimper_Combo_AI_Generator
 {
-    public function __construct() {
-        add_action('wp_ajax_kidazzle_combo_ai_generate', [$this, 'ajax_generate_single']);
-        add_action('wp_ajax_kidazzle_combo_ai_bulk_generate', [$this, 'ajax_bulk_generate']);
-        add_action('wp_ajax_kidazzle_combo_bulk_status', [$this, 'ajax_bulk_status_update']);
-        add_action('wp_ajax_kidazzle_combo_save_data', [$this, 'ajax_save_data']);
-        add_action('wp_ajax_kidazzle_combo_get_data', [$this, 'ajax_get_data']);
+    public function __construct()
+    {
+        add_action('wp_ajax_wimper_combo_ai_generate', [$this, 'ajax_generate_single']);
+        add_action('wp_ajax_wimper_combo_ai_bulk_generate', [$this, 'ajax_bulk_generate']);
+        add_action('wp_ajax_wimper_combo_bulk_status', [$this, 'ajax_bulk_status_update']);
+        add_action('wp_ajax_wimper_combo_save_data', [$this, 'ajax_save_data']);
+        add_action('wp_ajax_wimper_combo_get_data', [$this, 'ajax_get_data']);
     }
-    
+
     /**
      * Generate AI content for a single combo page
      */
-    public function ajax_generate_single() {
-        check_ajax_referer('kidazzle_combo_ai', 'nonce');
-        
+    public function ajax_generate_single()
+    {
+        check_ajax_referer('wimper_combo_ai', 'nonce');
+
         if (!current_user_can('manage_options')) {
             wp_send_json_error('Unauthorized');
         }
-        
+
         $program_slug = sanitize_title($_POST['program_slug'] ?? '');
         $city_slug = sanitize_title($_POST['city_slug'] ?? '');
         $state = strtoupper(sanitize_text_field($_POST['state'] ?? 'GA'));
-        
+
         if (!$program_slug || !$city_slug) {
             wp_send_json_error('Missing parameters');
         }
-        
+
         $city_name = ucwords(str_replace('-', ' ', $city_slug));
         $program = get_page_by_path($program_slug, OBJECT, 'program');
         $program_name = $program ? $program->post_title : ucwords(str_replace('-', ' ', $program_slug));
-        
+
         // Generate content using LLM
         $result = $this->generate_combo_content($program_name, $city_name, $state);
-        
+
         if (is_wp_error($result)) {
             wp_send_json_error($result->get_error_message());
         }
-        
+
         // Get auto-publish setting
-        $auto_publish = get_option('kidazzle_combo_auto_publish', false);
+        $auto_publish = get_option('wimper_combo_auto_publish', false);
         $result['status'] = $auto_publish ? 'published' : 'draft';
         $result['ai_generated'] = true;
         $result['last_ai_update'] = current_time('timestamp');
-        
+
         // Save data
-        kidazzle_Combo_Page_Data::save($program_slug, $city_slug, $state, $result);
-        
+        wimper_Combo_Page_Data::save($program_slug, $city_slug, $state, $result);
+
         wp_send_json_success([
             'data' => $result,
             'message' => 'AI content generated successfully'
         ]);
     }
-    
+
     /**
      * Bulk generate AI content
      */
-    public function ajax_bulk_generate() {
-        check_ajax_referer('kidazzle_combo_ai', 'nonce');
-        
+    public function ajax_bulk_generate()
+    {
+        check_ajax_referer('wimper_combo_ai', 'nonce');
+
         if (!current_user_can('manage_options')) {
             wp_send_json_error('Unauthorized');
         }
-        
+
         $combos = $_POST['combos'] ?? [];
         if (empty($combos)) {
             wp_send_json_error('No combos selected');
         }
-        
+
         $results = [];
         $success_count = 0;
         $error_count = 0;
-        
+
         foreach ($combos as $combo) {
             $program_slug = sanitize_title($combo['program_slug'] ?? '');
             $city_slug = sanitize_title($combo['city_slug'] ?? '');
             $state = strtoupper(sanitize_text_field($combo['state'] ?? 'GA'));
-            
+
             if (!$program_slug || !$city_slug) {
                 $error_count++;
                 continue;
             }
-            
+
             $city_name = ucwords(str_replace('-', ' ', $city_slug));
             $program = get_page_by_path($program_slug, OBJECT, 'program');
             $program_name = $program ? $program->post_title : ucwords(str_replace('-', ' ', $program_slug));
-            
+
             $result = $this->generate_combo_content($program_name, $city_name, $state);
-            
+
             if (is_wp_error($result)) {
                 $results[] = [
                     'combo' => "$program_name in $city_name",
@@ -108,24 +111,24 @@ class kidazzle_Combo_AI_Generator
                 ];
                 $error_count++;
             } else {
-                $auto_publish = get_option('kidazzle_combo_auto_publish', false);
+                $auto_publish = get_option('wimper_combo_auto_publish', false);
                 $result['status'] = $auto_publish ? 'published' : 'draft';
                 $result['ai_generated'] = true;
                 $result['last_ai_update'] = current_time('timestamp');
-                
-                kidazzle_Combo_Page_Data::save($program_slug, $city_slug, $state, $result);
-                
+
+                wimper_Combo_Page_Data::save($program_slug, $city_slug, $state, $result);
+
                 $results[] = [
                     'combo' => "$program_name in $city_name",
                     'status' => 'success'
                 ];
                 $success_count++;
             }
-            
+
             // Add a small delay to avoid rate limiting
             usleep(500000); // 0.5 seconds
         }
-        
+
         wp_send_json_success([
             'results' => $results,
             'success_count' => $success_count,
@@ -136,54 +139,56 @@ class kidazzle_Combo_AI_Generator
     /**
      * Bulk status update (Draft/Publish/Auto)
      */
-    public function ajax_bulk_status_update() {
-        check_ajax_referer('kidazzle_combo_ai', 'nonce');
-        
+    public function ajax_bulk_status_update()
+    {
+        check_ajax_referer('wimper_combo_ai', 'nonce');
+
         if (!current_user_can('manage_options')) {
             wp_send_json_error('Unauthorized');
         }
-        
+
         $combos = $_POST['combos'] ?? [];
         $status = sanitize_text_field($_POST['status'] ?? 'draft');
-        
+
         if (empty($combos)) {
             wp_send_json_error('No combos selected');
         }
-        
+
         $success_count = 0;
-        
+
         foreach ($combos as $combo) {
             $program_slug = sanitize_title($combo['program_slug'] ?? '');
             $city_slug = sanitize_title($combo['city_slug'] ?? '');
             $state = strtoupper(sanitize_text_field($combo['state'] ?? 'GA'));
-            
+
             if ($program_slug && $city_slug) {
-                if (kidazzle_Combo_Page_Data::save($program_slug, $city_slug, $state, ['status' => $status])) {
+                if (wimper_Combo_Page_Data::save($program_slug, $city_slug, $state, ['status' => $status])) {
                     $success_count++;
                 }
             }
         }
-        
+
         wp_send_json_success([
             'success_count' => $success_count,
             'message' => "Successfully updated $success_count items to $status"
         ]);
     }
-    
+
     /**
      * Save combo page data manually
      */
-    public function ajax_save_data() {
-        check_ajax_referer('kidazzle_combo_ai', 'nonce');
-        
+    public function ajax_save_data()
+    {
+        check_ajax_referer('wimper_combo_ai', 'nonce');
+
         if (!current_user_can('manage_options')) {
             wp_send_json_error('Unauthorized');
         }
-        
+
         $program_slug = sanitize_title($_POST['program_slug'] ?? '');
         $city_slug = sanitize_title($_POST['city_slug'] ?? '');
         $state = strtoupper(sanitize_text_field($_POST['state'] ?? 'GA'));
-        
+
         $data = [
             'neighborhoods' => array_map('sanitize_text_field', $_POST['neighborhoods'] ?? []),
             'major_road' => sanitize_text_field($_POST['major_road'] ?? ''),
@@ -192,42 +197,44 @@ class kidazzle_Combo_AI_Generator
             'custom_intro' => wp_kses_post($_POST['custom_intro'] ?? ''),
             'status' => sanitize_text_field($_POST['status'] ?? 'draft')
         ];
-        
-        kidazzle_Combo_Page_Data::save($program_slug, $city_slug, $state, $data);
-        
+
+        wimper_Combo_Page_Data::save($program_slug, $city_slug, $state, $data);
+
         wp_send_json_success('Saved successfully');
     }
 
     /**
      * Get combo page data
      */
-    public function ajax_get_data() {
-        check_ajax_referer('kidazzle_combo_ai', 'nonce');
-        
+    public function ajax_get_data()
+    {
+        check_ajax_referer('wimper_combo_ai', 'nonce');
+
         $program_slug = sanitize_title($_POST['program_slug'] ?? '');
         $city_slug = sanitize_title($_POST['city_slug'] ?? '');
         $state = strtoupper(sanitize_text_field($_POST['state'] ?? 'GA'));
-        
-        $data = kidazzle_Combo_Page_Data::get($program_slug, $city_slug, $state);
-        
+
+        $data = wimper_Combo_Page_Data::get($program_slug, $city_slug, $state);
+
         wp_send_json_success($data);
     }
-    
+
     /**
      * Generate combo page content using LLM
      */
-    private function generate_combo_content($program_name, $city_name, $state) {
-        /** @var kidazzle_LLM_Client $kidazzle_llm_client */
-        global $kidazzle_llm_client;
-        
-        if (!$kidazzle_llm_client) {
+    private function generate_combo_content($program_name, $city_name, $state)
+    {
+        /** @var wimper_LLM_Client $wimper_llm_client */
+        global $wimper_llm_client;
+
+        if (!$wimper_llm_client) {
             return new WP_Error('no_llm', 'LLM client not available');
         }
-        
+
         $prompt = $this->build_prompt($program_name, $city_name, $state);
-        
-        $response = $kidazzle_llm_client->make_request([
-            'model' => get_option('kidazzle_llm_model', 'gpt-4o-mini'),
+
+        $response = $wimper_llm_client->make_request([
+            'model' => get_option('wimper_llm_model', 'gpt-4o-mini'),
             'messages' => [
                 [
                     'role' => 'system',
@@ -241,18 +248,18 @@ class kidazzle_Combo_AI_Generator
             'response_format' => ['type' => 'json_object'],
             'temperature' => 0.7
         ]);
-        
+
         if (is_wp_error($response)) {
             return $response;
         }
-        
+
         $content = $response['choices'][0]['message']['content'] ?? '';
         $data = json_decode($content, true);
-        
+
         if (json_last_error() !== JSON_ERROR_NONE) {
             return new WP_Error('json_error', 'Failed to parse LLM response');
         }
-        
+
         return [
             'neighborhoods' => $data['neighborhoods'] ?? [],
             'major_road' => $data['major_road'] ?? '',
@@ -261,11 +268,12 @@ class kidazzle_Combo_AI_Generator
             'custom_intro' => $data['custom_intro'] ?? ''
         ];
     }
-    
+
     /**
      * Build the prompt for LLM
      */
-    private function build_prompt($program_name, $city_name, $state) {
+    private function build_prompt($program_name, $city_name, $state)
+    {
         return <<<PROMPT
 Generate local SEO content for a childcare landing page: "$program_name in $city_name, $state"
 
@@ -288,4 +296,4 @@ PROMPT;
     }
 }
 
-new kidazzle_Combo_AI_Generator();
+new wimper_Combo_AI_Generator();
